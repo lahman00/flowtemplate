@@ -1,0 +1,30 @@
+{
+  "name": "Monday.com",
+  "slug": "monday",
+  "category": "Visual work management",
+  "description": "Monday.com is a visual work-management platform built around customizable boards, dashboards, and automations.",
+  "order": 11,
+  "alternatives": [
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
+      "best_for": "Teams that want a more structured, list-first workflow",
+      "strengths": ["Timelines", "Task dependencies", "Team workflows"]
+    },
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams that want more customization and an all-in-one workspace",
+      "strengths": ["Task management", "Dashboards", "Automation"]
+    },
+    {
+      "name": "Trello",
+      "slug": "trello",
+      "description": "A simple visual project-management tool based on boards, lists, and cards.",
+      "best_for": "Small teams that want the simplest possible board view",
+      "strengths": ["Easy setup", "Kanban boards", "Low learning curve"]
+    }
+  ]
+}

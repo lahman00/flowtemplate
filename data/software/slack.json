@@ -1,0 +1,30 @@
+{
+  "name": "Slack",
+  "slug": "slack",
+  "category": "Team communication",
+  "description": "Slack is a workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
+  "order": 2,
+  "alternatives": [
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A communication and collaboration platform with chat, meetings, file sharing, and Microsoft 365 integration.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": ["Video meetings", "Office integration", "File collaboration"]
+    },
+    {
+      "name": "Discord",
+      "slug": "discord",
+      "description": "A community-focused communication platform with text channels, voice rooms, and real-time collaboration.",
+      "best_for": "Communities and informal teams",
+      "strengths": ["Voice channels", "Community tools", "Easy onboarding"]
+    },
+    {
+      "name": "Mattermost",
+      "slug": "mattermost",
+      "description": "A team messaging platform designed for organizations that need greater control over hosting and security.",
+      "best_for": "Technical teams needing self-hosting",
+      "strengths": ["Self-hosting", "Security control", "Developer workflows"]
+    }
+  ]
+}

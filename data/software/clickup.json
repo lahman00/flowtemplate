@@ -1,0 +1,30 @@
+{
+  "name": "ClickUp",
+  "slug": "clickup",
+  "category": "Project management",
+  "description": "ClickUp is a project-management platform that combines tasks, documents, dashboards, goals, and automation.",
+  "order": 3,
+  "alternatives": [
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
+      "best_for": "Teams wanting clear and structured project tracking",
+      "strengths": ["Timelines", "Task dependencies", "Team workflows"]
+    },
+    {
+      "name": "Monday.com",
+      "slug": "monday",
+      "description": "A visual work-management platform with customizable boards, dashboards, and automations.",
+      "best_for": "Teams that prefer visual workflow management",
+      "strengths": ["Custom boards", "Dashboards", "Automation"]
+    },
+    {
+      "name": "Trello",
+      "slug": "trello",
+      "description": "A simple visual project-management tool based on boards, lists, and cards.",
+      "best_for": "Small teams needing a simple workflow",
+      "strengths": ["Easy setup", "Kanban boards", "Low learning curve"]
+    }
+  ]
+}

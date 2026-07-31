@@ -1,0 +1,30 @@
+{
+  "name": "Notion",
+  "slug": "notion",
+  "category": "Workspace and productivity",
+  "description": "Notion combines documents, databases, project tracking, and team knowledge in one flexible workspace.",
+  "order": 1,
+  "alternatives": [
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams that need structured project management",
+      "strengths": ["Task management", "Dashboards", "Automation"]
+    },
+    {
+      "name": "Coda",
+      "slug": "coda",
+      "description": "A collaborative document platform that combines text, tables, formulas, and app-like workflows.",
+      "best_for": "Teams building custom internal workflows",
+      "strengths": ["Flexible documents", "Formulas", "Integrations"]
+    },
+    {
+      "name": "Confluence",
+      "slug": "confluence",
+      "description": "A team knowledge-management platform designed for documentation and internal collaboration.",
+      "best_for": "Larger teams managing structured documentation",
+      "strengths": ["Knowledge base", "Permissions", "Atlassian integration"]
+    }
+  ]
+}

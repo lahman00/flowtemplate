@@ -1,0 +1,30 @@
+{
+  "name": "Mattermost",
+  "slug": "mattermost",
+  "category": "Self-hosted team messaging",
+  "description": "Mattermost is an open-source team messaging platform built for organizations that want to host and control their own chat infrastructure.",
+  "order": 10,
+  "alternatives": [
+    {
+      "name": "Slack",
+      "slug": "slack",
+      "description": "A workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
+      "best_for": "Teams that prefer a fully managed, cloud-hosted chat tool",
+      "strengths": ["Channels", "App integrations", "Searchable history"]
+    },
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A communication and collaboration platform with chat, meetings, file sharing, and Microsoft 365 integration.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": ["Video meetings", "Office integration", "File collaboration"]
+    },
+    {
+      "name": "Discord",
+      "slug": "discord",
+      "description": "A community-focused communication platform with text channels, voice rooms, and real-time collaboration.",
+      "best_for": "Communities that value voice chat over self-hosting",
+      "strengths": ["Voice channels", "Community tools", "Easy onboarding"]
+    }
+  ]
+}

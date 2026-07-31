@@ -1,0 +1,30 @@
+{
+  "name": "Microsoft Teams",
+  "slug": "microsoft-teams",
+  "category": "Team communication",
+  "description": "Microsoft Teams combines chat, video meetings, and file collaboration, tightly integrated with Microsoft 365.",
+  "order": 8,
+  "alternatives": [
+    {
+      "name": "Slack",
+      "slug": "slack",
+      "description": "A workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
+      "best_for": "Teams that want a lighter, integration-friendly chat tool",
+      "strengths": ["Channels", "App integrations", "Searchable history"]
+    },
+    {
+      "name": "Discord",
+      "slug": "discord",
+      "description": "A community-focused communication platform with text channels, voice rooms, and real-time collaboration.",
+      "best_for": "Informal teams and communities that value voice chat",
+      "strengths": ["Voice channels", "Community tools", "Easy onboarding"]
+    },
+    {
+      "name": "Mattermost",
+      "slug": "mattermost",
+      "description": "A team messaging platform designed for organizations that need greater control over hosting and security.",
+      "best_for": "Technical teams that need self-hosted, secure messaging",
+      "strengths": ["Self-hosting", "Security control", "Developer workflows"]
+    }
+  ]
+}

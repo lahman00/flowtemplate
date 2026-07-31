@@ -1,0 +1,30 @@
+{
+  "name": "Confluence",
+  "slug": "confluence",
+  "category": "Team knowledge and documentation",
+  "description": "Confluence is Atlassian's team workspace for documentation, meeting notes, and internal knowledge shared across an organization.",
+  "order": 7,
+  "alternatives": [
+    {
+      "name": "Notion",
+      "slug": "notion",
+      "description": "A flexible workspace combining documents, databases, project boards, and team knowledge.",
+      "best_for": "Smaller teams wanting a lighter-weight, faster setup",
+      "strengths": ["Flexible pages", "Databases", "Templates"]
+    },
+    {
+      "name": "Coda",
+      "slug": "coda",
+      "description": "A collaborative document platform that combines text, tables, formulas, and app-like workflows.",
+      "best_for": "Teams building custom internal tools on top of docs",
+      "strengths": ["Flexible documents", "Formulas", "Integrations"]
+    },
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams that want documentation and project tracking in one place",
+      "strengths": ["Task management", "Dashboards", "Automation"]
+    }
+  ]
+}

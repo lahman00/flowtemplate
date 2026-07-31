@@ -1,0 +1,30 @@
+{
+  "name": "Asana",
+  "slug": "asana",
+  "category": "Work management",
+  "description": "Asana helps teams organize projects, assign tasks, manage deadlines, and track work across multiple views.",
+  "order": 5,
+  "alternatives": [
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A broad productivity platform combining project management, documents, dashboards, and automation.",
+      "best_for": "Teams wanting an all-in-one workspace",
+      "strengths": ["Feature depth", "Customization", "Dashboards"]
+    },
+    {
+      "name": "Monday.com",
+      "slug": "monday",
+      "description": "A visual work-management platform with configurable boards and automated workflows.",
+      "best_for": "Teams wanting highly visual workflows",
+      "strengths": ["Visual boards", "Automation", "Templates"]
+    },
+    {
+      "name": "Trello",
+      "slug": "trello",
+      "description": "A lightweight Kanban tool that organizes work with boards, lists, and cards.",
+      "best_for": "Small teams with simple workflows",
+      "strengths": ["Simplicity", "Fast setup", "Kanban"]
+    }
+  ]
+}

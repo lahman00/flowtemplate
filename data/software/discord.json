@@ -1,0 +1,30 @@
+{
+  "name": "Discord",
+  "slug": "discord",
+  "category": "Community and team chat",
+  "description": "Discord organizes communities and teams around text channels, voice rooms, and real-time conversation.",
+  "order": 9,
+  "alternatives": [
+    {
+      "name": "Slack",
+      "slug": "slack",
+      "description": "A workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
+      "best_for": "Professional teams that need structured, searchable channels",
+      "strengths": ["Channels", "App integrations", "Searchable history"]
+    },
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A communication and collaboration platform with chat, meetings, file sharing, and Microsoft 365 integration.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": ["Video meetings", "Office integration", "File collaboration"]
+    },
+    {
+      "name": "Mattermost",
+      "slug": "mattermost",
+      "description": "A team messaging platform designed for organizations that need greater control over hosting and security.",
+      "best_for": "Communities that want to self-host their chat platform",
+      "strengths": ["Self-hosting", "Security control", "Developer workflows"]
+    }
+  ]
+}

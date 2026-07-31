@@ -12,7 +12,15 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { getAllSoftware, getSoftware } from "@/data/software";
-import { getSoftwareFaqItems } from "@/lib/faq";
+import { getRelatedSoftware } from "@/lib/related";
+import {
+  generateComparisonIntro,
+  generateFaq,
+  generateH1,
+  generateIntro,
+  generateMetaDescription,
+  generateTitle,
+} from "@/lib/generators";
 import {
   getBreadcrumbJsonLd,
   getFaqJsonLd,
@@ -40,15 +48,16 @@ export async function generateMetadata({ params }: SoftwarePageProps): Promise<M
     };
   }
 
-  const title = `Best ${software.name} Alternatives`;
+  const title = generateTitle(software);
+  const description = generateMetaDescription(software);
 
   return {
     title,
-    description: software.description,
+    description,
     alternates: { canonical: `/software/${slug}` },
     openGraph: {
       title,
-      description: software.description,
+      description,
     },
   };
 }
@@ -61,12 +70,8 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
     notFound();
   }
 
-  const directAlternativeSlugs = new Set(software.alternatives.map((alt) => alt.slug));
-  const relatedSoftware = getAllSoftware()
-    .filter((item) => item.slug !== software.slug && !directAlternativeSlugs.has(item.slug))
-    .slice(0, 3);
-
-  const faqItems = getSoftwareFaqItems(software);
+  const relatedSoftware = getRelatedSoftware(software, 3);
+  const faqItems = generateFaq(software);
 
   return (
     <main className="flex-1 py-16 sm:py-20">
@@ -86,10 +91,10 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
           <Badge>{software.category}</Badge>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            Best {software.name} alternatives
+            {generateH1(software)}
           </h1>
 
-          <p className="mt-6 text-lg leading-8 text-zinc-400">{software.description}</p>
+          <p className="mt-6 text-lg leading-8 text-zinc-400">{generateIntro(software)}</p>
 
           <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-300">
             <GitCompare className="h-4 w-4" />
@@ -99,10 +104,7 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
 
         <section className="mt-14">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading
-              title="Top alternatives"
-              description="Compare the strongest options based on use case and core strengths."
-            />
+            <SectionHeading title="Top alternatives" description={generateComparisonIntro(software)} />
 
             <span className="hidden shrink-0 rounded-full border border-white/10 px-4 py-2 text-sm text-zinc-400 sm:block">
               {software.alternatives.length} options
