@@ -13,29 +13,44 @@
     "Tiered access controls and permissions",
     "SSO (SAML) and compliance features"
   ],
-  "order": 25,
-  "sources": ["https://www.gitbook.com"],
+  "sources": [
+    "https://www.gitbook.com"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Confluence",
       "slug": "confluence",
       "description": "Atlassian's team workspace for documentation, meeting notes, and internal knowledge.",
       "best_for": "General team documentation beyond developer docs",
-      "strengths": ["Knowledge base", "Permissions", "Atlassian integration"]
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
     },
     {
       "name": "Notion",
       "slug": "notion",
       "description": "An all-in-one workspace combining documents, databases, project tracking, and team knowledge.",
       "best_for": "Teams wanting a lighter-weight, more flexible workspace",
-      "strengths": ["Flexible pages", "Databases", "Templates"]
+      "strengths": [
+        "Flexible pages",
+        "Databases",
+        "Templates"
+      ]
     },
     {
       "name": "Guru",
       "slug": "guru",
       "description": "An enterprise knowledge-management platform that organizes and continuously verifies company information.",
       "best_for": "Enterprise teams needing verified, permission-scoped knowledge",
-      "strengths": ["Knowledge verification", "AI search", "Permission-aware answers"]
+      "strengths": [
+        "Knowledge verification",
+        "AI search",
+        "Permission-aware answers"
+      ]
     }
-  ]
+  ],
+  "order": 25
 }

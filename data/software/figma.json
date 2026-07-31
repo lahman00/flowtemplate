@@ -4,7 +4,14 @@
   "category": "design",
   "description": "Figma is a browser- and desktop-based design tool where teams create interface designs, prototypes, and increasingly code together in a shared, real-time canvas.",
   "website": "https://www.figma.com",
-  "platforms": ["Web", "macOS", "Windows", "iOS", "iPad", "Android"],
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows",
+    "iOS",
+    "iPad",
+    "Android"
+  ],
   "best_for": "Positioned for multidisciplinary product teams — designers, engineers, PMs — at organizations ranging from startups to large enterprises.",
   "features": [
     "Real-time collaborative design canvas",
@@ -13,22 +20,34 @@
     "AI-assisted design and code generation",
     "Design-to-code handoff tools"
   ],
-  "order": 18,
-  "sources": ["https://www.figma.com", "https://www.figma.com/downloads/"],
+  "sources": [
+    "https://www.figma.com",
+    "https://www.figma.com/downloads/"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Canva",
       "slug": "canva",
       "description": "An online visual design platform letting non-designers create graphics, presentations, and print materials from templates.",
       "best_for": "Non-designers making marketing and social content quickly",
-      "strengths": ["Templates", "Ease of use", "Broad content types"]
+      "strengths": [
+        "Templates",
+        "Ease of use",
+        "Broad content types"
+      ]
     },
     {
       "name": "Sketch",
       "slug": "sketch",
       "description": "A vector-based UI/UX design application for creating interface designs and interactive prototypes, macOS only.",
       "best_for": "Mac-based professional UI/UX designers",
-      "strengths": ["Vector editing", "Component libraries", "Developer handoff"]
+      "strengths": [
+        "Vector editing",
+        "Component libraries",
+        "Developer handoff"
+      ]
     }
-  ]
+  ],
+  "order": 18
 }

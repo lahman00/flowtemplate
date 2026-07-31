@@ -33,6 +33,8 @@ app/                    Routes (App Router)
   software/[slug]/       One page per software entry
   category/[slug]/        One page per category
   about|contact|privacy|terms/
+  affiliate-disclosure|disclaimer|editorial-policy|sources-policy|
+  corrections-policy|ai-usage|accessibility|cookies|trademark-notice/
 data/
   software/*.json         One file per software entry (source of truth)
   categories/              Category definitions + loader
@@ -42,7 +44,8 @@ lib/
   comparison.ts                /compare engine (built, not routed)
   monetization.ts               Monetization-ready utilities (no live data)
   structured-data.ts             JSON-LD builders
-components/               Reusable UI components
+  legal.ts                        Shared list of legal/trust pages (drives footer + sitemap)
+components/               Reusable UI components (incl. LegalPageLayout)
 scripts/validate-data.ts   Standalone data validator (npm run validate:data)
 docs/                      Architecture documentation
 ```
@@ -51,10 +54,20 @@ docs/                      Architecture documentation
 
 Every software entry lives in its own JSON file and is validated with Zod
 at build time. Nothing in this dataset is invented: every entry cites at
-least one official source, and fields with no verified source (pricing,
-founding date, parent company, pros/cons) are left unpopulated rather than
-guessed. See [`docs/content-engine.md`](docs/content-engine.md) for the
-full policy and schema.
+least one official source with the date it was accessed, and fields with no
+verified source (pricing, founding date, parent company, pros/cons) are
+left unpopulated rather than guessed. See
+[`docs/content-engine.md`](docs/content-engine.md) for the full policy and
+schema.
+
+## Legal and trust
+
+11 legal/trust pages (Privacy, Terms, Disclaimer, Affiliate Disclosure,
+Editorial Policy, Sources Policy, Corrections Policy, AI Usage Disclosure,
+Accessibility Statement, Cookie Policy, Trademark Notice) — each written to
+match how the site actually operates today, not aspirational claims. No
+analytics/advertising/auth cookies are set, so there's no cookie banner.
+See [`docs/legal-and-trust.md`](docs/legal-and-trust.md).
 
 ## Learn more
 

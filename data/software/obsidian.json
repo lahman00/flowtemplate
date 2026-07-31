@@ -4,7 +4,14 @@
   "category": "knowledge-base",
   "description": "Obsidian is a note-taking app that stores notes as local plain-text Markdown files and lets users link notes together to build a personal, interconnected knowledge base, with an emphasis on local-first data ownership.",
   "website": "https://obsidian.md",
-  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Described by the vendor as the free and flexible app for private thoughts — positioned for individuals who want full ownership and privacy of their personal notes and knowledge bases.",
   "features": [
     "Bi-directional linking and backlinks between notes",
@@ -14,29 +21,45 @@
     "Optional end-to-end encrypted sync across devices",
     "Fully offline, local Markdown storage"
   ],
-  "order": 24,
-  "sources": ["https://obsidian.md", "https://obsidian.md/download"],
+  "sources": [
+    "https://obsidian.md",
+    "https://obsidian.md/download"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Notion",
       "slug": "notion",
       "description": "An all-in-one workspace combining documents, databases, project tracking, and team knowledge.",
       "best_for": "People who want a cloud-hosted, team-friendly workspace instead of local files",
-      "strengths": ["Team collaboration", "Databases", "Cloud-hosted"]
+      "strengths": [
+        "Team collaboration",
+        "Databases",
+        "Cloud-hosted"
+      ]
     },
     {
       "name": "Confluence",
       "slug": "confluence",
       "description": "Atlassian's team workspace for documentation, meeting notes, and internal knowledge.",
       "best_for": "Teams needing structured, permissioned documentation",
-      "strengths": ["Knowledge base", "Permissions", "Atlassian integration"]
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
     },
     {
       "name": "GitBook",
       "slug": "gitbook",
       "description": "A documentation platform for building and maintaining technical or product documentation, kept in sync with code.",
       "best_for": "Teams publishing developer or product documentation",
-      "strengths": ["Git Sync", "AI-assisted docs", "Access controls"]
+      "strengths": [
+        "Git Sync",
+        "AI-assisted docs",
+        "Access controls"
+      ]
     }
-  ]
+  ],
+  "order": 24
 }

@@ -4,7 +4,11 @@
   "category": "productivity",
   "description": "Coda combines documents, spreadsheet-style tables, and app-like building blocks into a single collaborative surface for teams.",
   "website": "https://coda.io",
-  "platforms": ["Web", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Positioned for cross-functional teams — product, sales, engineering, design, marketing, HR — as a single tool replacing separate docs, spreadsheets, and wikis.",
   "features": [
     "Docs and team hubs",
@@ -14,29 +18,45 @@
     "Packs for customization",
     "Publishing docs as shareable websites"
   ],
-  "order": 6,
-  "sources": ["https://coda.io", "https://coda.io/product"],
+  "sources": [
+    "https://coda.io",
+    "https://coda.io/product"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Notion",
       "slug": "notion",
       "description": "A flexible workspace combining documents, databases, project boards, and team knowledge.",
       "best_for": "Teams that want a simpler, more visual all-in-one workspace",
-      "strengths": ["Flexible pages", "Databases", "Templates"]
+      "strengths": [
+        "Flexible pages",
+        "Databases",
+        "Templates"
+      ]
     },
     {
       "name": "ClickUp",
       "slug": "clickup",
       "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
       "best_for": "Teams that need more structured project tracking alongside docs",
-      "strengths": ["Task management", "Dashboards", "Automation"]
+      "strengths": [
+        "Task management",
+        "Dashboards",
+        "Automation"
+      ]
     },
     {
       "name": "Confluence",
       "slug": "confluence",
       "description": "A team knowledge-management platform designed for documentation and internal collaboration.",
       "best_for": "Larger teams standardizing on structured documentation",
-      "strengths": ["Knowledge base", "Permissions", "Atlassian integration"]
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
     }
-  ]
+  ],
+  "order": 6
 }

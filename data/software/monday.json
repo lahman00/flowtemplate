@@ -4,7 +4,13 @@
   "category": "project-management",
   "description": "Monday.com is a visual work-management platform built around customizable boards, dashboards, and automations.",
   "website": "https://monday.com",
-  "platforms": ["Web", "iOS", "Android", "macOS", "Windows"],
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "macOS",
+    "Windows"
+  ],
   "best_for": "Vendor targets enterprise-scale organizations wanting to scale projects and operations through combined human and AI-agent workflows.",
   "features": [
     "Customizable boards including Kanban-style views",
@@ -14,29 +20,46 @@
     "Forms for intake and Docs for collaborative documentation",
     "AI agents for research, reporting, and scheduling"
   ],
-  "order": 11,
-  "sources": ["https://monday.com", "https://monday.com/lang/download", "https://monday.com/work-management"],
+  "sources": [
+    "https://monday.com",
+    "https://monday.com/lang/download",
+    "https://monday.com/work-management"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Asana",
       "slug": "asana",
       "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
       "best_for": "Teams that want a more structured, list-first workflow",
-      "strengths": ["Timelines", "Task dependencies", "Team workflows"]
+      "strengths": [
+        "Timelines",
+        "Task dependencies",
+        "Team workflows"
+      ]
     },
     {
       "name": "ClickUp",
       "slug": "clickup",
       "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
       "best_for": "Teams that want more customization and an all-in-one workspace",
-      "strengths": ["Task management", "Dashboards", "Automation"]
+      "strengths": [
+        "Task management",
+        "Dashboards",
+        "Automation"
+      ]
     },
     {
       "name": "Trello",
       "slug": "trello",
       "description": "A simple visual project-management tool based on boards, lists, and cards.",
       "best_for": "Small teams that want the simplest possible board view",
-      "strengths": ["Easy setup", "Kanban boards", "Low learning curve"]
+      "strengths": [
+        "Easy setup",
+        "Kanban boards",
+        "Low learning curve"
+      ]
     }
-  ]
+  ],
+  "order": 11
 }

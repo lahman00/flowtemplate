@@ -4,7 +4,14 @@
   "category": "communication",
   "description": "Mattermost is an open-source team messaging platform built for organizations that want to host and control their own chat infrastructure.",
   "website": "https://mattermost.com",
-  "platforms": ["Windows", "macOS", "Linux", "iOS", "Android", "Web"],
+  "platforms": [
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android",
+    "Web"
+  ],
   "best_for": "Positioned as a collaboration platform for mission-critical work — defense, government, critical infrastructure, DevSecOps, and security-operations teams needing data sovereignty.",
   "features": [
     "Channels for secure messaging and collaboration",
@@ -14,33 +21,46 @@
     "AI agents connectable to sovereign or private LLMs",
     "Pre-built integrations for SIEM/SOAR and DevSecOps tooling"
   ],
-  "order": 10,
   "sources": [
     "https://mattermost.com",
     "https://mattermost.com/platform-overview/",
     "https://mattermost.com/apps/"
   ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Slack",
       "slug": "slack",
       "description": "A workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
       "best_for": "Teams that prefer a fully managed, cloud-hosted chat tool",
-      "strengths": ["Channels", "App integrations", "Searchable history"]
+      "strengths": [
+        "Channels",
+        "App integrations",
+        "Searchable history"
+      ]
     },
     {
       "name": "Microsoft Teams",
       "slug": "microsoft-teams",
       "description": "A communication and collaboration platform with chat, meetings, file sharing, and Microsoft 365 integration.",
       "best_for": "Organizations already using Microsoft 365",
-      "strengths": ["Video meetings", "Office integration", "File collaboration"]
+      "strengths": [
+        "Video meetings",
+        "Office integration",
+        "File collaboration"
+      ]
     },
     {
       "name": "Discord",
       "slug": "discord",
       "description": "A community-focused communication platform with text channels, voice rooms, and real-time collaboration.",
       "best_for": "Communities that value voice chat over self-hosting",
-      "strengths": ["Voice channels", "Community tools", "Easy onboarding"]
+      "strengths": [
+        "Voice channels",
+        "Community tools",
+        "Easy onboarding"
+      ]
     }
-  ]
+  ],
+  "order": 10
 }

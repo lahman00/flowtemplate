@@ -4,7 +4,11 @@
   "category": "crm",
   "description": "Pipedrive is a sales-focused CRM built around a visual pipeline, letting sales teams track leads and deals as they move through stages, with automation and AI features to reduce manual data entry.",
   "website": "https://www.pipedrive.com",
-  "platforms": ["Web", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Pipedrive positions itself for small to mid-sized sales teams who want a straightforward, adaptable alternative to more complex enterprise CRM systems.",
   "features": [
     "Kanban-style customizable pipeline view",
@@ -14,22 +18,33 @@
     "Calendar and task integration",
     "Real-time sales reporting and forecasting"
   ],
-  "order": 14,
-  "sources": ["https://www.pipedrive.com"],
+  "sources": [
+    "https://www.pipedrive.com"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "HubSpot",
       "slug": "hubspot",
       "description": "A CRM platform with a free tier covering contact, deal, and pipeline management alongside marketing and service tools.",
       "best_for": "Startups and small businesses that want to start free and scale up",
-      "strengths": ["Free tier", "Ease of setup", "Marketing/sales/service in one"]
+      "strengths": [
+        "Free tier",
+        "Ease of setup",
+        "Marketing/sales/service in one"
+      ]
     },
     {
       "name": "Salesforce",
       "slug": "salesforce",
       "description": "A cloud-based CRM platform that centralizes customer data across sales, service, marketing, and IT.",
       "best_for": "Larger organizations wanting one AI-enabled platform across departments",
-      "strengths": ["Deep customization", "AI agents", "Enterprise scale"]
+      "strengths": [
+        "Deep customization",
+        "AI agents",
+        "Enterprise scale"
+      ]
     }
-  ]
+  ],
+  "order": 14
 }

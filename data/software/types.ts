@@ -36,6 +36,8 @@ export type Software = {
   faq?: FaqItem[];
   tags?: string[];
   sources: string[];
+  /** Date sources[] was fetched/verified, YYYY-MM-DD. */
+  accessedAt: string;
   /** Phase 5 — monetization-ready architecture. Never fabricated; see docs/monetization.md. */
   affiliateUrl?: string;
   sponsored?: boolean;

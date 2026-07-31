@@ -4,7 +4,13 @@
   "category": "communication",
   "description": "Microsoft Teams combines chat, video meetings, and file collaboration, tightly integrated with Microsoft 365.",
   "website": "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
-  "platforms": ["Web", "Windows", "macOS", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Segmented by Microsoft into small/medium business, enterprise, education, and individual use — organizations already invested in the Microsoft ecosystem.",
   "features": [
     "Chat and channels integrating Loop, OneNote, and third-party apps",
@@ -13,32 +19,45 @@
     "Copilot integration for meetings and workflows",
     "Built-in security and encryption controls"
   ],
-  "order": 8,
   "sources": [
     "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
     "https://www.microsoft.com/en-us/microsoft-teams/download-app"
   ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Slack",
       "slug": "slack",
       "description": "A workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
       "best_for": "Teams that want a lighter, integration-friendly chat tool",
-      "strengths": ["Channels", "App integrations", "Searchable history"]
+      "strengths": [
+        "Channels",
+        "App integrations",
+        "Searchable history"
+      ]
     },
     {
       "name": "Discord",
       "slug": "discord",
       "description": "A community-focused communication platform with text channels, voice rooms, and real-time collaboration.",
       "best_for": "Informal teams and communities that value voice chat",
-      "strengths": ["Voice channels", "Community tools", "Easy onboarding"]
+      "strengths": [
+        "Voice channels",
+        "Community tools",
+        "Easy onboarding"
+      ]
     },
     {
       "name": "Mattermost",
       "slug": "mattermost",
       "description": "A team messaging platform designed for organizations that need greater control over hosting and security.",
       "best_for": "Technical teams that need self-hosted, secure messaging",
-      "strengths": ["Self-hosting", "Security control", "Developer workflows"]
+      "strengths": [
+        "Self-hosting",
+        "Security control",
+        "Developer workflows"
+      ]
     }
-  ]
+  ],
+  "order": 8
 }

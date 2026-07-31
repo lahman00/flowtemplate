@@ -1,0 +1,77 @@
+# Legal & trust architecture
+
+Sprint 5 added the legal and trust pages needed for a public commercial
+launch. The governing rule throughout: describe the site as it actually
+operates, never as it might operate someday or as a template might imply.
+
+## Pages (`lib/legal.ts` → `LEGAL_PAGES`)
+
+One shared list drives both the footer's "Legal & trust" column and the
+sitemap — a new legal page is added to the site by adding one entry there,
+not by hand-editing both places separately.
+
+| Page | Route | What it actually says |
+|---|---|---|
+| Privacy Policy | `/privacy` | No accounts, no database, no cookies set by this site. |
+| Terms of Service | `/terms` | General informational use; not professional advice. |
+| Disclaimer | `/disclaimer` | Verify pricing/features with the vendor; not legal/financial/security/procurement advice; user is responsible for their own decision. |
+| Affiliate Disclosure | `/affiliate-disclosure` | No link on the site is currently an affiliate link — stated as present-tense fact, not a hedge. Explains how a real affiliate link would be marked if one is ever added. |
+| Editorial Policy | `/editorial-policy` | Official sources preferred, data is schema-validated, no fabricated ratings, commercial relationships don't affect placement. |
+| Sources Policy | `/sources-policy` | Official product pages are primary; pricing is deliberately not tracked; unverifiable fields are left blank; access dates are stored (see below). |
+| Corrections Policy | `/corrections-policy` | How to report an error, what to include, no guaranteed timeline, corrections are free. |
+| AI Usage Disclosure | `/ai-usage` | States plainly that AI/automation assists with drafting and validation, and does **not** claim every fact has been manually re-verified by a human. |
+| Accessibility Statement | `/accessibility` | States goals and current practices; explicitly does not claim WCAG conformance/certification. |
+| Cookie Policy | `/cookies` | States plainly that no cookies are set for analytics, advertising, or auth — verified by inspecting the codebase (see below), not assumed. |
+| Trademark Notice | `/trademark-notice` | Product/company names belong to their owners; listing ≠ endorsement. |
+
+Every page uses the shared `components/LegalPageLayout.tsx` (breadcrumbs,
+`BreadcrumbList` JSON-LD, an H1, a "Last updated" date from
+`lib/legal.ts`'s `LEGAL_LAST_UPDATED`, and `components/LegalContent.tsx`
+sections) and has its own `metadata` export with a canonical URL.
+
+## What was verified before writing the Cookie Policy
+
+Before claiming "no cookies," the codebase was actually inspected rather
+than assumed:
+
+- Grepped for cookie/analytics/tracking code (`gtag`, `fbq`, `analytics`,
+  etc.) across `app/`, `components/`, `lib/`, `data/` — none found outside
+  the Privacy/Cookie policy text itself.
+- Confirmed `@supabase/ssr` and `@supabase/supabase-js` (both installed as
+  dependencies) are not imported anywhere in the app — they're unused, so
+  Supabase's cookie-based session handling is never actually invoked.
+- Confirmed `@prisma/client` is likewise unused.
+- Confirmed there are no API routes, no server actions, no `middleware.ts`,
+  and the only `<form>` on the site (`SearchForm`) does a client-side
+  redirect and never sends a network request.
+
+Because of this, no cookie consent banner was added — the task was
+explicit that one should only be added if actually required, and it isn't.
+
+## `accessed_at` — making the Sources Policy true, not aspirational
+
+The Sources Policy states "access dates are stored." Before Sprint 5, that
+wasn't actually true — no such field existed. Rather than write a policy
+page describing a capability the site didn't have, `data/software/schema.ts`
+gained a required `accessed_at` field (`YYYY-MM-DD`), populated on all 30
+existing entries with the date their sources were originally fetched during
+Sprint 4's research. `app/software/[slug]/page.tsx` now has a visible
+"Sources" section listing every cited URL with the access date shown in
+plain language, each link using `target="_blank" rel="noopener noreferrer"`.
+
+## Footer
+
+Reorganized into columns (`components/Footer.tsx`): Product, Company, and
+"Legal & trust" (all 11 pages from `LEGAL_PAGES`), plus the existing
+dynamic-year copyright line, so the 11 legal links don't clutter a single
+flat row.
+
+## Adding a new legal page later
+
+1. Create `app/<slug>/page.tsx` using `LegalPageLayout` (see any existing
+   page in `app/` for the pattern — `metadata` export with `canonical`,
+   `title`/`path`/`sections` props).
+2. Add `{ name, href }` to `LEGAL_PAGES` in `lib/legal.ts`.
+
+The footer and sitemap pick it up automatically — no other file needs to
+change.

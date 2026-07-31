@@ -4,7 +4,13 @@
   "category": "design",
   "description": "Canva is an online visual design platform letting non-designers create graphics, documents, presentations, videos, and print materials from templates.",
   "website": "https://www.canva.com",
-  "platforms": ["Windows", "macOS", "iOS", "Android", "Chromebook"],
+  "platforms": [
+    "Windows",
+    "macOS",
+    "iOS",
+    "Android",
+    "Chromebook"
+  ],
   "best_for": "Positioned for general users and teams who want to create marketing and visual content without dedicated design skills.",
   "features": [
     "Templates for social media, presentations, documents, and print",
@@ -13,22 +19,33 @@
     "Brand kit for brand consistency",
     "Collaborative whiteboards and docs"
   ],
-  "order": 19,
-  "sources": ["https://www.canva.com/download/"],
+  "sources": [
+    "https://www.canva.com/download/"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Figma",
       "slug": "figma",
       "description": "A browser- and desktop-based design tool for interface design, prototyping, and real-time collaboration.",
       "best_for": "Product teams doing UI design and prototyping",
-      "strengths": ["Real-time collaboration", "Vector design tools", "Prototyping"]
+      "strengths": [
+        "Real-time collaboration",
+        "Vector design tools",
+        "Prototyping"
+      ]
     },
     {
       "name": "Sketch",
       "slug": "sketch",
       "description": "A vector-based UI/UX design application for creating interface designs and interactive prototypes, macOS only.",
       "best_for": "Mac-based professional UI/UX designers",
-      "strengths": ["Vector editing", "Component libraries", "Developer handoff"]
+      "strengths": [
+        "Vector editing",
+        "Component libraries",
+        "Developer handoff"
+      ]
     }
-  ]
+  ],
+  "order": 19
 }

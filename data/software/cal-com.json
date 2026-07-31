@@ -4,7 +4,11 @@
   "category": "scheduling",
   "description": "Cal.com is an open, customizable scheduling platform where users share a booking link that automatically syncs calendars, detects time zones, and handles meeting logistics.",
   "website": "https://cal.com",
-  "platforms": ["iOS", "Android", "Web (macOS, Windows, Linux via browser)"],
+  "platforms": [
+    "iOS",
+    "Android",
+    "Web (macOS, Windows, Linux via browser)"
+  ],
   "best_for": "Positioned for individuals, businesses that take calls, and developers building scheduling into their own platforms, with named use cases in healthcare, B2B sales, and support.",
   "features": [
     "Two-way calendar sync to prevent double-booking",
@@ -14,22 +18,33 @@
     "Short customizable booking links",
     "Support for 65+ languages"
   ],
-  "order": 23,
-  "sources": ["https://cal.com"],
+  "sources": [
+    "https://cal.com"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Calendly",
       "slug": "calendly",
       "description": "A scheduling tool that connects to a user's calendar and lets them share a booking link for others to pick an open time slot.",
       "best_for": "Teams wanting a polished, no-setup-required booking tool",
-      "strengths": ["Native mobile apps", "Video tool integrations", "Event type variety"]
+      "strengths": [
+        "Native mobile apps",
+        "Video tool integrations",
+        "Event type variety"
+      ]
     },
     {
       "name": "Doodle",
       "slug": "doodle",
       "description": "A scheduling and coordination tool that finds a meeting time across a group's calendars via polls and booking pages.",
       "best_for": "Coordinating a time across a group rather than one-on-one booking",
-      "strengths": ["Group polls", "Sign-up sheets", "Simple setup"]
+      "strengths": [
+        "Group polls",
+        "Sign-up sheets",
+        "Simple setup"
+      ]
     }
-  ]
+  ],
+  "order": 23
 }

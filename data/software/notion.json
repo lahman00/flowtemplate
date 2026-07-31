@@ -4,7 +4,13 @@
   "category": "productivity",
   "description": "Notion combines documents, databases, project tracking, and team knowledge in one flexible workspace.",
   "website": "https://www.notion.com",
-  "platforms": ["Web", "macOS", "Windows", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Positioned for teams of any size, from startups to large enterprises, who want people and AI working together in one connected workspace.",
   "features": [
     "AI-powered search across connected apps",
@@ -14,33 +20,46 @@
     "Project and task tracking",
     "Built-in calendar and third-party app connections"
   ],
-  "order": 1,
   "sources": [
     "https://www.notion.com",
     "https://www.notion.com/desktop",
     "https://www.notion.so/help/notion-for-desktop"
   ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "ClickUp",
       "slug": "clickup",
       "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
       "best_for": "Teams that need structured project management",
-      "strengths": ["Task management", "Dashboards", "Automation"]
+      "strengths": [
+        "Task management",
+        "Dashboards",
+        "Automation"
+      ]
     },
     {
       "name": "Coda",
       "slug": "coda",
       "description": "A collaborative document platform that combines text, tables, formulas, and app-like workflows.",
       "best_for": "Teams building custom internal workflows",
-      "strengths": ["Flexible documents", "Formulas", "Integrations"]
+      "strengths": [
+        "Flexible documents",
+        "Formulas",
+        "Integrations"
+      ]
     },
     {
       "name": "Confluence",
       "slug": "confluence",
       "description": "A team knowledge-management platform designed for documentation and internal collaboration.",
       "best_for": "Larger teams managing structured documentation",
-      "strengths": ["Knowledge base", "Permissions", "Atlassian integration"]
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
     }
-  ]
+  ],
+  "order": 1
 }

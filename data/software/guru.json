@@ -4,7 +4,10 @@
   "category": "knowledge-base",
   "description": "Guru is an enterprise knowledge-management platform that organizes and continuously verifies company information — policies, procedures, product info — so employees and connected AI tools can retrieve accurate, permission-scoped answers.",
   "website": "https://www.getguru.com",
-  "platforms": ["Web", "Browser extension (Chrome, Edge, Opera)"],
+  "platforms": [
+    "Web",
+    "Browser extension (Chrome, Edge, Opera)"
+  ],
   "best_for": "Positioned for enterprise organizations — HR, Ops, Support, Sales, Engineering, L&D — across industries like tech, healthcare, finance, and manufacturing.",
   "features": [
     "Knowledge structuring and governance with continuous review",
@@ -14,33 +17,46 @@
     "Automated quality control: conflict detection, duplicate merging, stale-content flagging",
     "Integrations with Slack, Microsoft Teams, and AI tools"
   ],
-  "order": 26,
   "sources": [
     "https://www.getguru.com",
     "https://help.getguru.com/docs/using-guru-on-a-mobile-device",
     "https://www.getguru.com/features/browser-extension"
   ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Confluence",
       "slug": "confluence",
       "description": "Atlassian's team workspace for documentation, meeting notes, and internal knowledge.",
       "best_for": "Teams already standardized on Atlassian tools",
-      "strengths": ["Knowledge base", "Permissions", "Atlassian integration"]
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
     },
     {
       "name": "Notion",
       "slug": "notion",
       "description": "An all-in-one workspace combining documents, databases, project tracking, and team knowledge.",
       "best_for": "Smaller teams wanting a lighter-weight workspace",
-      "strengths": ["Flexible pages", "Databases", "Templates"]
+      "strengths": [
+        "Flexible pages",
+        "Databases",
+        "Templates"
+      ]
     },
     {
       "name": "GitBook",
       "slug": "gitbook",
       "description": "A documentation platform for building and maintaining technical or product documentation, kept in sync with code.",
       "best_for": "Teams publishing developer-facing documentation",
-      "strengths": ["Git Sync", "AI-assisted docs", "Access controls"]
+      "strengths": [
+        "Git Sync",
+        "AI-assisted docs",
+        "Access controls"
+      ]
     }
-  ]
+  ],
+  "order": 26
 }

@@ -4,7 +4,10 @@
   "category": "automation",
   "description": "n8n is a workflow automation platform aimed at technical users, combining a visual drag-and-drop canvas with the option to drop into custom code, used for both app-to-app automation and building AI agents.",
   "website": "https://n8n.io",
-  "platforms": ["Web (n8n.cloud)", "Self-hosted via Docker, npm, or Kubernetes"],
+  "platforms": [
+    "Web (n8n.cloud)",
+    "Self-hosted via Docker, npm, or Kubernetes"
+  ],
   "best_for": "Positioned for technical teams — IT Ops, Security Operations, DevOps, and Sales — who want to automate processes while retaining full visibility and control, including via self-hosting.",
   "features": [
     "Visual workflow builder with inline custom code",
@@ -14,22 +17,34 @@
     "Human-in-the-loop approval steps",
     "Enterprise controls: SSO/SAML, audit logs, RBAC, Git-based deployment"
   ],
-  "order": 17,
-  "sources": ["https://n8n.io", "https://docs.n8n.io/deploy/host-n8n"],
+  "sources": [
+    "https://n8n.io",
+    "https://docs.n8n.io/deploy/host-n8n"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Zapier",
       "slug": "zapier",
       "description": "A no-code automation platform connecting thousands of apps through simple trigger-and-action workflows.",
       "best_for": "Non-technical teams wanting the simplest setup",
-      "strengths": ["Huge app catalog", "Simple setup", "Templates"]
+      "strengths": [
+        "Huge app catalog",
+        "Simple setup",
+        "Templates"
+      ]
     },
     {
       "name": "Make",
       "slug": "make",
       "description": "A visual automation platform where users build multi-step workflows connecting apps and AI models on a drag-and-drop canvas.",
       "best_for": "Teams wanting a visual, flowchart-style builder without self-hosting",
-      "strengths": ["Visual scenario builder", "Complex multi-step flows", "AI agent creation"]
+      "strengths": [
+        "Visual scenario builder",
+        "Complex multi-step flows",
+        "AI agent creation"
+      ]
     }
-  ]
+  ],
+  "order": 17
 }

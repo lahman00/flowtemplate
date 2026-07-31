@@ -12,22 +12,33 @@
     "Option to build via code or natural-language prompt",
     "Centralized management of automations across an organization"
   ],
-  "order": 16,
-  "sources": ["https://www.make.com/en"],
+  "sources": [
+    "https://www.make.com/en"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Zapier",
       "slug": "zapier",
       "description": "A no-code automation platform connecting thousands of apps through simple trigger-and-action workflows.",
       "best_for": "Teams wanting the widest app coverage and simplest setup",
-      "strengths": ["Huge app catalog", "Simple setup", "Templates"]
+      "strengths": [
+        "Huge app catalog",
+        "Simple setup",
+        "Templates"
+      ]
     },
     {
       "name": "n8n",
       "slug": "n8n",
       "description": "A workflow automation platform for technical users, combining a visual canvas with custom code and self-hosting options.",
       "best_for": "Technical teams that want full visibility and control, including self-hosting",
-      "strengths": ["Self-hostable", "Custom code steps", "Developer-oriented"]
+      "strengths": [
+        "Self-hostable",
+        "Custom code steps",
+        "Developer-oriented"
+      ]
     }
-  ]
+  ],
+  "order": 16
 }

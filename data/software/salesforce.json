@@ -4,7 +4,11 @@
   "category": "crm",
   "description": "Salesforce is a cloud-based CRM platform that centralizes customer data across sales, service, marketing, and IT so teams share one view of the customer, with AI layered in for automation and assistance.",
   "website": "https://www.salesforce.com/crm/",
-  "platforms": ["Web", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Salesforce markets itself for companies of any size wanting a single, AI-enabled platform unifying sales, service, marketing, and IT — from small businesses up through large enterprises.",
   "features": [
     "Contact, account, and opportunity management",
@@ -14,22 +18,34 @@
     "AI agents for autonomous task handling",
     "Extensive customization and third-party integrations"
   ],
-  "order": 13,
-  "sources": ["https://www.salesforce.com/crm/", "https://www.salesforce.com/products/mobile/"],
+  "sources": [
+    "https://www.salesforce.com/crm/",
+    "https://www.salesforce.com/products/mobile/"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "HubSpot",
       "slug": "hubspot",
       "description": "A CRM platform with a free tier covering contact, deal, and pipeline management alongside marketing and service tools.",
       "best_for": "Startups and small businesses that want to start free and scale up",
-      "strengths": ["Free tier", "Ease of setup", "Marketing/sales/service in one"]
+      "strengths": [
+        "Free tier",
+        "Ease of setup",
+        "Marketing/sales/service in one"
+      ]
     },
     {
       "name": "Pipedrive",
       "slug": "pipedrive",
       "description": "A sales-focused CRM built around a visual pipeline for tracking leads and deals.",
       "best_for": "Small to mid-sized sales teams wanting a simpler, sales-first tool",
-      "strengths": ["Visual pipeline", "Ease of use", "Sales automation"]
+      "strengths": [
+        "Visual pipeline",
+        "Ease of use",
+        "Sales automation"
+      ]
     }
-  ]
+  ],
+  "order": 13
 }

@@ -4,7 +4,14 @@
   "category": "communication",
   "description": "Discord organizes communities and teams around text channels, voice rooms, and real-time conversation.",
   "website": "https://discord.com",
-  "platforms": ["Windows", "macOS", "Linux", "iOS", "Android", "Web"],
+  "platforms": [
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android",
+    "Web"
+  ],
   "best_for": "Vendor positions it primarily for gaming communities and friend groups seeking a persistent, casual space rather than formal meetings.",
   "features": [
     "Custom emoji, stickers, soundboards, and avatars",
@@ -14,29 +21,45 @@
     "Integrated activities like watch-together and built-in games",
     "Cross-device sync across PC, phone, and console"
   ],
-  "order": 9,
-  "sources": ["https://discord.com", "https://discord.com/download"],
+  "sources": [
+    "https://discord.com",
+    "https://discord.com/download"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Slack",
       "slug": "slack",
       "description": "A workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
       "best_for": "Professional teams that need structured, searchable channels",
-      "strengths": ["Channels", "App integrations", "Searchable history"]
+      "strengths": [
+        "Channels",
+        "App integrations",
+        "Searchable history"
+      ]
     },
     {
       "name": "Microsoft Teams",
       "slug": "microsoft-teams",
       "description": "A communication and collaboration platform with chat, meetings, file sharing, and Microsoft 365 integration.",
       "best_for": "Organizations already using Microsoft 365",
-      "strengths": ["Video meetings", "Office integration", "File collaboration"]
+      "strengths": [
+        "Video meetings",
+        "Office integration",
+        "File collaboration"
+      ]
     },
     {
       "name": "Mattermost",
       "slug": "mattermost",
       "description": "A team messaging platform designed for organizations that need greater control over hosting and security.",
       "best_for": "Communities that want to self-host their chat platform",
-      "strengths": ["Self-hosting", "Security control", "Developer workflows"]
+      "strengths": [
+        "Self-hosting",
+        "Security control",
+        "Developer workflows"
+      ]
     }
-  ]
+  ],
+  "order": 9
 }

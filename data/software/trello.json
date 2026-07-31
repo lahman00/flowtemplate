@@ -4,7 +4,13 @@
   "category": "project-management",
   "description": "Trello organizes projects with boards, lists, and cards, making it easy to visualize work in progress.",
   "website": "https://trello.com",
-  "platforms": ["Web", "iOS", "Android", "macOS", "Windows"],
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "macOS",
+    "Windows"
+  ],
   "best_for": "Positioned for individuals and small teams first, scaling up to teams of around 100 and enterprise use cases.",
   "features": [
     "Boards, lists, and cards for Kanban-style tracking",
@@ -14,29 +20,46 @@
     "Due dates, checklists, and file attachments",
     "Inbox and calendar-based Planner view"
   ],
-  "order": 4,
-  "sources": ["https://trello.com", "https://trello.com/platforms", "https://trello.com/guide/trello-101"],
+  "sources": [
+    "https://trello.com",
+    "https://trello.com/platforms",
+    "https://trello.com/guide/trello-101"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Asana",
       "slug": "asana",
       "description": "A structured project-management platform with tasks, timelines, milestones, and reporting.",
       "best_for": "Teams managing more complex projects",
-      "strengths": ["Project structure", "Timelines", "Reporting"]
+      "strengths": [
+        "Project structure",
+        "Timelines",
+        "Reporting"
+      ]
     },
     {
       "name": "ClickUp",
       "slug": "clickup",
       "description": "An all-in-one work-management platform with tasks, dashboards, documents, and automations.",
       "best_for": "Teams needing more features and customization",
-      "strengths": ["Customization", "Dashboards", "Automation"]
+      "strengths": [
+        "Customization",
+        "Dashboards",
+        "Automation"
+      ]
     },
     {
       "name": "Notion",
       "slug": "notion",
       "description": "A flexible workspace combining documents, databases, project boards, and team knowledge.",
       "best_for": "Teams combining project tracking and documentation",
-      "strengths": ["Documents", "Databases", "Flexible workspaces"]
+      "strengths": [
+        "Documents",
+        "Databases",
+        "Flexible workspaces"
+      ]
     }
-  ]
+  ],
+  "order": 4
 }

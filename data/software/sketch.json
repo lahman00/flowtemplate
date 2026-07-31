@@ -4,7 +4,9 @@
   "category": "design",
   "description": "Sketch is a vector-based UI/UX design application for creating interface designs and interactive prototypes, with tools for developer handoff.",
   "website": "https://www.sketch.com",
-  "platforms": ["macOS"],
+  "platforms": [
+    "macOS"
+  ],
   "best_for": "Positioned for professional UI/UX designers, from independent freelancers to enterprise design teams.",
   "features": [
     "Nestable frames and flexible stack layouts for responsive design",
@@ -14,22 +16,33 @@
     "Free developer handoff and inspection tools",
     "Component libraries and frame presets"
   ],
-  "order": 20,
-  "sources": ["https://www.sketch.com"],
+  "sources": [
+    "https://www.sketch.com"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Figma",
       "slug": "figma",
       "description": "A browser- and desktop-based design tool for interface design, prototyping, and real-time collaboration.",
       "best_for": "Teams that need cross-platform access beyond macOS",
-      "strengths": ["Real-time collaboration", "Cross-platform", "Prototyping"]
+      "strengths": [
+        "Real-time collaboration",
+        "Cross-platform",
+        "Prototyping"
+      ]
     },
     {
       "name": "Canva",
       "slug": "canva",
       "description": "An online visual design platform letting non-designers create graphics, presentations, and print materials from templates.",
       "best_for": "Non-designers making marketing content quickly",
-      "strengths": ["Templates", "Ease of use", "Broad content types"]
+      "strengths": [
+        "Templates",
+        "Ease of use",
+        "Broad content types"
+      ]
     }
-  ]
+  ],
+  "order": 20
 }

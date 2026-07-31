@@ -4,7 +4,14 @@
   "category": "project-management",
   "description": "ClickUp is a project-management platform that combines tasks, documents, dashboards, goals, and automation.",
   "website": "https://clickup.com",
-  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Positioned for businesses of all sizes that want to consolidate several separate tools into one workspace.",
   "features": [
     "Task hierarchy across Spaces, Folders, and Lists",
@@ -14,29 +21,46 @@
     "Docs, wikis, and in-context chat tied to tasks",
     "AI features and third-party integrations"
   ],
-  "order": 3,
-  "sources": ["https://clickup.com", "https://clickup.com/download", "https://clickup.com/features"],
+  "sources": [
+    "https://clickup.com",
+    "https://clickup.com/download",
+    "https://clickup.com/features"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Asana",
       "slug": "asana",
       "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
       "best_for": "Teams wanting clear and structured project tracking",
-      "strengths": ["Timelines", "Task dependencies", "Team workflows"]
+      "strengths": [
+        "Timelines",
+        "Task dependencies",
+        "Team workflows"
+      ]
     },
     {
       "name": "Monday.com",
       "slug": "monday",
       "description": "A visual work-management platform with customizable boards, dashboards, and automations.",
       "best_for": "Teams that prefer visual workflow management",
-      "strengths": ["Custom boards", "Dashboards", "Automation"]
+      "strengths": [
+        "Custom boards",
+        "Dashboards",
+        "Automation"
+      ]
     },
     {
       "name": "Trello",
       "slug": "trello",
       "description": "A simple visual project-management tool based on boards, lists, and cards.",
       "best_for": "Small teams needing a simple workflow",
-      "strengths": ["Easy setup", "Kanban boards", "Low learning curve"]
+      "strengths": [
+        "Easy setup",
+        "Kanban boards",
+        "Low learning curve"
+      ]
     }
-  ]
+  ],
+  "order": 3
 }

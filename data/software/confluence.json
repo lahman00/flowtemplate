@@ -4,7 +4,11 @@
   "category": "knowledge-base",
   "description": "Confluence is Atlassian's team workspace for documentation, meeting notes, and internal knowledge shared across an organization.",
   "website": "https://www.atlassian.com/software/confluence",
-  "platforms": ["Web", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Positioned as a single source of truth for cross-functional and enterprise teams across departments like software development, HR, marketing, and product management.",
   "features": [
     "AI-assisted content creation and templates",
@@ -14,32 +18,45 @@
     "Role and department-specific templates",
     "Integrations with Jira, Figma, GitHub, Google Drive, Microsoft Teams"
   ],
-  "order": 7,
   "sources": [
     "https://www.atlassian.com/software/confluence",
     "https://www.atlassian.com/software/confluence/mobile-app"
   ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Notion",
       "slug": "notion",
       "description": "A flexible workspace combining documents, databases, project boards, and team knowledge.",
       "best_for": "Smaller teams wanting a lighter-weight, faster setup",
-      "strengths": ["Flexible pages", "Databases", "Templates"]
+      "strengths": [
+        "Flexible pages",
+        "Databases",
+        "Templates"
+      ]
     },
     {
       "name": "Coda",
       "slug": "coda",
       "description": "A collaborative document platform that combines text, tables, formulas, and app-like workflows.",
       "best_for": "Teams building custom internal tools on top of docs",
-      "strengths": ["Flexible documents", "Formulas", "Integrations"]
+      "strengths": [
+        "Flexible documents",
+        "Formulas",
+        "Integrations"
+      ]
     },
     {
       "name": "ClickUp",
       "slug": "clickup",
       "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
       "best_for": "Teams that want documentation and project tracking in one place",
-      "strengths": ["Task management", "Dashboards", "Automation"]
+      "strengths": [
+        "Task management",
+        "Dashboards",
+        "Automation"
+      ]
     }
-  ]
+  ],
+  "order": 7
 }

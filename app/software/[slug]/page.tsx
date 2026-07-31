@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check, ExternalLink, GitCompare, Scale } from "lucide-react";
+import { BookOpen, Check, ExternalLink, GitCompare, Scale } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
@@ -18,6 +18,7 @@ import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
 import { getRelatedSoftware } from "@/lib/related";
 import { getSoftwareCtaRel, getSoftwareCtaUrl } from "@/lib/monetization";
+import { formatIsoDate } from "@/lib/date";
 import {
   generateChoosingGuide,
   generateComparisonIntro,
@@ -195,6 +196,40 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
         </Card>
 
         <FaqSection items={faqItems} />
+
+        <Card className="mt-14">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-zinc-950">
+              <BookOpen className="h-5 w-5" strokeWidth={2.25} />
+            </span>
+            <h2 className="text-2xl font-semibold text-white">Sources</h2>
+          </div>
+
+          <p className="mt-4 max-w-3xl leading-7 text-zinc-400">
+            The facts on this page come from {software.name}&apos;s own official site, accessed{" "}
+            {formatIsoDate(software.accessedAt)}. See our{" "}
+            <Link href="/sources-policy" className="text-white underline underline-offset-4">
+              Sources Policy
+            </Link>{" "}
+            for how we handle sourcing.
+          </p>
+
+          <ul className="mt-4 space-y-2">
+            {software.sources.map((source) => (
+              <li key={source}>
+                <a
+                  href={source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-zinc-300 underline underline-offset-4 transition hover:text-white"
+                >
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                  {source}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Card>
 
         {relatedSoftware.length > 0 ? (
           <section className="mt-14">

@@ -43,6 +43,10 @@ export const softwareRawSchema = z.object({
   faq: z.array(faqItemRawSchema).optional(),
   tags: z.array(z.string().min(1)).optional(),
   sources: z.array(z.string().url()).min(1),
+  // Date the sources[] URLs above were fetched/verified, YYYY-MM-DD. Backs
+  // the Sources Policy page's "access dates are stored" claim — see
+  // docs/legal-and-trust.md.
+  accessed_at: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "must be YYYY-MM-DD"),
   order: z.number().int().optional(),
   // Phase 5 — monetization-ready architecture. Schema-supported, never
   // populated with fabricated data. See docs/monetization.md.

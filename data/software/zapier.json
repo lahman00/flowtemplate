@@ -12,22 +12,34 @@
     "Zapier Tables for lightweight data storage",
     "Governance and security controls for enterprise use"
   ],
-  "order": 15,
-  "sources": ["https://zapier.com", "https://zapier.com/features"],
+  "sources": [
+    "https://zapier.com",
+    "https://zapier.com/features"
+  ],
+  "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Make",
       "slug": "make",
       "description": "A visual automation platform where users build multi-step workflows connecting apps and AI models on a drag-and-drop canvas.",
       "best_for": "Teams wanting a more visual, flowchart-style automation builder",
-      "strengths": ["Visual scenario builder", "Complex multi-step flows", "AI agent creation"]
+      "strengths": [
+        "Visual scenario builder",
+        "Complex multi-step flows",
+        "AI agent creation"
+      ]
     },
     {
       "name": "n8n",
       "slug": "n8n",
       "description": "A workflow automation platform for technical users, combining a visual canvas with custom code and self-hosting options.",
       "best_for": "Technical teams that want full visibility and control, including self-hosting",
-      "strengths": ["Self-hostable", "Custom code steps", "Developer-oriented"]
+      "strengths": [
+        "Self-hostable",
+        "Custom code steps",
+        "Developer-oriented"
+      ]
     }
-  ]
+  ],
+  "order": 15
 }

@@ -37,6 +37,7 @@ export function mapSoftware(raw: SoftwareRaw): Software {
     faq: raw.faq,
     tags: raw.tags,
     sources: raw.sources,
+    accessedAt: raw.accessed_at,
     affiliateUrl: raw.affiliate_url,
     sponsored: raw.sponsored,
     featured: raw.featured,
