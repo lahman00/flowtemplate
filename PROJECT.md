@@ -1,10 +1,10 @@
 # Project
 
-Status: In development — legal & trust groundwork complete (Sprint 5)
+Status: In development — brand, analytics, and affiliate architecture complete (Sprint 6)
 
-Sprint: 5
+Sprint: 6
 
-Version: 0.5.0
+Version: 0.6.0
 
 ## What this is
 
@@ -39,15 +39,32 @@ handful of hand-written pages.
   Policy's "access dates are stored" claim is true rather than aspirational,
   and a visible Sources section on every software page. Footer reorganized
   into columns to hold 11 legal links without clutter.
+- **Sprint 6** — Brand, Domain & Revenue: every remaining hardcoded brand
+  string centralized into `lib/site.ts` (`SITE_NAME`/`SITE_TAGLINE`/
+  `SITE_DESCRIPTION`/`SITE_EMAIL`/`SITE_URL`/`SITE_THEME_COLOR`/
+  `SITE_VERSION`, the last sourced straight from `package.json`); real
+  generated favicon/app icon/Apple touch icon/OG image/Twitter image/web
+  manifest (all built from the same brand mark, not placeholders); an
+  analytics abstraction (Google Analytics/Plausible/PostHog/none, off by
+  default, env-var-only); a proper affiliate-link engine
+  (`lib/affiliate.ts`: `preferredUrl`, tracking params, disclosure flag)
+  replacing the earlier ad hoc CTA helper; reusable vendor-link blocks
+  (pricing/docs/support/integrations/status/community — none populated,
+  no invented URLs); and real, computed data-freshness stats (tool count,
+  category count, most recent source-verification date) surfacing in the
+  Footer, About, Editorial Policy, and Sources Policy pages instead of
+  hand-typed numbers.
 
 See `docs/` for full architecture documentation:
 
 - `docs/content-engine.md` — data model, schema, generators, sourcing policy
 - `docs/categories.md` — category system
 - `docs/comparison-engine.md` — the unrouted `/compare` architecture
-- `docs/monetization.md` — the unrouted monetization architecture
-- `docs/legal-and-trust.md` — the 9 new legal pages and what was verified
+- `docs/monetization.md` — the affiliate/sponsorship/vendor-links architecture
+- `docs/legal-and-trust.md` — the 9 legal pages and what was verified
   before each claim was written
+- `docs/brand-and-analytics.md` — brand centralization, generated visual
+  identity, and the analytics abstraction
 
 ## Rules that have held across every sprint
 

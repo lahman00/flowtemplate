@@ -5,15 +5,20 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { LegalContent } from "@/components/LegalContent";
 import { JsonLd } from "@/components/JsonLd";
 import { getBreadcrumbJsonLd } from "@/lib/structured-data";
-import { SITE_URL } from "@/lib/site";
+import { getDataFreshness } from "@/lib/freshness";
+import { formatIsoDate } from "@/lib/date";
+import { LEGAL_LAST_UPDATED } from "@/lib/legal";
+import { SITE_NAME, SITE_URL, SITE_VERSION } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Why Flowtemplate exists and how we choose which alternatives to compare.",
+  description: `Why ${SITE_NAME} exists and how we choose which alternatives to compare.`,
   alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
+  const freshness = getDataFreshness();
+
   return (
     <main className="flex-1 py-16 sm:py-20">
       <JsonLd
@@ -27,11 +32,12 @@ export default function AboutPage() {
         <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "About" }]} />
 
         <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-          About Flowtemplate
+          About {SITE_NAME}
         </h1>
+        <p className="mt-4 text-sm text-zinc-500">Last updated {LEGAL_LAST_UPDATED}</p>
 
         <p className="mt-6 text-lg leading-8 text-zinc-400">
-          Flowtemplate helps you figure out what to switch to before you actually switch —
+          {SITE_NAME} helps you figure out what to switch to before you actually switch —
           comparing the strongest alternatives to the software you already use, side by side.
         </p>
 
@@ -49,10 +55,30 @@ export default function AboutPage() {
               ),
             },
             {
+              heading: "Data freshness",
+              body: (
+                <>
+                  <p>
+                    {SITE_NAME} currently covers {freshness.softwareCount} software tools across{" "}
+                    {freshness.categoryCount} categories. Every entry cites at least one official
+                    source, last verified {formatIsoDate(freshness.latestAccessedAt)} — see our{" "}
+                    <Link
+                      href="/sources-policy"
+                      className="text-white underline underline-offset-4"
+                    >
+                      Sources Policy
+                    </Link>{" "}
+                    for how that works.
+                  </p>
+                  <p className="text-sm text-zinc-500">Site version {SITE_VERSION}.</p>
+                </>
+              ),
+            },
+            {
               heading: "Independence",
               body: (
                 <p>
-                  Flowtemplate is not affiliated with, sponsored by, or endorsed by any of the
+                  {SITE_NAME} is not affiliated with, sponsored by, or endorsed by any of the
                   software vendors named on this site. Product names, logos, and brands mentioned
                   here are the property of their respective owners.
                 </p>

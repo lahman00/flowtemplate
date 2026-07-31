@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { getDataFreshness } from "@/lib/freshness";
+import { formatIsoDate } from "@/lib/date";
+import { SITE_EMAIL, SITE_NAME, SITE_VERSION } from "@/lib/site";
 
 const TITLE = "Editorial Policy";
 const PATH = "/editorial-policy";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: "How Flowtemplate researches, structures, and maintains its comparisons.",
+  description: `How ${SITE_NAME} researches, structures, and maintains its comparisons.`,
   alternates: { canonical: PATH },
 };
 
 export default function EditorialPolicyPage() {
+  const freshness = getDataFreshness();
+
   return (
     <LegalPageLayout
       title={TITLE}
@@ -40,6 +44,17 @@ export default function EditorialPolicyPage() {
               before it can be published — required fields, valid category assignments, and
               working cross-references between tools are all checked automatically, and the
               site fails to build if any entry is invalid.
+            </p>
+          ),
+        },
+        {
+          heading: "Data freshness",
+          body: (
+            <p>
+              {SITE_NAME} currently covers {freshness.softwareCount} software tools across{" "}
+              {freshness.categoryCount} categories, all last verified{" "}
+              {formatIsoDate(freshness.latestAccessedAt)}. This page reflects site version{" "}
+              {SITE_VERSION}.
             </p>
           ),
         },
@@ -88,8 +103,8 @@ export default function EditorialPolicyPage() {
           body: (
             <p>
               Questions about this policy? Reach us at{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-4">
-                {CONTACT_EMAIL}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
+                {SITE_EMAIL}
               </a>{" "}
               or via the{" "}
               <Link href="/contact" className="text-white underline underline-offset-4">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Layers } from "lucide-react";
 import { Container } from "@/components/Container";
+import { SITE_NAME } from "@/lib/site";
 
 export function Navbar() {
   return (
@@ -10,7 +11,7 @@ export function Navbar() {
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-zinc-950">
             <Layers className="h-5 w-5" strokeWidth={2.5} />
           </span>
-          <span className="text-base font-bold tracking-tight text-white">Flowtemplate</span>
+          <span className="text-base font-bold tracking-tight text-white">{SITE_NAME}</span>
         </Link>
 
         <nav className="hidden items-center gap-8 text-sm font-medium text-zinc-400 sm:flex">

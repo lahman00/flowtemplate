@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { getDataFreshness } from "@/lib/freshness";
+import { formatIsoDate } from "@/lib/date";
+import { SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const TITLE = "Sources Policy";
 const PATH = "/sources-policy";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: "Where Flowtemplate's product facts come from, and what we intentionally leave out.",
+  description: `Where ${SITE_NAME}'s product facts come from, and what we intentionally leave out.`,
   alternates: { canonical: PATH },
 };
 
 export default function SourcesPolicyPage() {
+  const freshness = getDataFreshness();
+
   return (
     <LegalPageLayout
       title={TITLE}
@@ -54,10 +58,20 @@ export default function SourcesPolicyPage() {
           heading: "Access dates are stored",
           body: (
             <p>
-              Every entry records the date its sources were fetched and verified. This date
-              doesn&apos;t appear as a separate calendar on every page, but it&apos;s part of
-              the entry&apos;s underlying record and is one of the signals we use when deciding
-              an entry needs re-checking.
+              Every entry records the date its sources were fetched and verified, and that date
+              is shown right on the page next to the source links themselves — not hidden in the
+              underlying data. It&apos;s also one of the signals we use when deciding an entry
+              needs re-checking.
+            </p>
+          ),
+        },
+        {
+          heading: "Data freshness",
+          body: (
+            <p>
+              As of this page&apos;s last update, {freshness.softwareCount} software entries
+              across {freshness.categoryCount} categories have been verified, with the most
+              recent check on {formatIsoDate(freshness.latestAccessedAt)}.
             </p>
           ),
         },
@@ -92,8 +106,8 @@ export default function SourcesPolicyPage() {
           body: (
             <p>
               Questions about a specific source? Reach us at{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-4">
-                {CONTACT_EMAIL}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
+                {SITE_EMAIL}
               </a>{" "}
               or via the{" "}
               <Link href="/contact" className="text-white underline underline-offset-4">

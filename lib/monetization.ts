@@ -3,21 +3,12 @@ import { getAllSoftware } from "@/data/software";
 import { getPopularAlternatives } from "@/lib/related";
 
 /**
- * Phase 5 — monetization-ready architecture. Everything here is real,
- * functioning logic; none of it is switched on by fake data. No entry in
- * data/software currently sets affiliate_url, sponsored, or featured — see
- * docs/monetization.md.
+ * Phase 5 (Sprint 4) — monetization-ready architecture. Everything here is
+ * real, functioning logic; none of it is switched on by fake data. No
+ * entry in data/software currently sets sponsored or featured — see
+ * docs/monetization.md. Affiliate-link mechanics (CTA URL, tracking
+ * params, disclosure) live in lib/affiliate.ts.
  */
-
-/** The URL a "visit site" CTA should point to — the real affiliate link if one is configured, otherwise the plain official site. */
-export function getSoftwareCtaUrl(software: Software): string {
-  return software.affiliateUrl ?? software.website;
-}
-
-/** rel attribute for the CTA link. Only claims "sponsored" when an affiliate link is actually configured. */
-export function getSoftwareCtaRel(software: Software): string {
-  return software.affiliateUrl ? "sponsored noopener noreferrer" : "noopener noreferrer";
-}
 
 export function isSponsored(software: Software): boolean {
   return software.sponsored === true;

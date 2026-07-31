@@ -17,6 +17,16 @@ export type FaqItem = {
   answer: string;
 };
 
+/** Sprint 6 Phase 5 — vendor link blocks. All optional; none populated today. */
+export type VendorLinks = {
+  pricing?: string;
+  docs?: string;
+  support?: string;
+  integrations?: string;
+  status?: string;
+  community?: string;
+};
+
 export type Software = {
   name: string;
   slug: string;
@@ -42,4 +52,5 @@ export type Software = {
   affiliateUrl?: string;
   sponsored?: boolean;
   featured?: boolean;
+  links?: VendorLinks;
 };

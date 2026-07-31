@@ -13,6 +13,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+Optionally copy `.env.example` to `.env` to configure a canonical site URL,
+an analytics provider, or affiliate tracking — every variable is optional
+and the site works identically with none of them set.
+
 ## Scripts
 
 ```bash
@@ -39,15 +43,20 @@ data/
   software/*.json         One file per software entry (source of truth)
   categories/              Category definitions + loader
 lib/
+  site.ts                    Centralized brand constants (name, email, URL, theme color, version)
   generators.ts             Page copy generators (title, H1, FAQ, etc.)
   related.ts                 Related/same-category/popular utilities
   comparison.ts                /compare engine (built, not routed)
-  monetization.ts               Monetization-ready utilities (no live data)
-  structured-data.ts             JSON-LD builders
-  legal.ts                        Shared list of legal/trust pages (drives footer + sitemap)
+  affiliate.ts                  Affiliate-link engine (preferredUrl, tracking params, disclosure)
+  monetization.ts                Sponsored/featured/recommended utilities (no live data)
+  analytics.ts                    Analytics abstraction (GA/Plausible/PostHog/none, off by default)
+  freshness.ts                     Real computed data-freshness stats
+  structured-data.ts                JSON-LD builders
+  legal.ts                           Shared list of legal/trust pages (drives footer + sitemap)
 components/               Reusable UI components (incl. LegalPageLayout)
 scripts/validate-data.ts   Standalone data validator (npm run validate:data)
 docs/                      Architecture documentation
+.env.example               Every supported environment variable, all optional
 ```
 
 ## Data and sourcing policy
@@ -68,6 +77,17 @@ Accessibility Statement, Cookie Policy, Trademark Notice) — each written to
 match how the site actually operates today, not aspirational claims. No
 analytics/advertising/auth cookies are set, so there's no cookie banner.
 See [`docs/legal-and-trust.md`](docs/legal-and-trust.md).
+
+## Brand, analytics, and affiliate links
+
+Every brand string (name, tagline, email, theme color) is centralized in
+`lib/site.ts` — renaming the site means changing one file. Favicon, app
+icon, Apple touch icon, Open Graph image, Twitter image, and the web
+manifest are all generated at build time from that same brand mark, not
+static placeholder files. Analytics and affiliate tracking are both real,
+functioning code paths that are off by default and only activate through
+environment variables — see [`docs/brand-and-analytics.md`](docs/brand-and-analytics.md)
+and [`docs/monetization.md`](docs/monetization.md).
 
 ## Learn more
 

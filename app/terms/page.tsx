@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const TITLE = "Terms of Service";
 const PATH = "/terms";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: "The terms that apply to using Flowtemplate.",
+  description: `The terms that apply to using ${SITE_NAME}.`,
   alternates: { canonical: PATH },
 };
 
@@ -117,8 +117,8 @@ export default function TermsPage() {
           body: (
             <p>
               Questions about these terms? Reach us at{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-4">
-                {CONTACT_EMAIL}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
+                {SITE_EMAIL}
               </a>{" "}
               or via the{" "}
               <Link href="/contact" className="text-white underline underline-offset-4">

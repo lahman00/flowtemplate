@@ -14,10 +14,15 @@ import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ListingBadges } from "@/components/ListingBadges";
+import { VendorLinksBlock } from "@/components/VendorLinksBlock";
 import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
 import { getRelatedSoftware } from "@/lib/related";
-import { getSoftwareCtaRel, getSoftwareCtaUrl } from "@/lib/monetization";
+import {
+  getSoftwareCtaRel,
+  getSoftwareCtaUrl,
+  shouldShowAffiliateDisclosure,
+} from "@/lib/affiliate";
 import { formatIsoDate } from "@/lib/date";
 import {
   generateChoosingGuide,
@@ -162,6 +167,21 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
               Visit official site
               <ExternalLink className="h-4 w-4" />
             </ButtonLink>
+
+            {shouldShowAffiliateDisclosure(software) ? (
+              <p className="mt-3 text-center text-xs text-zinc-500">
+                This is an affiliate link. See our{" "}
+                <Link
+                  href="/affiliate-disclosure"
+                  className="underline underline-offset-4 hover:text-zinc-300"
+                >
+                  Affiliate Disclosure
+                </Link>
+                .
+              </p>
+            ) : null}
+
+            <VendorLinksBlock software={software} />
           </Card>
         </section>
 

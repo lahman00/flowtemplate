@@ -24,6 +24,19 @@ export const faqItemRawSchema = z.object({
   answer: z.string().min(1),
 });
 
+// Sprint 6 Phase 5 — vendor link blocks. All optional; official_url
+// (website) already exists as its own required field. None of these are
+// populated on any entry today — no URL is invented without a verified
+// official source. See docs/monetization.md.
+export const vendorLinksRawSchema = z.object({
+  pricing: z.string().url().optional(),
+  docs: z.string().url().optional(),
+  support: z.string().url().optional(),
+  integrations: z.string().url().optional(),
+  status: z.string().url().optional(),
+  community: z.string().url().optional(),
+});
+
 export const softwareRawSchema = z.object({
   name: z.string().min(1),
   slug: slugSchema,
@@ -53,9 +66,11 @@ export const softwareRawSchema = z.object({
   affiliate_url: z.string().url().optional(),
   sponsored: z.boolean().optional(),
   featured: z.boolean().optional(),
+  links: vendorLinksRawSchema.optional(),
 });
 
 export type AlternativeRaw = z.infer<typeof alternativeRawSchema>;
 export type PricingRaw = z.infer<typeof pricingRawSchema>;
 export type FaqItemRaw = z.infer<typeof faqItemRawSchema>;
+export type VendorLinksRaw = z.infer<typeof vendorLinksRawSchema>;
 export type SoftwareRaw = z.infer<typeof softwareRawSchema>;

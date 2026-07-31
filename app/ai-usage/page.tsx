@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const TITLE = "AI Usage Disclosure";
 const PATH = "/ai-usage";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: "The honest, current role automation and AI play in building and maintaining Flowtemplate.",
+  description: `The honest, current role automation and AI play in building and maintaining ${SITE_NAME}.`,
   alternates: { canonical: PATH },
 };
 
@@ -72,8 +72,8 @@ export default function AiUsagePage() {
           body: (
             <p>
               Questions about this disclosure? Reach us at{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-4">
-                {CONTACT_EMAIL}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
+                {SITE_EMAIL}
               </a>{" "}
               or via the{" "}
               <Link href="/contact" className="text-white underline underline-offset-4">

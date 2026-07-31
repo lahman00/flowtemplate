@@ -6,11 +6,11 @@ import { Card } from "@/components/Card";
 import { ButtonLink } from "@/components/ButtonLink";
 import { JsonLd } from "@/components/JsonLd";
 import { getBreadcrumbJsonLd } from "@/lib/structured-data";
-import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+import { SITE_EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with the Flowtemplate team.",
+  description: `Get in touch with the ${SITE_NAME} team.`,
   alternates: { canonical: "/contact" },
 };
 
@@ -43,11 +43,11 @@ export default function ContactPage() {
             </span>
             <div>
               <p className="text-sm text-zinc-500">Email us</p>
-              <p className="font-semibold text-white">{CONTACT_EMAIL}</p>
+              <p className="font-semibold text-white">{SITE_EMAIL}</p>
             </div>
           </div>
 
-          <ButtonLink href={`mailto:${CONTACT_EMAIL}`} variant="secondary">
+          <ButtonLink href={`mailto:${SITE_EMAIL}`} variant="secondary">
             Send an email
           </ButtonLink>
         </Card>

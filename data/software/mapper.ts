@@ -41,5 +41,15 @@ export function mapSoftware(raw: SoftwareRaw): Software {
     affiliateUrl: raw.affiliate_url,
     sponsored: raw.sponsored,
     featured: raw.featured,
+    links: raw.links
+      ? {
+          pricing: raw.links.pricing,
+          docs: raw.links.docs,
+          support: raw.links.support,
+          integrations: raw.links.integrations,
+          status: raw.links.status,
+          community: raw.links.community,
+        }
+      : undefined,
   };
 }

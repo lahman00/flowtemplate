@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const TITLE = "Trademark Notice";
 const PATH = "/trademark-notice";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: "Trademark ownership and non-affiliation notice for products listed on Flowtemplate.",
+  description: `Trademark ownership and non-affiliation notice for products listed on ${SITE_NAME}.`,
   alternates: { canonical: PATH },
 };
 
@@ -60,8 +60,8 @@ export default function TrademarkNoticePage() {
           body: (
             <p>
               Trademark owner with a concern about how your product is listed? Reach us at{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-4">
-                {CONTACT_EMAIL}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
+                {SITE_EMAIL}
               </a>{" "}
               or via the{" "}
               <Link href="/contact" className="text-white underline underline-offset-4">

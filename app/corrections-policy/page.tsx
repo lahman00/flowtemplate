@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const TITLE = "Corrections Policy";
 const PATH = "/corrections-policy";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: "How to report a factual error on Flowtemplate, and what happens next.",
+  description: `How to report a factual error on ${SITE_NAME}, and what happens next.`,
   alternates: { canonical: PATH },
 };
 
@@ -23,8 +23,8 @@ export default function CorrectionsPolicyPage() {
           body: (
             <p>
               Email{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-4">
-                {CONTACT_EMAIL}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
+                {SITE_EMAIL}
               </a>{" "}
               or use the{" "}
               <Link href="/contact" className="text-white underline underline-offset-4">

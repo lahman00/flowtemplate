@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Layers } from "lucide-react";
 import { Container } from "@/components/Container";
 import { LEGAL_PAGES } from "@/lib/legal";
-import { SITE_NAME } from "@/lib/site";
+import { SITE_NAME, SITE_TAGLINE, SITE_VERSION } from "@/lib/site";
+import { getDataFreshness } from "@/lib/freshness";
+import { formatIsoDate } from "@/lib/date";
 
 const productLinks = [
   { name: "How it works", href: "/#how-it-works" },
@@ -39,6 +41,8 @@ function FooterColumn({
 }
 
 export function Footer() {
+  const freshness = getDataFreshness();
+
   return (
     <footer className="border-t border-white/10">
       <Container className="py-14">
@@ -50,9 +54,7 @@ export function Footer() {
               </span>
               {SITE_NAME}
             </Link>
-            <p className="mt-4 max-w-[22ch] text-sm leading-6 text-zinc-500">
-              Software alternatives, compared honestly.
-            </p>
+            <p className="mt-4 max-w-[22ch] text-sm leading-6 text-zinc-500">{SITE_TAGLINE}</p>
           </div>
 
           <FooterColumn title="Product" links={productLinks} />
@@ -60,10 +62,14 @@ export function Footer() {
           <FooterColumn title="Legal & trust" links={LEGAL_PAGES} />
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8">
+        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-zinc-500">
             © {new Date().getFullYear()} {SITE_NAME} — independent comparisons, not affiliated
             with the listed brands.
+          </p>
+          <p className="text-xs text-zinc-600">
+            v{SITE_VERSION} · {freshness.softwareCount} tools across {freshness.categoryCount}{" "}
+            categories · sources last verified {formatIsoDate(freshness.latestAccessedAt)}
           </p>
         </div>
       </Container>

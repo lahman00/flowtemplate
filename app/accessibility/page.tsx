@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const TITLE = "Accessibility Statement";
 const PATH = "/accessibility";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: "Our accessibility goals for Flowtemplate, and how to report a barrier.",
+  description: `Our accessibility goals for ${SITE_NAME}, and how to report a barrier.`,
   alternates: { canonical: PATH },
 };
 
@@ -58,8 +58,8 @@ export default function AccessibilityPage() {
             <p>
               If you run into something on {SITE_NAME} that&apos;s hard to use with assistive
               technology, tell us — email{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-4">
-                {CONTACT_EMAIL}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
+                {SITE_EMAIL}
               </a>{" "}
               or use the{" "}
               <Link href="/contact" className="text-white underline underline-offset-4">
