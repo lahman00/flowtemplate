@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { SearchX } from "lucide-react";
 import { Container } from "@/components/Container";
 import { ButtonLink } from "@/components/ButtonLink";
+
+export const metadata: Metadata = {
+  title: "Software Not Found",
+};
 
 export default function SoftwareNotFound() {
   return (

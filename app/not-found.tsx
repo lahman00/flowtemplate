@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { Compass } from "lucide-react";
 import { Container } from "@/components/Container";
 import { ButtonLink } from "@/components/ButtonLink";
+
+export const metadata: Metadata = {
+  title: "Page Not Found",
+};
 
 export default function NotFound() {
   return (

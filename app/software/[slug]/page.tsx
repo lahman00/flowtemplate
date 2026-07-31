@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, GitCompare, Scale } from "lucide-react";
+import { GitCompare, Scale } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AlternativeCard } from "@/components/AlternativeCard";
+import { SoftwareCard } from "@/components/SoftwareCard";
 import { SearchForm } from "@/components/SearchForm";
 import { SectionHeading } from "@/components/SectionHeading";
+import { FaqSection } from "@/components/FaqSection";
+import { JsonLd } from "@/components/JsonLd";
 import { getAllSoftware, getSoftware } from "@/data/software";
+import { getSoftwareFaqItems } from "@/lib/faq";
+import {
+  getBreadcrumbJsonLd,
+  getFaqJsonLd,
+  getSoftwareApplicationJsonLd,
+} from "@/lib/structured-data";
+import { SITE_URL } from "@/lib/site";
 
 type SoftwarePageProps = {
   params: Promise<{
@@ -35,6 +45,7 @@ export async function generateMetadata({ params }: SoftwarePageProps): Promise<M
   return {
     title,
     description: software.description,
+    alternates: { canonical: `/software/${slug}` },
     openGraph: {
       title,
       description: software.description,
@@ -50,18 +61,28 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
     notFound();
   }
 
+  const directAlternativeSlugs = new Set(software.alternatives.map((alt) => alt.slug));
+  const relatedSoftware = getAllSoftware()
+    .filter((item) => item.slug !== software.slug && !directAlternativeSlugs.has(item.slug))
+    .slice(0, 3);
+
+  const faqItems = getSoftwareFaqItems(software);
+
   return (
     <main className="flex-1 py-16 sm:py-20">
-      <Container>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-white"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to search
-        </Link>
+      <JsonLd
+        data={getBreadcrumbJsonLd([
+          { name: "Home", url: SITE_URL },
+          { name: software.name, url: `${SITE_URL}/software/${software.slug}` },
+        ])}
+      />
+      <JsonLd data={getSoftwareApplicationJsonLd(software)} />
+      <JsonLd data={getFaqJsonLd(faqItems)} />
 
-        <header className="mt-10 max-w-3xl">
+      <Container>
+        <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: software.name }]} />
+
+        <header className="mt-6 max-w-3xl">
           <Badge>{software.category}</Badge>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-white sm:text-6xl">
@@ -109,6 +130,20 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
             existing data.
           </p>
         </Card>
+
+        <FaqSection items={faqItems} />
+
+        {relatedSoftware.length > 0 ? (
+          <section className="mt-14">
+            <SectionHeading eyebrow="Keep exploring" title="Compare other tools" />
+
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedSoftware.map((item) => (
+                <SoftwareCard key={item.slug} software={item} />
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className="mt-16 border-t border-white/10 pt-14 text-center">
           <SectionHeading

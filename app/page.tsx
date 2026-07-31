@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   Sparkles,
   LayoutGrid,
@@ -16,6 +17,10 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { FeatureCard } from "@/components/FeatureCard";
 import { SoftwareCard } from "@/components/SoftwareCard";
 import { getAllSoftware } from "@/data/software";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const allSoftware = getAllSoftware();
@@ -88,7 +93,7 @@ export default function Home() {
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm">
             <span className="text-zinc-500">Popular:</span>
             <PopularSearches
-              items={allSoftware.map((software) => ({
+              items={allSoftware.slice(0, 6).map((software) => ({
                 name: software.name,
                 slug: software.slug,
               }))}
