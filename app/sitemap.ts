@@ -3,6 +3,7 @@ import { SITE_URL } from "@/lib/site";
 import { LEGAL_PAGES } from "@/lib/legal";
 import { getAllSoftware } from "@/data/software";
 import { getAllCategories } from "@/data/categories";
+import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const softwarePages: MetadataRoute.Sitemap = getAllSoftware().map((software) => ({
@@ -16,6 +17,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly",
     priority: 0.7,
   }));
+
+  const comparisonPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/compare`, changeFrequency: "weekly", priority: 0.7 },
+    ...PUBLISHED_COMPARISONS.map(([slugA, slugB]) => ({
+      url: `${SITE_URL}/compare/${getComparisonSlug(slugA, slugB)}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+  ];
 
   // Every legal/trust page (Privacy, Terms, Disclaimer, Affiliate
   // Disclosure, Editorial Policy, Sources Policy, Corrections Policy, AI
@@ -34,5 +44,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.4 },
   ];
 
-  return [...staticPages, ...categoryPages, ...softwarePages, ...legalPages];
+  return [...staticPages, ...categoryPages, ...softwarePages, ...comparisonPages, ...legalPages];
 }

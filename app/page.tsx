@@ -8,6 +8,7 @@ import {
   Scale,
   CircleCheck,
 } from "lucide-react";
+import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Badge } from "@/components/Badge";
 import { SearchForm } from "@/components/SearchForm";
@@ -20,6 +21,7 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { getAllSoftware } from "@/data/software";
 import { getAllCategories } from "@/data/categories";
 import { getSoftwareByCategory } from "@/lib/related";
+import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -34,6 +36,14 @@ export default function Home() {
   ).size;
 
   const categoryCount = new Set(allSoftware.map((software) => software.category)).size;
+
+  const popularComparisons = PUBLISHED_COMPARISONS.slice(0, 6)
+    .map(([slugA, slugB]) => {
+      const softwareA = allSoftware.find((software) => software.slug === slugA);
+      const softwareB = allSoftware.find((software) => software.slug === slugB);
+      return softwareA && softwareB ? { softwareA, softwareB } : null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
   const stats = [
     { icon: LayoutGrid, value: String(allSoftware.length), label: "Tools covered" },
@@ -145,6 +155,36 @@ export default function Home() {
                 category={category}
                 count={getSoftwareByCategory(category.slug).length}
               />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section id="compare" className="scroll-mt-16 py-20 sm:py-28">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="Compare"
+              title="Popular head-to-head comparisons"
+              description="Side-by-side breakdowns of the tools people compare most."
+            />
+            <Link
+              href="/compare"
+              className="hidden shrink-0 text-sm font-medium text-zinc-400 transition hover:text-white sm:block"
+            >
+              View all comparisons →
+            </Link>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {popularComparisons.map(({ softwareA, softwareB }) => (
+              <Link
+                key={getComparisonSlug(softwareA.slug, softwareB.slug)}
+                href={`/compare/${getComparisonSlug(softwareA.slug, softwareB.slug)}`}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 text-center text-sm font-semibold text-white transition hover:border-white/25 hover:bg-white/[0.05]"
+              >
+                {softwareA.name} vs {softwareB.name}
+              </Link>
             ))}
           </div>
         </Container>

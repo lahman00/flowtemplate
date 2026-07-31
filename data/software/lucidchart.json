@@ -1,0 +1,36 @@
+{
+  "name": "Lucidchart",
+  "slug": "lucidchart",
+  "category": "design",
+  "description": "Lucidchart is an intelligent diagramming platform for creating diagrams with AI, data, and automation to visualize and optimize systems, processes, and organizational structures.",
+  "website": "https://lucid.co/lucidchart",
+  "platforms": ["Web"],
+  "best_for": "Positioned for enterprise teams across IT, engineering, product, project management, and operations who need to document and optimize processes, infrastructure, and technical systems.",
+  "features": [
+    "Lucid AI generates diagrams from text prompts",
+    "Data linking to Google Sheets, Excel, or CSV files",
+    "Conditional formatting to highlight patterns in data",
+    "Real-time collaboration on diagrams",
+    "Template library for processes, org charts, and technical diagrams",
+    "100+ integrations including Jira, Confluence, Slack, and Microsoft Teams"
+  ],
+  "order": 34,
+  "sources": ["https://lucid.co/lucidchart"],
+  "accessed_at": "2026-07-31",
+  "alternatives": [
+    {
+      "name": "Miro",
+      "slug": "miro",
+      "description": "A visual collaboration platform with an infinite multiplayer canvas for research, planning, and product development.",
+      "best_for": "Teams wanting open-ended whiteboarding alongside structured diagrams",
+      "strengths": ["Infinite canvas", "AI workflows", "250+ integrations"]
+    },
+    {
+      "name": "Figma",
+      "slug": "figma",
+      "description": "A browser- and desktop-based design tool for interface design, prototyping, and real-time collaboration.",
+      "best_for": "Teams that need diagramming alongside actual UI design work",
+      "strengths": ["Real-time collaboration", "Design tools", "Prototyping"]
+    }
+  ]
+}

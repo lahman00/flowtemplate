@@ -1,0 +1,340 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Ban, Check, ExternalLink, Scale, ThumbsUp, Users } from "lucide-react";
+import { Container } from "@/components/Container";
+import { Card } from "@/components/Card";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { ComparisonTable } from "@/components/ComparisonTable";
+import { SectionHeading } from "@/components/SectionHeading";
+import { SoftwareCard } from "@/components/SoftwareCard";
+import { JsonLd } from "@/components/JsonLd";
+import { SearchForm } from "@/components/SearchForm";
+import { getSoftware } from "@/data/software";
+import {
+  PUBLISHED_COMPARISONS,
+  getComparisonSlug,
+  getComparisonsInvolving,
+  isPublishedComparison,
+} from "@/data/comparisons";
+import {
+  CONS_DISCLOSURE,
+  generateProsList,
+  getComparisonBySlug,
+  type ComparisonData,
+} from "@/lib/comparison";
+import { getRelatedSoftware } from "@/lib/related";
+import { getBreadcrumbJsonLd, getComparisonJsonLd } from "@/lib/structured-data";
+import { SITE_URL } from "@/lib/site";
+
+type ComparePageProps = {
+  params: Promise<{ comparison: string }>;
+};
+
+// Only ever render the curated set below — a valid-but-uncurated pair
+// (e.g. two real software slugs that just happen to parse) must 404, not
+// render on demand. Task 3 is explicit: publish exactly 20, not every
+// combination.
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return PUBLISHED_COMPARISONS.map(([slugA, slugB]) => ({
+    comparison: getComparisonSlug(slugA, slugB),
+  }));
+}
+
+function resolvePublishedComparison(comparison: string): ComparisonData | null {
+  const data = getComparisonBySlug(comparison);
+  if (!data) {
+    return null;
+  }
+  if (!isPublishedComparison(data.softwareA.slug, data.softwareB.slug)) {
+    return null;
+  }
+  return data;
+}
+
+export async function generateMetadata({ params }: ComparePageProps): Promise<Metadata> {
+  const { comparison } = await params;
+  const data = resolvePublishedComparison(comparison);
+
+  if (!data) {
+    return { title: "Comparison not found" };
+  }
+
+  return {
+    title: data.title,
+    description: data.metaDescription,
+    alternates: { canonical: `/compare/${comparison}` },
+    openGraph: {
+      title: data.title,
+      description: data.metaDescription,
+    },
+  };
+}
+
+export default async function ComparePage({ params }: ComparePageProps) {
+  const { comparison } = await params;
+  const data = resolvePublishedComparison(comparison);
+
+  if (!data) {
+    notFound();
+  }
+
+  const { softwareA, softwareB } = data;
+
+  const relatedComparisons = [
+    ...getComparisonsInvolving(softwareA.slug),
+    ...getComparisonsInvolving(softwareB.slug),
+  ].filter(
+    ([a, b]) =>
+      !(
+        (a === softwareA.slug && b === softwareB.slug) ||
+        (a === softwareB.slug && b === softwareA.slug)
+      )
+  );
+  const uniqueRelatedComparisons = Array.from(
+    new Map(relatedComparisons.map((pair) => [getComparisonSlug(pair[0], pair[1]), pair])).values()
+  ).slice(0, 4);
+
+  const excludeSlugs = new Set([softwareA.slug, softwareB.slug]);
+  const relatedSoftware = [...getRelatedSoftware(softwareA, 3), ...getRelatedSoftware(softwareB, 3)]
+    .filter((item) => !excludeSlugs.has(item.slug))
+    .filter((item, index, all) => all.findIndex((other) => other.slug === item.slug) === index)
+    .slice(0, 3);
+
+  return (
+    <main className="flex-1 py-16 sm:py-20">
+      <JsonLd
+        data={getBreadcrumbJsonLd([
+          { name: "Home", url: SITE_URL },
+          { name: "Compare", url: `${SITE_URL}/compare` },
+          { name: data.title, url: `${SITE_URL}/compare/${comparison}` },
+        ])}
+      />
+      <JsonLd data={getComparisonJsonLd(softwareA, softwareB)} />
+
+      <Container>
+        <Breadcrumbs
+          items={[
+            { name: "Home", href: "/" },
+            { name: "Compare", href: "/compare" },
+            { name: data.title },
+          ]}
+        />
+
+        <header className="mt-6 max-w-3xl">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+            {data.title}
+          </h1>
+          <p className="mt-6 text-lg leading-8 text-zinc-400">{data.intro}</p>
+        </header>
+
+        <section className="mt-14">
+          <SectionHeading title="Side-by-side summary" />
+          <div className="mt-8">
+            <ComparisonTable data={data} />
+          </div>
+        </section>
+
+        <section className="mt-14 grid gap-6 sm:grid-cols-2">
+          <Card>
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-zinc-950">
+                <Users className="h-5 w-5" strokeWidth={2.25} />
+              </span>
+              <h2 className="text-lg font-semibold text-white">Best for {softwareA.name}</h2>
+            </div>
+            <p className="mt-4 leading-7 text-zinc-400">{softwareA.bestFor}</p>
+          </Card>
+          <Card>
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-zinc-950">
+                <Users className="h-5 w-5" strokeWidth={2.25} />
+              </span>
+              <h2 className="text-lg font-semibold text-white">Best for {softwareB.name}</h2>
+            </div>
+            <p className="mt-4 leading-7 text-zinc-400">{softwareB.bestFor}</p>
+          </Card>
+        </section>
+
+        <section className="mt-14">
+          <SectionHeading
+            title="Feature comparison"
+            description="Every feature listed here comes directly from each vendor's own official site."
+          />
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            {[softwareA, softwareB].map((software) => (
+              <Card key={software.slug}>
+                <h3 className="text-lg font-semibold text-white">{software.name}</h3>
+                <ul className="mt-4 space-y-2">
+                  {software.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2 text-sm text-zinc-300">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-zinc-500" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-14">
+          <SectionHeading title="Pros and cons" />
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            {[softwareA, softwareB].map((software) => (
+              <Card key={software.slug}>
+                <h3 className="text-lg font-semibold text-white">{software.name}</h3>
+                <div className="mt-4 flex items-center gap-2 text-sm font-medium text-zinc-300">
+                  <ThumbsUp className="h-4 w-4 text-zinc-500" />
+                  Pros
+                </div>
+                <ul className="mt-2 space-y-2">
+                  {generateProsList(software).map((pro) => (
+                    <li key={pro} className="flex items-start gap-2 text-sm text-zinc-400">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-zinc-600" />
+                      {pro}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex items-center gap-2 text-sm font-medium text-zinc-300">
+                  <Ban className="h-4 w-4 text-zinc-500" />
+                  Cons
+                </div>
+                <p className="mt-2 text-sm leading-6 text-zinc-500">{CONS_DISCLOSURE}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <Card className="mt-14">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-zinc-950">
+              <Scale className="h-5 w-5" strokeWidth={2.25} />
+            </span>
+            <h2 className="text-2xl font-semibold text-white">Key differences</h2>
+          </div>
+          {data.keyDifferences.length > 0 ? (
+            <ul className="mt-4 space-y-3">
+              {data.keyDifferences.map((difference) => (
+                <li key={difference} className="flex items-start gap-2 text-zinc-400">
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-600" />
+                  <span className="leading-7">{difference}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 leading-7 text-zinc-400">
+              {softwareA.name} and {softwareB.name} list similar stated features and platforms —
+              the difference likely comes down to workflow fit rather than raw capability.
+            </p>
+          )}
+        </Card>
+
+        <section className="mt-14 grid gap-6 sm:grid-cols-2">
+          <Card>
+            <h2 className="text-lg font-semibold text-white">Choose {softwareA.name} if…</h2>
+            <p className="mt-4 leading-7 text-zinc-400">{data.whoShouldChooseA}</p>
+          </Card>
+          <Card>
+            <h2 className="text-lg font-semibold text-white">Choose {softwareB.name} if…</h2>
+            <p className="mt-4 leading-7 text-zinc-400">{data.whoShouldChooseB}</p>
+          </Card>
+        </section>
+
+        <Card className="mt-14 border-amber-500/20 bg-amber-500/[0.03]">
+          <p className="text-sm leading-7 text-zinc-400">
+            Facts on this page are sourced from each vendor&apos;s official site (linked below),
+            not from ratings or reviews. Products change — verify anything that matters to your
+            decision directly on the vendor&apos;s own site before switching. See our{" "}
+            <Link href="/disclaimer" className="text-white underline underline-offset-4">
+              Disclaimer
+            </Link>{" "}
+            and{" "}
+            <Link href="/sources-policy" className="text-white underline underline-offset-4">
+              Sources Policy
+            </Link>
+            .
+          </p>
+        </Card>
+
+        <section className="mt-14 grid gap-6 sm:grid-cols-2">
+          {[softwareA, softwareB].map((software) => (
+            <Card key={software.slug}>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+                {software.name} sources
+              </h3>
+              <ul className="mt-3 space-y-2">
+                {software.sources.map((source) => (
+                  <li key={source}>
+                    <a
+                      href={source}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-zinc-300 underline underline-offset-4 transition hover:text-white"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                      {source}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={`/software/${software.slug}`}
+                className="mt-4 inline-block text-sm text-white underline underline-offset-4"
+              >
+                Full {software.name} comparison page
+              </Link>
+            </Card>
+          ))}
+        </section>
+
+        {relatedSoftware.length > 0 ? (
+          <section className="mt-14">
+            <SectionHeading eyebrow="Keep exploring" title="Related software" />
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedSoftware.map((software) => (
+                <SoftwareCard key={software.slug} software={software} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {uniqueRelatedComparisons.length > 0 ? (
+          <section className="mt-14">
+            <SectionHeading eyebrow="Keep exploring" title="Related comparisons" />
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {uniqueRelatedComparisons.map(([slugA, slugB]) => {
+                const relSoftwareA = getSoftware(slugA);
+                const relSoftwareB = getSoftware(slugB);
+                if (!relSoftwareA || !relSoftwareB) return null;
+
+                return (
+                  <Link
+                    key={getComparisonSlug(slugA, slugB)}
+                    href={`/compare/${getComparisonSlug(slugA, slugB)}`}
+                    className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm font-medium text-zinc-300 transition hover:border-white/25 hover:text-white"
+                  >
+                    {relSoftwareA.name} vs {relSoftwareB.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        <section className="mt-16 border-t border-white/10 pt-14 text-center">
+          <SectionHeading
+            align="center"
+            title="Comparing something else?"
+            description="Search any software by name to see its alternatives."
+          />
+          <div className="mx-auto mt-8 max-w-2xl">
+            <SearchForm />
+          </div>
+        </section>
+      </Container>
+    </main>
+  );
+}

@@ -3,9 +3,10 @@ import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
 
 /**
- * Reusable engine for a future /compare/[softwareA]-vs-[softwareB] route.
- * Deliberately not wired into any page or route yet — this is architecture,
- * not a feature (see docs/comparison-engine.md).
+ * Comparison engine backing /compare/[comparison] (Sprint 7). Built in
+ * Sprint 3/4/6 ahead of routing; see docs/comparison-engine.md for the
+ * curated-pairs policy (data/comparisons.ts) that decides which pairs
+ * actually get a page.
  */
 
 export type ComparisonRow = {
@@ -19,8 +20,11 @@ export type ComparisonData = {
   softwareB: Software;
   title: string;
   metaDescription: string;
+  intro: string;
   rows: ComparisonRow[];
   keyDifferences: string[];
+  whoShouldChooseA: string;
+  whoShouldChooseB: string;
 };
 
 export function generateComparisonSlug(softwareA: Software, softwareB: Software): string {
@@ -64,6 +68,30 @@ export function generateComparisonMetaDescription(
   softwareB: Software
 ): string {
   return `Compare ${softwareA.name} and ${softwareB.name} side by side — category, core strengths, and which one fits your workflow.`;
+}
+
+/** Factual, grounded intro — states what's being compared and why, nothing evaluative. */
+export function generateComparisonIntro(softwareA: Software, softwareB: Software): string {
+  return `${softwareA.name} and ${softwareB.name} are both ${getCategoryName(softwareA.category) === getCategoryName(softwareB.category) ? getCategoryName(softwareA.category).toLowerCase() : "tools people compare when choosing between " + getCategoryName(softwareA.category).toLowerCase() + " and " + getCategoryName(softwareB.category).toLowerCase()} options. Here's how they compare on official platforms, features, and positioning — sourced from each vendor's own site, not from ratings or reviews.`;
+}
+
+/**
+ * "Pros" reuses each product's own stated features — real, sourced
+ * capabilities, not editorial praise. There is no "cons" generator: this
+ * dataset deliberately doesn't store unverified weaknesses (see
+ * docs/content-engine.md), so instead of inventing them, every comparison
+ * page shows an honest disclosure in place of a cons list.
+ */
+export function generateProsList(software: Software): string[] {
+  return software.features;
+}
+
+export const CONS_DISCLOSURE =
+  "We don't publish a \"cons\" list for either product. No vendor's official site documents its own product's weaknesses, so there's no sourced basis for one — and we'd rather say that plainly than invent one.";
+
+/** Grounded in the vendor's own stated positioning (best_for) — never an independent editorial judgment. */
+export function generateWhoShouldChoose(software: Software): string {
+  return `Choose ${software.name} if this matches your situation: ${software.bestFor.charAt(0).toLowerCase()}${software.bestFor.slice(1)}`;
 }
 
 function formatList(values: string[] | undefined): string {
@@ -145,8 +173,11 @@ export function generateComparisonData(softwareA: Software, softwareB: Software)
     softwareB,
     title: generateComparisonTitle(softwareA, softwareB),
     metaDescription: generateComparisonMetaDescription(softwareA, softwareB),
+    intro: generateComparisonIntro(softwareA, softwareB),
     rows: generateComparisonRows(softwareA, softwareB),
     keyDifferences: generateKeyDifferences(softwareA, softwareB),
+    whoShouldChooseA: generateWhoShouldChoose(softwareA),
+    whoShouldChooseB: generateWhoShouldChoose(softwareB),
   };
 }
 

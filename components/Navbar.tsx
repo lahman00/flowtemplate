@@ -24,6 +24,9 @@ export function Navbar() {
           <Link href="/#browse" className="transition hover:text-white">
             Browse
           </Link>
+          <Link href="/compare" className="transition hover:text-white">
+            Compare
+          </Link>
         </nav>
 
         <Link

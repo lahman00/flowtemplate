@@ -18,6 +18,7 @@ import { VendorLinksBlock } from "@/components/VendorLinksBlock";
 import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
 import { getRelatedSoftware } from "@/lib/related";
+import { getComparisonSlug, getComparisonsInvolving } from "@/data/comparisons";
 import {
   getSoftwareCtaRel,
   getSoftwareCtaUrl,
@@ -86,6 +87,13 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
 
   const relatedSoftware = getRelatedSoftware(software, 3);
   const faqItems = generateFaq(software);
+  const comparisons = getComparisonsInvolving(software.slug)
+    .map(([slugA, slugB]) => {
+      const softwareA = getSoftware(slugA);
+      const softwareB = getSoftware(slugB);
+      return softwareA && softwareB ? { softwareA, softwareB } : null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
   return (
     <main className="flex-1 py-16 sm:py-20">
@@ -250,6 +258,23 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
             ))}
           </ul>
         </Card>
+
+        {comparisons.length > 0 ? (
+          <section className="mt-14">
+            <SectionHeading eyebrow="Head-to-head" title={`${software.name} comparisons`} />
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {comparisons.map(({ softwareA, softwareB }) => (
+                <Link
+                  key={getComparisonSlug(softwareA.slug, softwareB.slug)}
+                  href={`/compare/${getComparisonSlug(softwareA.slug, softwareB.slug)}`}
+                  className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm font-medium text-zinc-300 transition hover:border-white/25 hover:text-white"
+                >
+                  {softwareA.name} vs {softwareB.name}
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {relatedSoftware.length > 0 ? (
           <section className="mt-14">

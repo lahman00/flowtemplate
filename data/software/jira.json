@@ -1,0 +1,45 @@
+{
+  "name": "Jira",
+  "slug": "jira",
+  "category": "project-management",
+  "description": "Jira is Atlassian's project-management platform for planning, tracking, and delivering work across the software development lifecycle.",
+  "website": "https://www.atlassian.com/software/jira",
+  "best_for": "Positioned for teams working across the software development lifecycle who want to align work to goals and coordinate across engineering, product, and marketing.",
+  "features": [
+    "Align work to goals across cross-functional teams",
+    "Break down projects into tasks with AI-powered assignment",
+    "Track work across boards, lists, timelines, and calendars",
+    "Manage dependencies across initiatives",
+    "Automate workflows integrated with your existing tech stack",
+    "AI-assisted real-time status reporting"
+  ],
+  "order": 31,
+  "sources": [
+    "https://www.atlassian.com/software/jira",
+    "https://www.atlassian.com/software/jira/features"
+  ],
+  "accessed_at": "2026-07-31",
+  "alternatives": [
+    {
+      "name": "Linear",
+      "slug": "linear",
+      "description": "A product development system combining issue tracking, planning, and AI agent collaboration.",
+      "best_for": "Teams wanting a faster, more opinionated issue tracker",
+      "strengths": ["Fast interface", "AI-native workflows", "Visual roadmaps"]
+    },
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
+      "best_for": "Teams wanting a more general-purpose work-management tool",
+      "strengths": ["Work Graph", "Multiple views", "Cross-functional coordination"]
+    },
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams wanting an all-in-one workspace beyond issue tracking",
+      "strengths": ["Task hierarchy", "Dashboards", "Automation"]
+    }
+  ]
+}

@@ -10,6 +10,7 @@ const productLinks = [
   { name: "How it works", href: "/#how-it-works" },
   { name: "Categories", href: "/#categories" },
   { name: "Browse", href: "/#browse" },
+  { name: "Compare", href: "/compare" },
 ];
 
 const companyLinks = [

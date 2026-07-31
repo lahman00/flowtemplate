@@ -1,11 +1,7 @@
 import { Card } from "@/components/Card";
 import type { ComparisonData } from "@/lib/comparison";
 
-/**
- * Reusable head-to-head comparison block for the planned /compare/a-vs-b
- * route. Not imported by any page yet — prepared architecture only, per
- * Sprint 3 scope (build the generator/component, don't route it).
- */
+/** Head-to-head summary table, used by app/compare/[comparison]/page.tsx. */
 export function ComparisonTable({ data }: { data: ComparisonData }) {
   return (
     <Card>

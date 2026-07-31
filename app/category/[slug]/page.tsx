@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LayoutGrid } from "lucide-react";
 import { Container } from "@/components/Container";
@@ -7,9 +8,11 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { SoftwareCard } from "@/components/SoftwareCard";
 import { JsonLd } from "@/components/JsonLd";
 import { getAllCategories, getCategory } from "@/data/categories";
+import { getSoftware } from "@/data/software";
 import { getSoftwareByCategory } from "@/lib/related";
 import { getBreadcrumbJsonLd, getCategoryJsonLd } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/site";
+import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -49,6 +52,16 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const software = getSoftwareByCategory(category.slug);
+  const categorySlugs = new Set(software.map((item) => item.slug));
+  const comparisons = PUBLISHED_COMPARISONS.filter(
+    ([slugA, slugB]) => categorySlugs.has(slugA) || categorySlugs.has(slugB)
+  )
+    .map(([slugA, slugB]) => {
+      const softwareA = getSoftware(slugA);
+      const softwareB = getSoftware(slugB);
+      return softwareA && softwareB ? { softwareA, softwareB } : null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
   return (
     <main className="flex-1 py-16 sm:py-20">
@@ -86,6 +99,23 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             ))}
           </div>
         </section>
+
+        {comparisons.length > 0 ? (
+          <section className="mt-14">
+            <SectionHeading eyebrow="Head-to-head" title="Comparisons in this category" />
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {comparisons.map(({ softwareA, softwareB }) => (
+                <Link
+                  key={getComparisonSlug(softwareA.slug, softwareB.slug)}
+                  href={`/compare/${getComparisonSlug(softwareA.slug, softwareB.slug)}`}
+                  className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm font-medium text-zinc-300 transition hover:border-white/25 hover:text-white"
+                >
+                  {softwareA.name} vs {softwareB.name}
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </Container>
     </main>
   );

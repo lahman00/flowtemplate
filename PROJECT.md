@@ -1,10 +1,10 @@
 # Project
 
-Status: In development — brand, analytics, and affiliate architecture complete (Sprint 6)
+Status: In development — 20 comparison pages published (Sprint 7)
 
-Sprint: 6
+Sprint: 7
 
-Version: 0.6.0
+Version: 0.7.0
 
 ## What this is
 
@@ -54,12 +54,30 @@ handful of hand-written pages.
   category count, most recent source-verification date) surfacing in the
   Footer, About, Editorial Policy, and Sources Policy pages instead of
   hand-typed numbers.
+- **Sprint 7** — Launch the Comparison Pages: routed `/compare/[a]-vs-[b]`
+  for a curated set of exactly 20 pairs (`data/comparisons.ts`), each
+  built entirely from fields already in the dataset — side-by-side
+  summary, best-for, feature comparison, pros/cons (with an honest
+  disclosure standing in for an invented cons list), key differences,
+  who-should-choose-which, official-source links, related software, and
+  related comparisons. Closed a real data gap first: Jira, Linear, Miro,
+  and Lucidchart didn't exist yet but were named in the required pair
+  list, so they were researched and added from official sources the same
+  way Sprint 4 grew the dataset — not fabricated to fit the list.
+  `dynamicParams = false` plus an in-component published-pair check means
+  a valid-but-uncurated pair (two real software slugs) 404s instead of
+  rendering on demand. Added a `/compare` index page, comparison URLs in
+  the sitemap, `BreadcrumbList` + ratings-free `ItemList` JSON-LD, related-
+  comparison links from software/category pages and the homepage, a
+  Compare link in the navbar and footer, and comparison-pair checks
+  (broken references, self-comparisons, duplicate pairs) in
+  `npm run validate:data`.
 
 See `docs/` for full architecture documentation:
 
 - `docs/content-engine.md` — data model, schema, generators, sourcing policy
 - `docs/categories.md` — category system
-- `docs/comparison-engine.md` — the unrouted `/compare` architecture
+- `docs/comparison-engine.md` — the `/compare` architecture and curated-pairs policy
 - `docs/monetization.md` — the affiliate/sponsorship/vendor-links architecture
 - `docs/legal-and-trust.md` — the 9 legal pages and what was verified
   before each claim was written

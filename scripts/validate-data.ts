@@ -1,5 +1,6 @@
 import { getAllSoftware } from "@/data/software";
 import { getAllCategories } from "@/data/categories";
+import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 
 type Problem = {
   scope: string;
@@ -109,13 +110,56 @@ function main() {
     }
   }
 
-  report(problems, software.length, categories.length);
+  // Comparison definitions (data/comparisons.ts): every pair must reference
+  // real software, contain two distinct products, and appear at most once —
+  // in either order — so /compare never has broken or duplicate routes.
+  const seenPairs = new Set<string>();
+  for (const [slugA, slugB] of PUBLISHED_COMPARISONS) {
+    const label = getComparisonSlug(slugA, slugB);
+
+    if (!knownSlugs.has(slugA)) {
+      problems.push({
+        scope: "comparisons",
+        message: `Comparison "${label}" references unknown software "${slugA}".`,
+      });
+    }
+    if (!knownSlugs.has(slugB)) {
+      problems.push({
+        scope: "comparisons",
+        message: `Comparison "${label}" references unknown software "${slugB}".`,
+      });
+    }
+    if (slugA === slugB) {
+      problems.push({
+        scope: "comparisons",
+        message: `Comparison "${label}" compares "${slugA}" with itself.`,
+      });
+    }
+
+    const canonicalKey = [slugA, slugB].sort().join("-vs-");
+    if (seenPairs.has(canonicalKey)) {
+      problems.push({
+        scope: "comparisons",
+        message: `Comparison "${label}" duplicates another published pair (same two products, either order).`,
+      });
+    }
+    seenPairs.add(canonicalKey);
+  }
+
+  report(problems, software.length, categories.length, PUBLISHED_COMPARISONS.length);
   process.exit(problems.length > 0 ? 1 : 0);
 }
 
-function report(problems: Problem[], softwareCount: number, categoryCount: number) {
+function report(
+  problems: Problem[],
+  softwareCount: number,
+  categoryCount: number,
+  comparisonCount = 0
+) {
   if (problems.length === 0) {
-    console.log(`✓ Data valid — ${softwareCount} software pages, ${categoryCount} categories, 0 problems.`);
+    console.log(
+      `✓ Data valid — ${softwareCount} software pages, ${categoryCount} categories, ${comparisonCount} comparisons, 0 problems.`
+    );
     return;
   }
 

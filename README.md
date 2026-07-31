@@ -36,17 +36,19 @@ categories, orphan category pages) without doing a full production build.
 app/                    Routes (App Router)
   software/[slug]/       One page per software entry
   category/[slug]/        One page per category
+  compare/                 /compare index + /compare/[a-vs-b] curated pairs
   about|contact|privacy|terms/
   affiliate-disclosure|disclaimer|editorial-policy|sources-policy|
   corrections-policy|ai-usage|accessibility|cookies|trademark-notice/
 data/
   software/*.json         One file per software entry (source of truth)
   categories/              Category definitions + loader
+  comparisons.ts            Curated list of published comparison pairs
 lib/
   site.ts                    Centralized brand constants (name, email, URL, theme color, version)
   generators.ts             Page copy generators (title, H1, FAQ, etc.)
   related.ts                 Related/same-category/popular utilities
-  comparison.ts                /compare engine (built, not routed)
+  comparison.ts                /compare engine, routed at /compare/[a]-vs-[b]
   affiliate.ts                  Affiliate-link engine (preferredUrl, tracking params, disclosure)
   monetization.ts                Sponsored/featured/recommended utilities (no live data)
   analytics.ts                    Analytics abstraction (GA/Plausible/PostHog/none, off by default)
@@ -68,6 +70,14 @@ verified source (pricing, founding date, parent company, pros/cons) are
 left unpopulated rather than guessed. See
 [`docs/content-engine.md`](docs/content-engine.md) for the full policy and
 schema.
+
+## Comparisons
+
+`/compare` lists a curated set of 20 head-to-head comparisons (not every
+possible pair — see `data/comparisons.ts`); each `/compare/[a]-vs-[b]` page
+is built entirely from fields already in the dataset, with an honest
+disclosure in place of an invented "cons" list. See
+[`docs/comparison-engine.md`](docs/comparison-engine.md).
 
 ## Legal and trust
 
