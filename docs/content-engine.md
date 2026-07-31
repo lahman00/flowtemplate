@@ -1,8 +1,14 @@
 # Content Engine
 
-How software data is stored, validated, and turned into pages — built to scale
-from 11 entries to thousands without changing how any existing page looks or
-routes.
+How software data is stored, validated, and turned into pages — built to
+scale from a handful of entries to thousands without changing how any
+existing page looks or routes.
+
+Updated in Sprint 4: the dataset grew from 11 to 30 entries, sourcing
+became mandatory, and the model gained `category` (cross-referenced against
+`data/categories`), `sources[]`, `website`, `platforms`, `features`, and
+monetization fields. See "Sourcing policy" below for exactly what changed
+and why some Phase 1 fields are still deliberately empty.
 
 ## Directory structure
 
@@ -14,7 +20,12 @@ data/software/
   index.ts              Loader: reads every *.json file, validates, sorts, caches
   notion.json
   slack.json
-  ...one file per software entry
+  ...one file per software entry (30 as of Sprint 4)
+
+data/categories/
+  schema.ts           Zod schema for categories.json
+  index.ts              Loader + getAllCategories/getCategory/getCategoryName
+  categories.json         The 8 canonical categories
 ```
 
 Each software entry lives in its own JSON file, named after its slug
@@ -34,27 +45,61 @@ is unaffected and keeps using the same field names as before.
 
 ## Schema (`data/software/schema.ts`)
 
-Required on every entry: `name`, `slug`, `category`, `description`,
-`alternatives` (at least one, each with `name`, `slug`, `description`,
-`best_for`, `strengths`).
+Required on every entry: `name`, `slug`, `category` (must match a slug in
+`data/categories`), `description`, `website`, `best_for`, `features`
+(at least one), `sources` (at least one URL), `alternatives` (at least one,
+each with `name`, `slug`, `description`, `best_for`, `strengths`).
 
-Optional, schema-supported but **not currently populated** on any entry:
-`website`, `logo`, `founded`, `company`, `pricing`, `platforms`, `best_for`
-(top-level), `pros`, `cons`, `features`, `faq`, `tags`. See "No invented
-data" below for why.
+Optional, schema-supported: `logo`, `founded`, `company`, `pricing`,
+`platforms`, `pros`, `cons`, `faq`, `tags`, `order`, plus the Phase 5
+monetization fields `affiliate_url`, `sponsored`, `featured` (see
+`docs/monetization.md`).
 
-`order` (optional number) controls display order across the homepage browse
-grid, the "Popular" pills, and the sitemap. Entries without an explicit
-`order` sort alphabetically by slug after every explicitly-ordered entry.
-The current 11 entries are numbered 1–11 to reproduce the exact order the
-hardcoded object literal used to produce, so migrating to this system changed
-zero visible output.
+`order` controls display order across the homepage browse grid, the
+"Popular" pills, and the sitemap. Entries without an explicit `order` sort
+alphabetically by slug after every explicitly-ordered entry. Entries 1–11
+reproduce the exact order the original hardcoded object literal used to
+produce; 12–30 are the Sprint 4 additions, grouped by category.
+
+## Sourcing policy — what's populated and why some fields aren't
+
+Sprint 4's rules were explicit: never invent facts, never fabricate
+pricing or ratings, always use official sources. Research for all 30
+entries was done by fetching each vendor's actual official site (via
+WebFetch/WebSearch), never from memory alone.
+
+**Populated, from official sources, for every entry:**
+`website`, `description` (paraphrased, not copied — copyright), `platforms`
+(only when the official site stated them; omitted, not guessed, otherwise),
+`features` (short phrases matching the vendor's own stated capabilities),
+`best_for` (the vendor's own positioning language), `sources` (the exact
+URLs fetched).
+
+**Deliberately left unpopulated on every entry, and why:**
+
+- **`pricing`** — not in Phase 1's field list, and pricing changes too
+  often for a fetched-today number to stay honest tomorrow.
+- **`cons`** — this is the one deliberate deviation from Phase 1's literal
+  field list. A vendor's own official site will never honestly publish its
+  product's weaknesses, so there is no official source `cons` could be
+  drawn from without it being independent editorial judgment — exactly the
+  kind of AI-generated claim the sprint's rules prohibit. `pros` was left
+  unpopulated for the same reason: without a paired, equally-sourced `cons`,
+  a `pros`-only list would be one-sided marketing framing.
+- **`founded`, `company`, `logo`** — no verified source consulted for these
+  specifically; left blank rather than guessed from general knowledge.
+
+One caveat on sourcing quality: Salesforce's main domain blocked automated
+fetching (HTTP 403), so that entry is sourced via search-result snippets
+that quote the same official `salesforce.com` pages rather than a direct
+fetch — cited URLs are still the real official pages, but recorded here for
+transparency.
 
 ## Build-time validation (`data/software/index.ts`)
 
 Every JSON file is parsed and validated with Zod when the dataset is first
 loaded (during `generateStaticParams`, so this runs for the whole dataset up
-front, not lazily per page). Three things fail the build:
+front, not lazily per page). This fails the build:
 
 1. **Malformed JSON** — a parse error in any file.
 2. **Schema violations** — a missing required field, wrong type, or a slug
@@ -62,18 +107,33 @@ front, not lazily per page). Three things fail the build:
 3. **Filename/slug mismatch** — `notion.json`'s `slug` must be `"notion"`.
 4. **Dangling alternative references** — every `alternatives[].slug` must
    match a real file in `data/software/`. This is the exact class of bug
-   Sprint 2 found and fixed by hand (six "View X" buttons pointing at pages
-   that didn't exist); it can no longer happen silently.
+   Sprint 2 found and fixed by hand; it can no longer happen silently.
+5. **Unknown category** — every `category` must match a real slug in
+   `data/categories`.
 
-Verified directly: temporarily corrupting `notion.json` during this sprint's
-build made `npm run build` fail with a clear, itemized error message, then
-passed again once restored.
+Verified directly, twice: once in Sprint 3 (corrupted `notion.json`) and
+again in Sprint 4 (stripped `sources` and broke an alternative reference in
+`slack.json`) — both times `npm run build` and `npm run validate:data`
+failed with a specific, itemized error, then passed again once restored.
+
+Run `npm run validate:data` to run this same validation (plus a few extra
+checks — see below) without a full production build.
+
+## `npm run validate:data` (`scripts/validate-data.ts`)
+
+Reuses the loader's validation (above), then adds checks the loader
+doesn't already make structurally impossible:
+
+- Duplicate slugs (software and categories) — defense in depth.
+- Missing `sources`/`features` — redundant with the schema, reported by name.
+- Orphan categories — a category with zero software would be a real,
+  discoverable dead end at `/category/[slug]`.
 
 ## Generators (`lib/generators.ts`)
 
-Every piece of per-software copy on `/software/[slug]` is produced by one
-named function instead of being written inline in the page or duplicated
-between the page and `generateMetadata`:
+Every piece of per-software copy is produced by one named function instead
+of being written inline in a page or duplicated between the page and
+`generateMetadata`:
 
 | Generator | Used for |
 |---|---|
@@ -81,63 +141,47 @@ between the page and `generateMetadata`:
 | `generateH1` | The page's H1 |
 | `generateMetaDescription` | `<meta name="description">` / Open Graph |
 | `generateIntro` | The paragraph under the H1 |
+| `generateOverview` | The "About {name}" card body (description + best_for) |
+| `generateWhoShouldUseIt` | Built, not currently wired into the page |
+| `generateWhoShouldntUseIt` | Points to the real alternatives already on the page — never asserts an unverified weakness |
 | `generateComparisonIntro` | The "Top alternatives" section intro |
-| `generateFaq` | FAQ items (prefers `software.faq` if an entry ever supplies one, otherwise falls back to `lib/faq.ts`'s existing generated questions) |
-
-`generateH1` and `generateIntro` intentionally reproduce the exact strings
-the page rendered before this refactor — zero visible change. The meta
-description gained one extra sentence (invisible, not page UI) and the
-comparison-section intro became per-software instead of one generic sentence
-reused on all 11 pages — the one deliberate, minimal copy change made in this
-sprint, in direct service of "no duplicated strings, everything generated
-from the data."
+| `generateMigrationTips` | Generic, honest migration guidance |
+| `generateChoosingGuide` | The "How to choose" card, now data-driven off `platforms` |
+| `generateFaq` | FAQ items (prefers `software.faq` if an entry ever supplies one, otherwise falls back to `lib/faq.ts`) |
 
 ## Related-software utilities (`lib/related.ts`)
 
-- `getRelatedSoftware` — powers the existing "Compare other tools" section
-  (relocated from inline page logic, output unchanged).
-- `getSameCategorySoftware` — built and functional, not currently wired into
-  any page (would be a new UI section, out of scope for this sprint).
-- `getSamePricingSoftware`, `getSameCompanySizeSoftware` — built, but return
-  `[]` today because no entry has `pricing.model` populated and there's no
-  company-size field in the schema at all. They're not stubs pretending to
-  work; they're correctly returning "no match" because there's genuinely no
-  data yet.
+- `getRelatedSoftware` — powers the "Compare other tools" section.
+- `getSameCategorySoftware` — built and functional, not wired into the
+  software page (would duplicate the category page).
+- `getSoftwareByCategory` — powers `/category/[slug]`.
+- `getSamePricingSoftware`, `getSameCompanySizeSoftware` — built, return
+  `[]` today: no entry has `pricing.model` set, and there's no
+  company-size field in the schema at all. Not stubs pretending to work —
+  correctly reporting "no match" because there's genuinely no data yet.
 - `getPopularAlternatives` — "popular" is defined as *most often listed as
   another tool's alternative in this dataset*, a real number computed from
   our own data, not a fabricated rating or review count.
 
-## `/compare/a-vs-b` — prepared, not routed
+## `/compare/[a]-vs-[b]` — prepared, not routed
 
-Per this sprint's explicit instruction, no `/compare` route exists yet.
-`lib/comparison.ts` (title/meta-description/row generators) and
-`components/ComparisonTable.tsx` (the rendering block) are built and
-type-checked but not imported by any page. When a `/compare/[pair]` route is
-added later, it can import these directly instead of inventing the same
-logic again.
-
-## No invented data
-
-Per this sprint's explicit rule, nothing was fabricated. The schema was
-expanded to *support* `website`, `logo`, `founded`, `company`, `pricing`,
-`platforms`, top-level `best_for`, `pros`, `cons`, `features`, and `tags` —
-but every one of the 11 JSON files leaves those fields absent, because no
-verified source for that information exists in this project. Filling them in
-with real, sourced data is future work, not something this sprint did on its
-behalf.
+Per Sprint 4's explicit instruction ("do NOT generate every page, only
+build the reusable engine"), still no `/compare` route exists. See
+`docs/comparison-engine.md`.
 
 ## Adding a new software entry
 
-1. Create `data/software/<slug>.json` with at minimum `name`, `slug`,
-   `category`, `description`, and `alternatives` (each alternative needs
-   `name`, `slug`, `description`, `best_for`, `strengths`).
+1. Create `data/software/<slug>.json`. Required fields: `name`, `slug`,
+   `category` (a real category slug), `description`, `website`, `best_for`,
+   `features` (min 1), `sources` (min 1 URL), `alternatives` (min 1, each
+   needs `name`, `slug`, `description`, `best_for`, `strengths`).
 2. Every `alternatives[].slug` must correspond to another real file in this
-   directory (build-fails otherwise).
-3. Optionally set `order` to control where it appears relative to existing
-   entries; omit it to have it sort alphabetically after the ordered ones.
-4. Run `npm run build`. If the file is invalid, the build fails with a
-   specific, itemized reason.
+   directory.
+3. Optionally set `order`; omit it to sort alphabetically after the ordered
+   entries.
+4. Run `npm run validate:data` (fast) or `npm run build` (full). Either
+   fails with a specific, itemized reason if the file is invalid.
 
 No other code changes are needed — `generateStaticParams`, the sitemap, the
-homepage browse grid, and the FAQ/breadcrumb/SoftwareApplication JSON-LD all
-pick up new entries automatically.
+homepage browse/category grids, and the FAQ/breadcrumb/SoftwareApplication
+JSON-LD all pick up new entries automatically.

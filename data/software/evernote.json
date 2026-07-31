@@ -1,0 +1,42 @@
+{
+  "name": "Evernote",
+  "slug": "evernote",
+  "category": "productivity",
+  "description": "Evernote is a note-taking and organization app for capturing, structuring, and retrieving notes, documents, and web content, with tools for tasks, calendar linking, and team collaboration.",
+  "website": "https://evernote.com",
+  "platforms": ["Web", "macOS", "Windows", "iOS", "Android"],
+  "best_for": "Vendor copy targets general users organizing personal information, teams doing real-time collaborative work, students, and enterprise customers.",
+  "features": [
+    "Ready-made note templates",
+    "Notebooks and Spaces for organizing notes",
+    "Full-text and fast search across notes",
+    "Task management within notes",
+    "Calendar integration linking events to notes",
+    "Web Clipper for saving web content"
+  ],
+  "order": 28,
+  "sources": ["https://evernote.com", "https://evernote.com/download"],
+  "alternatives": [
+    {
+      "name": "Notion",
+      "slug": "notion",
+      "description": "An all-in-one workspace combining documents, databases, project tracking, and team knowledge.",
+      "best_for": "People who want databases and project tracking alongside notes",
+      "strengths": ["Flexible pages", "Databases", "Templates"]
+    },
+    {
+      "name": "Obsidian",
+      "slug": "obsidian",
+      "description": "A note-taking app that stores notes as local Markdown files and links them into a personal knowledge base.",
+      "best_for": "People who want local-first, privately owned notes",
+      "strengths": ["Local Markdown files", "Linked notes", "Plugin ecosystem"]
+    },
+    {
+      "name": "Coda",
+      "slug": "coda",
+      "description": "A collaborative document platform that combines text, tables, formulas, and app-like workflows.",
+      "best_for": "Teams wanting notes that grow into structured team tools",
+      "strengths": ["Flexible documents", "Formulas", "Integrations"]
+    }
+  ]
+}

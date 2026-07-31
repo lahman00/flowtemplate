@@ -1,0 +1,34 @@
+{
+  "name": "Calendly",
+  "slug": "calendly",
+  "category": "scheduling",
+  "description": "Calendly is a scheduling tool that connects to a user's calendar and lets them share a booking link so others can pick an open time slot without back-and-forth emails.",
+  "website": "https://calendly.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for solopreneurs up through large enterprises, with named use cases in sales, marketing, customer success, recruiting, and education.",
+  "features": [
+    "Connects and syncs up to six calendars for real-time availability",
+    "Customizable availability rules and buffer times",
+    "Integrates with Zoom, Microsoft Teams, Google Meet, and Webex",
+    "Multiple event types: one-on-one, collective, and round robin",
+    "AI meeting notetaker for recaps and action items"
+  ],
+  "order": 21,
+  "sources": ["https://calendly.com"],
+  "alternatives": [
+    {
+      "name": "Doodle",
+      "slug": "doodle",
+      "description": "A scheduling and coordination tool that finds a meeting time across a group's calendars via polls and booking pages.",
+      "best_for": "Coordinating a time across a group rather than one-on-one booking",
+      "strengths": ["Group polls", "Sign-up sheets", "Simple setup"]
+    },
+    {
+      "name": "Cal.com",
+      "slug": "cal-com",
+      "description": "An open, customizable scheduling platform where users share a booking link that syncs calendars and handles meeting logistics.",
+      "best_for": "Developers and teams wanting an open, customizable scheduling tool",
+      "strengths": ["Open source", "Developer-friendly", "Built-in video"]
+    }
+  ]
+}

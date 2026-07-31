@@ -1,9 +1,21 @@
 {
   "name": "Slack",
   "slug": "slack",
-  "category": "Team communication",
+  "category": "communication",
   "description": "Slack is a workplace communication platform built around channels, direct messages, integrations, and searchable conversations.",
+  "website": "https://slack.com",
+  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "best_for": "Positioned for teams and businesses across departments — engineering, sales, customer service, marketing, HR — looking to replace email-based workflows with organized, searchable communication.",
+  "features": [
+    "Channel-based messaging",
+    "Huddles (built-in audio/video meetings)",
+    "Slack AI summaries and recaps",
+    "Workflow Builder for no-code automation",
+    "Canvas collaborative documents",
+    "Third-party app integrations"
+  ],
   "order": 2,
+  "sources": ["https://slack.com", "https://slack.com/downloads", "https://slack.com/features"],
   "alternatives": [
     {
       "name": "Microsoft Teams",

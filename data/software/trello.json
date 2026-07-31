@@ -1,9 +1,21 @@
 {
   "name": "Trello",
   "slug": "trello",
-  "category": "Visual project management",
+  "category": "project-management",
   "description": "Trello organizes projects with boards, lists, and cards, making it easy to visualize work in progress.",
+  "website": "https://trello.com",
+  "platforms": ["Web", "iOS", "Android", "macOS", "Windows"],
+  "best_for": "Positioned for individuals and small teams first, scaling up to teams of around 100 and enterprise use cases.",
+  "features": [
+    "Boards, lists, and cards for Kanban-style tracking",
+    "Automation for repetitive tasks",
+    "Power-Ups that connect other tools into a board",
+    "Templates from teams and industry playbooks",
+    "Due dates, checklists, and file attachments",
+    "Inbox and calendar-based Planner view"
+  ],
   "order": 4,
+  "sources": ["https://trello.com", "https://trello.com/platforms", "https://trello.com/guide/trello-101"],
   "alternatives": [
     {
       "name": "Asana",

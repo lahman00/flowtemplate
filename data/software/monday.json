@@ -1,9 +1,21 @@
 {
   "name": "Monday.com",
   "slug": "monday",
-  "category": "Visual work management",
+  "category": "project-management",
   "description": "Monday.com is a visual work-management platform built around customizable boards, dashboards, and automations.",
+  "website": "https://monday.com",
+  "platforms": ["Web", "iOS", "Android", "macOS", "Windows"],
+  "best_for": "Vendor targets enterprise-scale organizations wanting to scale projects and operations through combined human and AI-agent workflows.",
+  "features": [
+    "Customizable boards including Kanban-style views",
+    "Dashboards and reporting",
+    "Automations connecting steps and tools",
+    "Gantt and timeline views for scheduling",
+    "Forms for intake and Docs for collaborative documentation",
+    "AI agents for research, reporting, and scheduling"
+  ],
   "order": 11,
+  "sources": ["https://monday.com", "https://monday.com/lang/download", "https://monday.com/work-management"],
   "alternatives": [
     {
       "name": "Asana",

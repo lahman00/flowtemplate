@@ -1,0 +1,35 @@
+{
+  "name": "HubSpot",
+  "slug": "hubspot",
+  "category": "crm",
+  "description": "HubSpot CRM is a customer-relationship platform where businesses store contact and company data, track deals through a sales pipeline, and manage sales, marketing, and service activity, with AI assistance built in.",
+  "website": "https://www.hubspot.com/products/crm",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "HubSpot positions the free CRM for startups and small businesses that want to start managing customers immediately and scale up without a data migration later.",
+  "features": [
+    "Contact and deal pipeline management",
+    "AI assistant for record summarization and research",
+    "Email tracking, templates, and scheduling",
+    "Reporting dashboards",
+    "Live chat and chatbot builder",
+    "Large third-party app marketplace"
+  ],
+  "order": 12,
+  "sources": ["https://www.hubspot.com/products/crm"],
+  "alternatives": [
+    {
+      "name": "Salesforce",
+      "slug": "salesforce",
+      "description": "A cloud-based CRM platform that centralizes customer data across sales, service, marketing, and IT.",
+      "best_for": "Larger organizations wanting one AI-enabled platform across departments",
+      "strengths": ["Deep customization", "AI agents", "Enterprise scale"]
+    },
+    {
+      "name": "Pipedrive",
+      "slug": "pipedrive",
+      "description": "A sales-focused CRM built around a visual pipeline for tracking leads and deals.",
+      "best_for": "Small to mid-sized sales teams wanting a simpler pipeline view",
+      "strengths": ["Visual pipeline", "Ease of use", "Sales automation"]
+    }
+  ]
+}

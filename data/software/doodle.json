@@ -1,0 +1,39 @@
+{
+  "name": "Doodle",
+  "slug": "doodle",
+  "category": "scheduling",
+  "description": "Doodle is a scheduling and coordination tool that finds a meeting time across a group's calendars via polls, booking pages, or one-on-one availability sharing.",
+  "website": "https://doodle.com",
+  "platforms": ["Web"],
+  "best_for": "Positioned for teams and organizations, as well as education, healthcare, professional services, and nonprofit sectors needing group and client-facing scheduling.",
+  "features": [
+    "Group Polls to find a time that works for everyone",
+    "Sign-up Sheets for workshops and events",
+    "One-on-one scheduling links",
+    "Shareable Booking Pages",
+    "Stripe-based payment collection at time of booking",
+    "Calendar integrations to auto-detect availability"
+  ],
+  "order": 22,
+  "sources": [
+    "https://doodle.com",
+    "https://doodle.com/en/features/",
+    "https://doodle.com/en/doodle-mobile-app-change/"
+  ],
+  "alternatives": [
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that connects to a user's calendar and lets them share a booking link for others to pick an open time slot.",
+      "best_for": "One-on-one and round-robin meeting booking with native mobile apps",
+      "strengths": ["Native mobile apps", "Video tool integrations", "Event type variety"]
+    },
+    {
+      "name": "Cal.com",
+      "slug": "cal-com",
+      "description": "An open, customizable scheduling platform where users share a booking link that syncs calendars and handles meeting logistics.",
+      "best_for": "Developers and teams wanting an open, customizable scheduling tool",
+      "strengths": ["Open source", "Developer-friendly", "Built-in video"]
+    }
+  ]
+}

@@ -1,9 +1,21 @@
 {
   "name": "Discord",
   "slug": "discord",
-  "category": "Community and team chat",
+  "category": "communication",
   "description": "Discord organizes communities and teams around text channels, voice rooms, and real-time conversation.",
+  "website": "https://discord.com",
+  "platforms": ["Windows", "macOS", "Linux", "iOS", "Android", "Web"],
+  "best_for": "Vendor positions it primarily for gaming communities and friend groups seeking a persistent, casual space rather than formal meetings.",
+  "features": [
+    "Custom emoji, stickers, soundboards, and avatars",
+    "Low-latency voice and video streaming",
+    "Always-available voice and text channels",
+    "Real-time friend activity and status visibility",
+    "Integrated activities like watch-together and built-in games",
+    "Cross-device sync across PC, phone, and console"
+  ],
   "order": 9,
+  "sources": ["https://discord.com", "https://discord.com/download"],
   "alternatives": [
     {
       "name": "Slack",

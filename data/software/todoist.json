@@ -1,0 +1,42 @@
+{
+  "name": "Todoist",
+  "slug": "todoist",
+  "category": "productivity",
+  "description": "Todoist is a task and project management app that lets individuals and teams capture, organize, schedule, and track to-do items, with support for recurring tasks, labels, and shared projects.",
+  "website": "https://todoist.com",
+  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "best_for": "Vendor language positions it for both individual task and time management and team collaboration, citing tens of thousands of teams using it to organize work together.",
+  "features": [
+    "Natural-language quick task entry",
+    "Recurring due dates and reminders",
+    "Multiple views: list, calendar, and board",
+    "Projects, sections, sub-tasks, priorities, and labels",
+    "Shared team projects with assignment and comments",
+    "Built-in AI assistant for turning tasks into action plans"
+  ],
+  "order": 27,
+  "sources": ["https://todoist.com", "https://www.todoist.com/downloads", "https://www.todoist.com/features"],
+  "alternatives": [
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
+      "best_for": "Teams needing more structured, cross-functional project tracking",
+      "strengths": ["Work Graph", "Multiple views", "Team coordination"]
+    },
+    {
+      "name": "Trello",
+      "slug": "trello",
+      "description": "A visual task-organization tool built around boards, lists, and cards.",
+      "best_for": "Teams that prefer a visual, board-based workflow",
+      "strengths": ["Kanban boards", "Power-Ups", "Simplicity"]
+    },
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams wanting a more feature-dense, all-in-one workspace",
+      "strengths": ["Task management", "Dashboards", "Automation"]
+    }
+  ]
+}

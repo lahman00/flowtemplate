@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "project-management",
+    "name": "Project Management",
+    "description": "Plan, assign, and track work across teams and projects."
+  },
+  {
+    "slug": "communication",
+    "name": "Communication",
+    "description": "Chat, video calls, and team messaging tools."
+  },
+  {
+    "slug": "crm",
+    "name": "CRM",
+    "description": "Track leads, deals, and customer relationships."
+  },
+  {
+    "slug": "productivity",
+    "name": "Productivity",
+    "description": "Notes, docs, and flexible personal or team workspaces."
+  },
+  {
+    "slug": "knowledge-base",
+    "name": "Knowledge Base",
+    "description": "Document and organize team knowledge for easy reference."
+  },
+  {
+    "slug": "automation",
+    "name": "Automation",
+    "description": "Connect apps and automate repetitive workflows."
+  },
+  {
+    "slug": "design",
+    "name": "Design",
+    "description": "Interface, graphic, and product design tools."
+  },
+  {
+    "slug": "scheduling",
+    "name": "Scheduling",
+    "description": "Book meetings and coordinate calendars."
+  }
+]

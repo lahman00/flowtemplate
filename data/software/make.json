@@ -1,0 +1,33 @@
+{
+  "name": "Make",
+  "slug": "make",
+  "category": "automation",
+  "description": "Make is a visual automation platform where users build multi-step workflows, called scenarios, connecting apps, data sources, and AI models by configuring modules on a canvas.",
+  "website": "https://www.make.com/en",
+  "best_for": "Positioned for teams across many departments — marketing, sales, operations, finance, IT, HR — in organizations ranging from smaller teams to large enterprises.",
+  "features": [
+    "Thousands of pre-built app integrations",
+    "Drag-and-drop visual scenario builder",
+    "AI agent creation and deployment",
+    "Option to build via code or natural-language prompt",
+    "Centralized management of automations across an organization"
+  ],
+  "order": 16,
+  "sources": ["https://www.make.com/en"],
+  "alternatives": [
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform connecting thousands of apps through simple trigger-and-action workflows.",
+      "best_for": "Teams wanting the widest app coverage and simplest setup",
+      "strengths": ["Huge app catalog", "Simple setup", "Templates"]
+    },
+    {
+      "name": "n8n",
+      "slug": "n8n",
+      "description": "A workflow automation platform for technical users, combining a visual canvas with custom code and self-hosting options.",
+      "best_for": "Technical teams that want full visibility and control, including self-hosting",
+      "strengths": ["Self-hostable", "Custom code steps", "Developer-oriented"]
+    }
+  ]
+}

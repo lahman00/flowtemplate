@@ -17,6 +17,9 @@ export function Navbar() {
           <Link href="/#how-it-works" className="transition hover:text-white">
             How it works
           </Link>
+          <Link href="/#categories" className="transition hover:text-white">
+            Categories
+          </Link>
           <Link href="/#browse" className="transition hover:text-white">
             Browse
           </Link>

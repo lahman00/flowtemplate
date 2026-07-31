@@ -1,9 +1,23 @@
 {
   "name": "Microsoft Teams",
   "slug": "microsoft-teams",
-  "category": "Team communication",
+  "category": "communication",
   "description": "Microsoft Teams combines chat, video meetings, and file collaboration, tightly integrated with Microsoft 365.",
+  "website": "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
+  "platforms": ["Web", "Windows", "macOS", "iOS", "Android"],
+  "best_for": "Segmented by Microsoft into small/medium business, enterprise, education, and individual use — organizations already invested in the Microsoft ecosystem.",
+  "features": [
+    "Chat and channels integrating Loop, OneNote, and third-party apps",
+    "AI-powered meetings with real-time translation and insights",
+    "Teams Phone cloud calling",
+    "Copilot integration for meetings and workflows",
+    "Built-in security and encryption controls"
+  ],
   "order": 8,
+  "sources": [
+    "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
+    "https://www.microsoft.com/en-us/microsoft-teams/download-app"
+  ],
   "alternatives": [
     {
       "name": "Slack",

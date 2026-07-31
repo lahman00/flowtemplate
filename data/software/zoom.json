@@ -1,0 +1,42 @@
+{
+  "name": "Zoom",
+  "slug": "zoom",
+  "category": "communication",
+  "description": "Zoom is an AI-integrated work platform unifying video meetings, team chat, phone/VoIP calling, and collaborative docs and whiteboarding into one product suite.",
+  "website": "https://www.zoom.com",
+  "platforms": ["Web", "Windows", "macOS", "iOS", "Android"],
+  "best_for": "Vendor targets small and midsize businesses and enterprises across verticals — education, healthcare, financial services, government — seeking a consolidated, AI-first communications platform.",
+  "features": [
+    "Video meetings",
+    "Zoom Chat team messaging",
+    "Zoom Phone cloud VoIP calling with AI call summaries",
+    "Docs and Whiteboard for collaborative content",
+    "Mail and Calendar",
+    "AI assistant for meeting summaries and next steps"
+  ],
+  "order": 30,
+  "sources": ["https://www.zoom.com", "https://www.zoom.com/en/products/collaboration-tools/"],
+  "alternatives": [
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A communication and collaboration platform with chat, meetings, file sharing, and Microsoft 365 integration.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": ["Video meetings", "Office integration", "File collaboration"]
+    },
+    {
+      "name": "Slack",
+      "slug": "slack",
+      "description": "A workplace communication platform built around channels, direct messages, and searchable conversations.",
+      "best_for": "Teams that primarily need chat with occasional video",
+      "strengths": ["Channels", "App integrations", "Searchable history"]
+    },
+    {
+      "name": "Discord",
+      "slug": "discord",
+      "description": "A community-focused communication platform with text channels, voice rooms, and real-time collaboration.",
+      "best_for": "Informal teams and communities that value voice chat",
+      "strengths": ["Voice channels", "Community tools", "Easy onboarding"]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "Zapier",
+  "slug": "zapier",
+  "category": "automation",
+  "description": "Zapier is a no-code automation platform that connects thousands of business apps, and increasingly AI models and agents, so users can build automated workflows without writing code.",
+  "website": "https://zapier.com",
+  "best_for": "Positioned for organizations of all sizes — from small/medium businesses to enterprise IT — that want teams to build automations while giving IT centralized governance.",
+  "features": [
+    "Automated workflows (Zaps) across thousands of connected apps",
+    "AI agent and task automation",
+    "Pre-built templates for common workflows",
+    "Zapier Tables for lightweight data storage",
+    "Governance and security controls for enterprise use"
+  ],
+  "order": 15,
+  "sources": ["https://zapier.com", "https://zapier.com/features"],
+  "alternatives": [
+    {
+      "name": "Make",
+      "slug": "make",
+      "description": "A visual automation platform where users build multi-step workflows connecting apps and AI models on a drag-and-drop canvas.",
+      "best_for": "Teams wanting a more visual, flowchart-style automation builder",
+      "strengths": ["Visual scenario builder", "Complex multi-step flows", "AI agent creation"]
+    },
+    {
+      "name": "n8n",
+      "slug": "n8n",
+      "description": "A workflow automation platform for technical users, combining a visual canvas with custom code and self-hosting options.",
+      "best_for": "Technical teams that want full visibility and control, including self-hosting",
+      "strengths": ["Self-hostable", "Custom code steps", "Developer-oriented"]
+    }
+  ]
+}

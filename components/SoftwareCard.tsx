@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, GitCompare } from "lucide-react";
 import { Card } from "@/components/Card";
 import type { Software } from "@/data/software";
+import { getCategoryName } from "@/data/categories";
 
 export function SoftwareCard({ software }: { software: Software }) {
   return (
@@ -10,7 +11,7 @@ export function SoftwareCard({ software }: { software: Software }) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
-              {software.category}
+              {getCategoryName(software.category)}
             </p>
             <h3 className="mt-2 text-xl font-semibold text-white">{software.name}</h3>
           </div>

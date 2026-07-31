@@ -1,0 +1,42 @@
+{
+  "name": "Airtable",
+  "slug": "airtable",
+  "category": "productivity",
+  "description": "Airtable is a cloud platform that combines a relational database with spreadsheet-like views, letting teams build custom apps, automations, and interfaces on top of their own data without traditional coding.",
+  "website": "https://airtable.com",
+  "platforms": ["Web", "macOS", "Windows", "iOS", "Android"],
+  "best_for": "Positioned for teams in product, marketing, project management, operations, sales, design, HR, and finance who want to move off spreadsheets toward custom interfaces and automations.",
+  "features": [
+    "Relational database foundation shared across a team",
+    "Multiple customizable views for the same underlying data",
+    "No-code, AI-assisted app building",
+    "Workflow automations",
+    "Interface Designer for building custom drag-and-drop apps",
+    "Reporting and analytics"
+  ],
+  "order": 29,
+  "sources": ["https://airtable.com", "https://www.airtable.com/product", "https://www.airtable.com/downloads"],
+  "alternatives": [
+    {
+      "name": "Notion",
+      "slug": "notion",
+      "description": "An all-in-one workspace combining documents, databases, project tracking, and team knowledge.",
+      "best_for": "Teams that want databases alongside docs and wikis in one workspace",
+      "strengths": ["Flexible pages", "Databases", "Templates"]
+    },
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams that want project management more than database structure",
+      "strengths": ["Task management", "Dashboards", "Automation"]
+    },
+    {
+      "name": "Monday.com",
+      "slug": "monday",
+      "description": "A visual work-management platform with customizable boards, dashboards, and automations.",
+      "best_for": "Teams wanting a more visual, board-first workflow",
+      "strengths": ["Custom boards", "Dashboards", "Automation"]
+    }
+  ]
+}

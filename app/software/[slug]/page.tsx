@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { GitCompare, Scale } from "lucide-react";
+import { Check, ExternalLink, GitCompare, Scale } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
@@ -11,15 +12,22 @@ import { SearchForm } from "@/components/SearchForm";
 import { SectionHeading } from "@/components/SectionHeading";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
+import { ButtonLink } from "@/components/ButtonLink";
+import { ListingBadges } from "@/components/ListingBadges";
 import { getAllSoftware, getSoftware } from "@/data/software";
+import { getCategoryName } from "@/data/categories";
 import { getRelatedSoftware } from "@/lib/related";
+import { getSoftwareCtaRel, getSoftwareCtaUrl } from "@/lib/monetization";
 import {
+  generateChoosingGuide,
   generateComparisonIntro,
   generateFaq,
   generateH1,
   generateIntro,
   generateMetaDescription,
+  generateOverview,
   generateTitle,
+  generateWhoShouldntUseIt,
 } from "@/lib/generators";
 import {
   getBreadcrumbJsonLd,
@@ -88,7 +96,11 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
         <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: software.name }]} />
 
         <header className="mt-6 max-w-3xl">
-          <Badge>{software.category}</Badge>
+          <Link href={`/category/${software.category}`}>
+            <Badge className="transition hover:border-white/25 hover:text-white">
+              {getCategoryName(software.category)}
+            </Badge>
+          </Link>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-white sm:text-6xl">
             {generateH1(software)}
@@ -96,11 +108,61 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
 
           <p className="mt-6 text-lg leading-8 text-zinc-400">{generateIntro(software)}</p>
 
-          <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-300">
-            <GitCompare className="h-4 w-4" />
-            {software.alternatives.length} alternatives compared
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <div className="inline-flex items-center gap-2 text-sm font-medium text-zinc-300">
+              <GitCompare className="h-4 w-4" />
+              {software.alternatives.length} alternatives compared
+            </div>
+            <ListingBadges software={software} />
           </div>
         </header>
+
+        <section className="mt-14 grid gap-6 lg:grid-cols-[2fr_1fr]">
+          <Card>
+            <h2 className="text-xl font-semibold text-white">About {software.name}</h2>
+            <p className="mt-4 leading-7 text-zinc-400">{generateOverview(software)}</p>
+
+            <ul className="mt-6 grid gap-2 sm:grid-cols-2">
+              {software.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-2 text-sm text-zinc-300">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-zinc-500" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </Card>
+
+          <Card className="flex flex-col">
+            {software.platforms?.length ? (
+              <div>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+                  Platforms
+                </h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {software.platforms.map((platform) => (
+                    <span
+                      key={platform}
+                      className="rounded-full border border-white/10 px-3 py-1 text-xs text-zinc-300"
+                    >
+                      {platform}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            <ButtonLink
+              href={getSoftwareCtaUrl(software)}
+              rel={getSoftwareCtaRel(software)}
+              target="_blank"
+              variant="secondary"
+              className="mt-6 w-full"
+            >
+              Visit official site
+              <ExternalLink className="h-4 w-4" />
+            </ButtonLink>
+          </Card>
+        </section>
 
         <section className="mt-14">
           <div className="flex flex-wrap items-end justify-between gap-6">
@@ -126,10 +188,9 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
             <h2 className="text-2xl font-semibold text-white">How to choose</h2>
           </div>
 
-          <p className="mt-4 max-w-3xl leading-7 text-zinc-400">
-            Start with the workflow you need to improve. Compare ease of use, collaboration
-            features, integrations, customization, and the effort required to migrate your
-            existing data.
+          <p className="mt-4 max-w-3xl leading-7 text-zinc-400">{generateChoosingGuide(software)}</p>
+          <p className="mt-3 max-w-3xl leading-7 text-zinc-400">
+            {generateWhoShouldntUseIt(software)}
           </p>
         </Card>
 

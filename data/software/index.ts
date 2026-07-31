@@ -3,6 +3,7 @@ import path from "node:path";
 import { softwareRawSchema, type SoftwareRaw } from "@/data/software/schema";
 import { mapSoftware } from "@/data/software/mapper";
 import type { Software } from "@/data/software/types";
+import { getAllCategories } from "@/data/categories";
 
 export type { Software, Alternative, Pricing, FaqItem } from "@/data/software/types";
 
@@ -58,6 +59,7 @@ function loadAllSoftware(): Software[] {
 
   const entries = rawEntries.map(mapSoftware);
   const knownSlugs = new Set(entries.map((entry) => entry.slug));
+  const knownCategorySlugs = new Set(getAllCategories().map((category) => category.slug));
 
   for (const entry of entries) {
     for (const alternative of entry.alternatives) {
@@ -66,6 +68,12 @@ function loadAllSoftware(): Software[] {
           `Invalid software data in ${entry.slug}.json: alternative "${alternative.slug}" has no matching software file in data/software/`
         );
       }
+    }
+
+    if (!knownCategorySlugs.has(entry.category)) {
+      throw new Error(
+        `Invalid software data in ${entry.slug}.json: category "${entry.category}" is not a known category slug (see data/categories.json)`
+      );
     }
   }
 

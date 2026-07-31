@@ -20,6 +20,11 @@ export function getSameCategorySoftware(software: Software, limit = 3): Software
     .slice(0, limit);
 }
 
+/** All software belonging to a given category slug, for /category/[slug]. */
+export function getSoftwareByCategory(categorySlug: string): Software[] {
+  return getAllSoftware().filter((item) => item.category === categorySlug);
+}
+
 /** Returns [] until entries actually carry a `pricing.model` value. */
 export function getSamePricingSoftware(software: Software, limit = 3): Software[] {
   if (!software.pricing?.model) {

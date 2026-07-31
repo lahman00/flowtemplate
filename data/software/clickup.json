@@ -1,9 +1,21 @@
 {
   "name": "ClickUp",
   "slug": "clickup",
-  "category": "Project management",
+  "category": "project-management",
   "description": "ClickUp is a project-management platform that combines tasks, documents, dashboards, goals, and automation.",
+  "website": "https://clickup.com",
+  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "best_for": "Positioned for businesses of all sizes that want to consolidate several separate tools into one workspace.",
+  "features": [
+    "Task hierarchy across Spaces, Folders, and Lists",
+    "Kanban boards, Gantt charts, and timeline views",
+    "Dashboards and reporting built from live task data",
+    "Automations for repetitive workflows",
+    "Docs, wikis, and in-context chat tied to tasks",
+    "AI features and third-party integrations"
+  ],
   "order": 3,
+  "sources": ["https://clickup.com", "https://clickup.com/download", "https://clickup.com/features"],
   "alternatives": [
     {
       "name": "Asana",

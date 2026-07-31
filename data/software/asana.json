@@ -1,9 +1,21 @@
 {
   "name": "Asana",
   "slug": "asana",
-  "category": "Work management",
+  "category": "project-management",
   "description": "Asana helps teams organize projects, assign tasks, manage deadlines, and track work across multiple views.",
+  "website": "https://asana.com",
+  "platforms": ["Web", "iOS", "Android", "macOS", "Windows"],
+  "best_for": "Positioned for cross-functional teams operating at any scale, from small business to enterprise.",
+  "features": [
+    "Work Graph connecting tasks, projects, and goals",
+    "Multiple project views for planning and tracking",
+    "AI Teammates that work inside existing workflows",
+    "Shared context between people and AI agents",
+    "Enterprise governance controls for AI agents",
+    "Work management, service management, and client management in one suite"
+  ],
   "order": 5,
+  "sources": ["https://asana.com", "https://asana.com/download", "https://asana.com/apps"],
   "alternatives": [
     {
       "name": "ClickUp",

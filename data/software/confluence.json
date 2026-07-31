@@ -1,9 +1,24 @@
 {
   "name": "Confluence",
   "slug": "confluence",
-  "category": "Team knowledge and documentation",
+  "category": "knowledge-base",
   "description": "Confluence is Atlassian's team workspace for documentation, meeting notes, and internal knowledge shared across an organization.",
+  "website": "https://www.atlassian.com/software/confluence",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned as a single source of truth for cross-functional and enterprise teams across departments like software development, HR, marketing, and product management.",
+  "features": [
+    "AI-assisted content creation and templates",
+    "Teamwork Graph connecting people, work, and goals",
+    "AI-enhanced search across tools",
+    "Multiple content types: docs, whiteboards, databases, slides, video",
+    "Role and department-specific templates",
+    "Integrations with Jira, Figma, GitHub, Google Drive, Microsoft Teams"
+  ],
   "order": 7,
+  "sources": [
+    "https://www.atlassian.com/software/confluence",
+    "https://www.atlassian.com/software/confluence/mobile-app"
+  ],
   "alternatives": [
     {
       "name": "Notion",

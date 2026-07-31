@@ -22,17 +22,22 @@ export type Software = {
   slug: string;
   category: string;
   description: string;
-  website?: string;
+  website: string;
   logo?: string;
   founded?: number;
   company?: string;
   pricing?: Pricing;
   platforms?: string[];
-  bestFor?: string;
+  bestFor: string;
   pros?: string[];
   cons?: string[];
-  features?: string[];
+  features: string[];
   alternatives: Alternative[];
   faq?: FaqItem[];
   tags?: string[];
+  sources: string[];
+  /** Phase 5 — monetization-ready architecture. Never fabricated; see docs/monetization.md. */
+  affiliateUrl?: string;
+  sponsored?: boolean;
+  featured?: boolean;
 };

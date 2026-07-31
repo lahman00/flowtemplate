@@ -16,7 +16,10 @@ import { StatItem } from "@/components/StatItem";
 import { SectionHeading } from "@/components/SectionHeading";
 import { FeatureCard } from "@/components/FeatureCard";
 import { SoftwareCard } from "@/components/SoftwareCard";
+import { CategoryCard } from "@/components/CategoryCard";
 import { getAllSoftware } from "@/data/software";
+import { getAllCategories } from "@/data/categories";
+import { getSoftwareByCategory } from "@/lib/related";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -24,6 +27,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const allSoftware = getAllSoftware();
+  const allCategories = getAllCategories();
 
   const alternativeCount = new Set(
     allSoftware.flatMap((software) => software.alternatives.map((alternative) => alternative.slug))
@@ -121,6 +125,26 @@ export default function Home() {
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {steps.map((step) => (
               <FeatureCard key={step.title} {...step} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section id="categories" className="scroll-mt-16 py-20 sm:py-28">
+        <Container>
+          <SectionHeading
+            eyebrow="Categories"
+            title="Browse by category"
+            description="Every tool belongs to one category — start there if you know what kind of tool you need."
+          />
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {allCategories.map((category) => (
+              <CategoryCard
+                key={category.slug}
+                category={category}
+                count={getSoftwareByCategory(category.slug).length}
+              />
             ))}
           </div>
         </Container>

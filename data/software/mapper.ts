@@ -36,5 +36,9 @@ export function mapSoftware(raw: SoftwareRaw): Software {
     alternatives: raw.alternatives.map(mapAlternative),
     faq: raw.faq,
     tags: raw.tags,
+    sources: raw.sources,
+    affiliateUrl: raw.affiliate_url,
+    sponsored: raw.sponsored,
+    featured: raw.featured,
   };
 }

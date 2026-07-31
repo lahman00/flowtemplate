@@ -1,9 +1,25 @@
 {
   "name": "Notion",
   "slug": "notion",
-  "category": "Workspace and productivity",
+  "category": "productivity",
   "description": "Notion combines documents, databases, project tracking, and team knowledge in one flexible workspace.",
+  "website": "https://www.notion.com",
+  "platforms": ["Web", "macOS", "Windows", "iOS", "Android"],
+  "best_for": "Positioned for teams of any size, from startups to large enterprises, who want people and AI working together in one connected workspace.",
+  "features": [
+    "AI-powered search across connected apps",
+    "AI meeting notes",
+    "Wiki and knowledge base pages",
+    "Nested and linked documents",
+    "Project and task tracking",
+    "Built-in calendar and third-party app connections"
+  ],
   "order": 1,
+  "sources": [
+    "https://www.notion.com",
+    "https://www.notion.com/desktop",
+    "https://www.notion.so/help/notion-for-desktop"
+  ],
   "alternatives": [
     {
       "name": "ClickUp",

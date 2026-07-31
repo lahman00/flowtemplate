@@ -1,9 +1,25 @@
 {
   "name": "Mattermost",
   "slug": "mattermost",
-  "category": "Self-hosted team messaging",
+  "category": "communication",
   "description": "Mattermost is an open-source team messaging platform built for organizations that want to host and control their own chat infrastructure.",
+  "website": "https://mattermost.com",
+  "platforms": ["Windows", "macOS", "Linux", "iOS", "Android", "Web"],
+  "best_for": "Positioned as a collaboration platform for mission-critical work — defense, government, critical infrastructure, DevSecOps, and security-operations teams needing data sovereignty.",
+  "features": [
+    "Channels for secure messaging and collaboration",
+    "Playbooks for workflow automation",
+    "Calls with screenshare, transcription, and summarization",
+    "Boards for kanban task tracking",
+    "AI agents connectable to sovereign or private LLMs",
+    "Pre-built integrations for SIEM/SOAR and DevSecOps tooling"
+  ],
   "order": 10,
+  "sources": [
+    "https://mattermost.com",
+    "https://mattermost.com/platform-overview/",
+    "https://mattermost.com/apps/"
+  ],
   "alternatives": [
     {
       "name": "Slack",

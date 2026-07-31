@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flowtemplate
 
-## Getting Started
+A software-comparison directory built with Next.js App Router. For any
+tool, see verified alternatives grouped by category — sourced facts only,
+nothing fabricated.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev            # start the dev server
+npm run build           # production build (also runs TypeScript checks)
+npm run lint             # ESLint
+npm run validate:data    # validate every data/software/*.json and data/categories entry
+```
 
-## Learn More
+Run `validate:data` after editing any data file — it checks the same rules
+the build enforces (schema, duplicate slugs, broken references, invalid
+categories, orphan category pages) without doing a full production build.
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                    Routes (App Router)
+  software/[slug]/       One page per software entry
+  category/[slug]/        One page per category
+  about|contact|privacy|terms/
+data/
+  software/*.json         One file per software entry (source of truth)
+  categories/              Category definitions + loader
+lib/
+  generators.ts             Page copy generators (title, H1, FAQ, etc.)
+  related.ts                 Related/same-category/popular utilities
+  comparison.ts                /compare engine (built, not routed)
+  monetization.ts               Monetization-ready utilities (no live data)
+  structured-data.ts             JSON-LD builders
+components/               Reusable UI components
+scripts/validate-data.ts   Standalone data validator (npm run validate:data)
+docs/                      Architecture documentation
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Data and sourcing policy
 
-## Deploy on Vercel
+Every software entry lives in its own JSON file and is validated with Zod
+at build time. Nothing in this dataset is invented: every entry cites at
+least one official source, and fields with no verified source (pricing,
+founding date, parent company, pros/cons) are left unpopulated rather than
+guessed. See [`docs/content-engine.md`](docs/content-engine.md) for the
+full policy and schema.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Learn more
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn)

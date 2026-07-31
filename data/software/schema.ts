@@ -27,22 +27,28 @@ export const faqItemRawSchema = z.object({
 export const softwareRawSchema = z.object({
   name: z.string().min(1),
   slug: slugSchema,
-  category: z.string().min(1),
+  category: slugSchema,
   description: z.string().min(1),
-  website: z.string().url().optional(),
+  website: z.string().url(),
   logo: z.string().min(1).optional(),
   founded: z.number().int().min(1900).max(2100).optional(),
   company: z.string().min(1).optional(),
   pricing: pricingRawSchema.optional(),
   platforms: z.array(z.string().min(1)).optional(),
-  best_for: z.string().min(1).optional(),
+  best_for: z.string().min(1),
   pros: z.array(z.string().min(1)).optional(),
   cons: z.array(z.string().min(1)).optional(),
-  features: z.array(z.string().min(1)).optional(),
+  features: z.array(z.string().min(1)).min(1),
   alternatives: z.array(alternativeRawSchema).min(1),
   faq: z.array(faqItemRawSchema).optional(),
   tags: z.array(z.string().min(1)).optional(),
+  sources: z.array(z.string().url()).min(1),
   order: z.number().int().optional(),
+  // Phase 5 — monetization-ready architecture. Schema-supported, never
+  // populated with fabricated data. See docs/monetization.md.
+  affiliate_url: z.string().url().optional(),
+  sponsored: z.boolean().optional(),
+  featured: z.boolean().optional(),
 });
 
 export type AlternativeRaw = z.infer<typeof alternativeRawSchema>;
