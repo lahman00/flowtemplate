@@ -1,9 +1,13 @@
 import type { Software } from "@/data/software";
+import { getAffiliateActivation } from "@/lib/revenue/affiliate-manager";
 
 /**
- * Phase 4 — reusable affiliate-link architecture. No entry in
- * data/software currently sets affiliate_url, so every function here
- * resolves to the plain official_url today — see docs/monetization.md.
+ * Phase 4 — reusable affiliate-link architecture. Resolves to the plain
+ * official_url unless a real affiliate link is active for that entry —
+ * either a hardcoded data/software/*.json affiliate_url (Sprint 6) or a
+ * Sprint 9 runtime activation (lib/revenue/affiliate-activation.ts, env
+ * var or gitignored config file, and only ever for a confirmed program).
+ * See docs/monetization.md and docs/revenue.md.
  */
 
 export type AffiliateLink = {
@@ -58,7 +62,9 @@ export function getConfiguredTrackingParams(): Record<string, string> {
 }
 
 function softwareToAffiliateLink(software: Software): AffiliateLink {
-  return { officialUrl: software.website, affiliateUrl: software.affiliateUrl };
+  const activation = getAffiliateActivation(software.slug);
+  const affiliateUrl = activation.isActive ? (activation.affiliateUrl ?? undefined) : software.affiliateUrl;
+  return { officialUrl: software.website, affiliateUrl };
 }
 
 /** The CTA URL for a software entry — the affiliate link (with tracking params, if configured) when one exists, otherwise the plain official site. */

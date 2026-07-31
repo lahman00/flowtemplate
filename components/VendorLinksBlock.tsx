@@ -1,4 +1,7 @@
+"use client";
+
 import { Activity, DollarSign, ExternalLink, FileText, LifeBuoy, Plug, Users } from "lucide-react";
+import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import type { Software } from "@/data/software";
@@ -15,8 +18,13 @@ type VendorLinkDef = {
  * covers the other six link types, and only when at least one is actually
  * present. Renders nothing today — no entry populates software.links yet.
  * Do not invent a URL here; leave the field unset instead.
+ *
+ * A client component since Sprint 9 (Task 6): each link fires a
+ * best-effort outbound-click event on click — see components/TrackedCtaLink.tsx
+ * for the same pattern applied to the main CTA button.
  */
 export function VendorLinksBlock({ software }: { software: Software }) {
+  const pathname = usePathname();
   const candidates: Array<{ label: string; url?: string; icon: ComponentType<LucideProps> }> = [
     { label: "Pricing", url: software.links?.pricing, icon: DollarSign },
     { label: "Documentation", url: software.links?.docs, icon: FileText },
@@ -47,6 +55,16 @@ export function VendorLinksBlock({ software }: { software: Software }) {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-zinc-300 transition hover:text-white"
+              onClick={() => {
+                void fetch("/api/outbound-click", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ slug: software.slug, kind: "vendor-link", sourcePage: pathname }),
+                  keepalive: true,
+                }).catch(() => {
+                  // Best-effort only — a tracking failure must never affect the user's click.
+                });
+              }}
             >
               <link.icon className="h-4 w-4 shrink-0 text-zinc-500" />
               {link.label}

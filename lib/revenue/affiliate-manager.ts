@@ -11,7 +11,19 @@ import {
  * tracking-param mechanics for a software entry's `affiliate_url` field):
  * this module only answers "what do we know about this vendor's program,"
  * not "what URL should the button use."
+ *
+ * Sprint 9 extends it to also answer "is this vendor's link actually
+ * activated, and with what URL" — re-exported here from
+ * lib/revenue/affiliate-activation.ts so callers have one import surface.
  */
+
+export {
+  getAffiliateActivation,
+  getTierASlugs,
+  getTierAActivationStatus,
+  type AffiliateActivation,
+  type AffiliateActivationSource,
+} from "@/lib/revenue/affiliate-activation";
 
 export function getAffiliateProgram(slug: string): AffiliateProgramInfo | undefined {
   return getAffiliateProgramBySlug(slug);

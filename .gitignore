@@ -34,6 +34,12 @@ yarn-error.log*
 .env*
 !.env.example
 
+# real affiliate credentials (Sprint 9) — only the .example template ships
+/config/affiliate-credentials.json
+
+# local outbound-click event log (Sprint 9) — first-party, never committed
+/var/outbound-clicks.json
+
 # vercel
 .vercel
 

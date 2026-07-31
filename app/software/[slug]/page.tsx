@@ -12,7 +12,7 @@ import { SearchForm } from "@/components/SearchForm";
 import { SectionHeading } from "@/components/SectionHeading";
 import { FaqSection } from "@/components/FaqSection";
 import { JsonLd } from "@/components/JsonLd";
-import { ButtonLink } from "@/components/ButtonLink";
+import { TrackedCtaLink } from "@/components/TrackedCtaLink";
 import { ListingBadges } from "@/components/ListingBadges";
 import { VendorLinksBlock } from "@/components/VendorLinksBlock";
 import { getAllSoftware, getSoftware } from "@/data/software";
@@ -165,7 +165,8 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
               </div>
             ) : null}
 
-            <ButtonLink
+            <TrackedCtaLink
+              slug={software.slug}
               href={getSoftwareCtaUrl(software)}
               rel={getSoftwareCtaRel(software)}
               target="_blank"
@@ -174,7 +175,7 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
             >
               Visit official site
               <ExternalLink className="h-4 w-4" />
-            </ButtonLink>
+            </TrackedCtaLink>
 
             {shouldShowAffiliateDisclosure(software) ? (
               <p className="mt-3 text-center text-xs text-zinc-500">
