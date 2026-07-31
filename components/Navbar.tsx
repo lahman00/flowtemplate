@@ -30,10 +30,10 @@ export function Navbar() {
         </nav>
 
         <Link
-          href="/#search"
+          href="/recommend"
           className="inline-flex min-h-9 items-center rounded-lg border border-white/15 bg-white/5 px-4 text-sm font-semibold text-white transition hover:bg-white/10"
         >
-          Compare now
+          Find my software
         </Link>
       </Container>
     </header>

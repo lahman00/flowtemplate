@@ -42,6 +42,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/about`, changeFrequency: "yearly", priority: 0.5 },
     { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.4 },
+    // /recommend/results is excluded — it's query-param-driven and marked
+    // noindex on the page itself; every answer combination would otherwise
+    // look like near-duplicate content to a crawler.
+    { url: `${SITE_URL}/recommend`, changeFrequency: "monthly", priority: 0.9 },
   ];
 
   return [...staticPages, ...categoryPages, ...softwarePages, ...comparisonPages, ...legalPages];

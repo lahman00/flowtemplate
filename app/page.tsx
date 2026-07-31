@@ -7,10 +7,14 @@ import {
   Search,
   Scale,
   CircleCheck,
+  Compass,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Badge } from "@/components/Badge";
+import { Card } from "@/components/Card";
+import { ButtonLink } from "@/components/ButtonLink";
 import { SearchForm } from "@/components/SearchForm";
 import { PopularSearches } from "@/components/PopularSearches";
 import { StatItem } from "@/components/StatItem";
@@ -121,6 +125,30 @@ export default function Home() {
           {stats.map((stat) => (
             <StatItem key={stat.label} {...stat} />
           ))}
+        </Container>
+      </section>
+
+      <section className="py-20 sm:py-28">
+        <Container>
+          <Card className="flex flex-col items-start gap-8 border-white/15 bg-white/[0.04] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
+            <div className="max-w-xl">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-zinc-950">
+                <Compass className="h-5 w-5" strokeWidth={2.25} />
+              </span>
+              <h2 className="mt-5 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                Not sure where to start? Get matched.
+              </h2>
+              <p className="mt-3 leading-7 text-zinc-400">
+                Answer a few questions about your team, budget, and what you need — our
+                recommendation engine matches you against the verified dataset and explains every
+                point of every score. No AI guessing, no invented facts.
+              </p>
+            </div>
+            <ButtonLink href="/recommend" size="lg" className="w-full shrink-0 sm:w-auto">
+              Find my software
+              <ArrowRight className="h-4 w-4" />
+            </ButtonLink>
+          </Card>
         </Container>
       </section>
 

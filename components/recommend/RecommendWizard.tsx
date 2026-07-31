@@ -1,0 +1,312 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Bot,
+  Building2,
+  GitCompare,
+  Globe,
+  Kanban,
+  MessageSquare,
+  Sparkles,
+  Users,
+  Wand2,
+  Workflow,
+} from "lucide-react";
+import { Card } from "@/components/Card";
+import { Button } from "@/components/Button";
+import { OptionButton } from "@/components/recommend/OptionButton";
+import { ToggleCard } from "@/components/recommend/ToggleCard";
+import type { RecommendationAnswers } from "@/lib/recommend/types";
+import { DEFAULT_ANSWERS, answersToSearchParams } from "@/lib/recommend/query";
+
+const STEPS = ["Your team", "Budget & industry", "What you need", "Fine-tune"] as const;
+
+export function RecommendWizard() {
+  const router = useRouter();
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<RecommendationAnswers>(DEFAULT_ANSWERS);
+  const [integrationsInput, setIntegrationsInput] = useState("");
+
+  const isLastStep = step === STEPS.length - 1;
+
+  function update<K extends keyof RecommendationAnswers>(key: K, value: RecommendationAnswers[K]) {
+    setAnswers((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function handleSubmit() {
+    const finalAnswers: RecommendationAnswers = {
+      ...answers,
+      requiredIntegrations: integrationsInput
+        .split(",")
+        .map((value) => value.trim())
+        .filter((value) => value.length > 0)
+        .slice(0, 10),
+    };
+
+    const params = answersToSearchParams(finalAnswers);
+    router.push(`/recommend/results?${params.toString()}`);
+  }
+
+  return (
+    <Card className="mx-auto max-w-2xl">
+      <div className="flex items-center gap-2">
+        {STEPS.map((label, index) => (
+          <div key={label} className="flex flex-1 flex-col gap-2">
+            <div
+              className={`h-1.5 rounded-full transition ${
+                index <= step ? "bg-white" : "bg-white/10"
+              }`}
+            />
+            <span
+              className={`hidden text-xs font-medium sm:block ${
+                index === step ? "text-white" : "text-zinc-500"
+              }`}
+            >
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 min-h-[22rem]">
+        {step === 0 ? (
+          <div className="space-y-8">
+            <fieldset>
+              <legend className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Users className="h-4 w-4" /> Team size
+              </legend>
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {(
+                  [
+                    ["solo", "Just me"],
+                    ["small", "Small (2-10)"],
+                    ["medium", "Medium (11-50)"],
+                    ["large", "Large (51+)"],
+                    ["unspecified", "Not sure"],
+                  ] as const
+                ).map(([value, label]) => (
+                  <OptionButton
+                    key={value}
+                    selected={answers.teamSize === value}
+                    onClick={() => update("teamSize", value)}
+                    title={label}
+                  />
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Building2 className="h-4 w-4" /> Company stage
+              </legend>
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {(
+                  [
+                    ["startup", "Startup"],
+                    ["growth", "Growth"],
+                    ["enterprise", "Enterprise"],
+                    ["unspecified", "Not sure"],
+                  ] as const
+                ).map(([value, label]) => (
+                  <OptionButton
+                    key={value}
+                    selected={answers.companyStage === value}
+                    onClick={() => update("companyStage", value)}
+                    title={label}
+                  />
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Globe className="h-4 w-4" /> How does your team work?
+              </legend>
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {(
+                  [
+                    ["remote", "Remote"],
+                    ["office", "In-office"],
+                    ["hybrid", "Hybrid"],
+                    ["unspecified", "Not sure"],
+                  ] as const
+                ).map(([value, label]) => (
+                  <OptionButton
+                    key={value}
+                    selected={answers.workStyle === value}
+                    onClick={() => update("workStyle", value)}
+                    title={label}
+                  />
+                ))}
+              </div>
+            </fieldset>
+          </div>
+        ) : null}
+
+        {step === 1 ? (
+          <div className="space-y-8">
+            <fieldset>
+              <legend className="text-sm font-semibold text-white">Budget</legend>
+              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {(
+                  [
+                    ["free", "Free only", "Must have a free tier or be open source"],
+                    ["low", "Low cost", "Free tier or affordable entry plan is fine"],
+                    ["flexible", "Flexible", "Budget isn't the main constraint"],
+                  ] as const
+                ).map(([value, label, description]) => (
+                  <OptionButton
+                    key={value}
+                    selected={answers.budget === value}
+                    onClick={() => update("budget", value)}
+                    title={label}
+                    description={description}
+                  />
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend className="text-sm font-semibold text-white">
+                Industry <span className="font-normal text-zinc-500">(optional)</span>
+              </legend>
+              <input
+                value={answers.industry}
+                onChange={(event) => update("industry", event.target.value)}
+                type="text"
+                placeholder="e.g. Healthcare, e-commerce, education"
+                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07]"
+              />
+              <p className="mt-2 text-xs text-zinc-500">
+                We collect this, but no product in our dataset is tagged by industry yet — so it
+                won&apos;t affect your results. We&apos;d rather tell you that than pretend it
+                does.
+              </p>
+            </fieldset>
+          </div>
+        ) : null}
+
+        {step === 2 ? (
+          <fieldset>
+            <legend className="text-sm font-semibold text-white">
+              What does the tool need to cover? Select all that apply.
+            </legend>
+            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <ToggleCard
+                selected={answers.needsProjectManagement}
+                onClick={() => update("needsProjectManagement", !answers.needsProjectManagement)}
+                icon={Kanban}
+                title="Project management"
+                description="Tasks, boards, timelines"
+              />
+              <ToggleCard
+                selected={answers.needsCrm}
+                onClick={() => update("needsCrm", !answers.needsCrm)}
+                icon={GitCompare}
+                title="CRM"
+                description="Leads, deals, pipeline"
+              />
+              <ToggleCard
+                selected={answers.needsKnowledgeBase}
+                onClick={() => update("needsKnowledgeBase", !answers.needsKnowledgeBase)}
+                icon={Sparkles}
+                title="Knowledge base"
+                description="Docs, wiki, notes"
+              />
+              <ToggleCard
+                selected={answers.needsAutomation}
+                onClick={() => update("needsAutomation", !answers.needsAutomation)}
+                icon={Workflow}
+                title="Automation"
+                description="Workflows, triggers"
+              />
+              <ToggleCard
+                selected={answers.needsCommunication}
+                onClick={() => update("needsCommunication", !answers.needsCommunication)}
+                icon={MessageSquare}
+                title="Communication"
+                description="Chat, calls, meetings"
+              />
+              <ToggleCard
+                selected={answers.needsAi}
+                onClick={() => update("needsAi", !answers.needsAi)}
+                icon={Bot}
+                title="AI features"
+                description="AI-assisted workflows"
+              />
+            </div>
+          </fieldset>
+        ) : null}
+
+        {step === 3 ? (
+          <div className="space-y-8">
+            <fieldset>
+              <legend className="text-sm font-semibold text-white">
+                Tools you need it to work with{" "}
+                <span className="font-normal text-zinc-500">(optional, comma-separated)</span>
+              </legend>
+              <input
+                value={integrationsInput}
+                onChange={(event) => setIntegrationsInput(event.target.value)}
+                type="text"
+                placeholder="e.g. Slack, Google Drive"
+                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07]"
+              />
+            </fieldset>
+
+            <fieldset>
+              <legend className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Wand2 className="h-4 w-4" /> Simple or powerful?
+              </legend>
+              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {(
+                  [
+                    ["simple", "Keep it simple", "Easy to learn, minimal setup"],
+                    ["powerful", "Give me power", "Advanced, full-featured"],
+                    ["no-preference", "No preference", ""],
+                  ] as const
+                ).map(([value, label, description]) => (
+                  <OptionButton
+                    key={value}
+                    selected={answers.difficultyPreference === value}
+                    onClick={() => update("difficultyPreference", value)}
+                    title={label}
+                    description={description || undefined}
+                  />
+                ))}
+              </div>
+            </fieldset>
+          </div>
+        ) : null}
+      </div>
+
+      <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-6">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => setStep((current) => Math.max(0, current - 1))}
+          disabled={step === 0}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
+
+        {isLastStep ? (
+          <Button type="button" onClick={handleSubmit}>
+            Get my recommendations
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        ) : (
+          <Button type="button" onClick={() => setStep((current) => Math.min(STEPS.length - 1, current + 1))}>
+            Next
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
+    </Card>
+  );
+}

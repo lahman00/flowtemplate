@@ -11,6 +11,7 @@ const productLinks = [
   { name: "Categories", href: "/#categories" },
   { name: "Browse", href: "/#browse" },
   { name: "Compare", href: "/compare" },
+  { name: "Find my software", href: "/recommend" },
 ];
 
 const companyLinks = [
