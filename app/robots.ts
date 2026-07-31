@@ -6,6 +6,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // Internal revenue dashboard (Sprint 8) — also marked noindex/nofollow
+      // on the page itself; disallowed here too as defense in depth.
+      disallow: "/internal/",
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
