@@ -37,13 +37,18 @@ than assumed:
 - Grepped for cookie/analytics/tracking code (`gtag`, `fbq`, `analytics`,
   etc.) across `app/`, `components/`, `lib/`, `data/` — none found outside
   the Privacy/Cookie policy text itself.
-- Confirmed `@supabase/ssr` and `@supabase/supabase-js` (both installed as
-  dependencies) are not imported anywhere in the app — they're unused, so
-  Supabase's cookie-based session handling is never actually invoked.
-- Confirmed `@prisma/client` is likewise unused.
-- Confirmed there are no API routes, no server actions, no `middleware.ts`,
-  and the only `<form>` on the site (`SearchForm`) does a client-side
-  redirect and never sends a network request.
+- `@supabase/ssr`, `@supabase/supabase-js`, and `@prisma/client` were
+  installed as dependencies but never imported anywhere in the app; a
+  Sprint 11 launch audit confirmed they were still unused and removed them
+  entirely, so there's no longer even a dormant cookie-based session
+  mechanism sitting in the dependency tree.
+- Confirmed there is no `middleware.ts`, and the only `<form>` on the site
+  (`SearchForm`) does a client-side redirect and never sends a network
+  request. Two API routes were added later (`app/api/outbound-click/route.ts`,
+  Sprint 9; `app/api/recommendation-click/route.ts`, Sprint 10) — both
+  read/write a local, first-party JSON log server-side and return a plain
+  JSON response; neither sets a cookie, reads a cookie, or touches
+  `Set-Cookie` in any way. Re-verified as part of the same Sprint 11 audit.
 
 Because of this, no cookie consent banner was added — the task was
 explicit that one should only be added if actually required, and it isn't.

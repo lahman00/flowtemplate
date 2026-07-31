@@ -70,9 +70,21 @@ export function generateComparisonMetaDescription(
   return `Compare ${softwareA.name} and ${softwareB.name} side by side — category, core strengths, and which one fits your workflow.`;
 }
 
+/** Lowercases a category name for mid-sentence use, without mangling acronyms like "CRM". */
+function lowercaseForSentence(name: string): string {
+  return name === name.toUpperCase() ? name : name.toLowerCase();
+}
+
 /** Factual, grounded intro — states what's being compared and why, nothing evaluative. */
 export function generateComparisonIntro(softwareA: Software, softwareB: Software): string {
-  return `${softwareA.name} and ${softwareB.name} are both ${getCategoryName(softwareA.category) === getCategoryName(softwareB.category) ? getCategoryName(softwareA.category).toLowerCase() : "tools people compare when choosing between " + getCategoryName(softwareA.category).toLowerCase() + " and " + getCategoryName(softwareB.category).toLowerCase()} options. Here's how they compare on official platforms, features, and positioning — sourced from each vendor's own site, not from ratings or reviews.`;
+  const categoryA = getCategoryName(softwareA.category);
+  const categoryB = getCategoryName(softwareB.category);
+  const categoryPhrase =
+    categoryA === categoryB
+      ? lowercaseForSentence(categoryA)
+      : `tools people compare when choosing between ${lowercaseForSentence(categoryA)} and ${lowercaseForSentence(categoryB)}`;
+
+  return `${softwareA.name} and ${softwareB.name} are both ${categoryPhrase} options. Here's how they compare on official platforms, features, and positioning — sourced from each vendor's own site, not from ratings or reviews.`;
 }
 
 /**
@@ -89,9 +101,15 @@ export function generateProsList(software: Software): string[] {
 export const CONS_DISCLOSURE =
   "We don't publish a \"cons\" list for either product. No vendor's official site documents its own product's weaknesses, so there's no sourced basis for one — and we'd rather say that plainly than invent one.";
 
-/** Grounded in the vendor's own stated positioning (best_for) — never an independent editorial judgment. */
+/**
+ * Grounded in the vendor's own stated positioning (best_for) — never an
+ * independent editorial judgment. Presents best_for verbatim rather than
+ * splicing it into a lowercase continuation: some entries' best_for text
+ * starts with the product's own name (e.g. "HubSpot positions..."), and a
+ * naive first-letter lowercase turns that into a broken word ("hubSpot").
+ */
 export function generateWhoShouldChoose(software: Software): string {
-  return `Choose ${software.name} if this matches your situation: ${software.bestFor.charAt(0).toLowerCase()}${software.bestFor.slice(1)}`;
+  return `Choose ${software.name} if this fits: ${software.bestFor}`;
 }
 
 function formatList(values: string[] | undefined): string {

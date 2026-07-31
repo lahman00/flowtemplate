@@ -192,7 +192,7 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
                       </>
                     ) : null}
 
-                    <p className="mt-4 text-xs text-zinc-600">
+                    <p className="mt-4 text-xs text-zinc-500">
                       Score: {rec.scoring.totalScore} of {rec.scoring.maxPossibleScore} possible
                       points for your answers.
                     </p>

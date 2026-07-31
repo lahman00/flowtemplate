@@ -14,37 +14,9 @@ export function getRelatedSoftware(software: Software, limit = 3): Software[] {
     .slice(0, limit);
 }
 
-export function getSameCategorySoftware(software: Software, limit = 3): Software[] {
-  return getAllSoftware()
-    .filter((item) => item.slug !== software.slug && item.category === software.category)
-    .slice(0, limit);
-}
-
 /** All software belonging to a given category slug, for /category/[slug]. */
 export function getSoftwareByCategory(categorySlug: string): Software[] {
   return getAllSoftware().filter((item) => item.category === categorySlug);
-}
-
-/** Returns [] until entries actually carry a `pricing.model` value. */
-export function getSamePricingSoftware(software: Software, limit = 3): Software[] {
-  if (!software.pricing?.model) {
-    return [];
-  }
-
-  return getAllSoftware()
-    .filter(
-      (item) => item.slug !== software.slug && item.pricing?.model === software.pricing?.model
-    )
-    .slice(0, limit);
-}
-
-/**
- * No field in the current schema captures target company size, and none of
- * the current entries can be honestly bucketed by it — this intentionally
- * returns [] rather than guessing from unrelated fields.
- */
-export function getSameCompanySizeSoftware(_software: Software, limit = 3): Software[] {
-  return ([] as Software[]).slice(0, limit);
 }
 
 /**

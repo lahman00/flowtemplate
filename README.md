@@ -37,6 +37,9 @@ app/                    Routes (App Router)
   software/[slug]/       One page per software entry
   category/[slug]/        One page per category
   compare/                 /compare index + /compare/[a-vs-b] curated pairs
+  recommend/                Recommendation wizard + /recommend/results
+  internal/                  Private admin dashboards (noindex, not linked)
+  api/                        outbound-click / recommendation-click endpoints
   about|contact|privacy|terms/
   affiliate-disclosure|disclaimer|editorial-policy|sources-policy|
   corrections-policy|ai-usage|accessibility|cookies|trademark-notice/
@@ -44,6 +47,7 @@ data/
   software/*.json         One file per software entry (source of truth)
   categories/              Category definitions + loader
   comparisons.ts            Curated list of published comparison pairs
+  revenue/                    Affiliate-program research (data/revenue/affiliate-programs.ts)
 lib/
   site.ts                    Centralized brand constants (name, email, URL, theme color, version)
   generators.ts             Page copy generators (title, H1, FAQ, etc.)
@@ -55,7 +59,10 @@ lib/
   freshness.ts                     Real computed data-freshness stats
   structured-data.ts                JSON-LD builders
   legal.ts                           Shared list of legal/trust pages (drives footer + sitemap)
-components/               Reusable UI components (incl. LegalPageLayout)
+  recommend/                          Deterministic recommendation engine (scoring, keywords, events)
+  revenue/                             Affiliate manager, activation, revenue scoring, outbound events
+components/               Reusable UI components (incl. LegalPageLayout, recommend/ wizard pieces)
+config/                    Local-only credential templates (see config/*.example.json)
 scripts/validate-data.ts   Standalone data validator (npm run validate:data)
 docs/                      Architecture documentation
 .env.example               Every supported environment variable, all optional
@@ -78,6 +85,13 @@ possible pair — see `data/comparisons.ts`); each `/compare/[a]-vs-[b]` page
 is built entirely from fields already in the dataset, with an honest
 disclosure in place of an invented "cons" list. See
 [`docs/comparison-engine.md`](docs/comparison-engine.md).
+
+## Recommendations
+
+`/recommend` is a mobile-first wizard that matches your team, budget, and
+needs against the verified dataset and returns 3 recommendations — fully
+deterministic (no LLM, no external API), with every point of every score
+explained. See [`docs/recommendation-engine.md`](docs/recommendation-engine.md).
 
 ## Legal and trust
 

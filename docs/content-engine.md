@@ -142,32 +142,35 @@ of being written inline in a page or duplicated between the page and
 | `generateMetaDescription` | `<meta name="description">` / Open Graph |
 | `generateIntro` | The paragraph under the H1 |
 | `generateOverview` | The "About {name}" card body (description + best_for) |
-| `generateWhoShouldUseIt` | Built, not currently wired into the page |
 | `generateWhoShouldntUseIt` | Points to the real alternatives already on the page — never asserts an unverified weakness |
 | `generateComparisonIntro` | The "Top alternatives" section intro |
-| `generateMigrationTips` | Generic, honest migration guidance |
 | `generateChoosingGuide` | The "How to choose" card, now data-driven off `platforms` |
 | `generateFaq` | FAQ items (prefers `software.faq` if an entry ever supplies one, otherwise falls back to `lib/faq.ts`) |
+
+A Sprint 11 launch audit removed `generateWhoShouldUseIt` and
+`generateMigrationTips` — both were built but never wired into any page,
+and one had a live text bug (naively lowercasing a `best_for` string's
+first letter broke brand names like "HubSpot" into "hubSpot"). Rather than
+fix dead code, they were deleted; see git history if either capability is
+needed again.
 
 ## Related-software utilities (`lib/related.ts`)
 
 - `getRelatedSoftware` — powers the "Compare other tools" section.
-- `getSameCategorySoftware` — built and functional, not wired into the
-  software page (would duplicate the category page).
 - `getSoftwareByCategory` — powers `/category/[slug]`.
-- `getSamePricingSoftware`, `getSameCompanySizeSoftware` — built, return
-  `[]` today: no entry has `pricing.model` set, and there's no
-  company-size field in the schema at all. Not stubs pretending to work —
-  correctly reporting "no match" because there's genuinely no data yet.
 - `getPopularAlternatives` — "popular" is defined as *most often listed as
   another tool's alternative in this dataset*, a real number computed from
   our own data, not a fabricated rating or review count.
 
-## `/compare/[a]-vs-[b]` — prepared, not routed
+Same Sprint 11 audit removed `getSameCategorySoftware`,
+`getSamePricingSoftware`, and `getSameCompanySizeSoftware` — all three were
+built but never called from any page.
 
-Per Sprint 4's explicit instruction ("do NOT generate every page, only
-build the reusable engine"), still no `/compare` route exists. See
-`docs/comparison-engine.md`.
+## `/compare/[a]-vs-[b]`
+
+Routed since Sprint 7 at a curated set of pairs (not every combination —
+see `data/comparisons.ts`). See `docs/comparison-engine.md` for the full
+architecture.
 
 ## Adding a new software entry
 

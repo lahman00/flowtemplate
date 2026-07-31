@@ -9,8 +9,19 @@ export function generateH1(software: Software): string {
   return `Best ${software.name} alternatives`;
 }
 
+/** SERP snippets get cut off past ~155-160 chars — truncate at a word boundary rather than mid-word. */
+const META_DESCRIPTION_MAX_LENGTH = 155;
+
+function truncateAtWord(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  const truncated = text.slice(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(" ");
+  return `${(lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated).trimEnd()}…`;
+}
+
 export function generateMetaDescription(software: Software): string {
-  return `${software.description} Compare ${software.alternatives.length} real alternatives to find the best fit for your team.`;
+  const full = `${software.description} Compare ${software.alternatives.length} real alternatives to find the best fit for your team.`;
+  return truncateAtWord(full, META_DESCRIPTION_MAX_LENGTH);
 }
 
 export function generateIntro(software: Software): string {
@@ -20,11 +31,6 @@ export function generateIntro(software: Software): string {
 /** A slightly richer overview combining what it is with who it's positioned for. */
 export function generateOverview(software: Software): string {
   return `${software.description} ${software.bestFor}`;
-}
-
-/** Grounded in the vendor's own stated positioning — never an independent editorial claim. */
-export function generateWhoShouldUseIt(software: Software): string {
-  return `${software.name} is worth a closer look if this matches your situation: ${software.bestFor.charAt(0).toLowerCase()}${software.bestFor.slice(1)}`;
 }
 
 /**
@@ -39,11 +45,6 @@ export function generateWhoShouldntUseIt(software: Software): string {
 
 export function generateComparisonIntro(software: Software): string {
   return `See how the top ${software.name} alternatives compare on use case fit and core strengths.`;
-}
-
-/** Generic, honest migration guidance — no product-specific claims we haven't verified. */
-export function generateMigrationTips(software: Software): string {
-  return `Most teams start by exporting their existing ${software.name} data, then importing it into the new tool while running both in parallel until the switch is complete. Check each alternative's own import tools before committing to a full migration.`;
 }
 
 /** Data-driven "how to choose" guidance, grounded in whatever platforms/features this entry actually has. */

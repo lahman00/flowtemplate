@@ -22,7 +22,7 @@ export function OptionButton({
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "min-h-14 w-full rounded-xl border px-5 py-3 text-left transition active:scale-[0.98]",
+        "min-h-14 w-full rounded-xl border px-5 py-3 text-left transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
         selected
           ? "border-white bg-white text-zinc-950"
           : "border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10",

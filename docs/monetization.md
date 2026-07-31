@@ -43,15 +43,16 @@ None of the 30 JSON files set any of these fields.
   under the CTA button on `app/software/[slug]/page.tsx` — never shown
   today.
 
-## `lib/monetization.ts` — sponsored/featured/recommended
+## `lib/monetization.ts` — sponsored/featured
 
-- `isSponsored`, `isFeatured` — boolean checks on the two flags.
-- `getFeaturedSoftware(limit)` — filters for `featured === true`. Returns
-  `[]` today.
-- `getRecommendedSoftware(limit)` — prefers explicitly featured entries;
-  falls back to `getPopularAlternatives` (the same real, computed
-  "most often listed as an alternative" metric `lib/related.ts` uses for
-  "popular"). Never needs fabricated ratings to return a real list.
+- `isSponsored`, `isFeatured` — boolean checks on the two flags, used by
+  `components/ListingBadges.tsx`.
+
+A Sprint 11 launch audit removed `getFeaturedSoftware` and
+`getRecommendedSoftware` from this file — both were built but never called
+from any page (verified via grep, zero importers). `lib/related.ts`'s
+`getPopularAlternatives` remains the real, computed "most often listed as
+an alternative" ranking used elsewhere on the site.
 
 ## `components/ListingBadges.tsx`
 

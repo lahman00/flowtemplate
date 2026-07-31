@@ -16,7 +16,7 @@ export default function SoftwareNotFound() {
         </span>
 
         <h1 className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          We don&apos;t have that comparison yet
+          We don&apos;t have that software yet
         </h1>
 
         <p className="mt-4 max-w-md text-zinc-400">

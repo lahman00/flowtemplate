@@ -179,7 +179,8 @@ export function RecommendWizard() {
                 onChange={(event) => update("industry", event.target.value)}
                 type="text"
                 placeholder="e.g. Healthcare, e-commerce, education"
-                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07]"
+                aria-label="Industry"
+                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-white/60"
               />
               <p className="mt-2 text-xs text-zinc-500">
                 We collect this, but no product in our dataset is tagged by industry yet — so it
@@ -254,7 +255,8 @@ export function RecommendWizard() {
                 onChange={(event) => setIntegrationsInput(event.target.value)}
                 type="text"
                 placeholder="e.g. Slack, Google Drive"
-                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07]"
+                aria-label="Tools you need it to work with"
+                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-white/60"
               />
             </fieldset>
 

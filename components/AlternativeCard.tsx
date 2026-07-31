@@ -13,7 +13,7 @@ export function AlternativeCard({
   return (
     <Card className="flex h-full flex-col">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-zinc-600">#{rank}</span>
+        <span className="text-sm font-semibold text-zinc-500">#{rank}</span>
         {rank === 1 ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs font-semibold text-zinc-950">
             <Star className="h-3 w-3" fill="currentColor" />

@@ -78,8 +78,11 @@ See `docs/` for full architecture documentation:
 - `docs/content-engine.md` — data model, schema, generators, sourcing policy
 - `docs/categories.md` — category system
 - `docs/comparison-engine.md` — the `/compare` architecture and curated-pairs policy
+- `docs/recommendation-engine.md` — the deterministic `/recommend` scoring engine
 - `docs/monetization.md` — the affiliate/sponsorship/vendor-links architecture
-- `docs/legal-and-trust.md` — the 9 legal pages and what was verified
+- `docs/revenue.md` — affiliate research, revenue scoring, and commercial tiers
+- `docs/affiliate-applications.md` — the Tier A affiliate-program application checklist
+- `docs/legal-and-trust.md` — the 11 legal pages and what was verified
   before each claim was written
 - `docs/brand-and-analytics.md` — brand centralization, generated visual
   identity, and the analytics abstraction
