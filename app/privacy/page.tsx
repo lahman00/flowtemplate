@@ -22,7 +22,8 @@ export default function PrivacyPage() {
           heading: "Overview",
           body: (
             <p>
-              {SITE_NAME} is an informational comparison site. This page explains what happens —
+              {SITE_NAME}{" "}
+              is an informational comparison site. This page explains what happens —
               and, just as importantly, what doesn&apos;t happen — to your data when you use it.
             </p>
           ),
@@ -32,7 +33,8 @@ export default function PrivacyPage() {
           body: (
             <>
               <p>
-                {SITE_NAME} has no user accounts and no database. Searching for software or
+                {SITE_NAME}{" "}
+                has no user accounts and no database. Searching for software or
                 browsing comparisons doesn&apos;t submit any data to a server — it all happens
                 directly in your browser.
               </p>
@@ -60,7 +62,8 @@ export default function PrivacyPage() {
           heading: "Third-party links",
           body: (
             <p>
-              {SITE_NAME} describes and compares third-party software products. We link to
+              {SITE_NAME}{" "}
+              describes and compares third-party software products. We link to
               information about those products, but we don&apos;t control their sites or their
               privacy practices — review each vendor&apos;s own policy before using their
               product.

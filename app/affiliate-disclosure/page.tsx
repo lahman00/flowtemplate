@@ -35,7 +35,7 @@ export default function AffiliateDisclosurePage() {
             <p>
               {SITE_NAME} may join affiliate programs in the future. If that happens, some
               outbound links on this site may become affiliate links — meaning {SITE_NAME}
-              could earn a commission if you sign up for or purchase a product through that
+              {" "}could earn a commission if you sign up for or purchase a product through that
               link, <strong className="text-white">at no extra cost to you</strong>. The price
               you pay a vendor is never higher because you came from an affiliate link.
             </p>

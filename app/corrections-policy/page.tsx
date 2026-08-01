@@ -67,7 +67,8 @@ export default function CorrectionsPolicyPage() {
           heading: "No guaranteed timeline",
           body: (
             <p>
-              {SITE_NAME} is run by a small team, and we can&apos;t promise an immediate fix or
+              {SITE_NAME}{" "}
+              is run by a small team, and we can&apos;t promise an immediate fix or
               a specific response time. We do review every report we receive.
             </p>
           ),

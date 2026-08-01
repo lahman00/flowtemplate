@@ -62,7 +62,8 @@ export default function EditorialPolicyPage() {
           heading: "No fabricated ratings or reviews",
           body: (
             <p>
-              {SITE_NAME} does not publish star ratings, review counts, testimonials, or
+              {SITE_NAME}{" "}
+              does not publish star ratings, review counts, testimonials, or
               &quot;best of&quot; rankings based on anything other than the sourced facts on
               each page. We have not added any of these, and we won&apos;t add them without a
               genuine, disclosed source.

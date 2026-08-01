@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
 import { getOrganizationJsonLd } from "@/lib/structured-data";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_THEME_COLOR, SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_THEME_COLOR, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,7 +13,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const title = `${SITE_NAME} — Find the right software alternatives`;
+const title = `${SITE_NAME} — ${SITE_TAGLINE}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

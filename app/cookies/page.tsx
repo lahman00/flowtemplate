@@ -49,7 +49,8 @@ export default function CookiesPage() {
           body: (
             <p>
               Cookie consent banners exist to get permission before setting non-essential
-              cookies. Since {SITE_NAME} doesn&apos;t set any today, there&apos;s nothing to ask
+              cookies. Since {SITE_NAME}
+              {" "}doesn&apos;t set any today, there&apos;s nothing to ask
               permission for — showing a banner anyway would be misleading, not more
               transparent.
             </p>

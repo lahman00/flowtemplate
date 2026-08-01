@@ -47,7 +47,8 @@ export default function AiUsagePage() {
           body: (
             <p>
               To be direct about this: we do not claim that every individual fact on every page
-              of {SITE_NAME} has been manually re-verified by a human after being drafted.
+              of {SITE_NAME}
+              {" "}has been manually re-verified by a human after being drafted.
               Content is AI-assisted and directed by the site&apos;s operator, not independently
               fact-checked line by line for every entry.
             </p>

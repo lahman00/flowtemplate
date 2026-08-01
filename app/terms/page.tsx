@@ -31,7 +31,8 @@ export default function TermsPage() {
           heading: "Use of the site",
           body: (
             <p>
-              {SITE_NAME} provides general, informational comparisons between software products
+              {SITE_NAME}{" "}
+              provides general, informational comparisons between software products
               to help you research alternatives. It is not professional advice, and it isn&apos;t
               a substitute for verifying pricing, features, and terms directly with each vendor
               before you decide to switch. See our{" "}

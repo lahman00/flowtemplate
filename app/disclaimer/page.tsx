@@ -32,7 +32,8 @@ export default function DisclaimerPage() {
           heading: "Verify pricing and features yourself",
           body: (
             <p>
-              {SITE_NAME} does not track or publish specific pricing figures — they change too
+              {SITE_NAME}{" "}
+              does not track or publish specific pricing figures — they change too
               often to keep reliably accurate on a periodically reviewed page. Always confirm
               current pricing, plan limits, and feature availability directly on the official
               vendor&apos;s own site before making a decision. See our{" "}

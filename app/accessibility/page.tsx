@@ -56,7 +56,8 @@ export default function AccessibilityPage() {
           heading: "Reporting a barrier",
           body: (
             <p>
-              If you run into something on {SITE_NAME} that&apos;s hard to use with assistive
+              If you run into something on {SITE_NAME}
+              {" "}that&apos;s hard to use with assistive
               technology, tell us — email{" "}
               <a href={`mailto:${SITE_EMAIL}`} className="text-white underline underline-offset-4">
                 {SITE_EMAIL}

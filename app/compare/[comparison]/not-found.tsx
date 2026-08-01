@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { ButtonLink } from "@/components/ButtonLink";
 
 export const metadata: Metadata = {
-  title: "Comparison Not Found",
+  title: "Comparison not found",
 };
 
 export default function ComparisonNotFound() {

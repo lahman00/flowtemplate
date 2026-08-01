@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { ButtonLink } from "@/components/ButtonLink";
 
 export const metadata: Metadata = {
-  title: "Page Not Found",
+  title: "Page not found",
 };
 
 export default function NotFound() {

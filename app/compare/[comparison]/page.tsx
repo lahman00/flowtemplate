@@ -33,10 +33,11 @@ type ComparePageProps = {
 
 // Only ever render the curated set below — a valid-but-uncurated pair
 // (e.g. two real software slugs that just happen to parse) must 404, not
-// render on demand. Task 3 is explicit: publish exactly 20, not every
-// combination.
-export const dynamicParams = false;
-
+// render as a full page. resolvePublishedComparison() below enforces this
+// on every request, so dynamicParams doesn't need to be forced to false —
+// leaving it at the default lets an uncurated pair fall through to this
+// segment's own not-found.tsx (a "we curate, not every pair" explanation)
+// instead of the generic site-wide 404.
 export function generateStaticParams() {
   return PUBLISHED_COMPARISONS.map(([slugA, slugB]) => ({
     comparison: getComparisonSlug(slugA, slugB),
