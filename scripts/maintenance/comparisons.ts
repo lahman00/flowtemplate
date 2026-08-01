@@ -113,7 +113,7 @@ async function run() {
   }));
 
   return {
-    summary: `Evaluated ${(allSoftware.length * (allSoftware.length - 1)) / 2} possible pairs (20 already published). Found ${candidates.length} candidate(s) with enough data and real relevance (skipped ${skippedInsufficientData} for thin data, ${skippedNoRelevance} for no category/alternative relationship). Nothing was published — see docs/maintenance-system.md.`,
+    summary: `Evaluated ${(allSoftware.length * (allSoftware.length - 1)) / 2} possible pairs (${PUBLISHED_COMPARISONS.length} already published). Found ${candidates.length} candidate(s) with enough data and real relevance (skipped ${skippedInsufficientData} for thin data, ${skippedNoRelevance} for no category/alternative relationship). Nothing was published — see docs/maintenance-system.md.`,
     issues,
     data: {
       totalCandidates: candidates.length,

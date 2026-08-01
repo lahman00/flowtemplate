@@ -31,6 +31,20 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["miro", "lucidchart"],
   ["zapier", "make"],
   ["hubspot", "pipedrive"],
+  // Sprint 13 — highest-priority candidates from the maintenance system's
+  // comparison-opportunity agent (npm run maintenance:comparisons), each a
+  // direct-alternative or same-category pair with enough real data on both
+  // sides. See var/maintenance/comparisons.md for the underlying analysis.
+  ["doodle", "cal-com"],
+  ["make", "n8n"],
+  ["figma", "canva"],
+  ["calendly", "doodle"],
+  ["calendly", "cal-com"],
+  ["hubspot", "salesforce"],
+  ["salesforce", "pipedrive"],
+  ["gitbook", "guru"],
+  ["confluence", "gitbook"],
+  ["zapier", "n8n"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
