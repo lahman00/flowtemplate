@@ -1,0 +1,38 @@
+{
+  "name": "Midjourney",
+  "slug": "midjourney",
+  "category": "ai",
+  "description": "Midjourney is described on its own documentation as \"your portal to transforming text into amazing images and videos\" — an AI image/video generation tool.",
+  "website": "https://www.midjourney.com",
+  "platforms": ["Web"],
+  "best_for": "Entering text prompts to generate a set of images, then varying, upscaling, remixing, or animating them into short videos, per the official documentation's description of core use.",
+  "features": [
+    "Text-to-image generation",
+    "Variations (Vary) for iterating on an image",
+    "Upscaling",
+    "Remix (edit prompt/parameters on existing image)",
+    "Image-to-video (turns a still image into a short video)",
+    "Style Explorer for discovering style reference codes"
+  ],
+  "sources": [
+    "https://docs.midjourney.com/hc/en-us",
+    "https://docs.midjourney.com/hc/en-us/articles/27870484040333-Comparing-Midjourney-Plans"
+  ],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Jasper",
+      "slug": "jasper",
+      "description": "An AI platform purpose-built for marketing teams that orchestrates specialized AI agents including multimodal (text and image) generation.",
+      "best_for": "Marketing teams needing brand-governed visual and text content together.",
+      "strengths": ["Brand/style governance", "Multimodal (text+image)", "Enterprise workflow pipelines"]
+    },
+    {
+      "name": "ElevenLabs",
+      "slug": "elevenlabs",
+      "description": "An AI audio platform providing voice generation and conversational voice agents.",
+      "best_for": "Creators needing narration, dubbing, or voice agents rather than visuals.",
+      "strengths": ["Large voice/language library", "Dubbing with emotion preservation", "Voice agent analytics"]
+    }
+  ]
+}

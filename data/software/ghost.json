@@ -1,0 +1,35 @@
+{
+  "name": "Ghost",
+  "slug": "ghost",
+  "category": "cms",
+  "description": "Ghost describes itself as \"a powerful app for professional publishers to create, share, and grow a business around their content\" — an open-source blogging and newsletter platform with built-in membership and subscription tools.",
+  "website": "https://ghost.org",
+  "platforms": ["Web"],
+  "best_for": "Ghost positions itself for creators (YouTubers, bloggers, podcasters, musicians), publishers/journalists, businesses running content marketing, and developers.",
+  "features": [
+    "Custom site design/branding control",
+    "Rich publishing editor (galleries, video, audio, embeds)",
+    "Native email newsletter delivery with segmentation",
+    "Membership and paid-subscription management",
+    "Native analytics",
+    "0% payment processing fees (via Stripe integration)"
+  ],
+  "sources": ["https://ghost.org"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "An open-source publishing platform with block editing, themes, and plugins.",
+      "best_for": "Creators and businesses wanting a self-hosted, highly extensible publishing platform.",
+      "strengths": ["Plugin ecosystem", "Open-source", "Theme variety"]
+    },
+    {
+      "name": "Squarespace",
+      "slug": "squarespace",
+      "description": "A website builder combining design templates with integrated business/marketing tools.",
+      "best_for": "Creatives and small businesses wanting an all-in-one hosted site.",
+      "strengths": ["Design-forward templates", "Integrated email marketing", "Managed hosting"]
+    }
+  ]
+}

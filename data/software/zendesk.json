@@ -1,0 +1,35 @@
+{
+  "name": "Zendesk",
+  "slug": "zendesk",
+  "category": "customer-support",
+  "description": "Zendesk is an AI-first customer service platform combining self-learning AI agents with unified ticketing and omnichannel workflow tools, serving both customer service and internal employee service use cases.",
+  "website": "https://www.zendesk.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for customer service teams, employee/IT/HR service departments, and contact centers spanning startups to large enterprises across industries like retail, financial services, healthcare, and government.",
+  "features": [
+    "AI agents that autonomously resolve tickets end-to-end",
+    "Unified omnichannel inbox (email, chat, phone, social, messaging)",
+    "Ticketing with routing and automation",
+    "Knowledge base / help center for self-service",
+    "AI-driven quality assurance and analytics dashboards",
+    "Workforce/contact-center management (forecasting, scheduling)"
+  ],
+  "sources": ["https://www.zendesk.com", "https://support.zendesk.com/hc/en-us/articles/4408846407066-About-the-Zendesk-Support-mobile-app"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Intercom",
+      "slug": "intercom",
+      "description": "A customer service platform pairing a full helpdesk with Fin, a natively integrated AI agent.",
+      "best_for": "Businesses wanting AI-agent-led resolution alongside human conversations.",
+      "strengths": ["Fin AI Agent", "Omnichannel inbox", "350+ integrations"]
+    },
+    {
+      "name": "Freshdesk",
+      "slug": "freshdesk",
+      "description": "An AI-powered customer service solution designed to be easy to set up and boost agent productivity.",
+      "best_for": "Mid-market to enterprise support teams wanting quick setup and AI ticket resolution.",
+      "strengths": ["AI Copilot for agents", "Omnichannel messaging", "Unified workspace"]
+    }
+  ]
+}

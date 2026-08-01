@@ -1,0 +1,35 @@
+{
+  "name": "Wix",
+  "slug": "wix",
+  "category": "cms",
+  "description": "Wix is a website-builder platform that lets users create professional websites quickly without coding skills, with hosting included.",
+  "website": "https://www.wix.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Wix positions itself for small business owners, entrepreneurs, creatives, and individuals seeking an accessible way to establish an online presence, including a free plan.",
+  "features": [
+    "Drag-and-drop editor",
+    "Pre-designed templates",
+    "Free website creation option",
+    "Built-in ecommerce",
+    "Hosting included",
+    "SEO tools"
+  ],
+  "sources": ["https://www.wix.com", "https://www.wix.com/mobile/wix-app"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Squarespace",
+      "slug": "squarespace",
+      "description": "A template-driven website builder with integrated commerce and marketing tools.",
+      "best_for": "Entrepreneurs and creatives wanting a design-forward all-in-one site.",
+      "strengths": ["Polished templates", "Integrated invoicing/scheduling", "Mobile app for management"]
+    },
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "An open-source CMS with block editing and a large plugin ecosystem.",
+      "best_for": "Users wanting deep customization and self-hosting.",
+      "strengths": ["Extensibility via plugins", "Open-source", "Large community/theme library"]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Bitbucket",
+  "slug": "bitbucket",
+  "category": "developer-tools",
+  "description": "Bitbucket is Atlassian's Git code hosting and CI/CD product, described on its site as \"Code & CI/CD, powered by AI and the Atlassian platform,\" built around native Jira integration.",
+  "website": "https://bitbucket.org",
+  "platforms": ["Web"],
+  "best_for": "Teams already using Jira who want commit messages/issue keys to automatically update Jira status and reduce context-switching between planning and code.",
+  "features": [
+    "Native Jira issue-status integration via commit messages",
+    "Bitbucket Pipelines (built-in CI/CD)",
+    "AI-powered code review, search, and chat",
+    "Pull request review with third-party report integration",
+    "Snyk-based automated security scanning",
+    "Branch permissions and merge checks (governance)"
+  ],
+  "sources": ["https://bitbucket.org"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "GitHub",
+      "slug": "github",
+      "description": "The widely-adopted developer platform combining repos, Actions CI/CD, and Copilot AI tooling.",
+      "best_for": "Individual developers through large enterprises across many industries.",
+      "strengths": ["Actions automation", "Codespaces cloud dev environments", "Large third-party Marketplace"]
+    },
+    {
+      "name": "GitLab",
+      "slug": "gitlab",
+      "description": "A single-application DevSecOps platform spanning planning, CI/CD, and security scanning.",
+      "best_for": "Organizations wanting to consolidate multiple DevOps tools into one platform.",
+      "strengths": ["Built-in SAST/DAST scanning", "GitLab Duo AI agents", "Self-managed or SaaS deployment"]
+    }
+  ]
+}

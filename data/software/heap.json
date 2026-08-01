@@ -1,0 +1,35 @@
+{
+  "name": "Heap",
+  "slug": "heap",
+  "category": "analytics",
+  "description": "Heap is a product analytics platform that \"automatically captures every user interaction\" so teams always have the data needed to increase conversion, retention, and customer delight.",
+  "website": "https://www.heap.io",
+  "platforms": ["Web"],
+  "best_for": "Positioned for product teams (activation/conversion/retention), marketing teams (acquisition performance), and data teams (behavioral analysis without coding), with industry solutions for SaaS, retail/ecommerce, healthcare, and financial services.",
+  "features": [
+    "Automatic data capture via a single code snippet (no manual event tagging)",
+    "Sense AI/Sense Chat for AI-powered analytics",
+    "Integrated session replay with directed navigation to key moments",
+    "Heap Illuminate (automated friction/opportunity detection)",
+    "Journey Maps and heatmaps",
+    "100+ bi-directional integrations"
+  ],
+  "sources": ["https://www.heap.io"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Mixpanel",
+      "slug": "mixpanel",
+      "description": "A product intelligence platform combining analytics, session replay, experiments, and AI-powered insights.",
+      "best_for": "Product, data, and engineering teams wanting fast, data-driven product decisions.",
+      "strengths": ["Fast querying", "Session Replay", "Metric Trees"]
+    },
+    {
+      "name": "Amplitude",
+      "slug": "amplitude",
+      "description": "A product analytics platform bringing AI into product-building, with experimentation and feature management.",
+      "best_for": "Product, data, and engineering teams needing product analytics with feature experimentation.",
+      "strengths": ["Instant query results", "Session replay and heatmaps", "Feature experimentation"]
+    }
+  ]
+}

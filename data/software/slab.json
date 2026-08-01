@@ -1,0 +1,35 @@
+{
+  "name": "Slab",
+  "slug": "slab",
+  "category": "documentation",
+  "description": "Slab is a knowledge management platform (wiki) for creating, organizing, and discovering company information across a workforce.",
+  "website": "https://slab.com",
+  "platforms": ["Web"],
+  "best_for": "Organizations of all technical skill levels (\"non-technical to tech-savvy\" employees) seeking company-wide knowledge sharing; used by companies such as Asana, Ashby, Benchling, Fivetran, and Forbes per the site.",
+  "features": [
+    "Hierarchical, topic-based organization with multi-topic labeling",
+    "Real-time collaborative editor with rich media/embeds",
+    "Fast full-text search with relevance ranking by reads/views/links",
+    "Admin insights on post helpfulness and stale content",
+    "Deep integrations: Google Workspace (Drive sync), Slack, GitHub (live markdown sync), Asana, Okta",
+    "Free tier for up to 10 users"
+  ],
+  "sources": ["https://slab.com", "https://slab.com/features"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Nuclino",
+      "slug": "nuclino",
+      "description": "A unified collaborative workspace combining docs, wiki, and light project management.",
+      "best_for": "Teams wanting to consolidate knowledge and project tracking in one simple tool.",
+      "strengths": ["Fast/instant search", "Visual Canvas", "Cross-platform (web/desktop/mobile)"]
+    },
+    {
+      "name": "Slite",
+      "slug": "slite",
+      "description": "An AI-powered knowledge base focused on keeping docs synced and accurate.",
+      "best_for": "Teams migrating from Notion/Confluence/ClickUp who want automated doc upkeep.",
+      "strengths": ["AI drift detection", "Integration monitoring", "Verification workflow"]
+    }
+  ]
+}

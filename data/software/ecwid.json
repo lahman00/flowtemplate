@@ -1,0 +1,35 @@
+{
+  "name": "Ecwid",
+  "slug": "ecwid",
+  "category": "ecommerce",
+  "description": "Ecwid is an ecommerce platform, branded \"#1 Ecommerce Shopping Cart & Online Store,\" that lets merchants launch a store with no transaction fees and embed selling widgets into existing sites.",
+  "website": "https://www.ecwid.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for businesses at any stage, from first-time sellers to scaling enterprises, with named verticals including dropshipping, wholesale, fashion, nonprofits, restaurants, and individual creators.",
+  "features": [
+    "Embeddable shopping cart/widget for existing websites",
+    "Social selling (Instagram, Facebook, TikTok, Pinterest, Snapchat, WhatsApp)",
+    "Built-in POS for in-person sales",
+    "Automated tax calculation and shipping labels",
+    "Abandoned-cart email recovery",
+    "AI-powered product photo enhancement"
+  ],
+  "sources": ["https://www.ecwid.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Shopify",
+      "slug": "shopify",
+      "description": "An all-in-one hosted commerce platform with its own storefront, checkout, and POS.",
+      "best_for": "Merchants wanting a dedicated, full-featured store rather than an embedded widget.",
+      "strengths": ["Shop Pay checkout", "Large app ecosystem", "Integrated multichannel tools"]
+    },
+    {
+      "name": "PrestaShop",
+      "slug": "prestashop",
+      "description": "An open-source self-hosted commerce platform giving merchants full platform ownership.",
+      "best_for": "Merchants wanting full platform ownership and customization.",
+      "strengths": ["Thousands of modules/themes", "Self-hosted control", "Optional managed hosting"]
+    }
+  ]
+}

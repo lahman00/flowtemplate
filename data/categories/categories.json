@@ -38,5 +38,55 @@
     "slug": "scheduling",
     "name": "Scheduling",
     "description": "Book meetings and coordinate calendars."
+  },
+  {
+    "slug": "ai",
+    "name": "AI",
+    "description": "AI-powered assistants and generative tools for writing, images, and research."
+  },
+  {
+    "slug": "developer-tools",
+    "name": "Developer Tools",
+    "description": "Code hosting, testing, and deployment tools for software teams."
+  },
+  {
+    "slug": "marketing",
+    "name": "Marketing",
+    "description": "Email campaigns, social scheduling, and marketing automation."
+  },
+  {
+    "slug": "analytics",
+    "name": "Analytics",
+    "description": "Track, measure, and understand how people use your product or site."
+  },
+  {
+    "slug": "customer-support",
+    "name": "Customer Support",
+    "description": "Help desks and live chat for handling customer conversations."
+  },
+  {
+    "slug": "cms",
+    "name": "CMS",
+    "description": "Build and manage websites and content without custom code."
+  },
+  {
+    "slug": "ecommerce",
+    "name": "Ecommerce",
+    "description": "Sell products online with storefronts, checkout, and inventory tools."
+  },
+  {
+    "slug": "documentation",
+    "name": "Documentation",
+    "description": "Write and publish product docs, API references, and knowledge bases."
+  },
+  {
+    "slug": "api",
+    "name": "API",
+    "description": "APIs and platforms for payments, messaging, and connecting services."
+  },
+  {
+    "slug": "security",
+    "name": "Security",
+    "description": "Password management, identity, and access-security tools."
   }
 ]

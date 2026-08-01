@@ -1,0 +1,35 @@
+{
+  "name": "Squarespace",
+  "slug": "squarespace",
+  "category": "cms",
+  "description": "Squarespace is a website-builder platform (\"A website makes it real\") that lets people create, customize, and manage a website alongside integrated business tools like ecommerce, scheduling, and invoicing — without coding.",
+  "website": "https://www.squarespace.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Squarespace positions itself for entrepreneurs, freelancers, creatives, and small business owners across industries (beauty, fitness, real estate, nonprofits, education, professional services) who want a website plus built-in business operations tools.",
+  "features": [
+    "Drag-and-drop editor with customizable templates",
+    "AI website builder (Blueprint AI)",
+    "Integrated online store/ecommerce",
+    "Appointment scheduling and invoicing",
+    "Email marketing and SEO tools",
+    "Domain registration and hosting included"
+  ],
+  "sources": ["https://www.squarespace.com", "https://support.squarespace.com/hc/en-us/articles/360002093708-Edit-your-site-with-the-Squarespace-app"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Wix",
+      "slug": "wix",
+      "description": "A drag-and-drop website builder with hosting and ecommerce built in.",
+      "best_for": "Small business owners wanting an accessible free-to-start site builder.",
+      "strengths": ["Free tier", "Drag-and-drop editor", "Template variety"]
+    },
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "An open-source, block-based publishing platform extensible via plugins and themes.",
+      "best_for": "Users wanting maximum customization and self-hosting control.",
+      "strengths": ["Plugin ecosystem", "Open-source flexibility", "Large developer community"]
+    }
+  ]
+}

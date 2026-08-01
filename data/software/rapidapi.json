@@ -1,0 +1,35 @@
+{
+  "name": "RapidAPI",
+  "slug": "rapidapi",
+  "category": "api",
+  "description": "RapidAPI (per its own documentation) is \"the world's largest API hub,\" used by millions of developers to discover, test, and connect to thousands of third-party APIs using a single API key, while also letting API providers distribute and monetize their APIs.",
+  "website": "https://rapidapi.com",
+  "platforms": ["Web"],
+  "best_for": "RapidAPI's documentation states it serves API consumers integrating existing APIs, API builders/providers wanting to distribute and monetize APIs, and teams/enterprises needing centralized management of internal API ecosystems.",
+  "features": [
+    "Unified API access via a single key/format across thousands of APIs",
+    "Usage analytics dashboard (requests, latency, error rates)",
+    "API monetization options for providers (public/private, revenue models)",
+    "Automated API testing and monitoring tools",
+    "Team/organization collaboration and API ownership management",
+    "Studio platform for building and publishing APIs (REST, SOAP, GraphQL)"
+  ],
+  "sources": ["https://docs.rapidapi.com/docs/what-is-rapidapi"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Kong",
+      "slug": "kong",
+      "description": "Provides API gateway and management infrastructure for organizations to connect, secure, and govern their own APIs.",
+      "best_for": "Platform/API teams managing internal or partner-facing API infrastructure at scale.",
+      "strengths": ["API lifecycle management", "AI gateway/token governance", "Security and traffic policy enforcement"]
+    },
+    {
+      "name": "Apigee",
+      "slug": "apigee",
+      "description": "Google Cloud's enterprise API management platform for designing, securing, publishing, and analyzing APIs.",
+      "best_for": "Enterprises needing to manage and expose many internal/partner APIs with strong governance.",
+      "strengths": ["API analytics", "Developer portal", "Policy/quota enforcement"]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Buffer",
+  "slug": "buffer",
+  "category": "marketing",
+  "description": "A \"social media workspace\" for planning and scheduling content across social platforms, with tools for creation, publishing, and community engagement.",
+  "website": "https://buffer.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for creators, small businesses, agencies, nonprofits, higher-education institutions, and developers wanting simplified social media management.",
+  "features": [
+    "Publish: schedule content across 11+ platforms (Facebook, Instagram, TikTok, LinkedIn, Threads, YouTube, X)",
+    "Create: content idea organization plus built-in AI Assistant for drafting/repurposing",
+    "Community: unified dashboard for responding to comments across channels",
+    "Insights: analytics/reporting on performance and posting strategy",
+    "Collaborate: team workflows with editing, approvals, and access permissions",
+    "Start Page: customizable link-in-bio landing pages"
+  ],
+  "sources": ["https://buffer.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Hootsuite",
+      "slug": "hootsuite",
+      "description": "A social media management platform for posting, tracking, and competitive performance across networks.",
+      "best_for": "Social media managers and enterprises managing multiple brand accounts.",
+      "strengths": ["Unified inbox", "Competitor/sentiment analysis", "Employee advocacy tools"]
+    },
+    {
+      "name": "Sprout Social",
+      "slug": "sprout-social",
+      "description": "A social intelligence platform turning real-time social signals into direction for teams.",
+      "best_for": "Teams and agencies needing social listening and analytics at scale.",
+      "strengths": ["AI-powered inbox (Trellis)", "Social listening", "Influencer marketing tools"]
+    }
+  ]
+}

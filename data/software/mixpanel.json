@@ -1,0 +1,35 @@
+{
+  "name": "Mixpanel",
+  "slug": "mixpanel",
+  "category": "analytics",
+  "description": "Mixpanel describes itself as \"the product intelligence platform for the AI era,\" combining analytics, session replay, experiments, feature flags, and AI-powered insights.",
+  "website": "https://mixpanel.com",
+  "platforms": ["Web"],
+  "best_for": "Positioned for product, data, marketing, and engineering teams — from startups to enterprises across SaaS, ecommerce, media, healthcare, and finance — who want fast, data-driven product decisions without needing SQL.",
+  "features": [
+    "Product and web analytics with fast querying",
+    "Session Replay (behavior recording and playback)",
+    "Experiments (A/B testing and feature experimentation)",
+    "Metric Trees for hierarchical metric organization",
+    "Mixpanel AI (automated insight/agent surfacing)",
+    "Warehouse/CDP connectors and headless/programmatic data access"
+  ],
+  "sources": ["https://mixpanel.com", "https://mixpanel.com/platform"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Amplitude",
+      "slug": "amplitude",
+      "description": "A product analytics platform bringing AI into product-building, with experimentation and feature management.",
+      "best_for": "Product, data, and engineering teams needing product analytics with feature experimentation.",
+      "strengths": ["Instant query results", "Session replay and heatmaps", "Feature experimentation"]
+    },
+    {
+      "name": "Heap",
+      "slug": "heap",
+      "description": "A product analytics platform that automatically captures every user interaction without manual event tagging.",
+      "best_for": "Product teams wanting automatic data capture for conversion and retention analysis.",
+      "strengths": ["Automatic data capture", "Session replay", "Automated friction detection"]
+    }
+  ]
+}

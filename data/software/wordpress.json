@@ -1,0 +1,35 @@
+{
+  "name": "WordPress",
+  "slug": "wordpress",
+  "category": "cms",
+  "description": "Open-source publishing platform used to build and manage websites — from blogs to enterprise sites — via block-based visual editing, themes, and an extensible plugin system.",
+  "website": "https://wordpress.org",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned by WordPress for creators, small businesses, enterprises, entrepreneurs, professional developers, and first-time bloggers who want a flexible, self-hosted publishing platform.",
+  "features": [
+    "Block-based visual editor",
+    "Thousands of customizable themes",
+    "Extensive plugin library (stores, analytics, newsletters, social)",
+    "Open-source, self-hostable software",
+    "Visual revision history",
+    "Official mobile apps for publishing on the go"
+  ],
+  "sources": ["https://wordpress.org", "https://wordpress.org/mobile/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Wix",
+      "slug": "wix",
+      "description": "A website builder for creating professional sites without coding, with hosting and business tools built in.",
+      "best_for": "Small business owners and individuals wanting an accessible, hosted way to build a site.",
+      "strengths": ["No-code drag-and-drop editor", "Hosting included", "Free tier"]
+    },
+    {
+      "name": "Squarespace",
+      "slug": "squarespace",
+      "description": "An all-in-one website builder combining design templates with ecommerce, scheduling, and marketing tools.",
+      "best_for": "Entrepreneurs and creatives who want a polished site plus built-in business tools.",
+      "strengths": ["Template-driven design", "Integrated commerce/invoicing", "Managed hosting"]
+    }
+  ]
+}

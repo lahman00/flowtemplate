@@ -1,0 +1,35 @@
+{
+  "name": "Slite",
+  "slug": "slite",
+  "category": "documentation",
+  "description": "Slite is an AI-powered knowledge base that monitors connected tools to detect outdated documentation and suggests updates, aiming to keep docs accurate as a \"single source of truth.\"",
+  "website": "https://slite.com",
+  "platforms": ["Web", "macOS", "Windows", "iOS", "Android"],
+  "best_for": "Organizations (the site cites \"3,000+ leading companies\") across IT & Operations, Product & Engineering, Customer Support, and HR, including teams migrating from Notion, Confluence, or ClickUp.",
+  "features": [
+    "Slite Agent that monitors integrated tools (Slack, Linear, GitHub, Jira, HubSpot, Asana, etc.) for changes",
+    "Automatic \"knowledge drift\" detection with generated draft updates",
+    "AI/agent-powered search across docs and connected tools",
+    "Team verification/approval workflow with audit trail",
+    "Analytics on what team members read and search for",
+    "MCP (Model Context Protocol) compatibility"
+  ],
+  "sources": ["https://slite.com", "https://slite.com/features", "https://slite.com/download"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Slab",
+      "slug": "slab",
+      "description": "A knowledge management wiki emphasizing fast search and clean organization for company-wide knowledge sharing.",
+      "best_for": "Non-technical to tech-savvy teams wanting a simple, well-organized company wiki.",
+      "strengths": ["Hierarchical organization", "Fast search", "Google/Slack/GitHub integrations"]
+    },
+    {
+      "name": "Document360",
+      "slug": "document360",
+      "description": "An AI-powered knowledge base for internal and external/customer-facing documentation.",
+      "best_for": "Support and technical writing teams needing both internal KB and public docs with analytics.",
+      "strengths": ["AI chatbot", "Workflow builder", "Ticket deflection"]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Front",
+  "slug": "front",
+  "category": "customer-support",
+  "description": "Front is described by the vendor as \"the AI customer operations platform,\" integrating shared team inboxes, ticketing, and AI tools to handle complex, cross-team customer support workflows.",
+  "website": "https://front.com",
+  "platforms": ["Web", "iOS", "Android", "macOS", "Windows"],
+  "best_for": "Positioned for organizations with complex customer operations spanning support, operations, inbound sales, account management, and customer success teams (9,300+ companies), in industries like financial services, tech, logistics, manufacturing, and travel.",
+  "features": [
+    "Shared inboxes for team email collaboration",
+    "Autopilot automation and Copilot AI assistant for complex requests",
+    "Smart QA and Smart CSAT (AI-driven quality/satisfaction scoring)",
+    "Omnichannel inbox including live chat and ticketing",
+    "No-code workflow automation across teams",
+    "160+ integrations and API"
+  ],
+  "sources": ["https://front.com", "https://front.com/download", "https://help.front.com/en/articles/2140"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Help Scout",
+      "slug": "help-scout",
+      "description": "A customer service platform centralizing email and other channels into a shared inbox with AI drafting.",
+      "best_for": "SaaS, ecommerce, and services teams wanting a simpler shared-inbox tool.",
+      "strengths": ["Unified shared inbox", "AI-assisted replies", "Embeddable help center"]
+    },
+    {
+      "name": "Intercom",
+      "slug": "intercom",
+      "description": "A customer service platform pairing a full helpdesk with Fin, a natively integrated AI agent.",
+      "best_for": "Businesses wanting AI-agent-led resolution alongside human conversations.",
+      "strengths": ["Fin AI Agent", "Omnichannel inbox", "350+ integrations"]
+    }
+  ]
+}

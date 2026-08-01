@@ -1,0 +1,35 @@
+{
+  "name": "Sanity",
+  "slug": "sanity",
+  "category": "cms",
+  "description": "Sanity is a headless CMS and \"content operating system\" for structured content, letting teams model, manage, and automate content across web, mobile, and agentic platforms via APIs.",
+  "website": "https://www.sanity.io",
+  "platforms": ["Web"],
+  "best_for": "Sanity positions itself for development teams, content operations professionals, and enterprises managing complex, structured content workflows across multiple brands and touchpoints.",
+  "features": [
+    "Structured content with schema-as-code (JSON-based)",
+    "Content Studio editorial interface",
+    "GROQ query language",
+    "AI-powered Content Agent / Agent Actions",
+    "In-context visual editing",
+    "Real-time webhooks and Content Releases (staged publishing)"
+  ],
+  "sources": ["https://www.sanity.io"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Contentful",
+      "slug": "contentful",
+      "description": "A Digital Experience Platform for managing and personalizing content across channels.",
+      "best_for": "Enterprise/mid-market marketing, product, and content teams.",
+      "strengths": ["AI-driven personalization", "Multi-brand delivery", "Localization automation"]
+    },
+    {
+      "name": "Webflow",
+      "slug": "webflow",
+      "description": "A visual site builder with a built-in CMS, hosting, and AI-driven optimization.",
+      "best_for": "Marketers and designers who want visual site control paired with a CMS.",
+      "strengths": ["Visual CMS binding", "Managed hosting", "Design-to-code export"]
+    }
+  ]
+}

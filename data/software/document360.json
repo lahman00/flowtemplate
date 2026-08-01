@@ -1,0 +1,35 @@
+{
+  "name": "Document360",
+  "slug": "document360",
+  "category": "documentation",
+  "description": "Document360 is an AI-powered knowledge base platform for creating, managing, and delivering internal and external documentation, including software docs, SOPs, and API docs.",
+  "website": "https://document360.com",
+  "platforms": ["Web"],
+  "best_for": "Serves multiple roles (support teams, technical writers, product managers, engineers) across industries such as SaaS, IT/consulting, financial services, healthcare, education, manufacturing, retail, and nonprofits, for both internal knowledge bases and external customer/API documentation.",
+  "features": [
+    "AI-powered conversational search grounded in your articles, plus an AI chatbot",
+    "AI writing agent that generates documentation from videos and files",
+    "MCP Server integration with ChatGPT, Claude, and Copilot",
+    "Custom workflow builder, PDF/Word import, PDF export",
+    "Support-ticket deflector and duplicate-content detection",
+    "SSO/SCIM, role-based access, IP restriction, SOC2 and ISO 27001:2022 certification"
+  ],
+  "sources": ["https://document360.com", "https://document360.com/features/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "ReadMe",
+      "slug": "readme",
+      "description": "A developer-focused API documentation platform with an interactive API explorer and Git-based workflows.",
+      "best_for": "API-first teams wanting docs tightly integrated with OpenAPI specs and code repos.",
+      "strengths": ["OpenAPI-driven API explorer", "GitHub/GitLab sync", "AI PR-based doc drafting"]
+    },
+    {
+      "name": "Slite",
+      "slug": "slite",
+      "description": "An AI knowledge base that auto-detects when docs drift out of sync with connected tools.",
+      "best_for": "Teams wanting continuously self-maintaining internal documentation.",
+      "strengths": ["Knowledge-drift detection", "AI-generated update drafts", "Verification workflow"]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ReadMe",
+  "slug": "readme",
+  "category": "documentation",
+  "description": "ReadMe is a developer-friendly API documentation platform that combines a visual editor with AI-powered tools to help teams create, manage, and publish technical/API documentation.",
+  "website": "https://readme.com",
+  "platforms": ["Web"],
+  "best_for": "Positioned for \"teams who know good docs drive adoption\" — API teams, technical writers, and developer-facing product teams, ranging from individual developers (free Starter tier) to large enterprises needing SSO/compliance (Enterprise tier).",
+  "features": [
+    "Interactive API reference/explorer generated from OpenAPI specs",
+    "WYSIWYG editor supporting Markdown, OpenAPI, and MDX",
+    "AI tools that draft doc updates from pull requests, plus a writing/linting assistant",
+    "Bi-directional Git sync (GitHub, GitHub Enterprise, GitLab) with branching/approval workflows",
+    "SSO (Entra ID, Google Workspace, Okta), SOC2/GDPR compliance, audit logs"
+  ],
+  "sources": ["https://readme.com", "https://readme.com/pricing"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Document360",
+      "slug": "document360",
+      "description": "An AI-powered knowledge base platform for internal and external documentation, SOPs, and API docs.",
+      "best_for": "Support teams, technical writers, and product/engineering teams needing a broad-purpose knowledge base.",
+      "strengths": ["AI chatbot/search", "Workflow builder", "60+ integrations"]
+    },
+    {
+      "name": "Archbee",
+      "slug": "archbee",
+      "description": "A knowledge portal platform for turning documentation into searchable, interactive customer-facing portals.",
+      "best_for": "Technical teams building customer self-service docs to cut support tickets.",
+      "strengths": ["Native Git-like branching", "Custom domain hosting", "SOC2/GDPR compliance"]
+    }
+  ]
+}

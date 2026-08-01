@@ -1,0 +1,35 @@
+{
+  "name": "Auth0",
+  "slug": "auth0",
+  "category": "security",
+  "description": "Auth0 is an authentication and authorization platform (an Okta product) that the vendor describes as \"an easy to implement, adaptable authentication and authorization platform\" for integrating identity into applications.",
+  "website": "https://auth0.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Serves developers building consumer apps, internal tools, and enterprise software, plus startups, enterprises needing SSO/SCIM/multi-tenancy, and B2B/B2C SaaS companies.",
+  "features": [
+    "Universal Login and passwordless authentication",
+    "Multi-Factor Authentication and breached-password/bot detection",
+    "Fine-Grained Authorization (FGA) and Token Vault",
+    "Single Sign-On, SCIM provisioning, multi-tenancy",
+    "Auth0 for AI Agents (async authorization, RAG pipeline controls)",
+    "Actions framework for extensibility"
+  ],
+  "sources": ["https://auth0.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Okta",
+      "slug": "okta",
+      "description": "Auth0's parent-company workforce identity platform, providing SSO and adaptive MFA for employees/partners across 8,000+ integrations.",
+      "best_for": "Enterprises managing internal workforce access rather than embedding customer-facing auth into an app.",
+      "strengths": ["Large pre-built integration network", "Identity governance", "Lifecycle management"]
+    },
+    {
+      "name": "1Password",
+      "slug": "1password",
+      "description": "Provides a credential vault and secrets management platform rather than a developer authentication API.",
+      "best_for": "Teams needing a shared vault for passwords/secrets rather than building login flows into their own product.",
+      "strengths": ["Secrets management", "Privileged access", "SaaS governance"]
+    }
+  ]
+}

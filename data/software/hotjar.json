@@ -1,0 +1,35 @@
+{
+  "name": "Hotjar",
+  "slug": "hotjar",
+  "category": "analytics",
+  "description": "Hotjar (part of Contentsquare) is an experience-intelligence platform for understanding and improving user behavior on websites/apps — \"go from insight to impact, fast.\"",
+  "website": "https://www.hotjar.com",
+  "platforms": ["Web"],
+  "best_for": "Positioned for product, design, and marketing teams who want to \"deliver experiences that convert\" by understanding user journeys and reducing drop-offs.",
+  "features": [
+    "Heatmaps (clicks, movement, scroll behavior)",
+    "Session recordings/replay",
+    "Funnels (conversion drop-off analysis)",
+    "Surveys with AI-powered summarization",
+    "User Tests and 1:1 Interviews",
+    "Integrations with Google Analytics, HubSpot, Optimizely"
+  ],
+  "sources": ["https://www.hotjar.com", "https://www.hotjar.com/product/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Heap",
+      "slug": "heap",
+      "description": "A product analytics platform that automatically captures every user interaction without manual event tagging.",
+      "best_for": "Product teams wanting automatic data capture for conversion and retention analysis.",
+      "strengths": ["Automatic data capture", "Session replay", "Journey Maps and heatmaps"]
+    },
+    {
+      "name": "Matomo",
+      "slug": "matomo",
+      "description": "Privacy-first analytics with full data ownership via self-hosted or cloud deployment.",
+      "best_for": "Organizations wanting privacy-compliant analytics without vendor lock-in.",
+      "strengths": ["Heatmaps and session recordings", "Cookieless tracking", "Self-hosted or cloud"]
+    }
+  ]
+}

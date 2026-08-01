@@ -1,0 +1,35 @@
+{
+  "name": "Webflow",
+  "slug": "webflow",
+  "category": "cms",
+  "description": "Webflow describes itself as \"the agentic web platform for modern businesses\" — a visual site builder combining full CSS/HTML design control, a built-in CMS, hosting, and AI-driven optimization tools.",
+  "website": "https://webflow.com",
+  "platforms": ["Web"],
+  "best_for": "Webflow positions itself for marketers who want to build without developer bottlenecks, designers wanting pixel-perfect visual control, developers who want to empower non-technical teams while retaining code-level control, and agencies/freelancers building client sites at scale.",
+  "features": [
+    "Visual builder with full CSS/HTML control",
+    "Built-in CMS for dynamic content",
+    "AI-powered site building and content generation",
+    "Managed hosting with global CDN (99.99% uptime cited)",
+    "Team collaboration (roles, branching, version control)",
+    "Design-to-code export (clean HTML/CSS/JS)"
+  ],
+  "sources": ["https://webflow.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "An open-source publishing platform with block-based editing, themes, and plugins.",
+      "best_for": "Creators and businesses wanting a self-hosted, highly extensible CMS.",
+      "strengths": ["Huge plugin ecosystem", "Self-hosting flexibility", "Large community"]
+    },
+    {
+      "name": "Squarespace",
+      "slug": "squarespace",
+      "description": "A template-based website builder with integrated business tools.",
+      "best_for": "Entrepreneurs wanting a fast, design-forward site without developer involvement.",
+      "strengths": ["Polished templates", "All-in-one commerce/marketing", "Managed hosting"]
+    }
+  ]
+}

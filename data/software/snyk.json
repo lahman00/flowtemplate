@@ -1,0 +1,35 @@
+{
+  "name": "Snyk",
+  "slug": "snyk",
+  "category": "security",
+  "description": "Snyk describes itself as \"the AI Security Fabric\" — an independent security layer that continuously validates AI-generated code, governs development agents, and secures applications across the software development lifecycle.",
+  "website": "https://snyk.io",
+  "platforms": ["Web"],
+  "best_for": "Targets development teams using AI coding assistants, security/DevOps teams managing application security, and enterprises scaling AI adoption who need to secure agentic development workflows.",
+  "features": [
+    "Snyk Code — static application security scanning",
+    "Snyk Open Source — dependency vulnerability management",
+    "Snyk Container — container vulnerability scanning",
+    "Snyk IaC — infrastructure-as-code security",
+    "Snyk API and Web (DAST) — dynamic application/API testing",
+    "AI agent governance and AI inventory tracking"
+  ],
+  "sources": ["https://snyk.io", "https://snyk.io/platform/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Cloudflare",
+      "slug": "cloudflare",
+      "description": "Offers network/application-layer security (WAF, DDoS, bot management) rather than source-code/SDLC scanning.",
+      "best_for": "Organizations wanting perimeter and runtime web application protection.",
+      "strengths": ["Global edge network", "Unified security dashboard", "Large-scale threat blocking"]
+    },
+    {
+      "name": "Okta",
+      "slug": "okta",
+      "description": "Secures workforce and customer identity via SSO, MFA, and governance rather than code security.",
+      "best_for": "Enterprises needing centralized identity/access control as part of their security stack.",
+      "strengths": ["Large integration network", "Identity governance", "AI agent identity security"]
+    }
+  ]
+}

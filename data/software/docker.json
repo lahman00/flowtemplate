@@ -1,0 +1,35 @@
+{
+  "name": "Docker",
+  "slug": "docker",
+  "category": "developer-tools",
+  "description": "Docker is a platform for \"accelerated container application development,\" providing tools to build, ship, and run containerized applications with security and isolation.",
+  "website": "https://www.docker.com",
+  "platforms": ["Web", "macOS", "Windows", "Linux"],
+  "best_for": "Docker serves individual developers (free Personal tier) up through Pro, Team, and Business/enterprise tiers; the site states 91% of Fortune 100 companies run on Docker and 20M+ developers build on it daily.",
+  "features": [
+    "Docker Desktop for local containerization",
+    "Docker Hub for discovering/sharing container images",
+    "Docker Scout (software supply-chain security)",
+    "Docker Hardened Images (SLSA Level 3 patched images)",
+    "Docker Sandboxes (microVM isolation for AI agent sessions)",
+    "Docker Model Runner (local-first LLM inference)"
+  ],
+  "sources": ["https://www.docker.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Vercel",
+      "slug": "vercel",
+      "description": "Agentic infrastructure for deploying web apps and AI agents at global scale with Git-connected preview deploys.",
+      "best_for": "Developers and platform builders deploying apps and autonomous agent workflows.",
+      "strengths": ["AI Gateway/SDK", "Vercel Delivery Network", "Sandbox environments for untrusted code"]
+    },
+    {
+      "name": "Netlify",
+      "slug": "netlify",
+      "description": "A platform to create with AI or code and deploy instantly on production infrastructure.",
+      "best_for": "Product engineers, AI developers, marketers, and designers building web apps.",
+      "strengths": ["Deploy previews for every change", "Serverless functions", "Built-in AI Gateway"]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Shopify",
+  "slug": "shopify",
+  "category": "ecommerce",
+  "description": "Shopify is an all-in-one commerce platform that lets businesses build an online store, process payments, and sell across web, mobile, social, and in-person channels.",
+  "website": "https://www.shopify.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for businesses of all sizes — from solo entrepreneurs launching their first store to large enterprises.",
+  "features": [
+    "Website builder with themes and AI-assisted design",
+    "Shopify Checkout with Shop Pay",
+    "Built-in and third-party payment processing",
+    "Multichannel selling (social, marketplaces, POS)",
+    "21,000+ app ecosystem",
+    "Shipping/international tools (Shopify Markets)"
+  ],
+  "sources": ["https://www.shopify.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "BigCommerce",
+      "slug": "bigcommerce",
+      "description": "An ecommerce platform supporting both B2C and B2B storefronts, marketplaces, and social commerce channels.",
+      "best_for": "Businesses needing B2B account/pricing workflows alongside a standard storefront.",
+      "strengths": ["No-cost-per-transaction B2B tooling", "600+ enterprise integrations", "Multi-channel via Feedonomics"]
+    },
+    {
+      "name": "WooCommerce",
+      "slug": "woocommerce",
+      "description": "An open-source ecommerce platform built as a WordPress plugin, giving merchants full control over their store.",
+      "best_for": "WordPress users/developers wanting full customization ownership.",
+      "strengths": ["Self-hosted flexibility", "Any payment processor", "Large plugin ecosystem"]
+    }
+  ]
+}

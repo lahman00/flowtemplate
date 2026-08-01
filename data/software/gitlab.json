@@ -1,0 +1,35 @@
+{
+  "name": "GitLab",
+  "slug": "gitlab",
+  "category": "developer-tools",
+  "description": "GitLab describes itself as \"an intelligent orchestration platform for DevSecOps,\" an end-to-end platform covering the software lifecycle from planning to security to deployment.",
+  "website": "https://about.gitlab.com",
+  "platforms": ["Web", "Linux"],
+  "best_for": "Targets enterprises, small businesses, and public-sector organizations, with named industry solutions for financial services, telecom, automotive, aerospace, education, and government.",
+  "features": [
+    "Built-in CI/CD pipelines",
+    "SAST/DAST/secret detection security scanning",
+    "GitLab Duo Agent Platform (AI agents for issues to merge requests)",
+    "Value stream management / DORA metrics analytics",
+    "GitLab Pages (static site hosting)",
+    "Epics, iterations, and agile planning tools"
+  ],
+  "sources": ["https://about.gitlab.com", "https://about.gitlab.com/features/", "https://about.gitlab.com/install/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "GitHub",
+      "slug": "github",
+      "description": "A developer platform combining source control, CI/CD (Actions), and AI coding assistance (Copilot).",
+      "best_for": "Teams of any size, from learners to enterprises, building software collaboratively.",
+      "strengths": ["Large ecosystem/Marketplace", "GitHub Actions automation", "Copilot AI assistance"]
+    },
+    {
+      "name": "Bitbucket",
+      "slug": "bitbucket",
+      "description": "Atlassian's Git platform centered on Jira integration and built-in Pipelines CI/CD.",
+      "best_for": "Jira-centric teams wanting tight planning-to-code integration.",
+      "strengths": ["Native Jira workflow", "Cloud and self-hosted options", "Snyk-based security scanning"]
+    }
+  ]
+}

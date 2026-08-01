@@ -1,0 +1,35 @@
+{
+  "name": "GitHub",
+  "slug": "github",
+  "category": "developer-tools",
+  "description": "GitHub is a developer platform where developers, agents, and code come together, described on its own site as \"the world's most widely adopted developer platform\" for building software collaboratively.",
+  "website": "https://github.com",
+  "platforms": ["Web", "macOS", "Windows", "iOS", "Android"],
+  "best_for": "Positioned for teams \"scaling your development process or just learning how to code,\" spanning startups to enterprises across industries like tech, automotive, and financial services.",
+  "features": [
+    "Pull requests and code review tools",
+    "GitHub Actions for CI/CD automation",
+    "GitHub Codespaces (cloud dev environments)",
+    "Copilot AI code assistance and Copilot Autofix",
+    "Code scanning, secret scanning, Dependabot (security)",
+    "Issues and Projects for planning/tracking"
+  ],
+  "sources": ["https://github.com", "https://github.com/features", "https://desktop.github.com/download/", "https://github.com/mobile"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "GitLab",
+      "slug": "gitlab",
+      "description": "An intelligent orchestration platform for DevSecOps offering source control, CI/CD, and security in one product.",
+      "best_for": "End-to-end DevSecOps for enterprises, small businesses, and public-sector orgs.",
+      "strengths": ["Built-in CI/CD", "Integrated security scanning", "Single-application consolidation"]
+    },
+    {
+      "name": "Bitbucket",
+      "slug": "bitbucket",
+      "description": "A Git solution built around deep Jira integration and Atlassian-platform CI/CD.",
+      "best_for": "Teams already using Jira who want reduced context-switching between planning and code.",
+      "strengths": ["Native Jira issue linking", "Bitbucket Pipelines CI/CD", "Cloud + self-hosted options"]
+    }
+  ]
+}

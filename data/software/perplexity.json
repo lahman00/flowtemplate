@@ -1,0 +1,39 @@
+{
+  "name": "Perplexity",
+  "slug": "perplexity",
+  "category": "ai",
+  "description": "Perplexity describes itself as an AI answer engine that researches the open web in real time and returns concise, cited answers.",
+  "website": "https://www.perplexity.ai/",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Perplexity positions itself for people who want real-time, cited answers to questions rather than a list of links — i.e., research/search replacement, with Pro tiers for deeper \"Pro Search,\" file uploads, and Spaces (saved research collections).",
+  "features": [
+    "Real-time web-grounded search answers",
+    "Inline citations on every answer",
+    "Multiple selectable AI models",
+    "Pro Search",
+    "Spaces (saved research collections)",
+    "Comet Browser integration"
+  ],
+  "sources": [
+    "https://www.perplexity.ai/help-center/en/articles/10352155-what-is-perplexity",
+    "https://www.perplexity.ai/hub",
+    "https://docs.perplexity.ai/"
+  ],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "ChatGPT",
+      "slug": "chatgpt",
+      "description": "OpenAI's AI assistant offering chat, voice, vision, and agentic \"Work\"/\"Codex\" capabilities.",
+      "best_for": "Users wanting one broad assistant across chat, research, documents, and coding.",
+      "strengths": ["Voice and vision input", "Desktop apps with built-in browser", "Broad task coverage"]
+    },
+    {
+      "name": "Gemini",
+      "slug": "gemini",
+      "description": "Google DeepMind's family of AI models for building and using intelligent agents across text, image, video, and audio.",
+      "best_for": "Users needing deep research across very large documents/contexts with Search integration.",
+      "strengths": ["Long-context processing", "Google Search AI Mode integration", "Agentic task execution"]
+    }
+  ]
+}

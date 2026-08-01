@@ -1,0 +1,35 @@
+{
+  "name": "Stripe",
+  "slug": "stripe",
+  "category": "api",
+  "description": "Stripe describes itself as \"financial infrastructure to grow your revenue,\" letting businesses accept payments, offer financial services, and implement custom revenue models — from your first transaction to your billionth.",
+  "website": "https://stripe.com",
+  "platforms": ["Web"],
+  "best_for": "Stripe states it serves enterprises (including half of Fortune 100 companies), startups, SaaS platforms, marketplaces, ecommerce businesses, and AI companies building payment or billing flows.",
+  "features": [
+    "Global payment processing (135+ currencies/payment methods)",
+    "Subscription and billing management (200M+ active subscriptions on Stripe Billing)",
+    "Embedded payments for marketplaces/platforms",
+    "Card issuing programs",
+    "Crypto and stablecoin money movement",
+    "Agentic Commerce Protocol for AI-driven purchases"
+  ],
+  "sources": ["https://stripe.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Plaid",
+      "slug": "plaid",
+      "description": "Connects applications to bank accounts and financial data, often used alongside payment processors to verify accounts or pull transaction data.",
+      "best_for": "Companies building fintech products that need to verify bank accounts or access financial data.",
+      "strengths": ["12,000+ bank connections", "Account/identity verification", "ACH/RTP/FedNow payment rails"]
+    },
+    {
+      "name": "Twilio",
+      "slug": "twilio",
+      "description": "A broader developer API platform for communications (SMS, voice, email) rather than payments.",
+      "best_for": "Companies needing customer communications (e.g., payment confirmations, fraud alerts) alongside a payments stack.",
+      "strengths": ["Multi-channel messaging", "Identity/verification APIs", "Large developer ecosystem"]
+    }
+  ]
+}

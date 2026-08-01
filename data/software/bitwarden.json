@@ -1,0 +1,35 @@
+{
+  "name": "Bitwarden",
+  "slug": "bitwarden",
+  "category": "security",
+  "description": "Bitwarden is an open-source, end-to-end encrypted password manager described by the vendor as \"the most trusted password manager,\" securing passwords, passkeys, and secrets for people, AI agents, and machines.",
+  "website": "https://bitwarden.com",
+  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "best_for": "The vendor states millions of users choose it to protect themselves and their families, alongside businesses and development/DevOps teams needing secrets management.",
+  "features": [
+    "End-to-end encrypted, open-source password vault",
+    "Integrated TOTP authenticator",
+    "Secure Send for sharing sensitive info",
+    "Passwordless/passkey authentication",
+    "Self-hosting capability",
+    "Secrets Manager for development teams"
+  ],
+  "sources": ["https://bitwarden.com", "https://bitwarden.com/download/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "1Password",
+      "slug": "1password",
+      "description": "A unified vault for identities, credentials, and secrets aimed at enterprise access management.",
+      "best_for": "Organizations wanting integrated privileged access and SaaS governance alongside password management.",
+      "strengths": ["Device trust", "Privileged access", "SaaS management"]
+    },
+    {
+      "name": "LastPass",
+      "slug": "lastpass",
+      "description": "A zero-knowledge password manager with family and business plans.",
+      "best_for": "Individuals and families wanting a straightforward vault with dark web monitoring.",
+      "strengths": ["Dark web monitoring", "Family sharing", "MSP support"]
+    }
+  ]
+}

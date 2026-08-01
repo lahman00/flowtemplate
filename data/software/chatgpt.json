@@ -1,0 +1,41 @@
+{
+  "name": "ChatGPT",
+  "slug": "chatgpt",
+  "category": "ai",
+  "description": "ChatGPT is OpenAI's AI assistant app, offering chat, voice, vision, and agentic \"Work\"/\"Codex\" capabilities for asking questions, researching, and creating documents.",
+  "website": "https://openai.com/chatgpt/",
+  "platforms": ["Web", "iOS", "Android", "macOS", "Windows"],
+  "best_for": "Positioned by OpenAI as a general assistant for chatting, searching, research/analysis, document/spreadsheet/presentation creation (\"Work\"), and software development with local files and terminals (\"Codex\").",
+  "features": [
+    "Voice input/conversation",
+    "Vision (image understanding via camera/upload)",
+    "Cross-device conversation sync",
+    "\"Work\" mode for research and document/spreadsheet/deck creation",
+    "\"Codex\" for coding with local repos/terminal",
+    "Built-in browser in desktop app"
+  ],
+  "sources": [
+    "https://openai.com/index/introducing-the-chatgpt-app-for-ios/",
+    "https://openai.com/index/chatgpt-can-now-see-hear-and-speak/",
+    "https://help.openai.com/en/articles/9982051-using-the-chatgpt-windows-app",
+    "https://help.openai.com/en/articles/9275200-downloading-the-chatgpt-macos-app",
+    "https://openai.com/chatgpt/desktop/"
+  ],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Perplexity",
+      "slug": "perplexity",
+      "description": "An AI answer engine that researches the open web in real time and returns concise, cited answers.",
+      "best_for": "People who want real-time, cited answers to questions rather than a list of links.",
+      "strengths": ["Inline citations", "Real-time web grounding", "Multi-model choice"]
+    },
+    {
+      "name": "Gemini",
+      "slug": "gemini",
+      "description": "Google DeepMind's family of AI models for building and using intelligent agents across text, image, video, and audio.",
+      "best_for": "Developers, enterprises, and consumers already in the Google ecosystem needing agentic or long-context reasoning.",
+      "strengths": ["Long-context processing", "Google Search AI Mode integration", "Agentic coding tools"]
+    }
+  ]
+}

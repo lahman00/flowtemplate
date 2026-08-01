@@ -1,0 +1,35 @@
+{
+  "name": "Netlify",
+  "slug": "netlify",
+  "category": "developer-tools",
+  "description": "Netlify is a unified platform to \"create with AI or code, deploy instantly on production infrastructure,\" supporting deploys via Git, CLI, drag-and-drop, or AI agents.",
+  "website": "https://www.netlify.com",
+  "platforms": ["Web"],
+  "best_for": "Positioned for diverse teams — product engineers, AI developers, marketers, designers, and ops personnel — building AI-powered apps, marketing sites, e-commerce storefronts, fullstack apps, and internal tools.",
+  "features": [
+    "Multiple deploy paths: Git, CLI, drag-and-drop, AI Agent Runners",
+    "Serverless functions (edge, background, scheduled)",
+    "AI Gateway for model access (OpenAI, Anthropic, Gemini)",
+    "Netlify Database and Blobs storage",
+    "Deploy previews and one-click rollbacks",
+    "Global edge network (100+ locations) with 99.99% uptime SLA"
+  ],
+  "sources": ["https://www.netlify.com", "https://www.netlify.com/platform/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Vercel",
+      "slug": "vercel",
+      "description": "Agentic infrastructure for deploying web apps and AI agents at global scale with Git-connected preview deploys.",
+      "best_for": "Developers and platform builders deploying apps and autonomous agent workflows.",
+      "strengths": ["AI Gateway/SDK", "Vercel Delivery Network", "Sandbox environments for untrusted code"]
+    },
+    {
+      "name": "Docker",
+      "slug": "docker",
+      "description": "A platform for building, shipping, and running containerized applications.",
+      "best_for": "Developers and enterprises standardizing application packaging/deployment via containers.",
+      "strengths": ["Docker Desktop local dev", "Docker Hub image registry", "OCI-compliant open standards"]
+    }
+  ]
+}

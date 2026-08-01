@@ -1,0 +1,35 @@
+{
+  "name": "BigCommerce",
+  "slug": "bigcommerce",
+  "category": "ecommerce",
+  "description": "BigCommerce is an ecommerce platform (\"Commerce built for momentum\") supporting both B2C and B2B storefronts, marketplaces, and social commerce channels.",
+  "website": "https://www.bigcommerce.com",
+  "platforms": ["Web"],
+  "best_for": "Serves a range from emerging/SMB brands (via free trial, emerging-brand programs) to enterprise merchants needing B2B features like account-specific pricing and approval workflows.",
+  "features": [
+    "Drag-and-drop store builder with code-level customization",
+    "One-page checkout with digital wallets/BNPL",
+    "130+ payment solutions, 20+ embedded providers",
+    "B2B tools (account pricing, quotes, approvals)",
+    "600+ app integrations (ERP/CRM/PIM/WMS)",
+    "Multi-channel selling via Feedonomics (150+ marketplaces)"
+  ],
+  "sources": ["https://www.bigcommerce.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Shopify",
+      "slug": "shopify",
+      "description": "An all-in-one hosted commerce platform spanning web, mobile, and POS.",
+      "best_for": "Merchants wanting a fast, managed setup from solo founders to enterprises.",
+      "strengths": ["Large app store", "Shop Pay checkout conversion", "Integrated POS"]
+    },
+    {
+      "name": "Ecwid",
+      "slug": "ecwid",
+      "description": "An ecommerce platform that lets merchants launch a store with no transaction fees and embed selling widgets into existing sites.",
+      "best_for": "Sellers wanting to add a store to an existing website rather than rebuild it.",
+      "strengths": ["No transaction fees claim", "Social-commerce sync", "POS included"]
+    }
+  ]
+}

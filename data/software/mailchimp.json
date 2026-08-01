@@ -1,0 +1,35 @@
+{
+  "name": "Mailchimp",
+  "slug": "mailchimp",
+  "category": "marketing",
+  "description": "An email & SMS marketing platform combining marketing analytics, automations, and AI tools to help businesses drive revenue through integrated customer communications.",
+  "website": "https://mailchimp.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for small to mid-sized businesses (retail/e-commerce, hospitality, nonprofits, professional services, content creators) who want an easy-to-use email/SMS marketing tool without needing extensive marketing experience.",
+  "features": [
+    "Drag-and-drop email builder with 300+ templates and AI content generation",
+    "Integrated SMS marketing campaigns",
+    "Always-on marketing automations (welcome sequences, customer journeys)",
+    "Analytics dashboards for opens, clicks, and engagement",
+    "Audience segmentation and personalization",
+    "300+ native integrations (Shopify, WooCommerce, Stripe, Salesforce, Zapier)"
+  ],
+  "sources": ["https://mailchimp.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "ActiveCampaign",
+      "slug": "activecampaign",
+      "description": "An autonomous marketing platform where AI agents handle email, SMS, WhatsApp, and CRM tasks backed by customer data.",
+      "best_for": "Growing businesses that want to automate marketing and sales work and reduce manual effort.",
+      "strengths": ["Active Intelligence AI", "Visual automation builder", "1,000+ integrations"]
+    },
+    {
+      "name": "Klaviyo",
+      "slug": "klaviyo",
+      "description": "An AI marketing and service platform built as an autonomous B2C CRM unifying customer data with omnichannel automation.",
+      "best_for": "Consumer/B2C brands, especially e-commerce retailers, wanting unified customer data and marketing.",
+      "strengths": ["Composer AI campaign generation", "Omnichannel marketing", "Unified customer data platform"]
+    }
+  ]
+}

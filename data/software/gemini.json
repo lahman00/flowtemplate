@@ -1,0 +1,35 @@
+{
+  "name": "Gemini",
+  "slug": "gemini",
+  "category": "ai",
+  "description": "Gemini is Google DeepMind's family of AI models, positioned as \"frontier intelligence\" for building and using intelligent agents that reason across text, images, video, and audio.",
+  "website": "https://deepmind.google/models/gemini/",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Google positions Gemini across segments — developers/engineers (via API and agentic coding), enterprises (via an Agent Platform for automation), knowledge workers (document analysis/reasoning), and general consumers (via the Gemini app).",
+  "features": [
+    "Multimodal understanding (text, image, video, audio)",
+    "Agentic coding assistance",
+    "Long-context processing (very large token windows)",
+    "Multi-step tool-using task execution",
+    "Google Search \"AI Mode\" integration",
+    "Enterprise Agent Platform for automation"
+  ],
+  "sources": ["https://deepmind.google/models/gemini/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "ChatGPT",
+      "slug": "chatgpt",
+      "description": "OpenAI's AI assistant offering chat, voice, vision, and agentic \"Work\"/\"Codex\" capabilities.",
+      "best_for": "General assistant use spanning chat, documents, and dev work.",
+      "strengths": ["Voice/vision input", "Desktop apps", "Broad plugin/app ecosystem"]
+    },
+    {
+      "name": "Perplexity",
+      "slug": "perplexity",
+      "description": "A citation-first answer engine focused on real-time web research.",
+      "best_for": "Fact-checked, sourced answers to specific questions.",
+      "strengths": ["Inline citations", "Real-time grounding", "Dedicated browser (Comet)"]
+    }
+  ]
+}

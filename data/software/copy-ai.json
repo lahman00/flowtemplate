@@ -1,0 +1,35 @@
+{
+  "name": "Copy.ai",
+  "slug": "copy-ai",
+  "category": "ai",
+  "description": "Copy.ai describes itself as \"The First AI-Native GTM Platform,\" a unified system meant to replace disconnected AI copilots across sales, marketing, and operations.",
+  "website": "https://www.copy.ai/",
+  "platforms": ["Web"],
+  "best_for": "Copy.ai positions itself for go-to-market teams — sales (prospecting, lead processing, deal management), marketing (content, ABM, localization), and operations (lead intelligence, CRM enrichment) — as a replacement for fragmented point-solution copilots.",
+  "features": [
+    "Copy Agents for automated guardrailed workflows",
+    "Tables (unified data foundation across sources)",
+    "Infobase company-knowledge repository",
+    "Brand Voice consistency controls",
+    "2,000+ integrations (Salesforce, HubSpot, Gong, Zapier, etc.)",
+    "LLM-agnostic (OpenAI, Anthropic, Gemini, Perplexity)"
+  ],
+  "sources": ["https://www.copy.ai/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Jasper",
+      "slug": "jasper",
+      "description": "A marketing-specific AI agent platform with strong brand-governance tooling, narrower than Copy.ai's full GTM scope.",
+      "best_for": "Marketing teams prioritizing brand consistency and content pipelines.",
+      "strengths": ["Brand Voice/Style Guides", "100+ marketing agents", "Multimodal content"]
+    },
+    {
+      "name": "ChatGPT",
+      "slug": "chatgpt",
+      "description": "A general-purpose AI assistant usable for GTM writing tasks.",
+      "best_for": "Teams wanting a flexible assistant rather than a dedicated GTM automation suite.",
+      "strengths": ["Broad task versatility", "Wide platform availability", "Coding capability via Codex"]
+    }
+  ]
+}

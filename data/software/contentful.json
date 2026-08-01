@@ -1,0 +1,35 @@
+{
+  "name": "Contentful",
+  "slug": "contentful",
+  "category": "cms",
+  "description": "Contentful describes itself as a Digital Experience Platform (DXP) using AI-driven analytics to help organizations manage, personalize, and optimize digital content across multiple channels and touchpoints.",
+  "website": "https://www.contentful.com",
+  "platforms": ["Web"],
+  "best_for": "Contentful positions itself for growth marketing teams, product and developer teams, content teams, and mid-market/enterprise organizations needing centralized, multi-channel content management.",
+  "features": [
+    "Centralized, modular content architecture",
+    "AI-powered personalization and content generation",
+    "No-code experimentation and A/B testing",
+    "Multi-channel, multi-brand content delivery",
+    "Localization and translation automation",
+    "Front-end hosting capabilities"
+  ],
+  "sources": ["https://www.contentful.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Sanity",
+      "slug": "sanity",
+      "description": "A headless CMS / content operating system for structured content managed via schema-as-code and APIs.",
+      "best_for": "Development teams needing structured, API-first content across web, mobile, and other surfaces.",
+      "strengths": ["GROQ query language", "Schema-as-code", "AI-powered Content Agent"]
+    },
+    {
+      "name": "Webflow",
+      "slug": "webflow",
+      "description": "A visual site builder with a built-in CMS, hosting, and AI-driven optimization.",
+      "best_for": "Marketers and designers who want visual site control paired with a CMS.",
+      "strengths": ["Visual CMS binding", "Managed hosting", "Design-to-code export"]
+    }
+  ]
+}

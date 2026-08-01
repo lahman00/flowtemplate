@@ -1,0 +1,35 @@
+{
+  "name": "Matomo",
+  "slug": "matomo",
+  "category": "analytics",
+  "description": "Matomo describes itself as \"privacy-first analytics you can trust,\" delivering accurate, GDPR-compliant analytics with full data ownership via self-hosted or cloud deployment.",
+  "website": "https://matomo.org",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for organizations wanting privacy-compliant analytics without vendor lock-in — enterprises prioritizing data ownership, public sector bodies with regulatory requirements, and teams seeking a Google Analytics alternative.",
+  "features": [
+    "Unsampled data with no sampling limitations",
+    "Cookieless tracking and data anonymization options",
+    "Self-hosted or cloud deployment with full data ownership",
+    "Heatmaps and session recordings",
+    "A/B testing and personalization",
+    "Funnel/flow analysis and raw data export"
+  ],
+  "sources": ["https://matomo.org", "https://matomo.org/integrate/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Google Analytics",
+      "slug": "google-analytics",
+      "description": "A free analytics tool from Google measuring customer behavior across websites and apps.",
+      "best_for": "Businesses of every size wanting free, easy measurement unified with Google's ad platforms.",
+      "strengths": ["Machine-learning insights", "Cross-platform attribution", "Google Ads integration"]
+    },
+    {
+      "name": "Hotjar",
+      "slug": "hotjar",
+      "description": "An experience-intelligence platform for understanding and improving user behavior on websites/apps.",
+      "best_for": "Product, design, and marketing teams wanting to reduce drop-offs and improve conversion.",
+      "strengths": ["Heatmaps", "Session recordings", "AI-summarized surveys"]
+    }
+  ]
+}

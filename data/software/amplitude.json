@@ -1,0 +1,35 @@
+{
+  "name": "Amplitude",
+  "slug": "amplitude",
+  "category": "analytics",
+  "description": "Amplitude positions itself as bringing \"AI into every step of building self-improving products,\" combining product analytics, feedback, experimentation, and feature management.",
+  "website": "https://amplitude.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for product, data, engineering, marketing, and executive teams at companies from startups (free tier) to enterprises, across financial services, B2B SaaS, media, healthcare, and ecommerce.",
+  "features": [
+    "Product analytics and web analytics with instant query results",
+    "\"360-Journeys\" view of user actions across the full customer journey",
+    "Root cause / anomaly analysis",
+    "Session replay and heatmaps",
+    "Feature experimentation and feature management/flagging",
+    "AI-powered feedback analysis and 400+ partner integrations"
+  ],
+  "sources": ["https://amplitude.com", "https://amplitude.com/product"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Mixpanel",
+      "slug": "mixpanel",
+      "description": "A product intelligence platform combining analytics, session replay, experiments, and AI-powered insights.",
+      "best_for": "Product, data, and engineering teams wanting fast, data-driven product decisions.",
+      "strengths": ["Fast querying", "Session Replay", "Metric Trees"]
+    },
+    {
+      "name": "Heap",
+      "slug": "heap",
+      "description": "A product analytics platform that automatically captures every user interaction without manual event tagging.",
+      "best_for": "Product teams wanting automatic data capture for conversion and retention analysis.",
+      "strengths": ["Automatic data capture", "Session replay", "Automated friction detection"]
+    }
+  ]
+}

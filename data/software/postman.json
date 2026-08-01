@@ -1,0 +1,35 @@
+{
+  "name": "Postman",
+  "slug": "postman",
+  "category": "developer-tools",
+  "description": "Postman calls itself \"The World's Leading API Platform\" (also framed as \"The AI-native API Platform\") for developing, testing, managing, and distributing APIs and services.",
+  "website": "https://www.postman.com",
+  "platforms": ["Web", "macOS", "Windows", "Linux"],
+  "best_for": "Postman positions itself as \"Built for engineers. Designed for enterprise scale,\" with customer logos including Microsoft, Meta, Salesforce, AWS, PayPal, Uber, and Stripe.",
+  "features": [
+    "API Client for building/sending requests",
+    "Collection Runner and Monitors for testing/validation",
+    "Mock Servers and SDK Generator",
+    "Spec Hub and Workspaces for API design/collaboration",
+    "Agent Mode / AI Engineer for automating API workflows",
+    "Postman CLI for command-line collection runs"
+  ],
+  "sources": ["https://www.postman.com", "https://www.postman.com/downloads/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "GitHub",
+      "slug": "github",
+      "description": "A developer platform for hosting code and automating workflows via Actions.",
+      "best_for": "Teams managing source code, CI/CD, and collaboration together.",
+      "strengths": ["Actions automation", "Large ecosystem", "Copilot AI assistance"]
+    },
+    {
+      "name": "GitLab",
+      "slug": "gitlab",
+      "description": "An end-to-end DevSecOps platform spanning planning through deployment and security.",
+      "best_for": "Organizations wanting one consolidated platform for the software lifecycle.",
+      "strengths": ["Built-in CI/CD", "Integrated security scanning", "DORA-metrics analytics"]
+    }
+  ]
+}

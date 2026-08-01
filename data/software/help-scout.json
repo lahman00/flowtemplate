@@ -1,0 +1,35 @@
+{
+  "name": "Help Scout",
+  "slug": "help-scout",
+  "category": "customer-support",
+  "description": "Help Scout is a customer service platform that centralizes email and other communication channels into a shared inbox, with AI-assisted drafting and a chatbot, to help teams deliver personalized support.",
+  "website": "https://www.helpscout.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for teams of any size (12,000+ companies) across SaaS, ecommerce, education, healthcare, financial services, insurance, manufacturing, and professional services.",
+  "features": [
+    "Unified shared inbox aggregating email, social, Shopify, and other channels",
+    "AI drafting/editing and automated thread recaps/translation",
+    "Beacon AI chatbot (resolves ~73% of interactions per site claim)",
+    "Custom help center / embeddable support hub",
+    "Workflow automation and saved reply templates",
+    "Proactive in-app messaging, surveys, and NPS collection"
+  ],
+  "sources": ["https://www.helpscout.com", "https://www.helpscout.com/mobile/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Front",
+      "slug": "front",
+      "description": "An AI customer operations platform unifying shared inboxes, ticketing, and live chat for complex cross-team workflows.",
+      "best_for": "Operations, support, sales, and account-management teams needing cross-team coordination.",
+      "strengths": ["Autopilot/Copilot AI automation", "160+ integrations", "Shared inbox collaboration"]
+    },
+    {
+      "name": "Crisp",
+      "slug": "crisp",
+      "description": "An all-in-one support platform combining AI agents, live chat, and a shared inbox for companies of any size.",
+      "best_for": "Startups to enterprises wanting a lightweight, chat-first support and marketing tool.",
+      "strengths": ["AI agent builder", "Live chat widget with mobile SDKs", "Built-in CRM and knowledge base"]
+    }
+  ]
+}

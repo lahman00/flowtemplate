@@ -1,0 +1,35 @@
+{
+  "name": "Google Analytics",
+  "slug": "google-analytics",
+  "category": "analytics",
+  "description": "A free analytics tool from Google that helps businesses understand customer behavior across websites and apps, with cross-platform measurement and machine-learning-based insights to improve marketing ROI.",
+  "website": "https://marketingplatform.google.com/about/analytics/",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for businesses of every size, from small businesses wanting free/easy measurement to enterprises wanting analytics unified with Google's advertising platforms (Google Ads, Display & Video 360).",
+  "features": [
+    "Cross-platform (web + app) customer journey measurement",
+    "Machine-learning-based predictive insights",
+    "Cross-platform attribution modeling",
+    "Customizable, shareable reporting",
+    "Built-in automation for measurement",
+    "Native integrations with Google Ads, Search Ads 360, Search Console, Google Cloud"
+  ],
+  "sources": ["https://marketingplatform.google.com/about/analytics/", "https://support.google.com/analytics/answer/9304153"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Mixpanel",
+      "slug": "mixpanel",
+      "description": "A product intelligence platform combining analytics, session replay, experiments, and AI-powered insights.",
+      "best_for": "Product, data, and engineering teams wanting fast, data-driven product decisions.",
+      "strengths": ["Fast querying", "Session Replay", "Experiments/A-B testing"]
+    },
+    {
+      "name": "Matomo",
+      "slug": "matomo",
+      "description": "Privacy-first analytics with full data ownership via self-hosted or cloud deployment.",
+      "best_for": "Organizations wanting privacy-compliant analytics without vendor lock-in.",
+      "strengths": ["Unsampled data", "Cookieless tracking", "Self-hosted or cloud"]
+    }
+  ]
+}

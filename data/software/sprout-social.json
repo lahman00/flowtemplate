@@ -1,0 +1,35 @@
+{
+  "name": "Sprout Social",
+  "slug": "sprout-social",
+  "category": "marketing",
+  "description": "A social intelligence platform that turns real-time social signals into direction for teams, enabling monitoring, management, and action on social conversations at scale.",
+  "website": "https://sproutsocial.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for teams of varying sizes — from small teams on the Standard plan to enterprises with cross-functional workflows on Advanced/Enterprise plans — plus agencies and industries like travel, retail, and higher education.",
+  "features": [
+    "Real-time social intelligence for engagement spikes and conversation trends",
+    "AI-powered inbox (Trellis) with automated summaries and prioritization",
+    "Publishing and scheduling informed by live performance signals",
+    "Social listening and analytics for narrative/engagement tracking",
+    "Influencer marketing (creator identification/activation via audience data)",
+    "Employee advocacy for brand-aligned employee content sharing"
+  ],
+  "sources": ["https://sproutsocial.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Hootsuite",
+      "slug": "hootsuite",
+      "description": "A social media management platform for posting, tracking, and competitive performance across networks.",
+      "best_for": "Social media managers and enterprises managing multiple brand accounts.",
+      "strengths": ["Unified inbox", "Competitor/sentiment analysis", "Employee advocacy tools"]
+    },
+    {
+      "name": "Buffer",
+      "slug": "buffer",
+      "description": "A social media workspace for planning and scheduling content across social platforms.",
+      "best_for": "Creators, small businesses, and agencies wanting simplified social media management.",
+      "strengths": ["Scheduling across 11+ platforms", "Built-in AI Assistant", "Link-in-bio Start Page"]
+    }
+  ]
+}

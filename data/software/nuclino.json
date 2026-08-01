@@ -1,0 +1,35 @@
+{
+  "name": "Nuclino",
+  "slug": "nuclino",
+  "category": "documentation",
+  "description": "Nuclino is a collaborative workspace that unifies team knowledge, documentation, and light project management in a single, fast, simple tool.",
+  "website": "https://nuclino.com",
+  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "best_for": "Teams from startups to large organizations (site names NASA, Ubisoft, MIT, Paddle among 12,000+ teams) wanting to reduce tool fragmentation by consolidating knowledge, docs, and projects in one place.",
+  "features": [
+    "Unified workspace combining docs, wiki, and project boards to eliminate silos",
+    "Instant full-text search and keyboard shortcuts, optimized for speed",
+    "Visual \"Canvas\" for diagramming/visual collaboration",
+    "Sidekick AI capabilities",
+    "Cross-platform apps: web, desktop (Win/Mac/Linux), and mobile (iOS/Android)",
+    "Third-party integrations and API access"
+  ],
+  "sources": ["https://nuclino.com", "https://www.nuclino.com/download"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Slab",
+      "slug": "slab",
+      "description": "A company wiki/knowledge platform emphasizing fast search and knowledge discovery.",
+      "best_for": "Teams wanting a dedicated, well-structured company wiki rather than combined project management.",
+      "strengths": ["Relevance-ranked search", "Admin content insights", "Deep Google/GitHub integration"]
+    },
+    {
+      "name": "Archbee",
+      "slug": "archbee",
+      "description": "A knowledge portal platform for building searchable, customer-facing documentation portals.",
+      "best_for": "Technical teams that need external-facing docs/self-service support portals.",
+      "strengths": ["Git-like branching", "Custom domain publishing", "1,800+ integrations"]
+    }
+  ]
+}

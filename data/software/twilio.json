@@ -1,0 +1,35 @@
+{
+  "name": "Twilio",
+  "slug": "twilio",
+  "category": "api",
+  "description": "Twilio positions itself as \"the platform for conversations in the AI era,\" providing programmable communications APIs (messaging, voice, email via SendGrid, video, authentication) that let companies build customer conversations across channels.",
+  "website": "https://www.twilio.com",
+  "platforms": ["Web"],
+  "best_for": "Twilio itself targets developers and enterprises across industries (financial services, healthcare, retail, ecommerce, public sector) needing to embed messaging, voice, video, or AI-driven conversation features into their own applications.",
+  "features": [
+    "Programmable SMS, WhatsApp, RCS, and voice APIs",
+    "Email API/SMTP via SendGrid",
+    "Conversational AI tools (Conversation Orchestrator, Conversation Relay)",
+    "Identity/authentication via Verify and Lookup",
+    "Customer data platform (Segment: Engage, Audiences, Journeys)",
+    "Multi-language SDKs and REST API access"
+  ],
+  "sources": ["https://www.twilio.com/en-us"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "SendGrid",
+      "slug": "sendgrid",
+      "description": "Twilio's dedicated email-sending platform, delivering transactional and marketing email at scale via API and SMTP.",
+      "best_for": "Teams needing transactional or marketing email specifically, rather than full multi-channel communications.",
+      "strengths": ["High-volume deliverability", "Dedicated marketing-campaign tools", "Simpler scope"]
+    },
+    {
+      "name": "RapidAPI",
+      "slug": "rapidapi",
+      "description": "A marketplace/hub where developers can discover and connect to thousands of third-party APIs under one key.",
+      "best_for": "Developers who want to compare/discover many API providers before integrating.",
+      "strengths": ["Broad API catalog", "Unified auth/dashboard", "Provider monetization tools"]
+    }
+  ]
+}

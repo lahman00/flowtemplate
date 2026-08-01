@@ -1,0 +1,35 @@
+{
+  "name": "Crisp",
+  "slug": "crisp",
+  "category": "customer-support",
+  "description": "Crisp is an all-in-one customer support platform combining AI-powered agents with live chat, shared inbox, and CRM tools to help businesses automate and streamline customer interactions.",
+  "website": "https://crisp.chat",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for \"every company\" from startups to enterprises, aimed at customer support, sales, and marketing teams handling inquiries across multiple channels.",
+  "features": [
+    "AI Agent builder (no-code workflow creation)",
+    "Live chat widget for websites and mobile apps, with Chat SDK for developers",
+    "Shared inbox centralizing messages from multiple channels",
+    "Support CRM for organizing customer data",
+    "Knowledge base for self-service support",
+    "Ticketing, campaign management, and status page tools"
+  ],
+  "sources": ["https://crisp.chat"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Help Scout",
+      "slug": "help-scout",
+      "description": "A customer service platform centralizing email and other channels into a shared inbox with AI drafting.",
+      "best_for": "SaaS, ecommerce, and service teams wanting a shared-inbox-centric helpdesk.",
+      "strengths": ["Unified shared inbox", "AI-assisted replies", "Workflow automation"]
+    },
+    {
+      "name": "Gorgias",
+      "slug": "gorgias",
+      "description": "A conversational AI helpdesk purpose-built for ecommerce and Shopify merchants.",
+      "best_for": "Ecommerce brands wanting support tied directly to order/revenue data.",
+      "strengths": ["Native Shopify integration", "AI shopping assistant", "In-conversation order actions"]
+    }
+  ]
+}

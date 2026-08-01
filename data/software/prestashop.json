@@ -1,0 +1,35 @@
+{
+  "name": "PrestaShop",
+  "slug": "prestashop",
+  "category": "ecommerce",
+  "description": "PrestaShop is an open-source, self-hostable ecommerce platform (with an optional managed-hosting option) that lets merchants build a fully customizable store.",
+  "website": "https://www.prestashop.com",
+  "platforms": ["Web"],
+  "best_for": "Positioned for merchants at all stages, from entrepreneurs launching a first store to established retailers scaling to millions in revenue.",
+  "features": [
+    "Fully customizable, open-source storefront",
+    "Thousands of modules/themes",
+    "Built-in checkout (PrestaShop Checkout) plus Stripe/Alma/Klarna integrations",
+    "Social commerce sync (Facebook/Instagram)",
+    "Marketing automation via Klaviyo integration",
+    "Expert network for setup/design/marketing/migration"
+  ],
+  "sources": ["https://www.prestashop.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "WooCommerce",
+      "slug": "woocommerce",
+      "description": "An open-source WordPress ecommerce plugin giving merchants full checkout and data ownership.",
+      "best_for": "Merchants already on WordPress wanting full control of their store.",
+      "strengths": ["Any payment processor", "Large theme/extension catalog", "Self-hosted data ownership"]
+    },
+    {
+      "name": "Ecwid",
+      "slug": "ecwid",
+      "description": "A widget-embeddable ecommerce platform sellable on any existing site plus social channels.",
+      "best_for": "Merchants wanting to add a store to an existing website rather than rebuild it.",
+      "strengths": ["No transaction fees claim", "Social-commerce sync", "POS included"]
+    }
+  ]
+}

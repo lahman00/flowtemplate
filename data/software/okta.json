@@ -1,0 +1,35 @@
+{
+  "name": "Okta",
+  "slug": "okta",
+  "category": "security",
+  "description": "Okta is an identity security platform that the vendor says \"secures all types of identity from AI agents to your customers, employees, and partners,\" providing workforce identity and access management.",
+  "website": "https://www.okta.com",
+  "platforms": ["Web"],
+  "best_for": "Positioned for enterprises, governments, and public sector agencies across industries (financial services, healthcare, manufacturing, retail, travel, technology, energy), as well as small businesses and developers.",
+  "features": [
+    "Single Sign-On (SSO) across a large integration network",
+    "Adaptive Multi-Factor Authentication (MFA)",
+    "Universal Directory / lifecycle management",
+    "Identity governance and identity security posture management",
+    "Privileged Access Management",
+    "AI agent identity governance"
+  ],
+  "sources": ["https://www.okta.com", "https://www.okta.com/products/single-sign-on/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Auth0",
+      "slug": "auth0",
+      "description": "An Okta product offering a developer-focused authentication and authorization platform with 30+ SDKs.",
+      "best_for": "Developers and B2B/B2C SaaS companies embedding customer identity into their own apps.",
+      "strengths": ["Broad SDK/language support", "Fine-grained authorization", "AI agent auth"]
+    },
+    {
+      "name": "Cloudflare",
+      "slug": "cloudflare",
+      "description": "Provides network and application security services including WAF, bot management, and DDoS mitigation.",
+      "best_for": "Organizations of all sizes wanting perimeter/application-layer security alongside identity.",
+      "strengths": ["Global network scale", "Unified security dashboard", "High-volume threat blocking"]
+    }
+  ]
+}

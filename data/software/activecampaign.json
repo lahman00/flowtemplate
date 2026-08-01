@@ -1,0 +1,35 @@
+{
+  "name": "ActiveCampaign",
+  "slug": "activecampaign",
+  "category": "marketing",
+  "description": "An \"autonomous marketing platform\" where AI agents handle email, SMS, WhatsApp, and more, backed by customer data; serves more than 180,000 businesses.",
+  "website": "https://www.activecampaign.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for growing businesses of any size that want to automate marketing/sales work (email, SMS, WhatsApp, CRM) and reduce manual effort; the mobile app targets sales/CRM users managing deals and contacts on the go.",
+  "features": [
+    "Active Intelligence AI (brand-aware AI trained on top campaigns)",
+    "Email marketing with automation flows and newsletters",
+    "SMS & WhatsApp automated messaging",
+    "AI-powered analytics/insights dashboards",
+    "Visual automation builder with custom rules",
+    "1,000+ app integrations; mobile app for CRM/deal management"
+  ],
+  "sources": ["https://www.activecampaign.com", "https://www.activecampaign.com/platform/mobile-application"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "description": "An email and SMS marketing platform combining marketing analytics, automations, and AI tools.",
+      "best_for": "Small to mid-sized businesses wanting an easy-to-use email/SMS marketing tool.",
+      "strengths": ["300+ templates with AI generation", "Always-on automations", "300+ integrations"]
+    },
+    {
+      "name": "Klaviyo",
+      "slug": "klaviyo",
+      "description": "An AI marketing and service platform built as an autonomous B2C CRM unifying customer data with omnichannel automation.",
+      "best_for": "Consumer/B2C brands, especially e-commerce retailers, wanting unified customer data and marketing.",
+      "strengths": ["Composer AI campaign generation", "Omnichannel marketing", "Unified customer data platform"]
+    }
+  ]
+}

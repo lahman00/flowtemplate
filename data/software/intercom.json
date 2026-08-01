@@ -1,0 +1,35 @@
+{
+  "name": "Intercom",
+  "slug": "intercom",
+  "category": "customer-support",
+  "description": "Intercom is a customer service platform pairing a full helpdesk with Fin, a natively integrated AI agent, letting businesses handle both automated and human-led support conversations in one system.",
+  "website": "https://www.intercom.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for businesses modernizing customer support, claiming 30,000+ brands as customers, spanning small teams to enterprise organizations.",
+  "features": [
+    "Fin AI Agent for automated customer inquiries",
+    "Copilot AI assistance for human agents",
+    "Omnichannel inbox (email, chat, phone, WhatsApp, social apps)",
+    "Onboarding tools (interactive product tours)",
+    "Real-time quality assurance monitoring",
+    "350+ integrations (Salesforce, Stripe, Jira)"
+  ],
+  "sources": ["https://www.intercom.com", "https://www.intercom.com/help/en/articles/190-intercom-system-requirements-on-web-and-mobile"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Zendesk",
+      "slug": "zendesk",
+      "description": "An AI-first service platform unifying ticketing, omnichannel messaging, and self-learning AI agents.",
+      "best_for": "Enterprises and contact centers needing broad omnichannel and workforce-management tooling.",
+      "strengths": ["Contact-center features", "Employee service management", "Large integration ecosystem"]
+    },
+    {
+      "name": "Help Scout",
+      "slug": "help-scout",
+      "description": "A customer service platform centralizing email and other channels into a shared inbox with AI drafting.",
+      "best_for": "Small-to-midsize support teams wanting a simpler, less complex helpdesk.",
+      "strengths": ["Unified shared inbox", "AI-assisted replies", "Embeddable help center"]
+    }
+  ]
+}

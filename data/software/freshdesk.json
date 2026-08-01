@@ -1,0 +1,35 @@
+{
+  "name": "Freshdesk",
+  "slug": "freshdesk",
+  "category": "customer-support",
+  "description": "Freshdesk (by Freshworks) is an AI-powered customer service solution designed to be easy to set up and boost agent productivity while delivering seamless customer experiences.",
+  "website": "https://www.freshworks.com/freshdesk/",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for organizations from mid-market to enterprise, trusted by 74,000+ companies including Forbes, Bridgestone, and PepsiCo.",
+  "features": [
+    "AI agents that resolve customer intent and take action",
+    "AI Copilot prioritizing agent work and recommending next steps",
+    "Unified workspace combining customer history with AI assistance",
+    "AI-powered insights identifying trends and root causes",
+    "Omnichannel connections (WhatsApp, Messenger, Instagram, Line)",
+    "Integrations with Slack, Teams, Shopify, Salesforce, Jira, HubSpot"
+  ],
+  "sources": ["https://www.freshworks.com/freshdesk/", "https://www.freshworks.com/freshdesk/mobile/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Zendesk",
+      "slug": "zendesk",
+      "description": "An AI-first service platform unifying ticketing, omnichannel messaging, and self-learning AI agents.",
+      "best_for": "Larger organizations needing contact-center and workforce-management capability alongside AI ticketing.",
+      "strengths": ["Broad omnichannel routing", "Workforce management", "Employee service tools"]
+    },
+    {
+      "name": "Gorgias",
+      "slug": "gorgias",
+      "description": "A conversational AI helpdesk built specifically for ecommerce brands, especially Shopify merchants.",
+      "best_for": "Ecommerce/DTC brands wanting support tightly integrated with order and revenue data.",
+      "strengths": ["Native Shopify integration", "AI shopping assistant", "In-conversation order actions"]
+    }
+  ]
+}

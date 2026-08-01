@@ -1,0 +1,35 @@
+{
+  "name": "SendGrid",
+  "slug": "sendgrid",
+  "category": "api",
+  "description": "SendGrid, now operated under Twilio's platform, is an email API and SMTP service providing email solutions for transactional email at scale and marketing email campaigns.",
+  "website": "https://sendgrid.com",
+  "platforms": ["Web"],
+  "best_for": "SendGrid's page targets both developers integrating transactional email via API/SMTP and marketing teams building email campaigns.",
+  "features": [
+    "Email API for transactional delivery at scale",
+    "Dedicated SMTP relay service",
+    "Marketing email campaign creation tools",
+    "High-volume deliverability infrastructure (200B+ emails/month claimed)",
+    "Multi-language SDKs and documentation",
+    "Access to Twilio's broader communications ecosystem (SMS, voice, Verify)"
+  ],
+  "sources": ["https://sendgrid.com", "https://www.twilio.com/en-us/sendgrid"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Twilio",
+      "slug": "twilio",
+      "description": "The parent communications platform (SMS, voice, video, conversational AI) that now owns and integrates SendGrid's email capability.",
+      "best_for": "Companies wanting email plus other channels (SMS, voice, video) under one platform.",
+      "strengths": ["Multi-channel reach", "Conversational AI tooling", "Unified customer data (Segment)"]
+    },
+    {
+      "name": "RapidAPI",
+      "slug": "rapidapi",
+      "description": "An API marketplace where developers can find and test various email/communication APIs.",
+      "best_for": "Developers comparison-shopping across multiple API providers rather than committing to one vendor.",
+      "strengths": ["Single API key across many providers", "Usage analytics dashboard", "Provider monetization options"]
+    }
+  ]
+}

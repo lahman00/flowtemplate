@@ -1,0 +1,35 @@
+{
+  "name": "ElevenLabs",
+  "slug": "elevenlabs",
+  "category": "ai",
+  "description": "ElevenLabs is an AI audio platform providing an AI voice generator and voice-agents platform for creating lifelike speech.",
+  "website": "https://elevenlabs.io/",
+  "platforms": ["Web"],
+  "best_for": "ElevenLabs positions itself for enterprises needing customer-service voice solutions, creators/content producers (audiobooks, podcasts, video), developers building via API/SDK, and government agencies.",
+  "features": [
+    "Text-to-speech (5,000+ voices, 70+ languages)",
+    "Voice cloning",
+    "Speech-to-text transcription (~98% accuracy claimed)",
+    "AI music generation",
+    "Dubbing with emotion preservation across languages",
+    "Conversational voice agents with analytics/testing/guardrails"
+  ],
+  "sources": ["https://elevenlabs.io/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Midjourney",
+      "slug": "midjourney",
+      "description": "An AI image/video generation tool, the visual counterpart to ElevenLabs' audio focus.",
+      "best_for": "Creators needing generated imagery/video rather than voice/audio.",
+      "strengths": ["Prompt-based image generation", "Image-to-video", "Style reference system"]
+    },
+    {
+      "name": "Jasper",
+      "slug": "jasper",
+      "description": "A marketing content platform that can pair with audio tools for full multimedia campaigns.",
+      "best_for": "Marketing teams needing on-brand text and imagery at scale.",
+      "strengths": ["Brand governance", "100+ specialized agents", "Enterprise compliance"]
+    }
+  ]
+}

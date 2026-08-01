@@ -1,0 +1,35 @@
+{
+  "name": "Plaid",
+  "slug": "plaid",
+  "category": "api",
+  "description": "Plaid calls itself \"the world's largest financial data network,\" enabling companies to connect to financial institutions and build fintech solutions on top of verified account and transaction data.",
+  "website": "https://plaid.com",
+  "platforms": ["Web"],
+  "best_for": "Plaid targets fintech companies, banks, lenders, payment processors, and organizations in consumer lending, insurance, healthcare, and gaming that need to build financial products.",
+  "features": [
+    "Bank connections across 12,000+ financial institutions in 20 countries",
+    "Account and routing number verification (Auth product)",
+    "Payment processing support (ACH, RTP, FedNow)",
+    "Identity verification / KYC and anti-fraud tools",
+    "Categorized transaction and investment data (up to 24 months)",
+    "Fraud-prevention network built on aggregated data points"
+  ],
+  "sources": ["https://plaid.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Stripe",
+      "slug": "stripe",
+      "description": "A payments and financial-infrastructure API for accepting payments and managing billing/subscriptions.",
+      "best_for": "Businesses that need to actually process payments (cards, ACH, subscriptions) rather than just access bank data.",
+      "strengths": ["Broad global payment methods", "Billing/subscription tooling", "Card issuing"]
+    },
+    {
+      "name": "Twilio",
+      "slug": "twilio",
+      "description": "Provides identity/verification APIs (Verify, Lookup) that overlap partially with Plaid's identity-verification use case.",
+      "best_for": "Companies needing phone-based identity verification or fraud signals alongside bank-data verification.",
+      "strengths": ["SMS/voice-based verification", "Large-scale messaging infrastructure", "Broad developer SDKs"]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Hootsuite",
+  "slug": "hootsuite",
+  "category": "marketing",
+  "description": "A social media management platform for managing posting, tracking, and competitive performance across multiple social networks from one dashboard.",
+  "website": "https://www.hootsuite.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for social media managers, marketing teams, and enterprises managing multiple brand accounts; used by \"world's leading brands\" per the site.",
+  "features": [
+    "Trend tracking and AI-powered market/competitor insights",
+    "Unified inbox for public and private message engagement",
+    "Multi-platform content scheduling with per-network customization",
+    "Competitor performance and sentiment analysis",
+    "Employee advocacy content distribution (Hootsuite Parliament)",
+    "AI-assisted post drafting grounded in social data"
+  ],
+  "sources": ["https://www.hootsuite.com", "https://www.hootsuite.com/hootsuite-mobile-app"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Buffer",
+      "slug": "buffer",
+      "description": "A social media workspace for planning and scheduling content across social platforms.",
+      "best_for": "Creators, small businesses, and agencies wanting simplified social media management.",
+      "strengths": ["Scheduling across 11+ platforms", "Built-in AI Assistant", "Link-in-bio Start Page"]
+    },
+    {
+      "name": "Sprout Social",
+      "slug": "sprout-social",
+      "description": "A social intelligence platform turning real-time social signals into direction for teams.",
+      "best_for": "Teams and agencies needing social listening and analytics at scale.",
+      "strengths": ["AI-powered inbox (Trellis)", "Social listening", "Influencer marketing tools"]
+    }
+  ]
+}

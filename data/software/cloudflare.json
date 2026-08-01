@@ -1,0 +1,35 @@
+{
+  "name": "Cloudflare",
+  "slug": "cloudflare",
+  "category": "security",
+  "description": "Cloudflare is a global network platform offering application security (WAF, DDoS mitigation, bot management), CDN, and Zero Trust/network services, delivered from a network positioned \"50 ms from 95% of Internet users.\"",
+  "website": "https://www.cloudflare.com",
+  "platforms": ["Web"],
+  "best_for": "Serves organizations \"of all sizes,\" with free, small-business, and enterprise plans, for blocking DDoS attacks and bad bots, closing vulnerabilities, and accelerating/securing web applications.",
+  "features": [
+    "Web Application Firewall (WAF)",
+    "DDoS mitigation",
+    "Bot management",
+    "Content Delivery Network (CDN)",
+    "Single-pass traffic inspection with unified dashboard/API",
+    "AI security for applications"
+  ],
+  "sources": ["https://www.cloudflare.com", "https://www.cloudflare.com/application-security/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Okta",
+      "slug": "okta",
+      "description": "A workforce and customer identity/access management platform with SSO and adaptive MFA.",
+      "best_for": "Enterprises needing centralized identity/access control rather than network-edge security.",
+      "strengths": ["Large integration network", "Identity governance", "Lifecycle management"]
+    },
+    {
+      "name": "Snyk",
+      "slug": "snyk",
+      "description": "An AI-native application security platform that scans code, dependencies, containers, and infrastructure-as-code for vulnerabilities.",
+      "best_for": "Development and security teams securing the software supply chain and AI-generated code.",
+      "strengths": ["SDLC-wide scanning", "IDE/CI integration", "AI code governance"]
+    }
+  ]
+}

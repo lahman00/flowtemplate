@@ -1,0 +1,35 @@
+{
+  "name": "Archbee",
+  "slug": "archbee",
+  "category": "documentation",
+  "description": "Archbee describes itself as \"The First Knowledge Portal Platform,\" helping organizations turn static documentation into searchable, interactive knowledge portals, serving 3,000+ organizations per the site.",
+  "website": "https://archbee.com",
+  "platforms": ["Web", "macOS", "Windows", "Linux"],
+  "best_for": "Technical teams scaling documentation, and companies building customer-facing knowledge portals to reduce support ticket volume through self-service docs.",
+  "features": [
+    "Native Git-like branching for isolated editing with review/merge",
+    "Multiplayer real-time collaborative editing",
+    "Reusable snippets and dynamic variables that propagate across docs",
+    "AI-assisted writing and AI-powered instant answers",
+    "Custom domain hosting with SEO/AEO/GEO optimization and in-app embedding",
+    "1,800+ integrations (GitHub, GitLab, Bitbucket, Slack, Jira, Zapier); SOC2/GDPR/DPF certified"
+  ],
+  "sources": ["https://archbee.com", "https://archbee.com/features/"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "ReadMe",
+      "slug": "readme",
+      "description": "An API-documentation platform with an interactive OpenAPI-driven explorer and Git-based sync.",
+      "best_for": "API-first developer teams.",
+      "strengths": ["OpenAPI API explorer", "GitHub/GitLab bi-directional sync", "AI PR-based doc drafting"]
+    },
+    {
+      "name": "Document360",
+      "slug": "document360",
+      "description": "An AI-powered knowledge base for internal and external documentation across many industries.",
+      "best_for": "Broad internal/external KB use cases beyond pure API docs.",
+      "strengths": ["AI chatbot/search", "Workflow builder", "Ticket deflection"]
+    }
+  ]
+}

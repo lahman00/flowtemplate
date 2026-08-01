@@ -1,0 +1,35 @@
+{
+  "name": "Kong",
+  "slug": "kong",
+  "category": "api",
+  "description": "Kong describes itself as \"The AI Connectivity Company,\" providing the connectivity layer for the agentic era — securely connecting, governing, and monetizing APIs and AI tokens across any model or cloud, via products like Kong Gateway and Kong Konnect.",
+  "website": "https://konghq.com",
+  "platforms": ["Web"],
+  "best_for": "Kong states it serves platform teams, developers, executives, and AI teams across financial services, healthcare, retail, and technology, including a startup program.",
+  "features": [
+    "Kong AI Gateway for building/managing AI agents",
+    "API lifecycle management (design, publish, monetize) via Konnect",
+    "Real-time data governance (Kong Event Gateway)",
+    "AI token consumption/cost governance and runtime entitlements",
+    "Developer Portal for API/MCP discovery and publishing",
+    "Security enforcement: access control, threat protection, resilience policies"
+  ],
+  "sources": ["https://konghq.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Apigee",
+      "slug": "apigee",
+      "description": "Google Cloud's API management platform offering design, security, analytics, and lifecycle management for enterprise APIs.",
+      "best_for": "Enterprises already on Google Cloud needing integrated API governance and analytics.",
+      "strengths": ["API analytics/monitoring", "Developer portal", "Policy/quota enforcement"]
+    },
+    {
+      "name": "RapidAPI",
+      "slug": "rapidapi",
+      "description": "An API hub/marketplace for discovering and consuming third-party APIs.",
+      "best_for": "Developers who want to find and test external APIs rather than manage internal gateway infrastructure.",
+      "strengths": ["Large public API catalog", "Unified key/auth", "Provider monetization tools"]
+    }
+  ]
+}

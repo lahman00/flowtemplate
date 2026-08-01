@@ -1,0 +1,35 @@
+{
+  "name": "WooCommerce",
+  "slug": "woocommerce",
+  "category": "ecommerce",
+  "description": "WooCommerce is an open-source ecommerce platform built as a WordPress plugin, described as \"the most flexible ecommerce platform\" giving merchants full control over their store.",
+  "website": "https://woocommerce.com",
+  "platforms": ["Web"],
+  "best_for": "Aimed at merchants, developers, and agencies who want full control/customization of their store on WordPress, from small businesses to larger companies needing multichannel selling.",
+  "features": [
+    "Full checkout/data ownership (self-hosted on WordPress)",
+    "Choice of any payment processor, plus native WooPayments",
+    "Theme and extension marketplace for customization",
+    "Mobile app for managing the store",
+    "Multichannel sales sync",
+    "Online and offline (in-person) sales support"
+  ],
+  "sources": ["https://woocommerce.com"],
+  "accessed_at": "2026-08-01",
+  "alternatives": [
+    {
+      "name": "Shopify",
+      "slug": "shopify",
+      "description": "A hosted all-in-one commerce platform with built-in payments and multichannel selling.",
+      "best_for": "Merchants who prefer a managed, non-self-hosted solution.",
+      "strengths": ["Integrated checkout", "App marketplace", "POS included"]
+    },
+    {
+      "name": "PrestaShop",
+      "slug": "prestashop",
+      "description": "An open-source, self-hostable storefront platform with optional managed hosting.",
+      "best_for": "Merchants wanting open-source ownership outside the WordPress ecosystem.",
+      "strengths": ["Fully customizable modules/themes", "Optional managed hosting", "Expert-partner network"]
+    }
+  ]
+}
