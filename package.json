@@ -1,13 +1,20 @@
 {
   "name": "flowtemplate",
-  "version": "0.7.0",
+  "version": "0.12.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate:data": "tsx scripts/validate-data.ts"
+    "validate:data": "tsx scripts/validate-data.ts",
+    "maintenance": "tsx scripts/maintenance/run-all.ts",
+    "maintenance:links": "tsx scripts/maintenance/links.ts",
+    "maintenance:freshness": "tsx scripts/maintenance/freshness.ts",
+    "maintenance:seo": "tsx scripts/maintenance/seo.ts",
+    "maintenance:recommendations": "tsx scripts/maintenance/recommendations.ts",
+    "maintenance:comparisons": "tsx scripts/maintenance/comparisons.ts",
+    "maintenance:affiliate": "tsx scripts/maintenance/affiliate.ts"
   },
   "dependencies": {
     "lucide-react": "^1.28.0",

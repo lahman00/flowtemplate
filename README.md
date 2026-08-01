@@ -24,11 +24,20 @@ npm run dev            # start the dev server
 npm run build           # production build (also runs TypeScript checks)
 npm run lint             # ESLint
 npm run validate:data    # validate every data/software/*.json and data/categories entry
+npm run maintenance       # run all 6 maintenance agents + write a combined report
 ```
 
 Run `validate:data` after editing any data file — it checks the same rules
 the build enforces (schema, duplicate slugs, broken references, invalid
 categories, orphan category pages) without doing a full production build.
+
+`npm run maintenance` runs read-only checks (link health, data freshness,
+SEO integrity, recommendation-engine regressions, comparison/affiliate
+opportunities) and writes reports to `var/maintenance/` — it never edits
+data or publishes anything automatically. Individual agents can also run
+alone (`npm run maintenance:links`, `:freshness`, `:seo`,
+`:recommendations`, `:comparisons`, `:affiliate`). See
+[`docs/maintenance-system.md`](docs/maintenance-system.md).
 
 ## Project structure
 
@@ -61,9 +70,14 @@ lib/
   legal.ts                           Shared list of legal/trust pages (drives footer + sitemap)
   recommend/                          Deterministic recommendation engine (scoring, keywords, events)
   revenue/                             Affiliate manager, activation, revenue scoring, outbound events
+  maintenance/                          Link/freshness/SEO/regression/opportunity agents (Sprint 12)
 components/               Reusable UI components (incl. LegalPageLayout, recommend/ wizard pieces)
 config/                    Local-only credential templates (see config/*.example.json)
-scripts/validate-data.ts   Standalone data validator (npm run validate:data)
+types/maintenance.ts       Shared types for the maintenance system
+scripts/
+  validate-data.ts           Standalone data validator (npm run validate:data)
+  maintenance/                 One script per maintenance agent + the master run-all.ts
+.github/workflows/maintenance.yml   Weekly scheduled maintenance run (see docs/maintenance-system.md)
 docs/                      Architecture documentation
 .env.example               Every supported environment variable, all optional
 ```
@@ -92,6 +106,17 @@ disclosure in place of an invented "cons" list. See
 needs against the verified dataset and returns 3 recommendations — fully
 deterministic (no LLM, no external API), with every point of every score
 explained. See [`docs/recommendation-engine.md`](docs/recommendation-engine.md).
+
+## Maintenance system
+
+Six deterministic agents (link health, data freshness, SEO integrity,
+recommendation-engine regressions, comparison opportunities, affiliate
+opportunities) check the live site and dataset and write local reports —
+never publishing a factual change, committing, or pushing automatically.
+Runs weekly via GitHub Actions and on demand via `npm run maintenance`; a
+private dashboard at `/internal/maintenance` (noindex, not linked) shows
+the latest report. See [`docs/maintenance-system.md`](docs/maintenance-system.md)
+and [`docs/maintenance-notifications.md`](docs/maintenance-notifications.md).
 
 ## Legal and trust
 

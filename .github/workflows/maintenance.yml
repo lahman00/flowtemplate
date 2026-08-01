@@ -1,0 +1,135 @@
+name: Maintenance
+
+# Sprint 12 Phase 10 — scheduled, read-only maintenance checks. This
+# workflow NEVER edits product data, NEVER commits anything, and NEVER
+# merges anything. It runs the maintenance agents, the real validation/
+# lint/build gates, uploads the local reports as artifacts, and — only if
+# it finds critical findings and has permission to do so — opens or
+# updates a single tracking issue. See docs/maintenance-system.md.
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC. Cron is evaluated in UTC regardless of
+    # repo settings; adjust the hour here if a different time is wanted.
+    - cron: "0 9 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  # Only used by the optional "open an issue for critical findings" step
+  # below. If your org enforces read-only default tokens, that step will
+  # no-op (continue-on-error) rather than fail the whole run — see
+  # docs/maintenance-system.md for how to enable it for real.
+  issues: write
+
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run maintenance agents
+        id: maintenance
+        # Non-blocking on purpose: a critical-severity *finding* (a broken
+        # vendor link, a stale entry) must never stop this workflow or be
+        # mistaken for a build failure. Only a real agent execution
+        # failure or an SEO/recommendation-regression codebase bug (which
+        # the agents themselves escalate to a non-zero exit — see
+        # lib/maintenance/run-agent.ts) will make this step's outcome
+        # "failure", and even then the workflow keeps going so the real
+        # gates below still run and reports still get uploaded.
+        continue-on-error: true
+        run: npm run maintenance
+
+      - name: Validate data
+        run: npm run validate:data
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload maintenance reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maintenance-reports
+          path: var/maintenance/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Open or update an issue for critical findings
+        if: always()
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+
+            let summary;
+            try {
+              summary = JSON.parse(fs.readFileSync("var/maintenance/latest-summary.json", "utf-8"));
+            } catch {
+              console.log("No latest-summary.json found — nothing to report.");
+              return;
+            }
+
+            if (summary.totalCritical === 0) {
+              console.log("No critical findings — not opening an issue.");
+              return;
+            }
+
+            const title = "Weekly maintenance: critical findings";
+            const body = [
+              `Automated maintenance run on ${summary.generatedAt} found **${summary.totalCritical} critical**, ${summary.totalWarning} warning, and ${summary.totalInfo} info finding(s).`,
+              "",
+              "This issue is informational only — nothing was changed automatically. See the `maintenance-reports` artifact on this workflow run for full detail, or run `npm run maintenance` locally and open `/internal/maintenance`.",
+              "",
+              "| Agent | Status | Critical | Warning | Info |",
+              "|---|---|---|---|---|",
+              ...summary.agents.map(
+                (a) => `| ${a.agent} | ${a.status} | ${a.criticalCount} | ${a.warningCount} | ${a.infoCount} |`
+              ),
+              "",
+              "**Recommended human actions:**",
+              ...summary.recommendedHumanActions.map((a) => `- ${a}`),
+            ].join("\n");
+
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: "maintenance",
+            });
+
+            const match = existing.data.find((issue) => issue.title === title);
+
+            if (match) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: match.number,
+                body,
+              });
+              console.log(`Updated existing issue #${match.number}.`);
+            } else {
+              const created = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ["maintenance"],
+              });
+              console.log(`Opened issue #${created.data.number}.`);
+            }

@@ -20,6 +20,8 @@ export type CommissionRecurrence = "recurring" | "one_time" | "unknown";
 export type AffiliateProgramInfo = {
   /** Matches a data/software/*.json slug. */
   slug: string;
+  /** YYYY-MM-DD — when this entry was last checked against an official source. Real date, not a placeholder: all 34 entries were researched in the same Sprint 8 pass. */
+  lastVerifiedAt: string;
   programExists: AffiliateProgramStatus;
   type: AffiliateProgramType;
   networkName: string | null;
@@ -34,6 +36,7 @@ export type AffiliateProgramInfo = {
 export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   {
     slug: "airtable",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -50,6 +53,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "asana",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "unknown",
     networkName: null,
@@ -63,6 +67,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "cal-com",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "direct",
     networkName: null,
@@ -75,6 +80,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "calendly",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -87,6 +93,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "canva",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "Impact (unconfirmed)",
@@ -99,6 +106,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "clickup",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -113,6 +121,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "coda",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "network",
     networkName: "PartnerStack (historical)",
@@ -125,6 +134,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "confluence",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -137,6 +147,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "discord",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -149,6 +160,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "doodle",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "direct",
     networkName: null,
@@ -161,6 +173,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "evernote",
+    lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
     type: "network",
     networkName: "PartnerStack",
@@ -173,6 +186,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "figma",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "network",
     networkName: "PartnerStack",
@@ -188,6 +202,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "gitbook",
+    lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
     type: "unknown",
     networkName: null,
@@ -202,6 +217,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "guru",
+    lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
     type: "unknown",
     networkName: null,
@@ -214,6 +230,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "hubspot",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "Impact",
@@ -230,6 +247,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "jira",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -242,6 +260,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "linear",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -254,6 +273,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "lucidchart",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "Awin",
@@ -266,6 +286,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "make",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "unknown",
     networkName: null,
@@ -278,6 +299,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "mattermost",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -290,6 +312,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "microsoft-teams",
+    lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
     type: "unknown",
     networkName: null,
@@ -302,6 +325,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "miro",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -318,6 +342,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "monday",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -329,6 +354,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "n8n",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -340,6 +366,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "notion",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -352,6 +379,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "obsidian",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -364,6 +392,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "pipedrive",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -380,6 +409,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "salesforce",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "direct",
     networkName: null,
@@ -395,6 +425,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "sketch",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -407,6 +438,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "slack",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -419,6 +451,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "todoist",
+    lastVerifiedAt: "2026-07-31",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -438,6 +471,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "trello",
+    lastVerifiedAt: "2026-07-31",
     programExists: "no",
     type: "unknown",
     networkName: null,
@@ -453,6 +487,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "zapier",
+    lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
     type: "unknown",
     networkName: null,
@@ -469,6 +504,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "zoom",
+    lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
     type: "unknown",
     networkName: null,
