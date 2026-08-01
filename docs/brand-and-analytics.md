@@ -20,7 +20,7 @@ color, or version:
 `SITE_URL` if applicable) in this one file — every page, every piece of
 metadata, and the generated icons/OG images pick it up automatically. This
 was verified by grepping the entire `app/`, `components/`, `lib/`, `data/`
-tree for the literal string `"Flowtemplate"` after the Sprint 6 Phase 1
+tree for the literal string `"Miloosh"` after the Sprint 6 Phase 1
 pass — the only remaining match is `lib/site.ts`'s own definition.
 
 Also removed as part of "replace every remaining placeholder": the 5

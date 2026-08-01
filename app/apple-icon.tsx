@@ -1,10 +1,14 @@
 import { ImageResponse } from "next/og";
-import { LAYERS_ICON_PATHS } from "@/lib/brand";
 import { SITE_THEME_COLOR } from "@/lib/site";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
+/**
+ * Typography-first app icon: the wordmark's own first letter, not a
+ * separate icon or symbol — consistent with the wordmark-only logo used
+ * everywhere else in the brand.
+ */
 export default function AppleIcon() {
   return new ImageResponse(
     (
@@ -15,24 +19,20 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "white",
+          background: SITE_THEME_COLOR,
           borderRadius: 40,
         }}
       >
-        <svg
-          width="112"
-          height="112"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={SITE_THEME_COLOR}
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        <span
+          style={{
+            fontSize: 108,
+            fontWeight: 800,
+            color: "white",
+            letterSpacing: -2,
+          }}
         >
-          {LAYERS_ICON_PATHS.map((d) => (
-            <path key={d} d={d} />
-          ))}
-        </svg>
+          M
+        </span>
       </div>
     ),
     { ...size }

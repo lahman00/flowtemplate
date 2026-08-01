@@ -1,4 +1,4 @@
-# Flowtemplate
+# Miloosh
 
 A software-comparison directory built with Next.js App Router. For any
 tool, see verified alternatives grouped by category — sourced facts only,

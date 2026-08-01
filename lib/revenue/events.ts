@@ -32,7 +32,7 @@ export type OutboundEvent = {
 };
 
 export type StoredOutboundEvent = OutboundEvent & {
-  /** The Flowtemplate page the click happened on, e.g. "/software/notion". */
+  /** The Miloosh page the click happened on, e.g. "/software/notion". */
   sourcePage: string;
   /** Server-assigned, ISO 8601 — never trusts a client-supplied clock. */
   timestamp: string;

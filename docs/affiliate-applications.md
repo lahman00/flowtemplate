@@ -3,7 +3,7 @@
 This is a checklist, not a status report: every "Approval status" field
 below reads **Not yet applied** because no application has actually been
 submitted. Nothing on this page is a claim that any program has approved
-Flowtemplate — see `docs/revenue.md` for the tier ranking these six came
+Miloosh — see `docs/revenue.md` for the tier ranking these six came
 from and `data/revenue/affiliate-programs.ts` for the full research this
 is built on.
 

@@ -5,14 +5,14 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3
   ""
 );
 
-export const SITE_NAME = "Flowtemplate";
+export const SITE_NAME = "Miloosh";
 
-export const SITE_TAGLINE = "Software alternatives, compared honestly.";
+export const SITE_TAGLINE = "Software research you can verify.";
 
 export const SITE_DESCRIPTION =
-  "Compare software alternatives, pricing, features, and migration options in one place — so you can switch with confidence.";
+  "Compare software alternatives, pricing, features, and migration options — every claim sourced and dated, so you can switch with confidence.";
 
-export const SITE_EMAIL = "hello@flowtemplate.app";
+export const SITE_EMAIL = "hello@miloosh.app";
 
 /** Matches the viewport theme-color in app/layout.tsx and the generated icons/OG images — one place to change the brand color. */
 export const SITE_THEME_COLOR = "#09090b";

@@ -8,7 +8,7 @@ Version: 0.12.0
 
 ## What this is
 
-Flowtemplate is a software-comparison directory: for a given tool, it shows
+Miloosh is a software-comparison directory: for a given tool, it shows
 verified, sourced alternatives grouped by category, with generated
 metadata, structured data, and internal linking designed to scale past a
 handful of hand-written pages.

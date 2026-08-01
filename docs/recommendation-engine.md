@@ -1,6 +1,6 @@
 # Recommendation engine (Sprint 10)
 
-`/recommend` turns Flowtemplate from a directory you search into a
+`/recommend` turns Miloosh from a directory you search into a
 decision tool you can answer questions and get matched by. The engine
 behind it is **fully deterministic**: no LLM call, no external API, no
 invented facts. Every point in every score traces back to a real field

@@ -85,7 +85,7 @@ function buildRecommendedActions(entries: MaintenanceSummaryAgentEntry[]): strin
 
 function renderSummaryMarkdown(summary: MaintenanceSummary): string {
   const lines: string[] = [
-    "# Flowtemplate maintenance summary",
+    "# Miloosh maintenance summary",
     "",
     `Generated: ${summary.generatedAt}`,
     `All agents succeeded: ${summary.allAgentsSucceeded ? "yes" : "no"}`,
@@ -116,7 +116,7 @@ function renderSummaryMarkdown(summary: MaintenanceSummary): string {
 }
 
 async function main() {
-  console.log("Running Flowtemplate maintenance agents...\n");
+  console.log("Running Miloosh maintenance agents...\n");
 
   const reports = [
     await executeLinksAgent(),
@@ -157,7 +157,7 @@ async function main() {
     totalCritical: summary.totalCritical,
     totalWarning: summary.totalWarning,
     totalInfo: summary.totalInfo,
-    headline: `Flowtemplate maintenance: ${summary.totalCritical} critical, ${summary.totalWarning} warning, ${summary.totalInfo} info`,
+    headline: `Miloosh maintenance: ${summary.totalCritical} critical, ${summary.totalWarning} warning, ${summary.totalInfo} info`,
   });
   console.log(
     notification.sent ? "Notification sent." : `Notification not sent (${notification.reason ?? "no provider configured"}).`

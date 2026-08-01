@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Layers } from "lucide-react";
 import { Container } from "@/components/Container";
 import { LEGAL_PAGES } from "@/lib/legal";
 import { SITE_NAME, SITE_TAGLINE, SITE_VERSION } from "@/lib/site";
@@ -32,7 +31,10 @@ function FooterColumn({
       <ul className="mt-4 space-y-2.5">
         {links.map((link) => (
           <li key={link.name}>
-            <Link href={link.href} className="text-sm text-zinc-400 transition hover:text-white">
+            <Link
+              href={link.href}
+              className="text-sm text-zinc-400 transition hover:text-accent-hover"
+            >
               {link.name}
             </Link>
           </li>
@@ -50,10 +52,7 @@ export function Footer() {
       <Container className="py-14">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
-            <Link href="/" className="flex items-center gap-2 text-sm font-semibold text-white">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-zinc-950">
-                <Layers className="h-4 w-4" strokeWidth={2.5} />
-              </span>
+            <Link href="/" className="text-base font-bold tracking-tight text-white">
               {SITE_NAME}
             </Link>
             <p className="mt-4 max-w-[22ch] text-sm leading-6 text-zinc-500">{SITE_TAGLINE}</p>

@@ -29,7 +29,7 @@ type MaintenanceNotificationPayload = {
   totalCritical: number;
   totalWarning: number;
   totalInfo: number;
-  headline: string; // e.g. "Flowtemplate maintenance: 2 critical, 37 warning, 45 info"
+  headline: string; // e.g. "Miloosh maintenance: 2 critical, 37 warning, 45 info"
 };
 ```
 

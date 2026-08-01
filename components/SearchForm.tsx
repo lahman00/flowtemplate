@@ -46,7 +46,7 @@ export function SearchForm({ className }: { className?: string }) {
           required
           placeholder="Search for software, e.g. Slack"
           aria-label="Software name"
-          className="min-h-14 w-full rounded-xl border border-white/15 bg-white/5 pl-12 pr-5 text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-white/60"
+          className="min-h-14 w-full rounded-xl border border-white/15 bg-white/5 pl-12 pr-5 text-white outline-none placeholder:text-zinc-500 focus:border-accent focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-accent"
         />
       </div>
 

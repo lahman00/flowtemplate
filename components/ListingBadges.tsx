@@ -1,4 +1,4 @@
-import { Sparkles, Megaphone } from "lucide-react";
+import { Star, Megaphone } from "lucide-react";
 import type { Software } from "@/data/software";
 import { isFeatured, isSponsored } from "@/lib/monetization";
 
@@ -22,7 +22,7 @@ export function ListingBadges({ software }: { software: Software }) {
       ) : null}
       {isFeatured(software) ? (
         <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400">
-          <Sparkles className="h-3 w-3" />
+          <Star className="h-3 w-3" />
           Featured
         </span>
       ) : null}

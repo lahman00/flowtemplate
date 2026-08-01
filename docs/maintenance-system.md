@@ -1,6 +1,6 @@
 # Autonomous maintenance system (Sprint 12)
 
-A set of deterministic, read-mostly agents that check Flowtemplate's data,
+A set of deterministic, read-mostly agents that check Miloosh's data,
 SEO surface, recommendation engine, and revenue posture, and report what
 they find. **Nothing in this system publishes a factual change
 automatically, commits anything, pushes to `main`, or merges anything.**

@@ -34,7 +34,7 @@ const MAX_REDIRECTS = 5;
 const REQUEST_TIMEOUT_MS = 10_000;
 
 /** Identifies us honestly, per robots-crawling convention. Some sites' bot detection silently hangs/drops connections from this instead of returning an HTTP error — see BROWSER_USER_AGENT below. */
-const BOT_USER_AGENT = "Mozilla/5.0 (compatible; FlowtemplateMaintenanceBot/1.0; +https://flowtemplate.app)";
+const BOT_USER_AGENT = "Mozilla/5.0 (compatible; MilooshMaintenanceBot/1.0; +https://miloosh.app)";
 
 /**
  * Fallback used only to distinguish "genuinely broken" from "this vendor's

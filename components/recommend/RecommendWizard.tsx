@@ -6,14 +6,14 @@ import {
   ArrowLeft,
   ArrowRight,
   Bot,
+  BookOpen,
   Building2,
   GitCompare,
   Globe,
   Kanban,
   MessageSquare,
-  Sparkles,
+  SlidersHorizontal,
   Users,
-  Wand2,
   Workflow,
 } from "lucide-react";
 import { Card } from "@/components/Card";
@@ -180,7 +180,7 @@ export function RecommendWizard() {
                 type="text"
                 placeholder="e.g. Healthcare, e-commerce, education"
                 aria-label="Industry"
-                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-white/60"
+                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-accent focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-accent"
               />
               <p className="mt-2 text-xs text-zinc-500">
                 We collect this, but no product in our dataset is tagged by industry yet — so it
@@ -214,7 +214,7 @@ export function RecommendWizard() {
               <ToggleCard
                 selected={answers.needsKnowledgeBase}
                 onClick={() => update("needsKnowledgeBase", !answers.needsKnowledgeBase)}
-                icon={Sparkles}
+                icon={BookOpen}
                 title="Knowledge base"
                 description="Docs, wiki, notes"
               />
@@ -256,13 +256,13 @@ export function RecommendWizard() {
                 type="text"
                 placeholder="e.g. Slack, Google Drive"
                 aria-label="Tools you need it to work with"
-                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-white/40 focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-white/60"
+                className="mt-3 min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-accent focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-accent"
               />
             </fieldset>
 
             <fieldset>
               <legend className="flex items-center gap-2 text-sm font-semibold text-white">
-                <Wand2 className="h-4 w-4" /> Simple or powerful?
+                <SlidersHorizontal className="h-4 w-4" /> Simple or powerful?
               </legend>
               <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
                 {(

@@ -1,6 +1,6 @@
 # Revenue intelligence (Sprint 8) — architecture, not a live feature
 
-Sprint 8 asked for the research and scoring behind Flowtemplate's future
+Sprint 8 asked for the research and scoring behind Miloosh's future
 revenue strategy, plus the architecture a real implementation would sit on.
 **Nothing here is live.** No tracking is enabled, no affiliate link is
 active, and the dashboard that surfaces all of this is deliberately kept
@@ -11,7 +11,7 @@ entry actually using them.
 
 ## Business model
 
-Flowtemplate's revenue model, in priority order (see `lib/revenue/opportunities.ts`
+Miloosh's revenue model, in priority order (see `lib/revenue/opportunities.ts`
 for the full ranked list with rationale):
 
 1. **Affiliate links** — commission on the existing "visit official site"

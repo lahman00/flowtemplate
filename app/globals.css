@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+
+  /* Miloosh brand accent — the single accent color used across the
+     product. Chosen for calm, confident contrast against near-black and
+     white, not to compete with the semantic amber/emerald/red already
+     used in internal status pages. */
+  --color-accent: #3458a8;
+  --color-accent-hover: #4a6fc0;
 }
 
 html {

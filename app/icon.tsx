@@ -1,10 +1,14 @@
 import { ImageResponse } from "next/og";
-import { LAYERS_ICON_PATHS } from "@/lib/brand";
 import { SITE_THEME_COLOR } from "@/lib/site";
 
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
+/**
+ * Typography-first favicon: the wordmark's own first letter, not a
+ * separate icon or symbol — consistent with the wordmark-only logo used
+ * everywhere else in the brand.
+ */
 export default function Icon() {
   return new ImageResponse(
     (
@@ -15,24 +19,20 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "white",
+          background: SITE_THEME_COLOR,
           borderRadius: 7,
         }}
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={SITE_THEME_COLOR}
-          strokeWidth={2.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        <span
+          style={{
+            fontSize: 20,
+            fontWeight: 800,
+            color: "white",
+            letterSpacing: -0.5,
+          }}
         >
-          {LAYERS_ICON_PATHS.map((d) => (
-            <path key={d} d={d} />
-          ))}
-        </svg>
+          M
+        </span>
       </div>
     ),
     { ...size }

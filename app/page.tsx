@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {
-  Sparkles,
+  BadgeCheck,
   LayoutGrid,
   GitCompare,
   Layers,
@@ -53,7 +53,7 @@ export default function Home() {
     { icon: LayoutGrid, value: String(allSoftware.length), label: "Tools covered" },
     { icon: GitCompare, value: `${alternativeCount}+`, label: "Alternatives compared" },
     { icon: Layers, value: String(categoryCount), label: "Categories" },
-    { icon: Sparkles, value: "Free", label: "No signup required" },
+    { icon: CircleCheck, value: "Free", label: "No signup required" },
   ];
 
   const steps = [
@@ -82,28 +82,21 @@ export default function Home() {
 
   return (
     <main className="flex-1">
-      <section id="search" className="relative scroll-mt-16 overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[-10rem] -z-10 flex justify-center"
-        >
-          <div className="h-[30rem] w-[60rem] rounded-full bg-white/[0.06] blur-3xl" />
-        </div>
-
+      <section id="search" className="relative scroll-mt-16">
         <Container className="flex flex-col items-center py-20 text-center sm:py-28 lg:py-32">
           <Badge>
-            <Sparkles className="h-3.5 w-3.5" />
-            Software alternatives made simple
+            <BadgeCheck className="h-3.5 w-3.5" />
+            Independent, source-verified comparisons
           </Badge>
 
           <h1 className="mt-8 text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Find the right software
-            <span className="block text-zinc-400">before you switch.</span>
+            Software research
+            <span className="block text-zinc-400">you can verify.</span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg">
-            Compare software alternatives, pricing, features, and migration options in one
-            place — so you can switch with confidence.
+            Compare software alternatives, pricing, features, and migration options — every
+            claim sourced and dated, so you can switch with confidence.
           </p>
 
           <SearchForm className="mt-10 w-full max-w-2xl" />
@@ -198,7 +191,7 @@ export default function Home() {
             />
             <Link
               href="/compare"
-              className="hidden shrink-0 text-sm font-medium text-zinc-400 transition hover:text-white sm:block"
+              className="hidden shrink-0 text-sm font-medium text-zinc-400 transition hover:text-accent-hover sm:block"
             >
               View all comparisons →
             </Link>
