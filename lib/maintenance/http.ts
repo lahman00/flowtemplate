@@ -16,7 +16,8 @@ export type LinkCheckOutcome =
   | "cross_domain_redirect"
   | "connection_failure"
   | "invalid_url"
-  | "timeout";
+  | "timeout"
+  | "bot_blocked";
 
 export type LinkCheckResult = {
   url: string;
@@ -32,12 +33,24 @@ export type LinkCheckResult = {
 const MAX_REDIRECTS = 5;
 const REQUEST_TIMEOUT_MS = 10_000;
 
+/** Identifies us honestly, per robots-crawling convention. Some sites' bot detection silently hangs/drops connections from this instead of returning an HTTP error — see BROWSER_USER_AGENT below. */
+const BOT_USER_AGENT = "Mozilla/5.0 (compatible; FlowtemplateMaintenanceBot/1.0; +https://flowtemplate.app)";
+
+/**
+ * Fallback used only to distinguish "genuinely broken" from "this vendor's
+ * bot detection blocks non-browser traffic on this specific path" after
+ * the primary, self-identifying request times out or fails to connect —
+ * see the retry in checkUrl(). Never used as the primary request.
+ */
+const BROWSER_USER_AGENT =
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+
 function hostnamesMatch(a: string, b: string): boolean {
   const stripWww = (host: string) => host.replace(/^www\./, "");
   return stripWww(a) === stripWww(b);
 }
 
-async function fetchOnce(url: string): Promise<Response> {
+async function fetchOnce(url: string, userAgent: string): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
@@ -47,7 +60,7 @@ async function fetchOnce(url: string): Promise<Response> {
       redirect: "manual",
       signal: controller.signal,
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; FlowtemplateMaintenanceBot/1.0; +https://flowtemplate.app)",
+        "User-Agent": userAgent,
       },
     });
   } finally {
@@ -79,12 +92,36 @@ export async function checkUrl(rawUrl: string): Promise<LinkCheckResult> {
     let response: Response;
 
     try {
-      response = await fetchOnce(currentUrl);
+      response = await fetchOnce(currentUrl, BOT_USER_AGENT);
     } catch (error) {
       const isAbort = error instanceof Error && error.name === "AbortError";
+      const networkOutcome: LinkCheckOutcome = isAbort ? "timeout" : "connection_failure";
+
+      // Some sites' bot detection silently hangs or drops connections from
+      // an identifying, non-browser User-Agent instead of returning an
+      // HTTP error — retry once with a standard browser User-Agent before
+      // concluding the URL is actually broken. A genuinely dead URL fails
+      // this too and falls through to the honest failure below.
+      try {
+        const retryResponse = await fetchOnce(currentUrl, BROWSER_USER_AGENT);
+        if (retryResponse.status < 400) {
+          return {
+            url: rawUrl,
+            outcome: "bot_blocked",
+            httpStatus: retryResponse.status,
+            redirectHops: hop,
+            redirectChain: chain,
+            checkedAt,
+            details: `Timed out under our identifying User-Agent, but returned HTTP ${retryResponse.status} under a standard browser User-Agent — the URL is reachable; this vendor blocks automated traffic on this path rather than the link being broken.`,
+          };
+        }
+      } catch {
+        // Retry also failed — report the original network failure below.
+      }
+
       return {
         url: rawUrl,
-        outcome: isAbort ? "timeout" : "connection_failure",
+        outcome: networkOutcome,
         redirectHops: hop,
         redirectChain: chain,
         checkedAt,

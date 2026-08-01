@@ -82,6 +82,7 @@ const OUTCOME_TITLE: Record<LinkCheckOutcome, string> = {
   connection_failure: "Connection failure",
   invalid_url: "Invalid URL",
   timeout: "Request timed out",
+  bot_blocked: "Reachable, but blocks automated checks",
 };
 
 async function run() {
@@ -108,7 +109,9 @@ async function run() {
             ? "redirect"
             : result.outcome === "connection_failure" || result.outcome === "timeout"
               ? "unreachable"
-              : "broken",
+              : result.outcome === "bot_blocked"
+                ? "unknown"
+                : "broken",
         httpStatus: result.httpStatus,
         details: result.details,
       },
