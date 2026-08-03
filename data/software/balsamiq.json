@@ -1,0 +1,45 @@
+{
+  "name": "Balsamiq",
+  "slug": "balsamiq",
+  "category": "design",
+  "description": "Balsamiq is a low-fidelity wireframing and prototyping tool that keeps teams focused on structure and functionality rather than visual polish, with an AI mode that generates prototypes from prompts or screenshots.",
+  "website": "https://balsamiq.com",
+  "platforms": ["Web", "macOS", "Windows"],
+  "best_for": "Product managers, founders, consultants, and enterprise teams who want to rapidly sketch and align on interface structure before investing in high-fidelity design.",
+  "features": [
+    "Low-fidelity wireframing UI kit designed to avoid premature visual polish",
+    "Balsamiq AI generates interactive prototypes from text prompts or uploaded screenshots",
+    "Built-in commenting for real-time team alignment",
+    "Confluence and Jira plugins for embedding wireframes",
+    "MCP server integration with Claude, Cursor, and Linear",
+    "Native desktop apps for Mac and Windows plus a cloud version",
+    "SOC 2 Type II certified with GDPR/CCPA compliance"
+  ],
+  "sources": [
+    "https://balsamiq.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Figma",
+      "slug": "figma",
+      "description": "A collaborative interface design tool with real-time multiplayer editing.",
+      "best_for": "Product design teams needing collaborative UI/UX design and prototyping.",
+      "strengths": ["Real-time collaboration", "Component libraries", "Dev handoff"]
+    },
+    {
+      "name": "Miro",
+      "slug": "miro",
+      "description": "An online collaborative whiteboard for brainstorming, diagramming, and workshops.",
+      "best_for": "Cross-functional teams running remote workshops and visual collaboration.",
+      "strengths": ["Infinite canvas", "Templates", "Real-time collaboration"]
+    },
+    {
+      "name": "Lucidchart",
+      "slug": "lucidchart",
+      "description": "A web-based diagramming tool for flowcharts, org charts, and technical diagrams.",
+      "best_for": "Teams needing structured diagramming and process documentation.",
+      "strengths": ["Diagramming templates", "Data-linked diagrams", "Integrations"]
+    }
+  ]
+}

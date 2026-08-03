@@ -1,0 +1,36 @@
+{
+  "name": "Elastic",
+  "slug": "elastic",
+  "category": "api",
+  "description": "Elastic is the company behind Elasticsearch, a distributed RESTful search and analytics engine, offering unified solutions for AI-powered search, observability, and security built on the same data platform.",
+  "website": "https://www.elastic.co/",
+  "platforms": ["Web"],
+  "best_for": "Organizations seeking unified solutions for search, monitoring, and threat detection, trusted by 50% of the Fortune 500 across financial services, manufacturing, retail, and telecommunications.",
+  "features": [
+    "Elasticsearch: a distributed, RESTful search and analytics engine",
+    "Vector database functionality for storing and searching embeddings",
+    "Observability: log analytics, infrastructure monitoring, and application performance monitoring (APM)",
+    "AIOps with automatic issue detection and resolution using generative AI",
+    "AI-driven SIEM for security threat detection and investigation",
+    "XDR and endpoint security with AI-driven insights and automated alert triage",
+    "Flexible deployment: Elastic Cloud Serverless, Elastic Cloud Hosted, or self-managed"
+  ],
+  "sources": ["https://www.elastic.co/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Algolia",
+      "slug": "algolia",
+      "description": "An AI-powered search and discovery API platform for search, recommendations, and personalization.",
+      "best_for": "Teams wanting a fully managed, developer-friendly search API rather than operating a search cluster.",
+      "strengths": ["AI-driven ranking and retrieval", "Recommendations and personalization", "70+ global data centers"]
+    },
+    {
+      "name": "Supabase",
+      "slug": "supabase",
+      "description": "An open-source backend platform built on Postgres, with built-in full-text search alongside database, auth, and storage APIs.",
+      "best_for": "Developers wanting lightweight search built into their existing backend rather than a dedicated search/observability platform.",
+      "strengths": ["Auto-generated REST and GraphQL APIs", "Postgres-native full-text search and pgvector", "Open-source, self-hostable core"]
+    }
+  ]
+}

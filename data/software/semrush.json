@@ -1,0 +1,47 @@
+{
+  "name": "Semrush",
+  "slug": "semrush",
+  "category": "marketing",
+  "description": "Semrush is a digital marketing platform for SEO, content, and competitive research, combining keyword research, site auditing, backlink analysis, and AI visibility tracking to help brands grow and measure visibility across digital channels.",
+  "website": "https://www.semrush.com",
+  "best_for": "Positioned for solopreneurs, freelancers, small teams, agencies, mid-market companies, and enterprises across industries like SaaS, e-commerce, healthcare, and professional services.",
+  "features": [
+    "Keyword research across a database of billions of keywords",
+    "Site audit and technical SEO health analysis",
+    "Competitor and backlink analysis with rank tracking across 142 geo databases",
+    "AI-powered content creation and optimization",
+    "AI visibility tracking that monitors brand mentions across LLM prompts",
+    "PPC and advertising tools for Google and Meta",
+    "Social media management and scheduling",
+    "Local SEO and Google Business Profile optimization"
+  ],
+  "sources": [
+    "https://www.semrush.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Ahrefs",
+      "slug": "ahrefs",
+      "description": "An AI-powered SEO and marketing platform built on a proprietary web index, covering keyword research, backlinks, and content marketing.",
+      "best_for": "SEO specialists and content marketers wanting deep backlink and keyword data",
+      "strengths": [
+        "Backlink index",
+        "Keywords Explorer",
+        "AI visibility tracking"
+      ]
+    },
+    {
+      "name": "Google Analytics",
+      "slug": "google-analytics",
+      "description": "A free web analytics platform for tracking website traffic, user behavior, and conversions.",
+      "best_for": "Teams needing free, foundational traffic and conversion analytics",
+      "strengths": [
+        "Free tier",
+        "Traffic analytics",
+        "Google Ads integration"
+      ]
+    }
+  ],
+  "order": 46
+}

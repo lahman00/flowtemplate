@@ -1,0 +1,65 @@
+{
+  "name": "Basecamp",
+  "slug": "basecamp",
+  "category": "project-management",
+  "description": "Basecamp is an all-in-one project management and team communication tool that combines to-do lists, message boards, docs, and chat in one place.",
+  "website": "https://basecamp.com",
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Teams, companies, and nonprofits who want centralized project coordination instead of scattered email, chat apps, and browser tabs.",
+  "features": [
+    "Message boards for team-wide discussions",
+    "To-do lists with assignments and due dates",
+    "Card table for Kanban-style workflow tracking",
+    "Hill charts for visualizing project progress",
+    "Campfire group chat for real-time messaging",
+    "Document and file storage",
+    "Team schedule and calendar",
+    "Automatic check-in questions for async updates"
+  ],
+  "sources": [
+    "https://basecamp.com",
+    "https://basecamp.com/features"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work management platform for tracking tasks, projects, and cross-team workflows.",
+      "best_for": "Teams that need structured task tracking and workflow automation",
+      "strengths": [
+        "Task dependencies",
+        "Timeline view",
+        "Workflow automation"
+      ]
+    },
+    {
+      "name": "Teamwork",
+      "slug": "teamwork",
+      "description": "A project management platform built for client services teams to manage projects, time, and budgets.",
+      "best_for": "Agencies and client-services businesses tracking profitability",
+      "strengths": [
+        "Time tracking",
+        "Client billing",
+        "Resource planning"
+      ]
+    },
+    {
+      "name": "Trello",
+      "slug": "trello",
+      "description": "A visual, card-based tool for organizing tasks and workflows on Kanban boards.",
+      "best_for": "Small teams wanting a simple visual task board",
+      "strengths": [
+        "Kanban boards",
+        "Simplicity",
+        "Power-Ups integrations"
+      ]
+    }
+  ]
+}

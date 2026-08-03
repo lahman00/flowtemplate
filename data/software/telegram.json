@@ -1,0 +1,54 @@
+{
+  "name": "Telegram",
+  "slug": "telegram",
+  "category": "communication",
+  "description": "Telegram is a cloud-based mobile and desktop messaging app focused on speed and security, supporting large groups, broadcast channels, and bots.",
+  "website": "https://telegram.org",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Individuals and communities that need large-scale group messaging, public broadcast channels, and bot automation with fast cloud sync across devices.",
+  "features": [
+    "Groups supporting up to 200,000 members",
+    "Communities feature linking multiple groups, channels, and bots together",
+    "Channels for one-way broadcast messaging",
+    "Bot platform with bot-to-bot chats and rich text formatting",
+    "Encrypted messages with self-destructing (ephemeral) message options",
+    "No limits on media and chat file sizes",
+    "Cloud sync of chats across unlimited devices",
+    "Open-source, publicly available API for developers"
+  ],
+  "sources": [
+    "https://telegram.org"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Discord",
+      "slug": "discord",
+      "description": "A voice, video, and text chat platform originally built for gaming communities and now used by many online communities.",
+      "best_for": "Communities and groups needing voice channels and public servers",
+      "strengths": [
+        "Voice channels",
+        "Community servers",
+        "Bot ecosystem"
+      ]
+    },
+    {
+      "name": "Signal",
+      "slug": "signal",
+      "description": "A nonprofit messaging app providing end-to-end encrypted text, voice, and video communication by default.",
+      "best_for": "Individuals prioritizing maximum privacy and encryption",
+      "strengths": [
+        "End-to-end encryption by default",
+        "No ads or tracking",
+        "Nonprofit, donor-funded"
+      ]
+    }
+  ]
+}

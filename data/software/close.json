@@ -1,0 +1,45 @@
+{
+  "name": "Close",
+  "slug": "close",
+  "category": "crm",
+  "description": "Close is a sales CRM that combines built-in calling, email, and SMS with Chloe, an AI sales agent that qualifies leads, books meetings, and updates records automatically.",
+  "website": "https://www.close.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Sales teams, since the platform's 2013 launch, wanting to automate outbound outreach and lead qualification while reducing manual admin work.",
+  "features": [
+    "Built-in calling, email, and SMS messaging in one workspace",
+    "Chloe AI agent for automated outbound calling and prospect qualification",
+    "Automatic meeting booking and call transcription/summarization",
+    "Automatic CRM field updates and intelligent follow-up generation",
+    "Cold lead re-engagement automation",
+    "Pipeline management and sales reporting",
+    "Integrations with Gmail, Microsoft 365, Zoom, Calendly, and Zapier"
+  ],
+  "sources": [
+    "https://www.close.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Pipedrive",
+      "slug": "pipedrive",
+      "description": "A sales-focused CRM built around a visual, pipeline-first workflow.",
+      "best_for": "Sales teams wanting a simple, activity-based pipeline tool.",
+      "strengths": ["Visual pipeline", "Ease of use", "Sales automation"]
+    },
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "An all-in-one CRM platform with marketing, sales, and service hubs.",
+      "best_for": "Growing businesses wanting an integrated marketing-to-sales CRM suite.",
+      "strengths": ["Free CRM tier", "Marketing automation", "Extensive integrations"]
+    },
+    {
+      "name": "Freshsales",
+      "slug": "freshsales",
+      "description": "A Freshworks CRM using Freddy AI for lead scoring and automated email writing.",
+      "best_for": "Sales teams wanting AI-assisted lead management and a 360° customer view.",
+      "strengths": ["Freddy AI scoring", "Kanban pipeline", "Built-in phone and email"]
+    }
+  ]
+}

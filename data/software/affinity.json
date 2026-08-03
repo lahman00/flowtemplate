@@ -1,0 +1,46 @@
+{
+  "name": "Affinity",
+  "slug": "affinity",
+  "category": "design",
+  "description": "Affinity is Canva's professional-grade creative app that unifies vector design, photo editing, and page layout tools that were previously three separate apps (Designer, Photo, and Publisher), now free for everyone.",
+  "website": "https://www.affinity.studio",
+  "platforms": ["macOS", "Windows"],
+  "best_for": "Professional and hobbyist designers who want a full desktop-grade design suite without a subscription, following Canva's acquisition of Affinity-maker Serif.",
+  "features": [
+    "Vector design tools with pen tools and non-destructive editing",
+    "Raster photo editing in the same unified app",
+    "Page layout and publishing tools for multi-page documents",
+    "Typography with text-on-path and OpenType features",
+    "GPU-accelerated 60 FPS real-time rendering",
+    "AI vector generation from text prompts",
+    "No subscription required — full professional feature set free, forever"
+  ],
+  "sources": [
+    "https://www.canva.com/newsroom/news/all-new-affinity/",
+    "https://www.affinity.studio"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Sketch",
+      "slug": "sketch",
+      "description": "A vector-based UI design tool for macOS with a large plugin ecosystem.",
+      "best_for": "Mac-based design teams wanting a mature, plugin-extensible design tool.",
+      "strengths": ["Vector editing", "Plugin ecosystem", "Symbols/components"]
+    },
+    {
+      "name": "Figma",
+      "slug": "figma",
+      "description": "A collaborative interface design tool with real-time multiplayer editing.",
+      "best_for": "Product design teams needing collaborative UI/UX design and prototyping.",
+      "strengths": ["Real-time collaboration", "Component libraries", "Dev handoff"]
+    },
+    {
+      "name": "Canva",
+      "slug": "canva",
+      "description": "A drag-and-drop graphic design platform for marketing and social media visuals.",
+      "best_for": "Non-designers and marketing teams creating quick visual content.",
+      "strengths": ["Template library", "Ease of use", "Brand kits"]
+    }
+  ]
+}

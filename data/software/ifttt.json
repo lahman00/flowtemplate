@@ -1,0 +1,62 @@
+{
+  "name": "IFTTT",
+  "slug": "ifttt",
+  "category": "automation",
+  "description": "IFTTT is a no-code automation platform that connects apps, services, and smart devices through simple trigger-and-action workflows called Applets.",
+  "website": "https://ifttt.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Individuals, small business owners, and smart-home users who want simple, no-code automations between everyday apps and connected devices.",
+  "features": [
+    "Applets built from a trigger, action, and optional filter code",
+    "100,000+ ready-made Applets plus custom Applet creation",
+    "Connects 1,000+ apps, services, and devices including Google, Spotify, Slack, and smart-home brands like Philips Hue and Ring",
+    "Webhooks for custom, code-based integrations",
+    "Multiple actions per Applet for expanded workflows",
+    "AI integrations with ChatGPT and Claude for content generation and summarization",
+    "IFTTT MCP server connecting AI assistants to IFTTT automations",
+    "Pro subscription unlocking unlimited Applets and exclusive triggers/actions"
+  ],
+  "sources": [
+    "https://ifttt.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform that connects thousands of web apps through simple trigger-and-action workflows.",
+      "best_for": "Teams that want fast, no-code automations between cloud apps",
+      "strengths": [
+        "Huge app directory",
+        "Easy setup",
+        "No-code workflows"
+      ]
+    },
+    {
+      "name": "Make",
+      "slug": "make",
+      "description": "A visual automation platform for building multi-step workflows between apps with a drag-and-drop scenario builder.",
+      "best_for": "Teams that want visual, complex multi-step automations",
+      "strengths": [
+        "Visual scenario builder",
+        "Complex branching logic",
+        "Wide app support"
+      ]
+    },
+    {
+      "name": "Pipedream",
+      "slug": "pipedream",
+      "description": "A developer-focused integration and automation platform for building workflows that connect APIs, AI, and databases with code-level control when needed.",
+      "best_for": "Developers who want visual workflows with optional custom code",
+      "strengths": [
+        "3,000+ integrated apps",
+        "Code steps",
+        "AI agent builder"
+      ]
+    }
+  ]
+}

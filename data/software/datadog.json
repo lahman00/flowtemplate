@@ -1,0 +1,49 @@
+{
+  "name": "Datadog",
+  "slug": "datadog",
+  "category": "developer-tools",
+  "description": "Datadog is an AI-powered observability and security platform that lets teams see inside any stack, any app, at any scale, unifying infrastructure monitoring, APM, logs, security, and user-experience monitoring.",
+  "website": "https://www.datadoghq.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Organizations managing complex, distributed cloud systems who need unified monitoring across infrastructure, applications, logs, and security teams.",
+  "features": [
+    "Infrastructure monitoring across servers, containers, Kubernetes, and serverless",
+    "Log management for rapid troubleshooting",
+    "Application Performance Monitoring (APM) and code profiling",
+    "Bits AI Agents that chat, investigate, and help remediate issues",
+    "Network monitoring for analyzing traffic across cloud environments",
+    "Real User Monitoring for frontend and user-journey performance",
+    "Synthetic monitoring for proactively testing critical features",
+    "Cloud security monitoring unified with observability data"
+  ],
+  "sources": [
+    "https://www.datadoghq.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Sentry",
+      "slug": "sentry",
+      "description": "An error monitoring and observability platform that tracks errors and performance issues across languages and frameworks.",
+      "best_for": "Developers who want error tracking and debugging tightly focused on application code.",
+      "strengths": [
+        "Error monitoring",
+        "Session Replay",
+        "AI-assisted debugging"
+      ]
+    },
+    {
+      "name": "Snyk",
+      "slug": "snyk",
+      "description": "A developer security platform for finding and fixing vulnerabilities in code, dependencies, containers, and infrastructure as code.",
+      "best_for": "Teams that want security scanning integrated into their monitoring and development workflow.",
+      "strengths": [
+        "Dependency scanning",
+        "Container security",
+        "CI/CD integrations"
+      ]
+    }
+  ]
+}

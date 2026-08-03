@@ -1,0 +1,51 @@
+{
+  "name": "Scribe",
+  "slug": "scribe",
+  "category": "documentation",
+  "description": "Scribe automatically captures how work gets done and turns it into step-by-step documentation, providing \"workflow context for teams & AI agents\" without manual write-up.",
+  "website": "https://scribe.com",
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows"
+  ],
+  "best_for": "Teams that need process documentation, SOPs, and training guides created automatically, including enterprises implementing AI agents that need context on how work actually happens.",
+  "features": [
+    "Automatic capture of workflows as step-by-step guides while you work",
+    "Desktop apps for Windows and Mac plus Chrome and Edge browser extensions",
+    "AI-driven workflow optimization that surfaces inefficiencies and bottlenecks",
+    "Workflow AI that gives AI agents context on real business processes",
+    "Automatic redaction of sensitive information for SOC 2, HIPAA, CCPA, and GDPR compliance",
+    "Performance analytics measuring where automation has the most impact",
+    "Ready-made template gallery for common business processes",
+    "API and MCP integrations for connecting to other enterprise tools"
+  ],
+  "sources": [
+    "https://scribe.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Guru",
+      "slug": "guru",
+      "description": "A knowledge management platform that verifies and surfaces answers directly inside a team's existing tools.",
+      "best_for": "Teams that want verified knowledge capture alongside workflow documentation.",
+      "strengths": [
+        "Knowledge verification",
+        "Browser extension",
+        "Slack integration"
+      ]
+    },
+    {
+      "name": "Helpjuice",
+      "slug": "helpjuice",
+      "description": "A knowledge base platform for centralizing and searching company documentation.",
+      "best_for": "Support and operations teams that want a searchable central knowledge hub.",
+      "strengths": [
+        "AI-powered search",
+        "Analytics dashboard",
+        "Multi-language support"
+      ]
+    }
+  ]
+}

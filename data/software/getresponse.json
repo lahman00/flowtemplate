@@ -1,0 +1,58 @@
+{
+  "name": "GetResponse",
+  "slug": "getresponse",
+  "category": "marketing",
+  "description": "GetResponse is an all-in-one marketing platform combining email marketing, automation, landing pages, webinars, and SMS so businesses can manage the full customer journey from a single tool.",
+  "website": "https://www.getresponse.com",
+  "best_for": "Positioned for entrepreneurs, e-commerce stores, and enterprise brands that want AI-assisted tools covering every step of the customer journey, from lead capture to repeat revenue.",
+  "features": [
+    "Email marketing with AI-optimized send times for promotional and lifecycle emails",
+    "Marketing automation workflows including welcome sequences and cart recovery",
+    "AI-assisted landing page creation for campaigns and lead capture",
+    "SMS marketing and web push notifications",
+    "Webinar hosting",
+    "Forms and popups for lead generation",
+    "E-commerce integrations with product recommendations",
+    "AI tools for content tailoring, copywriting, and layout selection"
+  ],
+  "sources": [
+    "https://www.getresponse.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
+      "best_for": "Businesses wanting a wide template library and app ecosystem",
+      "strengths": [
+        "Drag-and-drop email builder",
+        "300+ integrations",
+        "AI content generation"
+      ]
+    },
+    {
+      "name": "Brevo",
+      "slug": "brevo",
+      "description": "An integrated marketing and CRM platform for email, SMS, WhatsApp, and chat campaigns.",
+      "best_for": "Businesses wanting multi-channel messaging with a built-in CRM",
+      "strengths": [
+        "WhatsApp and SMS channels",
+        "Built-in CRM",
+        "Freemium pricing"
+      ]
+    },
+    {
+      "name": "ActiveCampaign",
+      "slug": "activecampaign",
+      "description": "An autonomous marketing platform where AI agents handle email, SMS, WhatsApp, and CRM tasks backed by customer data.",
+      "best_for": "Growing businesses wanting deep automation and a CRM",
+      "strengths": [
+        "Active Intelligence AI",
+        "Visual automation builder",
+        "1,000+ integrations"
+      ]
+    }
+  ],
+  "order": 43
+}

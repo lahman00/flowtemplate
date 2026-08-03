@@ -1,0 +1,58 @@
+{
+  "name": "Bloomfire",
+  "slug": "bloomfire",
+  "category": "knowledge-base",
+  "description": "Bloomfire is an AI-powered knowledge management and engagement platform that helps enterprises turn static content repositories into a connected system for surfacing trusted knowledge and capturing expertise across teams.",
+  "website": "https://bloomfire.com",
+  "best_for": "Positioned for enterprise organizations and global teams — across support, operations, and innovation functions — that need a unified knowledge layer across business units and geographies.",
+  "features": [
+    "AI-powered search and discovery with verified answers and clickable citations",
+    "Self-healing knowledge base that flags outdated or redundant content for review",
+    "AI-powered authoring tools for auto-tagging, summarization, and categorization",
+    "Q&A collective knowledge engine that proposes answers and avoids duplicate questions",
+    "Single-copy document publishing with automatic updates across communities",
+    "Moderation tools with approval workflows and version control",
+    "Analytics suite with real-time visualizations and custom reporting",
+    "SOC2, GDPR, SSO, and SCIM support for enterprise data governance"
+  ],
+  "sources": [
+    "https://bloomfire.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Guru",
+      "slug": "guru",
+      "description": "An enterprise knowledge-management platform that organizes and continuously verifies company information.",
+      "best_for": "Enterprises needing permission-scoped AI answers across departments",
+      "strengths": [
+        "Knowledge verification",
+        "AI search",
+        "Permission-aware answers"
+      ]
+    },
+    {
+      "name": "Confluence",
+      "slug": "confluence",
+      "description": "Atlassian's team workspace for documentation, meeting notes, and internal knowledge.",
+      "best_for": "Teams already standardized on Atlassian tools",
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
+    },
+    {
+      "name": "Tettra",
+      "slug": "tettra",
+      "description": "An AI-powered internal knowledge base built around a Slack-first workflow for answering team questions.",
+      "best_for": "Smaller teams wanting a lighter-weight, Slack-centric wiki",
+      "strengths": [
+        "Slack integration",
+        "AI Q&A bot",
+        "Content verification workflows"
+      ]
+    }
+  ],
+  "order": 37
+}

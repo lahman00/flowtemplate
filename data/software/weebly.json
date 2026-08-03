@@ -1,0 +1,49 @@
+{
+  "name": "Weebly",
+  "slug": "weebly",
+  "category": "ecommerce",
+  "description": "Weebly is a free website builder, owned by Square, that lets entrepreneurs build a website and online store that grows with their business, with order management and payment processing built in.",
+  "website": "https://www.weebly.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Entrepreneurs and small business owners, from those just starting out to established businesses expanding online, who want a simple website and store builder backed by Square payments.",
+  "features": [
+    "Customizable website and store templates with drag-and-drop editing",
+    "All-in-one order management for online and pop-up-shop sales",
+    "Integrated shipping tools",
+    "Payment processing through Square integration",
+    "Built-in SEO guidance and tools",
+    "Automated email marketing campaigns",
+    "Integrated Facebook advertising tools",
+    "App Center for additional integrations"
+  ],
+  "sources": [
+    "https://www.weebly.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Ecwid",
+      "slug": "ecwid",
+      "description": "An ecommerce platform that lets businesses add a store to any existing website or sell across multiple channels.",
+      "best_for": "Small businesses wanting to add ecommerce to an existing site without rebuilding it.",
+      "strengths": [
+        "Embeddable storefront",
+        "Multi-channel selling",
+        "Easy setup"
+      ]
+    },
+    {
+      "name": "Squarespace",
+      "slug": "squarespace",
+      "description": "A website builder and hosting platform with design templates and integrated ecommerce tools.",
+      "best_for": "Businesses that want a design-forward website with built-in selling tools.",
+      "strengths": [
+        "Polished templates",
+        "Integrated ecommerce",
+        "All-in-one hosting"
+      ]
+    }
+  ]
+}

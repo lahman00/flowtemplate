@@ -1,0 +1,61 @@
+{
+  "name": "Directus",
+  "slug": "directus",
+  "category": "cms",
+  "description": "Directus is a self-hostable, open-source headless CMS and backend that connects to any SQL database and instantly generates REST and GraphQL APIs plus a no-code admin interface.",
+  "website": "https://directus.com",
+  "platforms": [
+    "Web (Directus Cloud)",
+    "Self-hosted"
+  ],
+  "best_for": "Development and content teams that want to turn an existing SQL database into a governed API and content backend without vendor lock-in.",
+  "features": [
+    "Instant REST and GraphQL API generation from an existing database",
+    "No-code admin interface (Studio) for content management and data governance",
+    "Digital asset manager with CDN-ready file transformation",
+    "Real-time updates via WebSockets and subscriptions",
+    "Visual editing with live preview",
+    "Role-based access control for both human users and AI agents",
+    "Native MCP server for Claude, ChatGPT, and Cursor integrations",
+    "Self-hosted via npm on your own infrastructure or managed Directus Cloud"
+  ],
+  "sources": [
+    "https://directus.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Strapi",
+      "slug": "strapi",
+      "description": "An open-source, TypeScript-based headless CMS that lets developers build content APIs without vendor lock-in.",
+      "best_for": "Developers wanting full data ownership and a self-hostable headless CMS",
+      "strengths": [
+        "Open source",
+        "Self-hosted or cloud",
+        "Automatic API generation"
+      ]
+    },
+    {
+      "name": "Sanity",
+      "slug": "sanity",
+      "description": "A headless CMS built around structured content and a real-time collaborative editing environment.",
+      "best_for": "Developer teams wanting real-time collaboration and customizable editing tools",
+      "strengths": [
+        "Real-time collaboration",
+        "Customizable Studio",
+        "Structured content"
+      ]
+    },
+    {
+      "name": "Contentful",
+      "slug": "contentful",
+      "description": "A headless CMS providing structured content management and delivery through APIs for web and mobile apps.",
+      "best_for": "Teams needing an enterprise-ready headless CMS with strong API tooling",
+      "strengths": [
+        "Structured content modeling",
+        "Robust APIs",
+        "App ecosystem"
+      ]
+    }
+  ]
+}

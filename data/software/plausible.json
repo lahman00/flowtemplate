@@ -1,0 +1,43 @@
+{
+  "name": "Plausible Analytics",
+  "slug": "plausible",
+  "category": "analytics",
+  "description": "Plausible Analytics is a privacy-focused alternative to Google Analytics that provides website traffic insights without cookies, persistent identifiers, or cross-site tracking, keeping data on European-owned infrastructure.",
+  "website": "https://plausible.io/",
+  "platforms": ["Web"],
+  "best_for": "Ecommerce, SaaS, digital agencies, content creators, and enterprises wanting cookieless, GDPR-friendly analytics without cookie banners, including white-label options.",
+  "features": [
+    "Automatic scroll-depth tracking across all pages without setup",
+    "AI-tool traffic monitoring to identify visits from ChatGPT, Perplexity, Claude, and similar services",
+    "SEO performance analysis via Search Console integration",
+    "UTM campaign tracking with automatic channel grouping",
+    "Real-time dashboards updating every 30 seconds",
+    "Codeless goal creation for conversions, downloads, and form submissions",
+    "Funnels and user-journey analysis"
+  ],
+  "sources": ["https://plausible.io/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Google Analytics",
+      "slug": "google-analytics",
+      "description": "A free analytics tool from Google measuring customer behavior across websites and apps.",
+      "best_for": "Businesses of every size wanting free, easy measurement unified with Google's ad platforms.",
+      "strengths": ["Machine-learning insights", "Cross-platform attribution", "Google Ads integration"]
+    },
+    {
+      "name": "Fathom Analytics",
+      "slug": "fathom-analytics",
+      "description": "A privacy-focused, cookieless web analytics platform emphasizing simplicity and speed.",
+      "best_for": "Developers and privacy-conscious businesses wanting a lightweight, fast-loading analytics script.",
+      "strengths": ["2kB lightweight script", "Perpetual data retention", "No cookie consent banners"]
+    },
+    {
+      "name": "Matomo",
+      "slug": "matomo",
+      "description": "Privacy-first analytics with full data ownership via self-hosted or cloud deployment.",
+      "best_for": "Organizations wanting privacy-compliant analytics without vendor lock-in.",
+      "strengths": ["Unsampled data", "Cookieless tracking", "Self-hosted or cloud"]
+    }
+  ]
+}

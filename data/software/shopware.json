@@ -1,0 +1,60 @@
+{
+  "name": "Shopware",
+  "slug": "shopware",
+  "category": "ecommerce",
+  "description": "Shopware is an open-source ecommerce platform to power online businesses, combining enterprise B2B capabilities, modular flexibility, and AI-powered tools for merchandising and content.",
+  "website": "https://www.shopware.com/en/",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Global enterprise brands and ambitious merchants across automotive, wholesale, consumer goods, retail, and manufacturing who want open-source control combined with strong B2B commerce support.",
+  "features": [
+    "Agentic AI Copilot built into the admin dashboard for automating tasks and recommendations",
+    "Open-source, extensible architecture giving teams control over technology and data",
+    "Integrated CMS and SEO tools built directly into the platform",
+    "Flow Builder and Rule Builder for drag-and-drop workflow and business-logic automation",
+    "B2B components for wholesale and distribution operations",
+    "Omnichannel and headless commerce architecture supporting multiple sales channels",
+    "Native Shopware Analytics for performance and customer insights",
+    "SOC 2 Type II and ISO 27001 compliance with AES-256 encryption"
+  ],
+  "sources": [
+    "https://www.shopware.com/en/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "WooCommerce",
+      "slug": "woocommerce",
+      "description": "An open-source ecommerce plugin for WordPress used to build and customize online stores.",
+      "best_for": "WordPress users wanting a free, highly extensible ecommerce plugin.",
+      "strengths": [
+        "Free and open source",
+        "WordPress ecosystem",
+        "Extension marketplace"
+      ]
+    },
+    {
+      "name": "PrestaShop",
+      "slug": "prestashop",
+      "description": "An open-source ecommerce platform for building and managing online stores.",
+      "best_for": "Merchants and agencies wanting a self-hosted, customizable open-source storefront.",
+      "strengths": [
+        "Open source",
+        "Module marketplace",
+        "Multi-language support"
+      ]
+    },
+    {
+      "name": "Adobe Commerce",
+      "slug": "adobe-commerce",
+      "description": "Adobe's enterprise ecommerce platform for B2B and B2C businesses with deep customization and multi-site management.",
+      "best_for": "Large enterprises needing complex catalog, pricing, and multi-region storefront capabilities.",
+      "strengths": [
+        "Page Builder",
+        "B2B purchasing workflows",
+        "Multisite architecture"
+      ]
+    }
+  ]
+}

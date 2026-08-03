@@ -1,0 +1,43 @@
+{
+  "name": "Claude",
+  "slug": "claude",
+  "category": "ai",
+  "description": "Claude is Anthropic's AI assistant, positioned as \"the AI for Problem Solvers\" — a collaborative thinking partner for writing, coding, research, and analysis that can work with documents, images, and voice.",
+  "website": "https://claude.com",
+  "platforms": ["Web", "macOS", "Windows", "iOS", "Android"],
+  "best_for": "Positioned for professionals, developers, students, and researchers who want an AI collaborator for expert-level work across writing, coding, and analysis, plus enterprise teams across healthcare, finance, government, and education needing coordinated project work.",
+  "features": [
+    "Multi-modal input for documents, images, and file uploads",
+    "Voice mode for spoken conversations",
+    "Projects for organizing conversations with persistent context",
+    "Web search for up-to-date information",
+    "Integrations with tools like Google Workspace, Jira, and Zapier",
+    "API access for developers building on Claude models",
+    "Desktop apps for macOS and Windows plus mobile apps and browser extensions"
+  ],
+  "sources": ["https://claude.com/product/overview", "https://claude.com"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "ChatGPT",
+      "slug": "chatgpt",
+      "description": "OpenAI's AI assistant offering chat, voice, vision, and agentic \"Work\"/\"Codex\" capabilities.",
+      "best_for": "Users wanting one broad assistant across chat, research, documents, and coding.",
+      "strengths": ["Voice/vision input", "Desktop apps with built-in browser", "Broad task coverage"]
+    },
+    {
+      "name": "Gemini",
+      "slug": "gemini",
+      "description": "Google DeepMind's family of AI models for building and using intelligent agents across text, image, video, and audio.",
+      "best_for": "Users already in the Google ecosystem needing agentic or long-context reasoning.",
+      "strengths": ["Long-context processing", "Google Search AI Mode integration", "Agentic coding tools"]
+    },
+    {
+      "name": "Perplexity",
+      "slug": "perplexity",
+      "description": "An AI answer engine that researches the open web in real time and returns concise, cited answers.",
+      "best_for": "People who want real-time, cited answers to questions rather than a general-purpose chat partner.",
+      "strengths": ["Inline citations", "Real-time web grounding", "Multi-model choice"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Workato",
+  "slug": "workato",
+  "category": "automation",
+  "description": "Workato is an enterprise integration and automation platform that connects SaaS and on-premises systems, automates cross-department workflows, and orchestrates AI agents.",
+  "website": "https://www.workato.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Enterprise IT, finance, HR, and revenue operations teams that need deep, governed integrations across many business systems and AI agents.",
+  "features": [
+    "500+ pre-built connectors for enterprise apps like Salesforce, NetSuite, Workday, and ServiceNow",
+    "Recipe-based workflow automation across departments",
+    "Agent Studio for building custom AI agents plus pre-built \"Workato Genies\" for IT, Sales, HR, and Support",
+    "MCP Gateway for governed Model Context Protocol tool access",
+    "Intelligent Document Processing (IDP) and Data Hub / master data management",
+    "Built-in API management and B2B/EDI capabilities",
+    "Robotic process automation for legacy system tasks",
+    "Regional cloud instances (US, EU, Singapore, Japan, Korea, Australia, Israel) for data residency"
+  ],
+  "sources": [
+    "https://www.workato.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform that connects thousands of web apps through simple trigger-and-action workflows.",
+      "best_for": "Teams that want fast, no-code automations between cloud apps",
+      "strengths": [
+        "Huge app directory",
+        "Easy setup",
+        "No-code workflows"
+      ]
+    },
+    {
+      "name": "Tray.ai",
+      "slug": "tray-ai",
+      "description": "An enterprise orchestration platform unifying integration, automation, and AI agent development with governed MCP tooling.",
+      "best_for": "Enterprises building and governing AI agents alongside integrations",
+      "strengths": [
+        "700+ connectors",
+        "MCP governance",
+        "AI agent building"
+      ]
+    },
+    {
+      "name": "n8n",
+      "slug": "n8n",
+      "description": "A source-available workflow automation tool combining visual building with custom code for technical teams.",
+      "best_for": "Technical teams that want self-hostable, code-extensible automation",
+      "strengths": [
+        "Self-hosting",
+        "Custom code steps",
+        "Visual workflow builder"
+      ]
+    }
+  ]
+}

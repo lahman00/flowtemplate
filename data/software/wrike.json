@@ -1,0 +1,65 @@
+{
+  "name": "Wrike",
+  "slug": "wrike",
+  "category": "project-management",
+  "description": "Wrike is an AI-powered work management platform that gives enterprises visibility into projects, resources, and workflows across teams and departments.",
+  "website": "https://www.wrike.com",
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Marketing, product, operations, and PMO teams at mid-size to large enterprises coordinating complex, cross-functional work.",
+  "features": [
+    "Interactive Gantt charts for timeline planning",
+    "Resource allocation and workload management",
+    "Custom request forms for work intake",
+    "Online proofing and approval workflows",
+    "AI-driven dashboards and reporting",
+    "Workflow automation",
+    "Time tracking and budget monitoring",
+    "400+ third-party app integrations"
+  ],
+  "sources": [
+    "https://www.wrike.com",
+    "https://www.wrike.com/features/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Monday.com",
+      "slug": "monday",
+      "description": "A work operating system with customizable boards for managing projects and workflows.",
+      "best_for": "Teams wanting a highly visual, customizable workflow builder",
+      "strengths": [
+        "Custom boards",
+        "Automation",
+        "Visual dashboards"
+      ]
+    },
+    {
+      "name": "Smartsheet",
+      "slug": "smartsheet",
+      "description": "A spreadsheet-style work management platform with Gantt charts, automation, and enterprise reporting.",
+      "best_for": "Enterprise PMOs needing spreadsheet-familiar project controls",
+      "strengths": [
+        "Grid interface",
+        "Gantt charts",
+        "Enterprise governance"
+      ]
+    },
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams that need structured project management",
+      "strengths": [
+        "Task management",
+        "Dashboards",
+        "Automation"
+      ]
+    }
+  ]
+}

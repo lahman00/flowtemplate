@@ -1,0 +1,62 @@
+{
+  "name": "Google Meet",
+  "slug": "google-meet",
+  "category": "communication",
+  "description": "Google Meet is Google's video conferencing service for business communication, offering HD video calls, screen sharing, and Gemini-powered AI meeting features within Google Workspace.",
+  "website": "https://workspace.google.com/products/meet",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Individuals, businesses, schools, and healthcare providers already in the Google ecosystem who need HIPAA-compliant video meetings integrated with Workspace.",
+  "features": [
+    "HD video calls up to 1080p with screen sharing from Docs, Sheets, and Slides",
+    "Real-time live captions and noise cancellation",
+    "Gemini integration for automatic meeting summaries and real-time translation",
+    "Breakout rooms, interactive polls, and Q&A",
+    "Meeting recording and transcription",
+    "Support for up to 1,000 participants and extended meeting durations on premium plans",
+    "Live streaming capabilities",
+    "Free tier supporting up to 100 participants and 60-minute group calls"
+  ],
+  "sources": [
+    "https://workspace.google.com/products/meet"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zoom",
+      "slug": "zoom",
+      "description": "A video conferencing platform for meetings, webinars, and team chat used widely across businesses and education.",
+      "best_for": "Teams needing reliable, widely adopted video conferencing",
+      "strengths": [
+        "Reliable video quality",
+        "Webinars",
+        "Wide adoption"
+      ]
+    },
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A collaboration hub combining chat, video meetings, and file sharing tightly integrated with Microsoft 365.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": [
+        "Microsoft 365 integration",
+        "Chat and video in one app",
+        "Enterprise security"
+      ]
+    },
+    {
+      "name": "Webex",
+      "slug": "webex",
+      "description": "Cisco's AI-powered collaboration platform for video meetings, webinars, calling, and messaging.",
+      "best_for": "Organizations wanting video, calling, and messaging with in-house AI transcription",
+      "strengths": [
+        "AI meeting assistant",
+        "Real-time translation",
+        "Webinars"
+      ]
+    }
+  ]
+}

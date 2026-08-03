@@ -1,0 +1,61 @@
+{
+  "name": "CircleCI",
+  "slug": "circleci",
+  "category": "developer-tools",
+  "description": "CircleCI is a continuous integration and continuous delivery (CI/CD) platform that lets teams build, test, and deploy software automatically, with cloud, self-hosted runner, and on-premise Server deployment options.",
+  "website": "https://circleci.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Built for developers, platform engineers, and engineering managers at organizations of any size, from startups to enterprises, who need fast, reliable pipelines across mobile, AI/ML, and traditional software projects.",
+  "features": [
+    "Configurable pipelines via YAML with parallelism and custom job workflows",
+    "Test splitting and intelligent test insights to speed up CI runs",
+    "Self-hosted runners for building on your own infrastructure",
+    "Docker and Kubernetes-native execution environments",
+    "Automatic rollback pipelines for failed releases",
+    "Build caching and dependency caching to cut pipeline time",
+    "Orbs (reusable, shareable configuration packages)",
+    "Integrations with GitHub, GitLab, Bitbucket, AWS, GCP, and Azure"
+  ],
+  "sources": [
+    "https://circleci.com",
+    "https://circleci.com/docs"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Jenkins",
+      "slug": "jenkins",
+      "description": "An open source automation server with a vast plugin ecosystem for building custom CI/CD pipelines.",
+      "best_for": "Teams that want full control over a self-hosted, highly customizable CI/CD server.",
+      "strengths": [
+        "Free and open source",
+        "Hundreds of plugins",
+        "Runs on-premise"
+      ]
+    },
+    {
+      "name": "GitHub",
+      "slug": "github",
+      "description": "A developer platform for hosting code and automating workflows via GitHub Actions.",
+      "best_for": "Teams that want CI/CD built directly into the same platform that hosts their code.",
+      "strengths": [
+        "Actions automation",
+        "Large ecosystem",
+        "Tight repo integration"
+      ]
+    },
+    {
+      "name": "GitLab",
+      "slug": "gitlab",
+      "description": "An end-to-end DevSecOps platform spanning planning through deployment and security.",
+      "best_for": "Organizations wanting one consolidated platform for source control and CI/CD.",
+      "strengths": [
+        "Built-in CI/CD",
+        "Integrated security scanning",
+        "DORA-metrics analytics"
+      ]
+    }
+  ]
+}

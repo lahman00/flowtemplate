@@ -1,0 +1,50 @@
+{
+  "name": "Sentry",
+  "slug": "sentry",
+  "category": "developer-tools",
+  "description": "Sentry is an error monitoring and observability platform that tracks errors and performance issues across every language, framework, and library, giving developers structured data and AI-assisted tools to debug faster.",
+  "website": "https://sentry.io",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Ranges from solo developers on small projects (free Developer plan) to growing teams (Team plan) and large enterprises needing advanced debugging (Business/Enterprise plans), across web, mobile, and game development.",
+  "features": [
+    "Error monitoring across dozens of languages and frameworks (Python, JavaScript, Java, Go, Ruby, PHP, and more)",
+    "Session Replay for reproducing what a user did before an error",
+    "Distributed tracing and application performance monitoring",
+    "Application profiling to pinpoint slow code paths",
+    "Cron and uptime monitoring for scheduled jobs and endpoints",
+    "AI-powered debugging tools (Seer, Autofix, AI Code Review)",
+    "Log aggregation and real user monitoring"
+  ],
+  "sources": [
+    "https://sentry.io",
+    "https://sentry.io/platforms/",
+    "https://sentry.io/pricing/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Datadog",
+      "slug": "datadog",
+      "description": "An AI-powered observability and security platform covering infrastructure, applications, logs, and user experience.",
+      "best_for": "Organizations needing unified monitoring across complex, distributed cloud systems.",
+      "strengths": [
+        "Infrastructure monitoring",
+        "APM and log management",
+        "Broad cloud integrations"
+      ]
+    },
+    {
+      "name": "Snyk",
+      "slug": "snyk",
+      "description": "A developer security platform for finding and fixing vulnerabilities in code, dependencies, containers, and infrastructure as code.",
+      "best_for": "Engineering teams that want security issues surfaced alongside their development workflow.",
+      "strengths": [
+        "Dependency scanning",
+        "Container security",
+        "IDE and CI integrations"
+      ]
+    }
+  ]
+}

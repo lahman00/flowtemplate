@@ -1,0 +1,58 @@
+{
+  "name": "Braze",
+  "slug": "braze",
+  "category": "marketing",
+  "description": "Braze is a customer engagement platform that helps brands deliver personalized experiences across email, SMS/RCS, WhatsApp, mobile push, and web messaging, unified through a real-time customer data platform and AI-driven orchestration.",
+  "website": "https://www.braze.com",
+  "best_for": "Positioned for consumer brands in retail, financial services, travel, media, gaming, and quick-service restaurants that need cross-channel campaign orchestration at scale.",
+  "features": [
+    "Cross-channel messaging across email, SMS/RCS, WhatsApp, mobile push, and web",
+    "BrazeAI Decisioning Studio for 1:1 personalization at scale",
+    "AI Agents for continuous, automated engagement",
+    "Braze Data Platform for unifying and activating customer data in real time",
+    "Journey Orchestration for multi-step, cross-channel campaigns",
+    "Segment Builder for audience targeting",
+    "Predictive analytics and behavior anticipation",
+    "Reporting and analytics dashboards"
+  ],
+  "sources": [
+    "https://www.braze.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Klaviyo",
+      "slug": "klaviyo",
+      "description": "An AI marketing and service platform built as an autonomous B2C CRM unifying customer data with omnichannel automation.",
+      "best_for": "E-commerce brands wanting unified customer data and marketing",
+      "strengths": [
+        "Composer AI campaign generation",
+        "Omnichannel marketing",
+        "Unified customer data platform"
+      ]
+    },
+    {
+      "name": "Adobe Marketo Engage",
+      "slug": "marketo-engage",
+      "description": "An enterprise B2B marketing automation platform covering lead management, ABM, and campaign orchestration.",
+      "best_for": "Enterprise B2B teams managing complex buying committees",
+      "strengths": [
+        "Account-based marketing",
+        "Lead management",
+        "Sales alignment"
+      ]
+    },
+    {
+      "name": "ActiveCampaign",
+      "slug": "activecampaign",
+      "description": "An autonomous marketing platform where AI agents handle email, SMS, WhatsApp, and CRM tasks backed by customer data.",
+      "best_for": "Growing businesses wanting automation with a built-in CRM",
+      "strengths": [
+        "Active Intelligence AI",
+        "Visual automation builder",
+        "1,000+ integrations"
+      ]
+    }
+  ],
+  "order": 45
+}

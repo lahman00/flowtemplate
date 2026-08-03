@@ -1,0 +1,43 @@
+{
+  "name": "Adobe Analytics",
+  "slug": "adobe-analytics",
+  "category": "analytics",
+  "description": "Adobe Analytics is an enterprise digital-experience analytics platform that brings together website, mobile, and product interaction data into a single source of truth, connecting customer journeys across channels.",
+  "website": "https://business.adobe.com/products/analytics/adobe-analytics.html",
+  "platforms": ["Web"],
+  "best_for": "Marketing and business leaders at large enterprises who need data-driven decision making across web, mobile, and product analytics, with governance and compliance aligned to Adobe Experience Platform.",
+  "features": [
+    "Analysis Workspace: a drag-and-drop interface for building and sharing analyses and visualizations",
+    "Real-time data analysis with advanced segmentation",
+    "Predictive analytics and cross-channel marketing attribution",
+    "Product Analytics for feature and journey usage in digital products",
+    "Content Analytics for asset-level performance and creative attributes",
+    "Role-based dashboards and a mobile scorecard app",
+    "Bulk and streaming APIs, data feeds, and warehouse exports to Azure, Amazon S3, Google BigQuery, and Snowflake"
+  ],
+  "sources": ["https://business.adobe.com/products/analytics/adobe-analytics.html", "https://business.adobe.com/products/analytics/adobe-analytics-features.html"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Google Analytics",
+      "slug": "google-analytics",
+      "description": "A free analytics tool from Google measuring customer behavior across websites and apps.",
+      "best_for": "Businesses of every size wanting free, easy measurement unified with Google's ad platforms.",
+      "strengths": ["Machine-learning insights", "Cross-platform attribution", "Google Ads integration"]
+    },
+    {
+      "name": "Amplitude",
+      "slug": "amplitude",
+      "description": "A product analytics platform combining analytics, feedback, experimentation, and feature management.",
+      "best_for": "Product, data, and engineering teams needing analytics with feature experimentation.",
+      "strengths": ["Instant query results", "Session replay and heatmaps", "Feature experimentation"]
+    },
+    {
+      "name": "Mixpanel",
+      "slug": "mixpanel",
+      "description": "A product intelligence platform combining analytics, session replay, experiments, and AI-powered insights.",
+      "best_for": "Product, data, and engineering teams wanting fast, data-driven product decisions.",
+      "strengths": ["Fast querying", "Session Replay", "Metric Trees"]
+    }
+  ]
+}

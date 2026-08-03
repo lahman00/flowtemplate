@@ -1,0 +1,64 @@
+{
+  "name": "Dashlane",
+  "slug": "dashlane",
+  "category": "security",
+  "description": "Dashlane is a password manager and credential security platform that stores, shares, and monitors passwords while detecting phishing and compromised credentials.",
+  "website": "https://www.dashlane.com",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Individuals and businesses that want a secure credential vault with proactive breach and phishing detection.",
+  "features": [
+    "Encrypted vault for logins and credentials across devices",
+    "Secure sharing with granular admin controls and role-based permissions",
+    "Credential risk detection for weak and compromised passwords",
+    "AI-powered phishing detection before credentials are entered",
+    "Passkey and passwordless login support",
+    "Browser extensions for autofill",
+    "Dark web monitoring"
+  ],
+  "sources": [
+    "https://www.dashlane.com",
+    "https://www.dashlane.com/features"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "1Password",
+      "slug": "1password",
+      "description": "A password manager and secrets vault for individuals, families, and businesses.",
+      "best_for": "Teams wanting a polished password manager with strong admin controls",
+      "strengths": [
+        "Vault sharing",
+        "Travel mode",
+        "Developer tools"
+      ]
+    },
+    {
+      "name": "Bitwarden",
+      "slug": "bitwarden",
+      "description": "An open-source password manager for individuals and organizations.",
+      "best_for": "Users and teams wanting an open-source, self-hostable option",
+      "strengths": [
+        "Open source",
+        "Self-hosting",
+        "Affordable pricing"
+      ]
+    },
+    {
+      "name": "NordPass",
+      "slug": "nordpass",
+      "description": "A password manager with zero-knowledge encryption, breach scanning, and passkey support.",
+      "best_for": "Individuals and businesses wanting simple, secure password management",
+      "strengths": [
+        "Zero-knowledge encryption",
+        "Data breach scanner",
+        "Email masking"
+      ]
+    }
+  ]
+}

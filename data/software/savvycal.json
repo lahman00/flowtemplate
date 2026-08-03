@@ -1,0 +1,61 @@
+{
+  "name": "SavvyCal",
+  "slug": "savvycal",
+  "category": "scheduling",
+  "description": "SavvyCal is a scheduling platform that lets recipients overlay their own calendar on a scheduling link, making it easier to find a time that works for everyone.",
+  "website": "https://savvycal.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Sales, recruiting, customer success, and consulting professionals who want a more collaborative, less chaotic scheduling-link experience.",
+  "features": [
+    "Scheduling links with a week-view booking interface",
+    "Calendar overlay so recipients can see their own events while booking",
+    "Buffers, quantity caps, and time-blocking to protect focus time",
+    "Collective mode combining multiple colleagues' availability",
+    "Round robin mode for distributing meetings across a team",
+    "Group mode for multiple attendees per time slot",
+    "Custom branding and custom domain hosting",
+    "Chrome extension"
+  ],
+  "sources": [
+    "https://savvycal.com",
+    "https://savvycal.com/features"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that lets people share availability links to book meetings without back-and-forth emails.",
+      "best_for": "Individuals and teams booking one-off or recurring meetings",
+      "strengths": [
+        "Scheduling links",
+        "Calendar sync",
+        "Team routing"
+      ]
+    },
+    {
+      "name": "Cal.com",
+      "slug": "cal-com",
+      "description": "An open-source scheduling infrastructure platform for building booking flows.",
+      "best_for": "Developers and businesses wanting customizable, self-hostable scheduling",
+      "strengths": [
+        "Open source",
+        "API-first",
+        "Customization"
+      ]
+    },
+    {
+      "name": "YouCanBook.me",
+      "slug": "youcanbookme",
+      "description": "An online scheduling tool with branded booking pages, automated reminders, and payment collection.",
+      "best_for": "Small businesses and consultants automating client booking",
+      "strengths": [
+        "Branded booking pages",
+        "Automated reminders",
+        "Zapier integrations"
+      ]
+    }
+  ]
+}

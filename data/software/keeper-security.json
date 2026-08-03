@@ -1,0 +1,65 @@
+{
+  "name": "Keeper Security",
+  "slug": "keeper-security",
+  "category": "security",
+  "description": "Keeper Security is a zero-trust and zero-knowledge platform providing password management, privileged access management, and secrets management for individuals and enterprises.",
+  "website": "https://www.keepersecurity.com",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Enterprises, government agencies, and managed service providers that need unified password, privileged access, and secrets management.",
+  "features": [
+    "Password management for enterprise, business, and family accounts",
+    "Privileged access management with just-in-time access and session auditing",
+    "Secrets Manager for policy-based credential and database access",
+    "AI-powered threat detection that classifies risk and terminates high-risk sessions",
+    "Dark web monitoring for personal and business breach scanning",
+    "Encrypted file storage",
+    "Remote browser isolation",
+    "Browser extensions for Chrome, Firefox, Safari, and Edge"
+  ],
+  "sources": [
+    "https://www.keepersecurity.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "1Password",
+      "slug": "1password",
+      "description": "A password manager and secrets vault for individuals, families, and businesses.",
+      "best_for": "Teams wanting a polished password manager with strong admin controls",
+      "strengths": [
+        "Vault sharing",
+        "Travel mode",
+        "Developer tools"
+      ]
+    },
+    {
+      "name": "Bitwarden",
+      "slug": "bitwarden",
+      "description": "An open-source password manager for individuals and organizations.",
+      "best_for": "Users and teams wanting an open-source, self-hostable option",
+      "strengths": [
+        "Open source",
+        "Self-hosting",
+        "Affordable pricing"
+      ]
+    },
+    {
+      "name": "Dashlane",
+      "slug": "dashlane",
+      "description": "A password manager and credential security platform with phishing and breach detection.",
+      "best_for": "Businesses wanting proactive credential risk detection",
+      "strengths": [
+        "Phishing detection",
+        "Secure sharing",
+        "Passkey support"
+      ]
+    }
+  ]
+}

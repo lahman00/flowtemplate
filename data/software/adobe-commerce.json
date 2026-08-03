@@ -1,0 +1,61 @@
+{
+  "name": "Adobe Commerce",
+  "slug": "adobe-commerce",
+  "category": "ecommerce",
+  "description": "Adobe Commerce (formerly Magento Commerce) is Adobe's enterprise ecommerce platform for B2B and B2C businesses, combining open-source extensibility with native tools for content, merchandising, and multi-site management.",
+  "website": "https://business.adobe.com/products/commerce.html",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Enterprise B2B and B2C brands that need deep customization, multi-site/multi-region storefronts, and complex catalog or pricing rules beyond what off-the-shelf platforms offer.",
+  "features": [
+    "Page Builder drag-and-drop content editor for building storefront pages without coding",
+    "B2B functionality including company accounts, purchasing permissions, and purchase orders",
+    "Requisition lists for saving and reordering frequently purchased products",
+    "Multisite architecture for running region-specific storefronts with shared catalog and marketing resources",
+    "Native localization supporting multiple languages, currencies, and tax regulations",
+    "AI-driven product recommendations and personalized search and merchandising",
+    "Dynamic customer segmentation based on behavior, demographics, and purchase history",
+    "Real-time inventory and order management tools"
+  ],
+  "sources": [
+    "https://business.adobe.com/products/commerce.html",
+    "https://experienceleague.adobe.com/en/docs/commerce-operations/release/features"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Shopify",
+      "slug": "shopify",
+      "description": "A hosted commerce platform for building and managing online stores across web, mobile, and in-person sales.",
+      "best_for": "Merchants who want a fully managed platform without hosting or infrastructure overhead.",
+      "strengths": [
+        "App ecosystem",
+        "Hosted infrastructure",
+        "Multi-channel selling"
+      ]
+    },
+    {
+      "name": "BigCommerce",
+      "slug": "bigcommerce",
+      "description": "A SaaS ecommerce platform for building and scaling online stores with built-in enterprise features.",
+      "best_for": "Growing and mid-market retailers wanting built-in enterprise features without added transaction fees.",
+      "strengths": [
+        "Open SaaS architecture",
+        "Built-in B2B features",
+        "Multi-storefront support"
+      ]
+    },
+    {
+      "name": "Shopware",
+      "slug": "shopware",
+      "description": "An open-source ecommerce platform combining B2B capabilities, modular architecture, and AI-powered tools.",
+      "best_for": "Enterprise brands wanting open-source flexibility with strong B2B support.",
+      "strengths": [
+        "Open-source core",
+        "B2B components",
+        "Headless/omnichannel architecture"
+      ]
+    }
+  ]
+}

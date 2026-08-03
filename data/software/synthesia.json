@@ -1,0 +1,36 @@
+{
+  "name": "Synthesia",
+  "slug": "synthesia",
+  "category": "ai",
+  "description": "Synthesia is an all-in-one AI video creation platform for businesses, letting users produce professional videos with AI avatars and voices without cameras, actors, or production studios.",
+  "website": "https://www.synthesia.io/",
+  "platforms": ["Web"],
+  "best_for": "Learning and development departments, sales-enablement teams, HR training programs, marketing departments, and compliance/technical training across manufacturing, tech, healthcare, and financial services.",
+  "features": [
+    "240+ AI avatars and 1,000+ AI voices across 160+ languages",
+    "Text-to-video generator and script-to-video maker",
+    "AI screen recorder with instant transcripts",
+    "PowerPoint-to-video conversion",
+    "One-click video translation and AI dubbing into 160+ languages",
+    "Real-time team collaboration with brand kits and version control",
+    "SCORM export for LMS integration and detailed viewer analytics"
+  ],
+  "sources": ["https://www.synthesia.io/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Runway",
+      "slug": "runway",
+      "description": "An AI creative suite and developer API for generating and editing cinematic video, image, and audio content.",
+      "best_for": "Teams wanting generative, cinematic video rather than avatar-led presenter videos.",
+      "strengths": ["Gen-4.5 video model", "Developer API for custom media pipelines", "Image-to-video generation"]
+    },
+    {
+      "name": "ElevenLabs",
+      "slug": "elevenlabs",
+      "description": "An AI audio platform for text-to-speech, voice cloning, and conversational voice agents.",
+      "best_for": "Teams needing standalone voice generation or dubbing without a full avatar-video suite.",
+      "strengths": ["5,000+ voices across 70+ languages", "Voice cloning", "Dubbing with emotion preservation"]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "MkDocs",
+  "slug": "mkdocs",
+  "category": "documentation",
+  "description": "MkDocs is a fast, simple static site generator geared toward building project documentation, using Markdown source files and a single YAML configuration file.",
+  "website": "https://www.mkdocs.org",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Developers and project maintainers who want to write documentation in plain Markdown and generate a professional static site without a heavyweight build system.",
+  "features": [
+    "Documentation written in Markdown and configured via a single YAML file",
+    "Built-in themes (mkdocs and readthedocs) plus a wide range of third-party themes",
+    "Plugin system for extending and customizing site generation",
+    "Markdown extensions to modify and enhance default Markdown behavior",
+    "Live-reloading development server for real-time preview while writing",
+    "Fully static HTML output that requires no server-side processing",
+    "Deployable anywhere, including GitHub Pages and Amazon S3"
+  ],
+  "sources": [
+    "https://www.mkdocs.org"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Docusaurus",
+      "slug": "docusaurus",
+      "description": "An open source static site generator for building documentation websites with Markdown/MDX and React.",
+      "best_for": "Teams that want React-based theming and built-in versioning/localization.",
+      "strengths": [
+        "MDX support",
+        "Versioning",
+        "React-based theming"
+      ]
+    },
+    {
+      "name": "Read the Docs",
+      "slug": "read-the-docs",
+      "description": "A documentation building and hosting platform that builds versioned docs from Git and previews changes on pull requests.",
+      "best_for": "Teams that want hosting and build automation handled for them, including for MkDocs sites.",
+      "strengths": [
+        "Pull request previews",
+        "Versioned docs",
+        "Hosting included"
+      ]
+    }
+  ]
+}

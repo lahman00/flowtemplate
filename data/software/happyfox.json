@@ -1,0 +1,45 @@
+{
+  "name": "HappyFox",
+  "slug": "happyfox",
+  "category": "customer-support",
+  "description": "HappyFox is a full-stack AI support platform offering help desk ticketing, an AI-powered chatbot, a service desk for IT teams, and workflow automation for customer and internal support.",
+  "website": "https://www.happyfox.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Customer service and IT/HR teams from small businesses to enterprises across education, healthcare, ecommerce, and real estate needing omnichannel support at scale.",
+  "features": [
+    "AI-powered help desk ticketing with knowledge base",
+    "Autopilot AI agents for automating repetitive support tasks",
+    "24/7 self-service chatbot",
+    "Service desk module for IT incident and asset tracking",
+    "End-to-end workflow automation",
+    "AI contact center with voice AI",
+    "Integrations with Slack, Microsoft Teams, Salesforce, Jira, and Shopify"
+  ],
+  "sources": [
+    "https://www.happyfox.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zendesk",
+      "slug": "zendesk",
+      "description": "A customer service platform with ticketing, live chat, and AI-powered automation.",
+      "best_for": "Support teams of all sizes needing an established, feature-rich helpdesk.",
+      "strengths": ["Mature ticketing system", "AI automation", "Large app marketplace"]
+    },
+    {
+      "name": "Freshdesk",
+      "slug": "freshdesk",
+      "description": "A cloud-based help desk with ticketing, automation, and omnichannel support.",
+      "best_for": "Support teams wanting an affordable, easy-to-deploy helpdesk.",
+      "strengths": ["Omnichannel ticketing", "Automation", "Affordable tiers"]
+    },
+    {
+      "name": "Help Scout",
+      "slug": "help-scout",
+      "description": "A shared inbox and help desk platform built for personalized, human-feeling support.",
+      "best_for": "Small to mid-sized support teams wanting simple, email-centric ticketing.",
+      "strengths": ["Shared inbox", "Simplicity", "Beacon in-app help widget"]
+    }
+  ]
+}

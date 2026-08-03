@@ -1,0 +1,53 @@
+{
+  "name": "CrowdStrike",
+  "slug": "crowdstrike",
+  "category": "security",
+  "description": "CrowdStrike Falcon is an AI-native cybersecurity platform that unifies endpoint detection and response, cloud security, and identity protection.",
+  "website": "https://www.crowdstrike.com",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux"
+  ],
+  "best_for": "Security operations teams and enterprises that need unified protection across endpoints, cloud infrastructure, and identity systems.",
+  "features": [
+    "Endpoint detection and response with continuous visibility",
+    "Next-gen antivirus protecting against malware and ransomware",
+    "Expert-led threat intelligence and threat hunting",
+    "Agent and agentless cloud security",
+    "Identity protection for human, non-human, AI, and SaaS identities",
+    "Next-gen SIEM for security information and event management",
+    "Centralized host firewall management",
+    "Device control for removable media"
+  ],
+  "sources": [
+    "https://www.crowdstrike.com",
+    "https://www.crowdstrike.com/platform/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Wiz",
+      "slug": "wiz",
+      "description": "An AI-powered cloud security platform providing posture management, vulnerability scanning, and workload protection.",
+      "best_for": "Security teams protecting cloud-native and AI-heavy environments",
+      "strengths": [
+        "Cloud security posture management",
+        "Agentless scanning",
+        "Security graph context"
+      ]
+    },
+    {
+      "name": "Snyk",
+      "slug": "snyk",
+      "description": "A developer security platform for finding and fixing vulnerabilities in code, dependencies, and containers.",
+      "best_for": "Development teams wanting security integrated into their workflow",
+      "strengths": [
+        "Dependency scanning",
+        "Container security",
+        "Developer-first workflow"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Read the Docs",
+  "slug": "read-the-docs",
+  "category": "documentation",
+  "description": "Read the Docs is a documentation building and hosting platform that treats documentation like code: it connects to Git repositories, builds docs automatically on every commit, and gives every pull request a live preview.",
+  "website": "https://about.readthedocs.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Open source and community projects (free tier) as well as commercial and enterprise engineering teams (paid plans starting around $50/month) that want documentation infrastructure handled for them.",
+  "features": [
+    "Git integration with automatic doc builds on every commit",
+    "Pull request previews with visual diffs against production",
+    "Support for multiple documentation tools, including Sphinx, MkDocs, and Docusaurus",
+    "Versioned documentation built automatically from branches or tags",
+    "SSO access control via GitHub or GitLab on paid plans",
+    "Private repository support via connected Git accounts or SSH keys",
+    "llms.txt and Markdown content negotiation for AI tool compatibility",
+    "Integrated documentation search"
+  ],
+  "sources": [
+    "https://about.readthedocs.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Docusaurus",
+      "slug": "docusaurus",
+      "description": "An open source static site generator for building documentation websites with Markdown/MDX and React.",
+      "best_for": "Teams that want full control of their doc site's design and want to self-host the output.",
+      "strengths": [
+        "MDX support",
+        "Versioning",
+        "React-based theming"
+      ]
+    },
+    {
+      "name": "GitBook",
+      "slug": "gitbook",
+      "description": "A knowledge management platform for creating and publishing product and technical documentation.",
+      "best_for": "Teams that want a visual editor with Git sync rather than a static-site build pipeline.",
+      "strengths": [
+        "Visual editor",
+        "Git sync",
+        "Publishing controls"
+      ]
+    }
+  ]
+}

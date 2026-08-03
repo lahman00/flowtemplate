@@ -1,0 +1,43 @@
+{
+  "name": "Grammarly",
+  "slug": "grammarly",
+  "category": "ai",
+  "description": "Grammarly is an AI writing assistant, described as \"an AI partner that helps turn your thoughts into writing,\" offering grammar correction, tone adjustment, and AI-generated content across browsers, desktop, mobile, and productivity apps.",
+  "website": "https://www.grammarly.com/",
+  "platforms": ["Web", "Windows", "macOS", "iOS", "Android"],
+  "best_for": "Individuals wanting free or Pro tiers for personal writing improvement, teams and businesses needing brand-voice consistency and AI prompts, and enterprises requiring data loss prevention and dedicated support.",
+  "features": [
+    "Grammar, spelling, and clarity correction with full-sentence rewrites",
+    "Tone detection and adjustment",
+    "AI-generated content creation with a monthly prompt allowance",
+    "Plagiarism detection and AI-generated text detection",
+    "Brand voice and style-guide consistency for teams",
+    "Browser extensions (Chrome, Safari, Firefox, Edge) and desktop apps (Windows, Mac)",
+    "Integrations with Google Docs, Microsoft Office, and Slack"
+  ],
+  "sources": ["https://www.grammarly.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "ChatGPT",
+      "slug": "chatgpt",
+      "description": "OpenAI's general-purpose AI assistant, usable for drafting, editing, and rewriting text.",
+      "best_for": "Users wanting a flexible assistant for writing tasks rather than a dedicated grammar/style checker.",
+      "strengths": ["Broad task versatility", "Voice and vision input", "Wide platform availability"]
+    },
+    {
+      "name": "Copy.ai",
+      "slug": "copy-ai",
+      "description": "An AI-native go-to-market platform for generating sales, marketing, and operations content.",
+      "best_for": "GTM teams producing high-volume marketing and sales copy rather than everyday writing correction.",
+      "strengths": ["2,000+ integrations", "LLM-agnostic", "Brand voice controls"]
+    },
+    {
+      "name": "Jasper",
+      "slug": "jasper",
+      "description": "An AI platform purpose-built for marketing teams with brand-governed content generation.",
+      "best_for": "Marketing teams needing on-brand content at scale rather than individual writing assistance.",
+      "strengths": ["Brand Voice/Style Guides", "100+ marketing agents", "Multimodal content"]
+    }
+  ]
+}

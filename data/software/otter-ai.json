@@ -1,0 +1,43 @@
+{
+  "name": "Otter.ai",
+  "slug": "otter-ai",
+  "category": "ai",
+  "description": "Otter.ai is an AI \"Conversational Knowledge Engine\" that automatically transcribes meetings, interviews, and conversations into searchable summaries with action items, decisions, and speaker identification.",
+  "website": "https://otter.ai/",
+  "platforms": ["Web", "Windows", "macOS", "iOS", "Android"],
+  "best_for": "Sales teams needing automatic follow-ups and CRM sync, educators wanting lecture transcripts and summaries, media/interview transcription, recruiting teams, and any organization needing structured conversation documentation.",
+  "features": [
+    "Automatic real-time transcription across multiple languages (English, French, Spanish, Japanese, German, Mandarin)",
+    "AI-generated meeting summaries with decisions and action items",
+    "AI Chat to search across meetings and connected apps",
+    "Bot-free desktop recording on Mac/Windows without a bot joining the call",
+    "Speaker recognition identifying who said what",
+    "Channels for organizing meetings by team, project, or topic",
+    "Integrations with Zoom, Google Meet, and Microsoft Teams"
+  ],
+  "sources": ["https://otter.ai/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Notion",
+      "slug": "notion",
+      "description": "A connected workspace that includes AI-powered meeting notes alongside documents and project tracking.",
+      "best_for": "Teams that want meeting notes to live alongside their broader knowledge base and task tracking.",
+      "strengths": ["AI meeting notes", "Wiki and knowledge base pages", "Project and task tracking"]
+    },
+    {
+      "name": "Zoom",
+      "slug": "zoom",
+      "description": "A video-meeting platform with a built-in AI assistant that generates call summaries and next steps.",
+      "best_for": "Teams that primarily need transcription/summaries within the video platform they already use.",
+      "strengths": ["Native to the meeting platform", "AI call summaries", "Docs and Whiteboard integration"]
+    },
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A communication and collaboration platform with chat, meetings, and Microsoft 365 integration.",
+      "best_for": "Organizations already on Microsoft 365 wanting meeting capture inside their existing chat/meeting tool.",
+      "strengths": ["Video meetings", "Office integration", "File collaboration"]
+    }
+  ]
+}

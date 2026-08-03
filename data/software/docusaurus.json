@@ -1,0 +1,48 @@
+{
+  "name": "Docusaurus",
+  "slug": "docusaurus",
+  "category": "documentation",
+  "description": "Docusaurus is an open source static site generator that helps teams build optimized documentation websites quickly, letting authors focus on writing content in Markdown/MDX instead of building infrastructure.",
+  "website": "https://docusaurus.io",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Open source projects and technical teams maintaining documentation across multiple product versions; used by projects like Redux, Supabase, and React Native.",
+  "features": [
+    "MDX support for writing Markdown with embedded React components",
+    "React-based theming and a pluggable architecture for customization",
+    "Built-in localization/i18n using Git-based or Crowdin translation workflows",
+    "Document versioning to maintain separate docs for different releases",
+    "Integrated full-text search (Algolia DocSearch)",
+    "Static site generation producing optimized, deployable HTML",
+    "Built-in dark mode theme switching"
+  ],
+  "sources": [
+    "https://docusaurus.io"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Read the Docs",
+      "slug": "read-the-docs",
+      "description": "A documentation building and hosting platform that builds versioned docs from Git and previews changes on pull requests.",
+      "best_for": "Teams that want documentation hosting and build automation without managing their own infrastructure.",
+      "strengths": [
+        "Pull request previews",
+        "Versioned docs",
+        "Supports Sphinx, MkDocs, and Docusaurus"
+      ]
+    },
+    {
+      "name": "GitBook",
+      "slug": "gitbook",
+      "description": "A knowledge management platform for creating and publishing product and technical documentation.",
+      "best_for": "Teams that want a WYSIWYG editor rather than a Markdown/code-based workflow.",
+      "strengths": [
+        "Visual editor",
+        "Git sync",
+        "Publishing controls"
+      ]
+    }
+  ]
+}

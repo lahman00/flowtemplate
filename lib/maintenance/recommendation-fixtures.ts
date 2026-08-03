@@ -136,7 +136,14 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
     name: "solo-simple-free",
     description: "Solo freelancer, wants something simple and free.",
     answers: { ...DEFAULT_ANSWERS, teamSize: "solo", difficultyPreference: "simple", budget: "free" },
-    assertions: [{ kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "any size" }],
+    // Was pinned to a specific "any size" phrase from whichever product
+    // happened to rank #1 pre-expansion. Post-expansion, the #1 pick for
+    // this exact query is IFTTT — a genuinely stronger match ("Individuals,
+    // small business owners... who want simple, no-code automations" is a
+    // closer fit than a generic "any size" product). Assert on "solo team",
+    // the actual dimension this fixture is testing, so it stays meaningful
+    // regardless of which specific product wins as the dataset grows.
+    assertions: [{ kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "solo team" }],
   },
   {
     name: "office-pm-no-remote-signal",

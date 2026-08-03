@@ -1,0 +1,61 @@
+{
+  "name": "Brevo",
+  "slug": "brevo",
+  "category": "marketing",
+  "description": "Brevo (formerly Sendinblue) is an integrated marketing and customer relationship platform that combines email, SMS, WhatsApp, chat, and a built-in CRM so businesses can run coordinated campaigns across channels from one place.",
+  "website": "https://www.brevo.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Positioned for businesses of various sizes that want to manage customer interactions and run coordinated marketing campaigns across integrated channels without stitching together separate tools.",
+  "features": [
+    "Email marketing campaign creation and sending",
+    "SMS messaging campaigns",
+    "WhatsApp business messaging",
+    "Marketing automation workflows",
+    "Built-in CRM for managing customer relationships",
+    "Live chat for on-site customer engagement"
+  ],
+  "sources": [
+    "https://www.brevo.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
+      "best_for": "Businesses wanting a wide template library and app ecosystem",
+      "strengths": [
+        "Drag-and-drop email builder",
+        "300+ integrations",
+        "AI content generation"
+      ]
+    },
+    {
+      "name": "Constant Contact",
+      "slug": "constant-contact",
+      "description": "A digital and email marketing platform for small businesses, with email, SMS, landing pages, and automation.",
+      "best_for": "Small businesses wanting a simple, all-in-one campaign tool",
+      "strengths": [
+        "Ease of use",
+        "SMS marketing",
+        "Landing pages"
+      ]
+    },
+    {
+      "name": "GetResponse",
+      "slug": "getresponse",
+      "description": "An all-in-one marketing platform combining email, automation, landing pages, and webinars.",
+      "best_for": "Businesses that also need webinars and AI-assisted landing pages",
+      "strengths": [
+        "AI send-time optimization",
+        "Webinars",
+        "Landing page builder"
+      ]
+    }
+  ],
+  "order": 42
+}

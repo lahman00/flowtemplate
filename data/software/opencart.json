@@ -1,0 +1,60 @@
+{
+  "name": "OpenCart",
+  "slug": "opencart",
+  "category": "ecommerce",
+  "description": "OpenCart is a free, open-source PHP-based ecommerce platform for building and managing online stores, with no monthly platform fees.",
+  "website": "https://www.opencart.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Small businesses, developers, and agencies who want a free, self-hosted, highly extensible storefront without recurring platform fees.",
+  "features": [
+    "Fully mobile-friendly admin area with product, order, and customer management",
+    "36 payment methods built in, with hundreds more available via the marketplace",
+    "Module-based system for extending functionality with themes and plugins",
+    "OpenCart marketplace offering 13,000+ modules and themes",
+    "Support for 40+ languages, including right-to-left languages like Arabic and Hebrew",
+    "Built-in sales reporting and marketing tools",
+    "No monthly licensing fees since the core platform is free and open source"
+  ],
+  "sources": [
+    "https://www.opencart.com",
+    "https://www.opencart.com/index.php?route=cms/feature"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "PrestaShop",
+      "slug": "prestashop",
+      "description": "An open-source ecommerce platform for building and managing online stores.",
+      "best_for": "Merchants and agencies wanting a self-hosted, customizable open-source storefront.",
+      "strengths": [
+        "Open source",
+        "Module marketplace",
+        "Multi-language support"
+      ]
+    },
+    {
+      "name": "WooCommerce",
+      "slug": "woocommerce",
+      "description": "An open-source ecommerce plugin for WordPress used to build and customize online stores.",
+      "best_for": "WordPress users wanting a free, highly extensible ecommerce plugin.",
+      "strengths": [
+        "Free and open source",
+        "WordPress ecosystem",
+        "Extension marketplace"
+      ]
+    },
+    {
+      "name": "Shift4Shop",
+      "slug": "shift4shop",
+      "description": "A turnkey ecommerce platform with a built-in website builder, marketing suite, and multi-channel selling.",
+      "best_for": "Small to mid-sized businesses wanting an all-in-one hosted store builder.",
+      "strengths": [
+        "Drag-and-drop builder",
+        "Built-in marketing tools",
+        "Multi-channel selling"
+      ]
+    }
+  ]
+}

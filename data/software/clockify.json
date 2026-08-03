@@ -1,0 +1,56 @@
+{
+  "name": "Clockify",
+  "slug": "clockify",
+  "category": "productivity",
+  "description": "Clockify is a time tracking and timesheet app that lets teams log work with a timer or manual entries, monitor activity, and generate reports on billable hours, project budgets, and team capacity.",
+  "website": "https://clockify.me",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android",
+    "Browser extension"
+  ],
+  "best_for": "Positioned for freelancers, agencies, developers, consultants, and construction companies that need to track productivity, attendance, and billable hours, with a free plan for unlimited users.",
+  "features": [
+    "Timer, manual timesheet entry, and calendar view for logging time",
+    "Auto-tracker that turns app and website usage into time entries",
+    "Kiosk clock-in for shared-device attendance tracking",
+    "Detailed reports on activity, rates, earnings, and project budgets",
+    "Scheduling and time-off management",
+    "Timesheet approval workflows",
+    "Expense tracking and invoicing",
+    "Role-based team administration"
+  ],
+  "sources": [
+    "https://clockify.me"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Toggl Track",
+      "slug": "toggl-track",
+      "description": "A time tracking tool with one-click timers, background activity tracking, and profitability reporting.",
+      "best_for": "Teams wanting deeper profitability and workload reporting",
+      "strengths": [
+        "Background activity tracking",
+        "Profitability reports",
+        "100+ integrations"
+      ]
+    },
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A project management platform for planning, tracking, and reporting on team work.",
+      "best_for": "Teams that want project management alongside light time tracking via integrations",
+      "strengths": [
+        "Task management",
+        "Timeline views",
+        "Workflow automation"
+      ]
+    }
+  ],
+  "order": 51
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Zoho Flow",
+  "slug": "zoho-flow",
+  "category": "automation",
+  "description": "Zoho Flow is an AI-powered integration platform that connects cloud and on-premises apps and automates workflows across departments.",
+  "website": "https://www.zoho.com/flow",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Businesses already using Zoho's app ecosystem who want no-code workflow automation connecting 1,000+ cloud and on-premises apps.",
+  "features": [
+    "Drag-and-drop visual workflow builder",
+    "Natural-language flow generation that builds workflows from plain-English descriptions",
+    "1,000+ supported cloud and on-premises app integrations",
+    "Custom functions using the Deluge scripting language",
+    "Multiple trigger sources including polling APIs, webhooks, templated emails, and RSS feeds",
+    "Agentic AI actions that choose a course of action based on real-time context",
+    "Conditional logic and branching workflows",
+    "Workflow monitoring with the ability to restart or rerun specific parts of a flow"
+  ],
+  "sources": [
+    "https://www.zoho.com/flow"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform that connects thousands of web apps through simple trigger-and-action workflows.",
+      "best_for": "Teams that want fast, no-code automations between cloud apps",
+      "strengths": [
+        "Huge app directory",
+        "Easy setup",
+        "No-code workflows"
+      ]
+    },
+    {
+      "name": "Make",
+      "slug": "make",
+      "description": "A visual automation platform for building multi-step workflows between apps with a drag-and-drop scenario builder.",
+      "best_for": "Teams that want visual, complex multi-step automations",
+      "strengths": [
+        "Visual scenario builder",
+        "Complex branching logic",
+        "Wide app support"
+      ]
+    },
+    {
+      "name": "Pipedream",
+      "slug": "pipedream",
+      "description": "A developer-focused integration and automation platform for building workflows that connect APIs, AI, and databases with code-level control when needed.",
+      "best_for": "Developers who want visual workflows with optional custom code",
+      "strengths": [
+        "3,000+ integrated apps",
+        "Code steps",
+        "AI agent builder"
+      ]
+    }
+  ]
+}

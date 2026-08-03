@@ -1,0 +1,46 @@
+{
+  "name": "Framer",
+  "slug": "framer",
+  "category": "design",
+  "description": "Framer is a design and website-building platform that combines a visual canvas with AI agents that generate designs, write custom code, and manage a synced CMS for publishing live sites.",
+  "website": "https://www.framer.com",
+  "platforms": ["Web", "macOS", "Windows"],
+  "best_for": "Designers, startup founders, and marketing teams who want to design and publish production websites without writing code, including AI-assisted workflows.",
+  "features": [
+    "Canvas-native AI design agent that generates and refines layouts",
+    "Agent-powered custom code generation for interactions and effects",
+    "CMS agent that sets up, organizes, and updates content collections",
+    "Real-time multiplayer collaboration",
+    "Built-in A/B testing and analytics dashboard",
+    "SEO tools and Core Web Vitals performance monitoring",
+    "Integration with external AI tools like Claude Code, ChatGPT, and Cursor"
+  ],
+  "sources": [
+    "https://www.framer.com",
+    "https://www.framer.com/downloads/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Figma",
+      "slug": "figma",
+      "description": "A collaborative interface design tool with real-time multiplayer editing.",
+      "best_for": "Product design teams needing collaborative UI/UX design and prototyping.",
+      "strengths": ["Real-time collaboration", "Component libraries", "Dev handoff"]
+    },
+    {
+      "name": "Webflow",
+      "slug": "webflow",
+      "description": "A visual web design and CMS platform that publishes production-ready code.",
+      "best_for": "Designers and agencies building custom, code-free marketing websites.",
+      "strengths": ["Visual CSS control", "Built-in CMS", "Hosting included"]
+    },
+    {
+      "name": "Sketch",
+      "slug": "sketch",
+      "description": "A vector-based UI design tool for macOS with a large plugin ecosystem.",
+      "best_for": "Mac-based design teams wanting a mature, plugin-extensible design tool.",
+      "strengths": ["Vector editing", "Plugin ecosystem", "Symbols/components"]
+    }
+  ]
+}

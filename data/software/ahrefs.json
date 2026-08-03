@@ -1,0 +1,47 @@
+{
+  "name": "Ahrefs",
+  "slug": "ahrefs",
+  "category": "marketing",
+  "description": "Ahrefs is an AI-powered marketing platform built on a proprietary index of the web, giving SEO specialists, content marketers, and agencies tools for keyword research, backlink analysis, site auditing, and AI visibility tracking.",
+  "website": "https://ahrefs.com",
+  "best_for": "Positioned for SEO specialists, content marketers, PPC specialists, brand marketers, and agencies — the vendor reports marketers at 44% of the Fortune 500 use Ahrefs.",
+  "features": [
+    "Keywords Explorer for keyword research and search volume data",
+    "Site Explorer and backlink analysis built on a proprietary web index",
+    "Rank Tracker for monitoring search rankings",
+    "Brand Radar for AI visibility tracking across LLM answers",
+    "Site Audit for technical SEO health checks",
+    "Content Explorer and AI Content Helper for content research and optimization",
+    "Web Analytics and Bot Analytics for website performance",
+    "Local SEO tools including Google Business Profile monitoring"
+  ],
+  "sources": [
+    "https://ahrefs.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Semrush",
+      "slug": "semrush",
+      "description": "A digital marketing platform for SEO, content, and competitive research, with keyword, backlink, and AI visibility tools.",
+      "best_for": "Teams wanting an all-in-one SEO, content, and PPC toolkit",
+      "strengths": [
+        "Keyword research",
+        "Site audit",
+        "AI visibility tracking"
+      ]
+    },
+    {
+      "name": "Google Analytics",
+      "slug": "google-analytics",
+      "description": "A free web analytics platform for tracking website traffic, user behavior, and conversions.",
+      "best_for": "Teams needing free, foundational traffic and conversion analytics",
+      "strengths": [
+        "Free tier",
+        "Traffic analytics",
+        "Google Ads integration"
+      ]
+    }
+  ],
+  "order": 47
+}

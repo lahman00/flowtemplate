@@ -1,0 +1,49 @@
+{
+  "name": "SwaggerHub",
+  "slug": "swaggerhub",
+  "category": "documentation",
+  "description": "SwaggerHub is SmartBear's platform for API design, documentation, testing, and governance, giving teams a centralized catalog and visual editor for building OpenAPI- and AsyncAPI-based API documentation.",
+  "website": "https://swagger.io/tools/swaggerhub/",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Development teams, QA professionals, and product managers building APIs for both human and AI-agent consumption; used by enterprises including CVS, Salesforce, and Volvo.",
+  "features": [
+    "AI-assisted API generation with intelligent design suggestions",
+    "Studio visual, code-optional editor for cross-functional API design",
+    "Centralized API catalog acting as a single source of truth",
+    "Contract testing that catches breaking changes during development",
+    "Automated mock server generation for testing without manual setup",
+    "Auto-generated API documentation portal with search and filtering",
+    "Low-code functional testing integrated with CI/CD pipelines",
+    "Explore feature for live API testing across REST and Kafka"
+  ],
+  "sources": [
+    "https://swagger.io/tools/swaggerhub/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "ReadMe",
+      "slug": "readme",
+      "description": "A developer-friendly API documentation platform combining a visual editor with AI-powered tools.",
+      "best_for": "Teams that want a polished, developer-facing API reference site.",
+      "strengths": [
+        "Interactive API explorer",
+        "Git sync",
+        "AI-assisted doc updates"
+      ]
+    },
+    {
+      "name": "Postman",
+      "slug": "postman",
+      "description": "An API platform for building, testing, and managing APIs, with tools for documentation and mock servers.",
+      "best_for": "Teams that want API design, testing, and documentation in one workflow.",
+      "strengths": [
+        "API client",
+        "Collection-based testing",
+        "Mock servers"
+      ]
+    }
+  ]
+}

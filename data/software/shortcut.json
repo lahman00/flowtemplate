@@ -1,0 +1,61 @@
+{
+  "name": "Shortcut",
+  "slug": "shortcut",
+  "category": "project-management",
+  "description": "Shortcut is a project management platform built for software development teams to plan, track, and ship work with fast, keyboard-driven workflows.",
+  "website": "https://shortcut.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Engineering and product teams that need issue tracking tightly integrated with their code, without heavyweight configuration.",
+  "features": [
+    "Kanban boards with work-in-progress limits",
+    "Sprints and iterations for time-boxed planning",
+    "Roadmaps and objectives to align work with company goals",
+    "Docs for linking plans to execution",
+    "VCS automations syncing with GitHub, GitLab, and Bitbucket",
+    "Custom fields and workflow states",
+    "Keyboard shortcuts for fast navigation",
+    "REST API for custom integrations"
+  ],
+  "sources": [
+    "https://shortcut.com",
+    "https://shortcut.com/product"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Linear",
+      "slug": "linear",
+      "description": "A fast, keyboard-driven issue tracker built for software teams.",
+      "best_for": "Engineering teams wanting a streamlined, opinionated workflow",
+      "strengths": [
+        "Speed",
+        "Keyboard shortcuts",
+        "Clean UI"
+      ]
+    },
+    {
+      "name": "Jira",
+      "slug": "jira",
+      "description": "An issue and project tracking tool built for agile software development teams.",
+      "best_for": "Larger engineering organizations needing configurable workflows",
+      "strengths": [
+        "Agile boards",
+        "Customization",
+        "Atlassian ecosystem"
+      ]
+    },
+    {
+      "name": "Trello",
+      "slug": "trello",
+      "description": "A visual, card-based tool for organizing tasks and workflows on Kanban boards.",
+      "best_for": "Small teams wanting a simple visual task board",
+      "strengths": [
+        "Kanban boards",
+        "Simplicity",
+        "Power-Ups integrations"
+      ]
+    }
+  ]
+}

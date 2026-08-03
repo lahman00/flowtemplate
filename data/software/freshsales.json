@@ -1,0 +1,45 @@
+{
+  "name": "Freshsales",
+  "slug": "freshsales",
+  "category": "crm",
+  "description": "Freshsales is Freshworks' cloud-based sales CRM that uses Freddy AI for lead scoring, deal recommendations, and automated email writing alongside kanban-style pipeline tracking.",
+  "website": "https://www.freshworks.com/crm/sales/",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Sales teams at companies of varying sizes — Freshworks reports 74,000+ businesses use the platform — seeking AI-assisted lead management and a 360° customer view.",
+  "features": [
+    "AI-assisted lead capture, qualification, and routing",
+    "Kanban-style deal tracking with drag-and-drop cards",
+    "360° customer view across preferred communication channels",
+    "Freddy AI lead scoring, intent analysis, and deal recommendations",
+    "AI-automated email writing",
+    "Check-in/check-out tracking for field sales meetings",
+    "Voice and image-to-text note capture in the mobile app"
+  ],
+  "sources": [
+    "https://www.freshworks.com/crm/sales/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "An all-in-one CRM platform with marketing, sales, and service hubs.",
+      "best_for": "Growing businesses wanting an integrated marketing-to-sales CRM suite.",
+      "strengths": ["Free CRM tier", "Marketing automation", "Extensive integrations"]
+    },
+    {
+      "name": "Zoho CRM",
+      "slug": "zoho-crm",
+      "description": "An AI-powered CRM with omnichannel engagement and deep workflow automation.",
+      "best_for": "Businesses of any size wanting an affordable, feature-rich CRM.",
+      "strengths": ["Zia AI assistant", "Workflow automation", "Zoho app ecosystem"]
+    },
+    {
+      "name": "Close",
+      "slug": "close",
+      "description": "A sales CRM with built-in calling, email, and SMS plus an AI sales agent.",
+      "best_for": "Sales teams automating outbound outreach and lead qualification.",
+      "strengths": ["Chloe AI agent", "Built-in calling", "Automated follow-up"]
+    }
+  ]
+}

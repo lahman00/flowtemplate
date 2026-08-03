@@ -1,0 +1,45 @@
+{
+  "name": "Kayako",
+  "slug": "kayako",
+  "category": "customer-support",
+  "description": "Kayako is an AI help desk platform whose Kay AI agent classifies, prioritizes, routes, and drafts replies to support tickets, either as a standalone helpdesk or layered on top of existing systems.",
+  "website": "https://kayako.com",
+  "platforms": ["Web"],
+  "best_for": "SaaS, retail, financial services, and healthcare organizations with high ticket volumes looking to reduce support costs and speed up resolution.",
+  "features": [
+    "Kay AI agent that classifies, prioritizes, and drafts replies to tickets",
+    "Omnichannel inbox consolidating email, chat, social, and voice",
+    "Native knowledge base with semantic search",
+    "No-code workflow automation for routing and assignment",
+    "SLA management and real-time resolution analytics",
+    "Deployable as an AI layer on top of Zendesk, Freshdesk, Intercom, or Salesforce",
+    "SOC 2 Type II, GDPR, and SSO/SAML enterprise security"
+  ],
+  "sources": [
+    "https://kayako.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zendesk",
+      "slug": "zendesk",
+      "description": "A customer service platform with ticketing, live chat, and AI-powered automation.",
+      "best_for": "Support teams of all sizes needing an established, feature-rich helpdesk.",
+      "strengths": ["Mature ticketing system", "AI automation", "Large app marketplace"]
+    },
+    {
+      "name": "Freshdesk",
+      "slug": "freshdesk",
+      "description": "A cloud-based help desk with ticketing, automation, and omnichannel support.",
+      "best_for": "Support teams wanting an affordable, easy-to-deploy helpdesk.",
+      "strengths": ["Omnichannel ticketing", "Automation", "Affordable tiers"]
+    },
+    {
+      "name": "Help Scout",
+      "slug": "help-scout",
+      "description": "A shared inbox and help desk platform built for personalized, human-feeling support.",
+      "best_for": "Small to mid-sized support teams wanting simple, email-centric ticketing.",
+      "strengths": ["Shared inbox", "Simplicity", "Beacon in-app help widget"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Reclaim.ai",
+  "slug": "reclaim-ai",
+  "category": "scheduling",
+  "description": "Reclaim.ai is an AI calendar assistant that automatically schedules meetings, tasks, habits, and focus time to optimize a person's or team's calendar.",
+  "website": "https://reclaim.ai",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Individuals and teams who want their calendar to automatically protect focus time and schedule tasks around meetings.",
+  "features": [
+    "AI Focus Time that defends uninterrupted work blocks based on weekly goals",
+    "AI Habits that schedules recurring routines into optimal time slots",
+    "AI Tasks that syncs and schedules to-do lists by priority",
+    "Smart Meetings that find the best time across attendees' calendars",
+    "AI scheduling links for external meeting booking",
+    "Buffer time that auto-schedules breaks and travel around meetings",
+    "Calendar sync across Google Calendar and Outlook",
+    "Integrations with Slack, Zoom, Asana, Jira, ClickUp, Todoist, and Linear"
+  ],
+  "sources": [
+    "https://reclaim.ai"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Motion",
+      "slug": "motion",
+      "description": "An AI-powered productivity platform combining calendar scheduling, task management, and project planning.",
+      "best_for": "Professionals wanting AI to auto-schedule their day",
+      "strengths": [
+        "AI task scheduling",
+        "Calendar consolidation",
+        "Project management"
+      ]
+    },
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that lets people share availability links to book meetings without back-and-forth emails.",
+      "best_for": "Individuals and teams booking one-off or recurring meetings",
+      "strengths": [
+        "Scheduling links",
+        "Calendar sync",
+        "Team routing"
+      ]
+    },
+    {
+      "name": "Todoist",
+      "slug": "todoist",
+      "description": "A task management app for organizing personal and team to-do lists.",
+      "best_for": "Individuals and small teams tracking daily tasks",
+      "strengths": [
+        "Simple task lists",
+        "Recurring tasks",
+        "Cross-platform sync"
+      ]
+    }
+  ]
+}

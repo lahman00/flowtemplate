@@ -1,0 +1,59 @@
+{
+  "name": "Storyblok",
+  "slug": "storyblok",
+  "category": "cms",
+  "description": "Storyblok is a headless CMS with a visual, drag-and-drop editor that serves developers with API-first architecture and marketers with intuitive content editing.",
+  "website": "https://www.storyblok.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Teams that want a headless CMS combining a developer-friendly, component-based architecture with a visual editor marketers can use directly.",
+  "features": [
+    "Visual, drag-and-drop editor with on-page collaboration",
+    "Global, reusable components and flexible content structures",
+    "API-first architecture with REST, GraphQL, and Management APIs",
+    "MCP server for agentic, AI-driven content access",
+    "FlowMotion workflow orchestration for agent-driven publishing tasks",
+    "Framework support including Next.js, Astro, Nuxt, React, and Vue",
+    "ISO 27001 security certification and 99.99% uptime SLA"
+  ],
+  "sources": [
+    "https://www.storyblok.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Contentful",
+      "slug": "contentful",
+      "description": "A headless CMS providing structured content management and delivery through APIs for web and mobile apps.",
+      "best_for": "Teams needing an enterprise-ready headless CMS with strong API tooling",
+      "strengths": [
+        "Structured content modeling",
+        "Robust APIs",
+        "App ecosystem"
+      ]
+    },
+    {
+      "name": "Sanity",
+      "slug": "sanity",
+      "description": "A headless CMS built around structured content and a real-time collaborative editing environment.",
+      "best_for": "Developer teams wanting real-time collaboration and customizable editing tools",
+      "strengths": [
+        "Real-time collaboration",
+        "Customizable Studio",
+        "Structured content"
+      ]
+    },
+    {
+      "name": "Strapi",
+      "slug": "strapi",
+      "description": "An open-source, TypeScript-based headless CMS that lets developers build content APIs without vendor lock-in.",
+      "best_for": "Developers wanting full data ownership and a self-hostable headless CMS",
+      "strengths": [
+        "Open source",
+        "Self-hosted or cloud",
+        "Automatic API generation"
+      ]
+    }
+  ]
+}

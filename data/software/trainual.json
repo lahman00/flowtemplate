@@ -1,0 +1,63 @@
+{
+  "name": "Trainual",
+  "slug": "trainual",
+  "category": "knowledge-base",
+  "description": "Trainual is a training and operations platform that combines standard operating procedures, role-based onboarding, and an AI-powered knowledge search so teams can document processes once and deliver consistent training at scale.",
+  "website": "https://trainual.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Positioned for business owners, operations leaders, and team managers in field-based, remote, and multi-location organizations, including healthcare, construction, home services, agencies, law firms, and real estate.",
+  "features": [
+    "Documentation and standard operating procedures (SOPs)",
+    "Role-based training paths and onboarding programs",
+    "AI-powered knowledge search and Q&A assistant",
+    "Testing, tracking, and compliance reporting with e-signatures",
+    "Pre-built courses on essential business topics",
+    "Roles and responsibilities mapping across an org chart",
+    "Meeting management with agendas and action tracking",
+    "Scorecards and KPI monitoring"
+  ],
+  "sources": [
+    "https://trainual.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Guru",
+      "slug": "guru",
+      "description": "An enterprise knowledge-management platform that organizes and continuously verifies company information.",
+      "best_for": "Enterprises needing permission-scoped AI answers",
+      "strengths": [
+        "Knowledge verification",
+        "AI search",
+        "Permission-aware answers"
+      ]
+    },
+    {
+      "name": "Tettra",
+      "slug": "tettra",
+      "description": "An AI-powered internal knowledge base built around a Slack-first workflow for answering team questions.",
+      "best_for": "Teams wanting a lightweight internal wiki rather than a full training suite",
+      "strengths": [
+        "Slack integration",
+        "AI Q&A bot",
+        "Content verification workflows"
+      ]
+    },
+    {
+      "name": "Confluence",
+      "slug": "confluence",
+      "description": "Atlassian's team workspace for documentation, meeting notes, and internal knowledge.",
+      "best_for": "Teams already standardized on Atlassian tools",
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
+    }
+  ],
+  "order": 40
+}

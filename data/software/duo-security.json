@@ -1,0 +1,50 @@
+{
+  "name": "Duo Security",
+  "slug": "duo-security",
+  "category": "security",
+  "description": "Duo Security, part of Cisco, is an identity and access management platform providing multi-factor authentication, single sign-on, and device trust for securing logins.",
+  "website": "https://duo.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Organizations of any size, including government agencies, that need phishing-resistant multi-factor authentication and zero-trust access controls.",
+  "features": [
+    "Multi-factor authentication supporting over 1.3 billion monthly authentications",
+    "Single sign-on across applications",
+    "Device trust to restrict access to trusted devices",
+    "Passwordless authentication via Duo Passport",
+    "Adaptive access policies based on risk factors",
+    "Admin dashboard for policy and user management"
+  ],
+  "sources": [
+    "https://duo.com",
+    "https://duo.com/product"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Okta",
+      "slug": "okta",
+      "description": "An identity and access management platform for single sign-on and user authentication.",
+      "best_for": "Enterprises managing identity across many applications",
+      "strengths": [
+        "Single sign-on",
+        "Adaptive MFA",
+        "Broad app integrations"
+      ]
+    },
+    {
+      "name": "Auth0",
+      "slug": "auth0",
+      "description": "An identity platform for developers to add authentication and authorization to applications.",
+      "best_for": "Developers building custom login and authentication flows",
+      "strengths": [
+        "Developer-friendly APIs",
+        "Customizable login",
+        "Social and enterprise connections"
+      ]
+    }
+  ]
+}
