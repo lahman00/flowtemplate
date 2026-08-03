@@ -224,12 +224,13 @@ function scoreCompanyStage(answers: RecommendationAnswers, text: string): ScoreF
   if (answers.companyStage === "unspecified") return [];
 
   if (matchesAny(text, getCompanyStageKeywords(answers.companyStage))) {
+    const article = /^[aeiou]/i.test(answers.companyStage) ? "an" : "a";
     return [
       {
-        label: `Matches a ${answers.companyStage} company`,
+        label: `Matches ${article} ${answers.companyStage} company`,
         points: POINTS.COMPANY_STAGE_MATCH,
         direction: "positive",
-        explanation: `Its stored positioning text mentions language matching a ${answers.companyStage}-stage company.`,
+        explanation: `Its stored positioning text mentions language matching ${article} ${answers.companyStage}-stage company.`,
       },
     ];
   }
