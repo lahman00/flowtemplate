@@ -1,6 +1,17 @@
 "use client";
 
-import { Activity, DollarSign, ExternalLink, FileText, LifeBuoy, Plug, Users } from "lucide-react";
+import {
+  Activity,
+  Building2,
+  DollarSign,
+  ExternalLink,
+  FileText,
+  LifeBuoy,
+  Plug,
+  Rocket,
+  Tag,
+  Users,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
@@ -15,9 +26,12 @@ type VendorLinkDef = {
 /**
  * Sprint 6 Phase 5 — reusable vendor link block. The official website
  * already has its own dedicated CTA elsewhere on the page, so this only
- * covers the other six link types, and only when at least one is actually
- * present. Renders nothing today — no entry populates software.links yet.
- * Do not invent a URL here; leave the field unset instead.
+ * covers the other link types (pricing, trial, docs, support,
+ * integrations, status, community, deals, enterprise — the last three
+ * added Sprint 20 Phase 7 as affiliate-readiness insertion points), and
+ * only when at least one is actually present. Renders nothing today — no
+ * entry populates software.links yet. Do not invent a URL here; leave the
+ * field unset instead.
  *
  * A client component since Sprint 9 (Task 6): each link fires a
  * best-effort outbound-click event on click — see components/TrackedCtaLink.tsx
@@ -27,11 +41,14 @@ export function VendorLinksBlock({ software }: { software: Software }) {
   const pathname = usePathname();
   const candidates: Array<{ label: string; url?: string; icon: ComponentType<LucideProps> }> = [
     { label: "Pricing", url: software.links?.pricing, icon: DollarSign },
+    { label: "Free trial", url: software.links?.trial, icon: Rocket },
     { label: "Documentation", url: software.links?.docs, icon: FileText },
     { label: "Support", url: software.links?.support, icon: LifeBuoy },
     { label: "Integrations", url: software.links?.integrations, icon: Plug },
     { label: "Status page", url: software.links?.status, icon: Activity },
     { label: "Community", url: software.links?.community, icon: Users },
+    { label: "Current deals", url: software.links?.deals, icon: Tag },
+    { label: "Enterprise contact", url: software.links?.enterprise, icon: Building2 },
   ];
 
   const links: VendorLinkDef[] = candidates

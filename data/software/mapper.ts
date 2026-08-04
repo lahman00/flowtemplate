@@ -49,6 +49,9 @@ export function mapSoftware(raw: SoftwareRaw): Software {
           integrations: raw.links.integrations,
           status: raw.links.status,
           community: raw.links.community,
+          trial: raw.links.trial,
+          deals: raw.links.deals,
+          enterprise: raw.links.enterprise,
         }
       : undefined,
   };

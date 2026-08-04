@@ -63,11 +63,36 @@ export function generateComparisonTitle(softwareA: Software, softwareB: Software
   return `${softwareA.name} vs ${softwareB.name}`;
 }
 
+/** SERP snippets get cut off past ~155-160 chars — same cap lib/generators.ts uses for software pages. */
+const META_DESCRIPTION_MAX_LENGTH = 155;
+
+function truncateAtWord(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  const truncated = text.slice(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(" ");
+  return `${(lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated).trimEnd()}…`;
+}
+
+/**
+ * Sprint 20 Phase 6 — grounded in each pair's real category data so 1,100+
+ * comparison pages don't all share one boilerplate sentence differing only
+ * by name (a real duplicate-intent/thin-snippet risk at that volume).
+ * Avoids "a/an" agreement entirely by parenthesizing category names rather
+ * than splicing them into a sentence.
+ */
 export function generateComparisonMetaDescription(
   softwareA: Software,
   softwareB: Software
 ): string {
-  return `Compare ${softwareA.name} and ${softwareB.name} side by side — category, core strengths, and which one fits your workflow.`;
+  const categoryA = getCategoryName(softwareA.category);
+  const categoryB = getCategoryName(softwareB.category);
+
+  const full =
+    categoryA === categoryB
+      ? `${softwareA.name} and ${softwareB.name}, compared: real ${lowercaseForSentence(categoryA)} features and platforms from each vendor's own site.`
+      : `${softwareA.name} (${categoryA}) vs ${softwareB.name} (${categoryB}) — real features and platforms, sourced from each vendor's own site.`;
+
+  return truncateAtWord(full, META_DESCRIPTION_MAX_LENGTH);
 }
 
 /** Lowercases a category name for mid-sentence use, without mangling acronyms like "CRM". */

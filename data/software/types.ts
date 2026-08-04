@@ -25,6 +25,10 @@ export type VendorLinks = {
   integrations?: string;
   status?: string;
   community?: string;
+  /** Sprint 20 Phase 7 — affiliate-readiness insertion points. */
+  trial?: string;
+  deals?: string;
+  enterprise?: string;
 };
 
 export type Software = {

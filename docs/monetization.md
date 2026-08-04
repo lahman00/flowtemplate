@@ -62,10 +62,13 @@ Wired into `app/software/[slug]/page.tsx`'s header; never visible today.
 
 ## `components/VendorLinksBlock.tsx`
 
-Renders a small "More from {name}" list of whichever of the six `links`
-fields are actually set, each with `target="_blank" rel="noopener noreferrer"`.
-Returns `null` when none are set — which is every entry today. Wired into
-the same card as the official-site CTA on the software page.
+Renders a small "More from {name}" list of whichever of the nine `links`
+fields are actually set (`pricing`, `trial`, `docs`, `support`,
+`integrations`, `status`, `community`, `deals`, `enterprise` — the last
+three added Sprint 20 as affiliate-readiness insertion points), each with
+`target="_blank" rel="noopener noreferrer"`. Returns `null` when none are
+set — which is every entry today. Wired into the same card as the
+official-site CTA on the software page.
 
 ## Turning any of this on for real
 
