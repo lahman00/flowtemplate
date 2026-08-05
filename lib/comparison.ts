@@ -1,6 +1,7 @@
 import type { Software } from "@/data/software";
 import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
+import { META_DESCRIPTION_MAX_LENGTH, truncateAtWord } from "@/lib/generators";
 
 /**
  * Comparison engine backing /compare/[comparison] (Sprint 7). Built in
@@ -61,16 +62,6 @@ export function parseComparisonSlug(pairSlug: string): { slugA: string; slugB: s
 
 export function generateComparisonTitle(softwareA: Software, softwareB: Software): string {
   return `${softwareA.name} vs ${softwareB.name}`;
-}
-
-/** SERP snippets get cut off past ~155-160 chars — same cap lib/generators.ts uses for software pages. */
-const META_DESCRIPTION_MAX_LENGTH = 155;
-
-function truncateAtWord(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text;
-  const truncated = text.slice(0, maxLength);
-  const lastSpace = truncated.lastIndexOf(" ");
-  return `${(lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated).trimEnd()}…`;
 }
 
 /**
