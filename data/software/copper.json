@@ -1,0 +1,45 @@
+{
+  "name": "Copper",
+  "slug": "copper",
+  "category": "crm",
+  "description": "Copper is a CRM built for Google Workspace users, integrating directly with Gmail and Google Calendar to manage contacts, deals, and projects for service-based businesses.",
+  "website": "https://www.copper.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Google Workspace users and small to mid-sized service businesses like agencies, consulting, and construction firms wanting minimal setup time.",
+  "features": [
+    "Native Gmail, Google Calendar, and Google Drive integration",
+    "Visual drag-and-drop sales pipelines with AI-powered alerts",
+    "Converts closed deals into projects for onboarding and service delivery",
+    "Automated email campaign building and personalization",
+    "Recurring task automation and reminders",
+    "Mobile app that automatically logs calls and SMS",
+    "Custom reporting for revenue projections and team activity"
+  ],
+  "sources": [
+    "https://www.copper.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "An all-in-one CRM platform with marketing, sales, and service hubs.",
+      "best_for": "Growing businesses wanting an integrated marketing-to-sales CRM suite.",
+      "strengths": ["Free CRM tier", "Marketing automation", "Extensive integrations"]
+    },
+    {
+      "name": "Pipedrive",
+      "slug": "pipedrive",
+      "description": "A sales-focused CRM built around a visual, pipeline-first workflow.",
+      "best_for": "Sales teams wanting a simple, activity-based pipeline tool.",
+      "strengths": ["Visual pipeline", "Ease of use", "Sales automation"]
+    },
+    {
+      "name": "Zoho CRM",
+      "slug": "zoho-crm",
+      "description": "An AI-powered CRM with omnichannel engagement and deep workflow automation.",
+      "best_for": "Businesses of any size wanting an affordable, feature-rich CRM.",
+      "strengths": ["Zia AI assistant", "Workflow automation", "Zoho app ecosystem"]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "FullStory",
+  "slug": "fullstory",
+  "category": "analytics",
+  "description": "FullStory is an AI-powered behavioral analytics platform that captures real user interactions across web and mobile and converts that data into actionable insights for product, support, and marketing teams.",
+  "website": "https://www.fullstory.com/",
+  "platforms": ["Web"],
+  "best_for": "Product management, data analytics, customer support, and marketing teams in retail/ecommerce, food and beverage, travel, financial services, gaming, and SaaS who want to remove conversion friction and personalize digital experiences.",
+  "features": [
+    "Session replay to record and play back real user sessions",
+    "Product analytics for behavior patterns and engagement metrics",
+    "Mobile analytics tracking interactions across mobile apps",
+    "Heatmaps visualizing where users click and scroll",
+    "In-product Guides and Surveys for feedback collection",
+    "StoryAI, an intelligence layer that surfaces insights from behavioral data",
+    "Fullcapture for automatic, privacy-first interaction recording"
+  ],
+  "sources": ["https://www.fullstory.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Hotjar",
+      "slug": "hotjar",
+      "description": "An experience-intelligence platform for understanding and improving user behavior on websites/apps.",
+      "best_for": "Product, design, and marketing teams wanting to reduce drop-offs and improve conversion.",
+      "strengths": ["Heatmaps", "Session recordings", "AI-summarized surveys"]
+    },
+    {
+      "name": "Heap",
+      "slug": "heap",
+      "description": "A product analytics platform that automatically captures every user interaction without manual event tagging.",
+      "best_for": "Product teams wanting automatic data capture for conversion and retention analysis.",
+      "strengths": ["Automatic data capture", "Session replay", "Automated friction detection"]
+    }
+  ]
+}

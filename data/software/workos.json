@@ -1,0 +1,36 @@
+{
+  "name": "WorkOS",
+  "slug": "workos",
+  "category": "api",
+  "description": "WorkOS is an API platform that lets software applications quickly add enterprise-ready authentication and user management, including SSO, directory sync, and audit logs, without building identity infrastructure from scratch.",
+  "website": "https://workos.com/",
+  "platforms": ["Web"],
+  "best_for": "Companies seeking to rapidly expand into enterprise markets without dedicating substantial engineering resources to identity infrastructure, and developers prioritizing speed-to-market for enterprise security controls.",
+  "features": [
+    "Enterprise SSO with SAML and OIDC support for providers like Okta, Azure, and Google",
+    "AuthKit, a customizable authentication UI, plus social and passwordless (magic link) authentication",
+    "Directory Sync with SCIM provisioning and HRIS integrations",
+    "Role-based access control (RBAC) and audit logs with event export",
+    "Admin Portal for self-service IT admin configuration",
+    "RESTful APIs with SDKs for Node.js, Ruby, Python, Go, PHP, Java, and .NET",
+    "Radar for bot and fraud detection, and Vault for encryption key management"
+  ],
+  "sources": ["https://workos.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Auth0",
+      "slug": "auth0",
+      "description": "An Okta product offering a developer-focused authentication and authorization platform with 30+ SDKs.",
+      "best_for": "Developers and B2B/B2C SaaS companies embedding customer identity into their own apps.",
+      "strengths": ["Broad SDK/language support", "Fine-grained authorization", "AI agent auth"]
+    },
+    {
+      "name": "Okta",
+      "slug": "okta",
+      "description": "An identity security platform providing workforce identity, SSO, and adaptive MFA for employees and partners.",
+      "best_for": "Enterprises managing internal workforce access across a large pre-built integration network.",
+      "strengths": ["Large pre-built integration network", "Identity governance", "Lifecycle management"]
+    }
+  ]
+}

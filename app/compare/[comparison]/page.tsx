@@ -26,6 +26,7 @@ import {
 import { getRelatedSoftware } from "@/lib/related";
 import { getBreadcrumbJsonLd, getComparisonJsonLd } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/site";
+import { formatIsoDate } from "@/lib/date";
 
 type ComparePageProps = {
   params: Promise<{ comparison: string }>;
@@ -266,6 +267,9 @@ export default async function ComparePage({ params }: ComparePageProps) {
               <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
                 {software.name} sources
               </h3>
+              <p className="mt-1 text-xs text-zinc-500">
+                Last verified {formatIsoDate(software.accessedAt)}
+              </p>
               <ul className="mt-3 space-y-2">
                 {software.sources.map((source) => (
                   <li key={source}>

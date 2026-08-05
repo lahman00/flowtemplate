@@ -1,0 +1,63 @@
+{
+  "name": "Google Chat",
+  "slug": "google-chat",
+  "category": "communication",
+  "description": "Google Chat is a team messaging and collaboration app within Google Workspace, offering direct messages, group spaces, and Gemini-powered AI features integrated with Gmail, Drive, and Meet.",
+  "website": "https://workspace.google.com/products/chat",
+  "platforms": [
+    "Web",
+    "Desktop",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Organizations using Google Workspace that want team messaging tightly integrated with Gmail, Drive, Calendar, and Meet.",
+  "features": [
+    "Direct messages and group conversations (Spaces) supporting up to 500,000 members",
+    "Message threading, emoji reactions, and rich text formatting",
+    "Huddles for quick synchronous conversations",
+    "Smart chips linking directly to Drive files and other content",
+    "Gemini in Chat for message translation, summaries, and composition assistance",
+    "Task creation and management within spaces",
+    "Native support for 100+ third-party apps including Jira, Asana, and GitHub",
+    "Seamless Meet integration for launching video calls"
+  ],
+  "sources": [
+    "https://workspace.google.com/products/chat"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Slack",
+      "slug": "slack",
+      "description": "A channel-based team messaging platform with deep app integrations and workflow automation.",
+      "best_for": "Teams wanting rich integrations and channel-based communication",
+      "strengths": [
+        "App ecosystem",
+        "Channel organization",
+        "Workflow automation"
+      ]
+    },
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A collaboration hub combining chat, video meetings, and file sharing tightly integrated with Microsoft 365.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": [
+        "Microsoft 365 integration",
+        "Chat and video in one app",
+        "Enterprise security"
+      ]
+    },
+    {
+      "name": "Mattermost",
+      "slug": "mattermost",
+      "description": "An open-source, self-hostable team messaging platform designed for technical and security-conscious teams.",
+      "best_for": "Teams needing self-hosted, secure messaging",
+      "strengths": [
+        "Self-hosting",
+        "Open source",
+        "Security controls"
+      ]
+    }
+  ]
+}

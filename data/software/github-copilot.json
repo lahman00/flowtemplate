@@ -1,0 +1,43 @@
+{
+  "name": "GitHub Copilot",
+  "slug": "github-copilot",
+  "category": "ai",
+  "description": "GitHub Copilot is an AI-powered coding assistant that provides contextualized assistance throughout the software development lifecycle, from inline code suggestions and IDE chat to code review and autonomous coding-agent capabilities.",
+  "website": "https://github.com/features/copilot",
+  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "best_for": "Positioned for individual developers (free and Pro plans), teams and enterprises needing governance controls (Business/Enterprise plans), and students and open-source maintainers with special pricing tiers.",
+  "features": [
+    "Inline code completion and suggestions based on editor context",
+    "Chat assistance for coding questions and explanations inside the IDE",
+    "Automated code review of pull requests",
+    "Copilot CLI for command-line assistance via GitHub CLI",
+    "Coding agent that can autonomously plan, explore, and execute development tasks",
+    "Multi-model access, choosing from AI models optimized for speed, accuracy, or cost",
+    "Integrations with Visual Studio Code, Visual Studio, JetBrains IDEs, Neovim, and Eclipse"
+  ],
+  "sources": ["https://github.com/features/copilot"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "ChatGPT",
+      "slug": "chatgpt",
+      "description": "OpenAI's general-purpose AI assistant, including a \"Codex\" mode for coding with local repos and terminals.",
+      "best_for": "Developers who want one assistant spanning chat, research, and coding rather than an IDE-embedded tool.",
+      "strengths": ["Codex coding mode", "Broad general-purpose use", "Desktop app with built-in browser"]
+    },
+    {
+      "name": "Claude",
+      "slug": "claude",
+      "description": "Anthropic's AI assistant, used heavily for coding, debugging, and codebase analysis via chat, desktop apps, or API.",
+      "best_for": "Developers wanting a collaborative AI partner for complex coding and analysis tasks.",
+      "strengths": ["Strong coding/reasoning performance", "Large context for codebases", "API access for custom tooling"]
+    },
+    {
+      "name": "Gemini",
+      "slug": "gemini",
+      "description": "Google DeepMind's AI models, including agentic coding assistance integrated with Google's developer tools.",
+      "best_for": "Developers in the Google ecosystem wanting agentic coding with long-context reasoning.",
+      "strengths": ["Long-context processing", "Agentic coding assistance", "Google tooling integration"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Render",
+  "slug": "render",
+  "category": "developer-tools",
+  "description": "Render is a cloud platform for deploying and scaling web services, static sites, background workers, cron jobs, private services, and databases, positioned as \"the cloud for builders.\"",
+  "website": "https://render.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Developers and teams migrating from Heroku, Railway, or Fly.io, plus startups and builders who want straightforward deployment with minimal infrastructure management.",
+  "features": [
+    "Autoscaling that automatically adjusts resources based on demand",
+    "Private networking for secure communication between services",
+    "Persistent disks for durable application storage",
+    "Infrastructure as Code for defining and managing infrastructure programmatically",
+    "Preview environments for testing changes before production",
+    "Zero-downtime deploys",
+    "Managed Postgres and Key-Value databases",
+    "Render API, CLI, and MCP integration for agent-driven workflows"
+  ],
+  "sources": [
+    "https://render.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Vercel",
+      "slug": "vercel",
+      "description": "Agentic infrastructure for deploying web apps and AI agents at global scale with Git-connected preview deploys.",
+      "best_for": "Developers and platform builders deploying apps and autonomous agent workflows.",
+      "strengths": [
+        "AI Gateway/SDK",
+        "Global delivery network",
+        "Sandbox environments"
+      ]
+    },
+    {
+      "name": "Netlify",
+      "slug": "netlify",
+      "description": "A platform to create with AI or code and deploy instantly on production infrastructure.",
+      "best_for": "Product engineers and teams building and deploying web apps.",
+      "strengths": [
+        "Deploy previews for every change",
+        "Serverless functions",
+        "Built-in AI Gateway"
+      ]
+    },
+    {
+      "name": "Supabase",
+      "slug": "supabase",
+      "description": "An open source Firebase alternative providing a Postgres-backed backend with auth, storage, and edge functions.",
+      "best_for": "Developers who want a managed backend built on Postgres.",
+      "strengths": [
+        "Postgres database",
+        "Row Level Security",
+        "Open source"
+      ]
+    }
+  ]
+}

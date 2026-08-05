@@ -9,10 +9,15 @@ export function generateH1(software: Software): string {
   return `Best ${software.name} alternatives`;
 }
 
-/** SERP snippets get cut off past ~155-160 chars — truncate at a word boundary rather than mid-word. */
-const META_DESCRIPTION_MAX_LENGTH = 155;
+/**
+ * SERP snippets get cut off past ~155-160 chars — truncate at a word
+ * boundary rather than mid-word. Exported so lib/comparison.ts's
+ * generateComparisonMetaDescription can reuse the same cap and algorithm
+ * instead of duplicating it.
+ */
+export const META_DESCRIPTION_MAX_LENGTH = 155;
 
-function truncateAtWord(text: string, maxLength: number): string {
+export function truncateAtWord(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   const truncated = text.slice(0, maxLength);
   const lastSpace = truncated.lastIndexOf(" ");

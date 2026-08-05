@@ -1,0 +1,44 @@
+{
+  "name": "Tidio",
+  "slug": "tidio",
+  "category": "customer-support",
+  "description": "Tidio is a customer service platform combining live chat, a help desk, and the Lyro AI agent, which can independently handle a large share of repetitive support conversations.",
+  "website": "https://www.tidio.com",
+  "platforms": ["Web", "iOS", "Android", "Windows", "macOS"],
+  "best_for": "Around 300,000 businesses wanting AI-assisted customer service without replacing their human support team, particularly ecommerce sites on Shopify and WordPress.",
+  "features": [
+    "Lyro AI agent for automated conversation handling",
+    "Live chat widget for real-time website engagement",
+    "Help desk ticket management system",
+    "Flows automation for lead capture and sales",
+    "Integrations with Shopify, WordPress, HubSpot, and Zapier",
+    "Native desktop and mobile apps across Windows, Mac, iOS, and Android"
+  ],
+  "sources": [
+    "https://www.tidio.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Intercom",
+      "slug": "intercom",
+      "description": "A customer messaging platform combining live chat, help desk, and AI-powered support agents.",
+      "best_for": "SaaS companies wanting conversational, in-app customer engagement.",
+      "strengths": ["AI chatbot (Fin)", "In-app messaging", "Product tours"]
+    },
+    {
+      "name": "Crisp",
+      "slug": "crisp",
+      "description": "An all-in-one support platform combining live chat, AI agents, and a shared inbox.",
+      "best_for": "Startups to enterprises wanting a lightweight, chat-first support tool.",
+      "strengths": ["AI agent builder", "Live chat widget", "Built-in CRM"]
+    },
+    {
+      "name": "LiveAgent",
+      "slug": "liveagent",
+      "description": "An all-in-one help desk merging email, chat, phone, and social into one dashboard.",
+      "best_for": "Businesses handling multiple channels wanting fast live chat.",
+      "strengths": ["Built-in call center", "Multichannel ticketing", "AI chatbot"]
+    }
+  ]
+}

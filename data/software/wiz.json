@@ -1,0 +1,50 @@
+{
+  "name": "Wiz",
+  "slug": "wiz",
+  "category": "security",
+  "description": "Wiz is an AI-powered cloud security platform that connects code, cloud, and runtime data into a unified security graph to identify and remediate risk.",
+  "website": "https://www.wiz.io",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Security teams at enterprises running cloud-native and AI-heavy environments who need end-to-end visibility across code, cloud, and runtime.",
+  "features": [
+    "Security Graph connecting code, cloud, and runtime context",
+    "Cloud security posture management (CSPM)",
+    "Vulnerability scanning and risk assessment",
+    "Cloud workload protection",
+    "Container and Kubernetes security",
+    "Agentless scanning for broad visibility",
+    "Runtime threat detection and response",
+    "AI-specific risk identification for AI applications"
+  ],
+  "sources": [
+    "https://www.wiz.io",
+    "https://www.wiz.io/platform"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "CrowdStrike",
+      "slug": "crowdstrike",
+      "description": "An AI-native cybersecurity platform unifying endpoint detection, cloud security, and identity protection.",
+      "best_for": "Security teams needing unified endpoint and cloud protection",
+      "strengths": [
+        "Endpoint detection and response",
+        "Threat intelligence",
+        "Identity protection"
+      ]
+    },
+    {
+      "name": "Snyk",
+      "slug": "snyk",
+      "description": "A developer security platform for finding and fixing vulnerabilities in code, dependencies, and containers.",
+      "best_for": "Development teams wanting security integrated into their workflow",
+      "strengths": [
+        "Dependency scanning",
+        "Container security",
+        "Developer-first workflow"
+      ]
+    }
+  ]
+}

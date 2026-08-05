@@ -1,0 +1,60 @@
+{
+  "name": "Stack Overflow for Teams",
+  "slug": "stack-overflow-for-teams",
+  "category": "knowledge-base",
+  "description": "Stack Overflow for Teams (now branded Stack Internal) is a private knowledge management platform, built on the Q&A model of Stack Overflow, that helps organizations capture, validate, and deliver trusted internal knowledge where employees already work.",
+  "website": "https://stackoverflow.co/teams/",
+  "best_for": "Positioned for engineering-driven enterprises seeking to consolidate dispersed organizational knowledge and reduce redundant work; used by companies including Microsoft, Intercom, Expensify, and Box.",
+  "features": [
+    "Private Q&A format with searchable long-form articles",
+    "Tags and categories for organizing engineering and company knowledge",
+    "Automatic capture and synthesis of knowledge from multiple sources",
+    "Trust signals including authorship, recency, usage, and provenance tracking",
+    "Slack integration that captures questions and answers and unfurls links inside channels",
+    "MCP and API integrations for embedding trusted knowledge into other tools",
+    "Subject-matter-expert validation workflows for critical knowledge gaps",
+    "Audit logs and role-based access controls for governance"
+  ],
+  "sources": [
+    "https://stackoverflow.co/teams/",
+    "https://stackoverflow.co/internal/",
+    "https://stackoverflowteams.com/teams/integrations/slack"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Guru",
+      "slug": "guru",
+      "description": "An enterprise knowledge-management platform that organizes and continuously verifies company information.",
+      "best_for": "Enterprises needing permission-scoped AI answers across departments",
+      "strengths": [
+        "Knowledge verification",
+        "AI search",
+        "Permission-aware answers"
+      ]
+    },
+    {
+      "name": "Confluence",
+      "slug": "confluence",
+      "description": "Atlassian's team workspace for documentation, meeting notes, and internal knowledge.",
+      "best_for": "Teams wanting broader documentation beyond a Q&A format",
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
+    },
+    {
+      "name": "Tettra",
+      "slug": "tettra",
+      "description": "An AI-powered internal knowledge base built around a Slack-first workflow for answering team questions.",
+      "best_for": "Smaller teams wanting a lightweight, Slack-centric wiki",
+      "strengths": [
+        "Slack integration",
+        "AI Q&A bot",
+        "Content verification workflows"
+      ]
+    }
+  ],
+  "order": 38
+}

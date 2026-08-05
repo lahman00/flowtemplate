@@ -1,0 +1,61 @@
+{
+  "name": "Drupal",
+  "slug": "drupal",
+  "category": "cms",
+  "description": "Drupal is an open-source, API-first content management system for building structured, composable digital experiences across websites and channels.",
+  "website": "https://new.drupal.org",
+  "platforms": [
+    "Web",
+    "Self-hosted"
+  ],
+  "best_for": "Higher education, government, healthcare, nonprofit, and enterprise organizations that need an open-source, highly customizable CMS with no vendor lock-in.",
+  "features": [
+    "Structured, component-based content modeling",
+    "10,000+ community modules for extending functionality",
+    "Layout Builder for visual page composition",
+    "Multisite support for managing multiple sites from one installation",
+    "Taxonomy system for content organization and classification",
+    "Built-in AI orchestration capabilities",
+    "Enterprise-grade security with no vendor lock-in",
+    "Drupal CMS distribution with guided setup for marketers and site builders"
+  ],
+  "sources": [
+    "https://new.drupal.org"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "The world's most widely used CMS, powering everything from blogs to large-scale websites with a vast plugin and theme ecosystem.",
+      "best_for": "Individuals and businesses of all sizes needing a flexible, widely supported CMS",
+      "strengths": [
+        "Huge plugin ecosystem",
+        "Large community",
+        "Flexible themes"
+      ]
+    },
+    {
+      "name": "Joomla",
+      "slug": "joomla",
+      "description": "An open-source CMS built entirely by volunteers, offering multilingual support and flexible permission structures.",
+      "best_for": "Organizations needing multilingual sites and granular user permissions",
+      "strengths": [
+        "Multilingual support",
+        "10,000+ extensions",
+        "Open source"
+      ]
+    },
+    {
+      "name": "Craft CMS",
+      "slug": "craft-cms",
+      "description": "A content-first CMS offering flexible content modeling and developer-friendly, headless architecture.",
+      "best_for": "Agencies and developers wanting flexible content modeling without rigid structures",
+      "strengths": [
+        "Flexible field types",
+        "Self-generating GraphQL API",
+        "Multi-site localization"
+      ]
+    }
+  ]
+}

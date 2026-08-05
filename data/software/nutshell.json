@@ -1,0 +1,46 @@
+{
+  "name": "Nutshell",
+  "slug": "nutshell",
+  "category": "crm",
+  "description": "Nutshell is an AI-powered sales CRM and marketing automation platform for small businesses, combining pipeline management, built-in email marketing, and AI call transcription.",
+  "website": "https://www.nutshell.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Small teams and individual entrepreneurs — Nutshell reports 5,000+ companies across 50 countries since 2009 — wanting a comprehensive CRM without complex setup.",
+  "features": [
+    "Unlimited contact and company storage with custom fields",
+    "Two-way email and calendar sync with Gmail and Outlook",
+    "Drag-and-drop sales pipeline visualization",
+    "AI call and meeting transcription, summarization, and logging",
+    "Email marketing with templates, segmentation, and automation",
+    "Quote and contract creation and tracking within the CRM",
+    "Chatbot and forms for lead capture and meeting booking",
+    "SMS outreach and landing pages"
+  ],
+  "sources": [
+    "https://www.nutshell.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Pipedrive",
+      "slug": "pipedrive",
+      "description": "A sales-focused CRM built around a visual, pipeline-first workflow.",
+      "best_for": "Sales teams wanting a simple, activity-based pipeline tool.",
+      "strengths": ["Visual pipeline", "Ease of use", "Sales automation"]
+    },
+    {
+      "name": "Zoho CRM",
+      "slug": "zoho-crm",
+      "description": "An AI-powered CRM with omnichannel engagement and deep workflow automation.",
+      "best_for": "Businesses of any size wanting an affordable, feature-rich CRM.",
+      "strengths": ["Zia AI assistant", "Workflow automation", "Zoho app ecosystem"]
+    },
+    {
+      "name": "Keap",
+      "slug": "keap",
+      "description": "A small business CRM and marketing automation platform with invoicing built in.",
+      "best_for": "Small businesses automating follow-up, invoicing, and scheduling.",
+      "strengths": ["Marketing automation", "Built-in invoicing", "Business phone line"]
+    }
+  ]
+}

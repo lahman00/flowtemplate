@@ -1,0 +1,58 @@
+{
+  "name": "KnowledgeOwl",
+  "slug": "knowledgeowl",
+  "category": "knowledge-base",
+  "description": "KnowledgeOwl is knowledge base software for creating, organizing, and sharing internal and customer-facing documentation, built for teams replacing fragmented tools like Confluence, SharePoint, and scattered documents.",
+  "website": "https://www.knowledgeowl.com",
+  "best_for": "Positioned for healthcare, education, IT services, manufacturing, credit unions, call centers, insurance, and financial services organizations, including compliance-focused teams such as government agencies and credit unions.",
+  "features": [
+    "Unlimited nested categories with drag-and-drop reorganization",
+    "Built-in table of contents and full-text search",
+    "AI-powered chatbot that answers only from the organization's own knowledge base content",
+    "Version history for tracking updates to processes and policies",
+    "Role-based access control across teams and departments",
+    "Built-in analytics on article performance, deflection rates, and search behavior",
+    "Custom theme design included with onboarding",
+    "White-glove migration from competing platforms"
+  ],
+  "sources": [
+    "https://www.knowledgeowl.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Helpjuice",
+      "slug": "helpjuice",
+      "description": "A cloud-based knowledge base platform for internal and customer-facing documentation with AI search and content creation.",
+      "best_for": "Support and customer-success teams building a searchable help center",
+      "strengths": [
+        "AI-powered search",
+        "AI article drafting",
+        "Usage analytics"
+      ]
+    },
+    {
+      "name": "Document360",
+      "slug": "document360",
+      "description": "A documentation platform for building searchable knowledge bases and technical documentation.",
+      "best_for": "Teams needing structured versioned documentation with analytics",
+      "strengths": [
+        "Version control",
+        "Analytics",
+        "Category organization"
+      ]
+    },
+    {
+      "name": "Guru",
+      "slug": "guru",
+      "description": "An enterprise knowledge-management platform that organizes and continuously verifies company information.",
+      "best_for": "Enterprises needing permission-scoped AI answers",
+      "strengths": [
+        "Knowledge verification",
+        "AI search",
+        "Permission-aware answers"
+      ]
+    }
+  ],
+  "order": 39
+}

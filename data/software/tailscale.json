@@ -1,0 +1,53 @@
+{
+  "name": "Tailscale",
+  "slug": "tailscale",
+  "category": "security",
+  "description": "Tailscale is a zero-trust, identity-based connectivity platform built on WireGuard that replaces legacy VPNs with a secure mesh network between devices.",
+  "website": "https://tailscale.com",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "IT teams managing remote workforces, DevOps engineers managing multi-cloud infrastructure, and developers wanting simplified, secure networking.",
+  "features": [
+    "Mesh overlay network connecting devices without centralized servers",
+    "WireGuard-based encryption for modern cryptographic security",
+    "Zero-config networking with setup in minutes",
+    "Identity-based access control tying permissions to user identity",
+    "Automatic NAT traversal across firewalls and multiple NATs",
+    "Support for Linux, macOS, Windows, iOS, Android, and NAS devices"
+  ],
+  "sources": [
+    "https://tailscale.com",
+    "https://tailscale.com/kb"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Cloudflare",
+      "slug": "cloudflare",
+      "description": "A network and security platform offering CDN, DDoS protection, and zero-trust access tools.",
+      "best_for": "Organizations wanting network performance and security in one platform",
+      "strengths": [
+        "Global network",
+        "DDoS protection",
+        "Zero-trust access"
+      ]
+    },
+    {
+      "name": "Okta",
+      "slug": "okta",
+      "description": "An identity and access management platform for single sign-on and user authentication.",
+      "best_for": "Enterprises managing identity across many applications",
+      "strengths": [
+        "Single sign-on",
+        "Adaptive MFA",
+        "Broad app integrations"
+      ]
+    }
+  ]
+}

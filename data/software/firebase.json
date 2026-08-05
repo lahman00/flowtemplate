@@ -1,0 +1,52 @@
+{
+  "name": "Firebase",
+  "slug": "firebase",
+  "category": "developer-tools",
+  "description": "Firebase is Google's platform of services for building and running apps, covering the complete app development lifecycle with tools for databases, authentication, hosting, and serverless functions.",
+  "website": "https://firebase.google.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "macOS"
+  ],
+  "best_for": "Development teams building Apple, Android, Web, Flutter, Unity, or C++ apps who want a managed backend without running their own servers; used by teams at NPR, Duolingo, and Venmo.",
+  "features": [
+    "Firestore NoSQL database for storing and syncing application data",
+    "Authentication with secure user login and identity management",
+    "Cloud Functions for running serverless backend code",
+    "App Hosting for deploying and managing web applications",
+    "Crashlytics for real-time crash monitoring and diagnosis",
+    "Remote Config for updating app behavior without a release",
+    "Cloud Messaging for push notifications",
+    "Google Analytics integration for user behavior tracking"
+  ],
+  "sources": [
+    "https://firebase.google.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Supabase",
+      "slug": "supabase",
+      "description": "An open source Firebase alternative providing a Postgres-backed backend with auth, storage, and edge functions.",
+      "best_for": "Developers who want a self-hostable backend built on a real SQL database.",
+      "strengths": [
+        "Postgres database",
+        "Row Level Security",
+        "Open source"
+      ]
+    },
+    {
+      "name": "Render",
+      "slug": "render",
+      "description": "A cloud platform for deploying web services, background workers, cron jobs, static sites, and databases.",
+      "best_for": "Developers who want managed cloud infrastructure for custom backends.",
+      "strengths": [
+        "Autoscaling",
+        "Managed databases",
+        "Zero-downtime deploys"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Joomla",
+  "slug": "joomla",
+  "category": "cms",
+  "description": "Joomla is a free, open-source content management system built entirely by volunteers, used to build websites and online applications with multilingual and permission-based content control.",
+  "website": "https://www.joomla.org",
+  "platforms": [
+    "Web",
+    "Self-hosted"
+  ],
+  "best_for": "Organizations that need multilingual websites, granular user permissions, and full design customization without licensing costs.",
+  "features": [
+    "Built-in multi-language support for content and interface",
+    "Multi-user permission levels and access control groups",
+    "10,000+ free extensions and templates",
+    "Fully extensible developer framework for custom builds",
+    "Search-engine-optimized, mobile-responsive output",
+    "Unlimited design customization through templates",
+    "Completely free and open source with no vendor lock-in"
+  ],
+  "sources": [
+    "https://www.joomla.org"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "The world's most widely used CMS, powering everything from blogs to large-scale websites with a vast plugin and theme ecosystem.",
+      "best_for": "Individuals and businesses of all sizes needing a flexible, widely supported CMS",
+      "strengths": [
+        "Huge plugin ecosystem",
+        "Large community",
+        "Flexible themes"
+      ]
+    },
+    {
+      "name": "Drupal",
+      "slug": "drupal",
+      "description": "An open-source, API-first CMS for building structured, composable digital experiences across websites and channels.",
+      "best_for": "Enterprises and institutions needing a highly customizable, secure CMS",
+      "strengths": [
+        "Structured content modeling",
+        "10,000+ modules",
+        "Enterprise security"
+      ]
+    },
+    {
+      "name": "Wix",
+      "slug": "wix",
+      "description": "A hosted website builder offering drag-and-drop design, templates, and integrated business tools.",
+      "best_for": "Small businesses wanting a hosted, no-code website builder",
+      "strengths": [
+        "Drag-and-drop editor",
+        "Hosted platform",
+        "Built-in business tools"
+      ]
+    }
+  ]
+}

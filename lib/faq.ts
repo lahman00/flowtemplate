@@ -1,16 +1,17 @@
 import type { Software } from "@/data/software";
 
+function joinWithAnd(items: string[]): string {
+  return items.length > 1 ? `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}` : items[0];
+}
+
 export function getSoftwareFaqItems(software: Software): Array<{
   question: string;
   answer: string;
 }> {
   const altNames = software.alternatives.map((alternative) => alternative.name);
-  const altList =
-    altNames.length > 1
-      ? `${altNames.slice(0, -1).join(", ")} and ${altNames[altNames.length - 1]}`
-      : altNames[0];
+  const altList = joinWithAnd(altNames);
 
-  return [
+  const items = [
     {
       question: `What are the best alternatives to ${software.name}?`,
       answer: `Based on core features and use case fit, the strongest ${software.name} alternatives are ${altList}. See the comparison above for what each one does best.`,
@@ -25,4 +26,17 @@ export function getSoftwareFaqItems(software: Software): Array<{
         "Integration support varies by tool — check each alternative's own integrations before switching workflows that depend on them.",
     },
   ];
+
+  // Sprint 20 Phase 1/3 — grounded in the entry's own stored `platforms`
+  // field (not every entry has one), so this question stays real instead
+  // of being one more name-substituted template with no per-product
+  // variance. Omitted rather than guessed when platforms isn't documented.
+  if (software.platforms && software.platforms.length > 0) {
+    items.push({
+      question: `What platforms does ${software.name} run on?`,
+      answer: `${software.name} is available on ${joinWithAnd(software.platforms)}, per its official site.`,
+    });
+  }
+
+  return items;
 }

@@ -1,0 +1,60 @@
+{
+  "name": "Salesforce Commerce Cloud",
+  "slug": "salesforce-commerce-cloud",
+  "category": "ecommerce",
+  "description": "Salesforce Commerce Cloud (now marketed by Salesforce as Agentforce Commerce) is a unified enterprise commerce platform connecting ecommerce, order management, and point of sale, with AI agents built into merchandising and shopping.",
+  "website": "https://www.salesforce.com/commerce/",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Large enterprise and multi-brand retailers that need a unified platform spanning online storefronts, in-store point of sale, and cross-channel order management.",
+  "features": [
+    "AI-native search that interprets shopper intent",
+    "Agentforce Merchant, Buyer, and Personal Shopper agents for merchandising and guided shopping",
+    "Cross-channel order management on a single codebase",
+    "Data 360 zero-copy access unifying storefront, marketing, and service data into real-time customer profiles",
+    "Buy-online-pick-up-in-store and store-level inventory visibility",
+    "B2B Commerce tools for custom catalogs, pricing, and purchasing workflows",
+    "AI-powered personalization throughout checkout"
+  ],
+  "sources": [
+    "https://www.salesforce.com/commerce/",
+    "https://www.salesforce.com/commerce/cloud/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Adobe Commerce",
+      "slug": "adobe-commerce",
+      "description": "Adobe's enterprise ecommerce platform for B2B and B2C businesses with deep customization and multi-site management.",
+      "best_for": "Enterprises needing highly customized catalog, pricing, and storefront logic.",
+      "strengths": [
+        "Page Builder",
+        "B2B purchasing workflows",
+        "Multisite architecture"
+      ]
+    },
+    {
+      "name": "BigCommerce",
+      "slug": "bigcommerce",
+      "description": "A SaaS ecommerce platform for building and scaling online stores with built-in enterprise features.",
+      "best_for": "Mid-market and enterprise retailers wanting built-in features without heavy customization overhead.",
+      "strengths": [
+        "Open SaaS architecture",
+        "Built-in B2B features",
+        "Multi-storefront support"
+      ]
+    },
+    {
+      "name": "Shopify",
+      "slug": "shopify",
+      "description": "A hosted commerce platform for building and managing online stores across web, mobile, and in-person sales.",
+      "best_for": "Brands wanting a fully managed platform with rapid time-to-launch.",
+      "strengths": [
+        "App ecosystem",
+        "Hosted infrastructure",
+        "Multi-channel selling"
+      ]
+    }
+  ]
+}

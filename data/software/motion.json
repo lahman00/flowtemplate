@@ -1,0 +1,62 @@
+{
+  "name": "Motion",
+  "slug": "motion",
+  "category": "scheduling",
+  "description": "Motion is an AI-powered productivity platform that combines calendar scheduling, task management, and project planning into a single, automatically optimized schedule.",
+  "website": "https://www.usemotion.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Individuals and teams who want AI to timeblock their day, plan projects, and reduce manual scheduling and status meetings.",
+  "features": [
+    "AI Task Manager that prioritizes and organizes tasks against available time",
+    "AI Project Manager that generates projects with tasks, deadlines, and assignees",
+    "AI Calendar Assistant that timeblocks and dynamically reschedules the day",
+    "Consolidated view across multiple calendar accounts",
+    "Automated meeting scheduling with booking links",
+    "AI Meeting Notetaker that records meetings and generates summaries and action items",
+    "Workflow builder for standard operating procedures",
+    "AI dashboards for project insights"
+  ],
+  "sources": [
+    "https://www.usemotion.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Reclaim.ai",
+      "slug": "reclaim-ai",
+      "description": "An AI calendar assistant that automatically schedules meetings, tasks, habits, and focus time.",
+      "best_for": "People wanting AI to protect focus time and schedule tasks",
+      "strengths": [
+        "AI focus time",
+        "Task scheduling",
+        "Calendar sync"
+      ]
+    },
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that lets people share availability links to book meetings without back-and-forth emails.",
+      "best_for": "Individuals and teams booking one-off or recurring meetings",
+      "strengths": [
+        "Scheduling links",
+        "Calendar sync",
+        "Team routing"
+      ]
+    },
+    {
+      "name": "Todoist",
+      "slug": "todoist",
+      "description": "A task management app for organizing personal and team to-do lists.",
+      "best_for": "Individuals and small teams tracking daily tasks",
+      "strengths": [
+        "Simple task lists",
+        "Recurring tasks",
+        "Cross-platform sync"
+      ]
+    }
+  ]
+}

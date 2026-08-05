@@ -1,6 +1,7 @@
 import type { Software } from "@/data/software";
 import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
+import { META_DESCRIPTION_MAX_LENGTH, truncateAtWord } from "@/lib/generators";
 
 /**
  * Comparison engine backing /compare/[comparison] (Sprint 7). Built in
@@ -63,11 +64,26 @@ export function generateComparisonTitle(softwareA: Software, softwareB: Software
   return `${softwareA.name} vs ${softwareB.name}`;
 }
 
+/**
+ * Sprint 20 Phase 6 — grounded in each pair's real category data so 1,100+
+ * comparison pages don't all share one boilerplate sentence differing only
+ * by name (a real duplicate-intent/thin-snippet risk at that volume).
+ * Avoids "a/an" agreement entirely by parenthesizing category names rather
+ * than splicing them into a sentence.
+ */
 export function generateComparisonMetaDescription(
   softwareA: Software,
   softwareB: Software
 ): string {
-  return `Compare ${softwareA.name} and ${softwareB.name} side by side — category, core strengths, and which one fits your workflow.`;
+  const categoryA = getCategoryName(softwareA.category);
+  const categoryB = getCategoryName(softwareB.category);
+
+  const full =
+    categoryA === categoryB
+      ? `${softwareA.name} and ${softwareB.name}, compared: real ${lowercaseForSentence(categoryA)} features and platforms from each vendor's own site.`
+      : `${softwareA.name} (${categoryA}) vs ${softwareB.name} (${categoryB}) — real features and platforms, sourced from each vendor's own site.`;
+
+  return truncateAtWord(full, META_DESCRIPTION_MAX_LENGTH);
 }
 
 /** Lowercases a category name for mid-sentence use, without mangling acronyms like "CRM". */

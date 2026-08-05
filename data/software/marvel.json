@@ -1,0 +1,45 @@
+{
+  "name": "Marvel",
+  "slug": "marvel",
+  "category": "design",
+  "description": "Marvel is a design and prototyping platform that lets teams create interactive mockups, generate developer handoff specs automatically, and validate designs with integrated user testing.",
+  "website": "https://marvelapp.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Design teams from startups to Fortune 100 companies and schools who want fast, code-free prototyping and design-to-development handoff.",
+  "features": [
+    "Interactive prototyping from low- to high-fidelity designs",
+    "Automatic developer handoff specs",
+    "Integrated user testing via Ballpark",
+    "Marvel for Sketch plugin integration",
+    "Full-screen mobile prototype viewing on iOS and Android apps",
+    "Multiple device frames including iPhone, iPad, Apple Watch, and Android",
+    "Developer API for custom workflows"
+  ],
+  "sources": [
+    "https://marvelapp.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Figma",
+      "slug": "figma",
+      "description": "A collaborative interface design tool with real-time multiplayer editing.",
+      "best_for": "Product design teams needing collaborative UI/UX design and prototyping.",
+      "strengths": ["Real-time collaboration", "Component libraries", "Dev handoff"]
+    },
+    {
+      "name": "Sketch",
+      "slug": "sketch",
+      "description": "A vector-based UI design tool for macOS with a large plugin ecosystem.",
+      "best_for": "Mac-based design teams wanting a mature, plugin-extensible design tool.",
+      "strengths": ["Vector editing", "Plugin ecosystem", "Symbols/components"]
+    },
+    {
+      "name": "Zeplin",
+      "slug": "zeplin",
+      "description": "A design delivery platform generating developer specs and AI-powered design reviews.",
+      "best_for": "Product teams needing clean, structured design-to-development handoffs.",
+      "strengths": ["Automated dev specs", "AI design review", "Design system management"]
+    }
+  ]
+}

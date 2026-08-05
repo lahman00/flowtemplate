@@ -1,0 +1,37 @@
+{
+  "name": "Crazy Egg",
+  "slug": "crazy-egg",
+  "category": "analytics",
+  "description": "Crazy Egg is a website-optimization platform that shows how visitors actually use a site, combining heatmaps, session recordings, A/B testing, and web analytics in one dashboard.",
+  "website": "https://www.crazyegg.com/",
+  "platforms": ["Web"],
+  "best_for": "Teams of any skill level, including those with multiple websites or team members, seeking to understand visitor behavior without complex configuration, with unlimited seats and domains on its plans.",
+  "features": [
+    "Heatmaps, Scrollmaps, and Confetti Maps visualizing visitor interaction",
+    "Session recordings to watch actual user behavior",
+    "A/B testing to run conversion experiments",
+    "Web analytics with real-time, AI-powered traffic reporting",
+    "Surveys with 50+ customizable templates",
+    "Popup CTAs including buttons, popups, and sticky bars",
+    "Error tracking for technical issues affecting user experience",
+    "Single-snippet setup with integrations for Google Tag Manager, Shopify, and WordPress"
+  ],
+  "sources": ["https://www.crazyegg.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Hotjar",
+      "slug": "hotjar",
+      "description": "An experience-intelligence platform for understanding and improving user behavior on websites/apps.",
+      "best_for": "Product, design, and marketing teams wanting to reduce drop-offs and improve conversion.",
+      "strengths": ["Heatmaps", "Session recordings", "AI-summarized surveys"]
+    },
+    {
+      "name": "FullStory",
+      "slug": "fullstory",
+      "description": "An AI-powered behavioral analytics platform capturing user interactions across web and mobile.",
+      "best_for": "Teams needing deeper session replay and product analytics alongside heatmaps.",
+      "strengths": ["Session replay", "Mobile analytics", "AI-generated behavioral insights"]
+    }
+  ]
+}

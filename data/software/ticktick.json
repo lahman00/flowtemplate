@@ -1,0 +1,54 @@
+{
+  "name": "TickTick",
+  "slug": "ticktick",
+  "category": "productivity",
+  "description": "TickTick is a to-do list and calendar app that helps users capture ideas, organize tasks, and manage time with multiple planning views, habit tracking, and built-in focus tools, syncing in real time across devices.",
+  "website": "https://www.ticktick.com",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Positioned for individuals who want a to-do list combined with calendar planning, habit tracking, and time-blocking in one free-to-start app.",
+  "features": [
+    "Multiple calendar views: yearly, monthly, weekly, daily, and agenda",
+    "Kanban boards, timeline view, and Eisenhower Matrix for prioritization",
+    "Built-in Pomodoro timer for focus sessions",
+    "Habit tracker with statistics and flexible tracking options",
+    "Natural language processing for automatic date and time recognition",
+    "Recurring and persistent reminders",
+    "Task sharing and assignment for collaboration",
+    "40+ customizable themes"
+  ],
+  "sources": [
+    "https://www.ticktick.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Todoist",
+      "slug": "todoist",
+      "description": "A cross-platform task manager with natural-language scheduling, projects, and collaboration features.",
+      "best_for": "Users who want a streamlined task manager without built-in habit tracking",
+      "strengths": [
+        "Cross-platform availability",
+        "Natural language due dates",
+        "Collaboration"
+      ]
+    },
+    {
+      "name": "Things",
+      "slug": "things",
+      "description": "A personal task manager for Apple devices with projects, areas, and a one-time purchase price.",
+      "best_for": "Apple users who prefer a one-time purchase over a subscription",
+      "strengths": [
+        "Elegant design",
+        "No subscription",
+        "Deep Apple ecosystem integration"
+      ]
+    }
+  ],
+  "order": 49
+}

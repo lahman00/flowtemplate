@@ -1,0 +1,62 @@
+{
+  "name": "Acuity Scheduling",
+  "slug": "acuity-scheduling",
+  "category": "scheduling",
+  "description": "Acuity Scheduling is an online appointment booking platform, owned by Squarespace, that lets service-based businesses manage bookings, payments, and reminders on branded booking pages.",
+  "website": "https://www.acuityscheduling.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Solo practitioners and service businesses in beauty, fitness, wellness, education, and consulting who need 24/7 client self-booking.",
+  "features": [
+    "Branded online booking pages available 24/7",
+    "Calendar sync with Google Calendar, Apple Calendar, and iCloud",
+    "Payment processing and revenue tracking",
+    "Custom intake forms",
+    "Automated email and text reminders to reduce no-shows",
+    "Class and group scheduling with multiple attendees",
+    "Integrations with Stripe, Square, PayPal, and Zoom"
+  ],
+  "sources": [
+    "https://www.acuityscheduling.com",
+    "https://www.acuityscheduling.com/features/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that lets people share availability links to book meetings without back-and-forth emails.",
+      "best_for": "Individuals and teams booking one-off or recurring meetings",
+      "strengths": [
+        "Scheduling links",
+        "Calendar sync",
+        "Team routing"
+      ]
+    },
+    {
+      "name": "Setmore",
+      "slug": "setmore",
+      "description": "A free online appointment scheduling platform with booking pages, payments, and reminders.",
+      "best_for": "Small service businesses wanting a free booking solution",
+      "strengths": [
+        "Free plan",
+        "Payment integrations",
+        "Video meeting links"
+      ]
+    },
+    {
+      "name": "Cal.com",
+      "slug": "cal-com",
+      "description": "An open-source scheduling infrastructure platform for building booking flows.",
+      "best_for": "Developers and businesses wanting customizable, self-hostable scheduling",
+      "strengths": [
+        "Open source",
+        "API-first",
+        "Customization"
+      ]
+    }
+  ]
+}

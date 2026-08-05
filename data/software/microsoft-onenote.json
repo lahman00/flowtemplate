@@ -1,0 +1,65 @@
+{
+  "name": "Microsoft OneNote",
+  "slug": "microsoft-onenote",
+  "category": "productivity",
+  "description": "Microsoft OneNote is a digital note-taking app organized into notebooks, sections, and pages, supporting handwriting, voice transcription, and real-time collaboration so users can capture ideas and organize projects across devices.",
+  "website": "https://www.microsoft.com/en-us/microsoft-365/onenote/digital-note-taking-app",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "iOS",
+    "iPadOS",
+    "Android"
+  ],
+  "best_for": "Positioned for individuals and teams already in the Microsoft ecosystem who want free-form, notebook-style note-taking with handwriting and voice capture across all their devices.",
+  "features": [
+    "Notebook, section, and page hierarchy for organizing notes",
+    "Handwriting and digital ink with stylus support for sketching and annotating",
+    "Voice transcription to capture notes from audio",
+    "Real-time collaboration for multiple users working on shared notebooks",
+    "Full-text search across notebooks",
+    "Copilot in OneNote for drafting plans, generating ideas, and organizing information",
+    "Free version, with additional features included in Microsoft 365 subscriptions"
+  ],
+  "sources": [
+    "https://www.microsoft.com/en-us/microsoft-365/onenote/digital-note-taking-app"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Evernote",
+      "slug": "evernote",
+      "description": "A note-taking app for capturing, organizing, and searching notes, documents, and web clippings.",
+      "best_for": "Users who want strong web clipping and document scanning",
+      "strengths": [
+        "Web clipper",
+        "Document scanning",
+        "Powerful search"
+      ]
+    },
+    {
+      "name": "Notion",
+      "slug": "notion",
+      "description": "An all-in-one workspace combining documents, databases, project tracking, and team knowledge.",
+      "best_for": "Users who want structured databases alongside free-form notes",
+      "strengths": [
+        "Flexible pages",
+        "Databases",
+        "Templates"
+      ]
+    },
+    {
+      "name": "Craft",
+      "slug": "craft",
+      "description": "A notes and docs app with block-based editing, AI writing assistance, and real-time collaboration.",
+      "best_for": "Users who want a more design-focused, block-based notes app",
+      "strengths": [
+        "Block-based editing",
+        "AI writing assistance",
+        "Cross-device sync"
+      ]
+    }
+  ],
+  "order": 52
+}

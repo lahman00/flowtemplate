@@ -1,0 +1,62 @@
+{
+  "name": "UiPath",
+  "slug": "uipath",
+  "category": "automation",
+  "description": "UiPath is an enterprise automation platform combining robotic process automation (RPA), AI agents, and process orchestration to automate and test complex business scenarios.",
+  "website": "https://www.uipath.com",
+  "platforms": [
+    "Web",
+    "Windows"
+  ],
+  "best_for": "Enterprises in regulated industries like banking, healthcare, and insurance that need to automate repetitive processes and scale RPA and agentic automation across departments.",
+  "features": [
+    "Studio Desktop (Windows) and browser-based Studio Web for building automations",
+    "AI-powered RPA robots for attended and unattended task execution",
+    "Maestro orchestration platform for coordinating complex, long-running workflows",
+    "Intelligent Document Processing (IXP) for extracting data from documents",
+    "Process mining and task mining to discover automation opportunities",
+    "Test Cloud and agentic testing for automated application testing",
+    "Action Center for human-in-the-loop approvals on long-running workflows",
+    "Automation Cloud SaaS or self-hosted Automation Suite across cloud, on-premises, or hybrid"
+  ],
+  "sources": [
+    "https://www.uipath.com/product/platform",
+    "https://docs.uipath.com/studio-web/automation-cloud/latest/user-guide/overview"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Power Automate",
+      "slug": "power-automate",
+      "description": "Microsoft's low-code automation platform combining cloud workflow automation with robotic process automation.",
+      "best_for": "Microsoft 365 organizations automating both cloud and desktop processes",
+      "strengths": [
+        "Desktop and cloud RPA",
+        "Microsoft 365 integration",
+        "1,400+ connectors"
+      ]
+    },
+    {
+      "name": "Workato",
+      "slug": "workato",
+      "description": "An enterprise integration and automation platform connecting SaaS and on-premises systems with AI agent orchestration.",
+      "best_for": "Enterprises needing deep integrations across many business functions",
+      "strengths": [
+        "500+ connectors",
+        "Enterprise governance",
+        "AI agent orchestration"
+      ]
+    },
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform that connects thousands of web apps through simple trigger-and-action workflows.",
+      "best_for": "Teams that want fast, no-code automations between cloud apps",
+      "strengths": [
+        "Huge app directory",
+        "Easy setup",
+        "No-code workflows"
+      ]
+    }
+  ]
+}

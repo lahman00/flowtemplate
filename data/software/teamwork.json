@@ -1,0 +1,62 @@
+{
+  "name": "Teamwork",
+  "slug": "teamwork",
+  "category": "project-management",
+  "description": "Teamwork.com is an AI-powered project management platform built for client-services businesses to manage projects, resources, and profitability in one place.",
+  "website": "https://www.teamwork.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Marketing and creative agencies, consulting firms, and other client-services businesses that need to track billable work and project profitability.",
+  "features": [
+    "Client project management with centralized communication",
+    "Built-in time tracking with billable and non-billable categorization",
+    "Capacity planning and resource workload visualization",
+    "Real-time budget tracking with overspend alerts",
+    "Client portal for shared visibility and feedback",
+    "Proofs feature for approval workflows",
+    "Pre-built project templates",
+    "150+ integrations including Slack, Salesforce, and QuickBooks"
+  ],
+  "sources": [
+    "https://www.teamwork.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work management platform for tracking tasks, projects, and cross-team workflows.",
+      "best_for": "Teams that need structured task tracking and workflow automation",
+      "strengths": [
+        "Task dependencies",
+        "Timeline view",
+        "Workflow automation"
+      ]
+    },
+    {
+      "name": "Basecamp",
+      "slug": "basecamp",
+      "description": "An all-in-one project management and team communication tool combining to-dos, message boards, and chat.",
+      "best_for": "Teams wanting simple, centralized project coordination",
+      "strengths": [
+        "Simplicity",
+        "Message boards",
+        "Flat pricing"
+      ]
+    },
+    {
+      "name": "ClickUp",
+      "slug": "clickup",
+      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
+      "best_for": "Teams that need structured project management",
+      "strengths": [
+        "Task management",
+        "Dashboards",
+        "Automation"
+      ]
+    }
+  ]
+}

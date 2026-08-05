@@ -1,0 +1,53 @@
+{
+  "name": "Things",
+  "slug": "things",
+  "category": "productivity",
+  "description": "Things is a personal task manager from Cultured Code that organizes to-dos into projects and areas, with a focus on elegant design and simplicity for planning daily and long-term work on Apple devices.",
+  "website": "https://culturedcode.com/things/",
+  "platforms": [
+    "macOS",
+    "iOS",
+    "iPadOS",
+    "Apple Watch",
+    "Vision Pro"
+  ],
+  "best_for": "Positioned for individuals on Apple devices who want a single, elegantly designed app for organizing personal tasks, projects, and life areas without a subscription.",
+  "features": [
+    "Projects for organizing related tasks and Areas for grouping ongoing responsibilities",
+    "Tags for flexible, cross-project organization",
+    "Today and Upcoming views for daily and future planning",
+    "Reminders and calendar integration for scheduling",
+    "Markdown support in project and task notes",
+    "Native Shortcuts app integration",
+    "Keyboard shortcuts for fast entry and navigation"
+  ],
+  "sources": [
+    "https://culturedcode.com/things/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Todoist",
+      "slug": "todoist",
+      "description": "A cross-platform task manager with natural-language scheduling, projects, and collaboration features.",
+      "best_for": "Users who want a task manager available on Android, Windows, Linux, and web",
+      "strengths": [
+        "Cross-platform availability",
+        "Natural language due dates",
+        "Collaboration"
+      ]
+    },
+    {
+      "name": "TickTick",
+      "slug": "ticktick",
+      "description": "A to-do list and calendar app with habit tracking, Pomodoro timers, and multiple planning views.",
+      "best_for": "Users who want task management combined with habit tracking and time-blocking",
+      "strengths": [
+        "Built-in Pomodoro timer",
+        "Habit tracker",
+        "Multiple calendar views"
+      ]
+    }
+  ],
+  "order": 48
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Signal",
+  "slug": "signal",
+  "category": "communication",
+  "description": "Signal is a nonprofit messaging app that provides end-to-end encrypted text messaging, voice messages, and voice and video calls by default, with no ads or tracking.",
+  "website": "https://signal.org",
+  "platforms": [
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Individuals, journalists, and privacy-conscious users who need fully encrypted communication with no advertising or data collection.",
+  "features": [
+    "End-to-end encryption by default for every message and call, powered by the open-source Signal Protocol",
+    "Voice and video calls with international support",
+    "Group chats for families, friends, and colleagues",
+    "Photo, video, GIF, and file sharing",
+    "Encrypted sticker packs with custom sticker creation",
+    "Voice messages",
+    "No advertisements or tracking mechanisms",
+    "Operated as a 501(c)(3) nonprofit funded by grants and donations, with no subscription fees"
+  ],
+  "sources": [
+    "https://signal.org"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Telegram",
+      "slug": "telegram",
+      "description": "A cloud-based mobile and desktop messaging app focused on speed and security, supporting large groups, broadcast channels, and bots.",
+      "best_for": "Communities needing large-scale group messaging and broadcast channels",
+      "strengths": [
+        "Large group support",
+        "Broadcast channels",
+        "Bot automation"
+      ]
+    },
+    {
+      "name": "Discord",
+      "slug": "discord",
+      "description": "A voice, video, and text chat platform originally built for gaming communities and now used by many online communities.",
+      "best_for": "Communities and groups needing voice channels and public servers",
+      "strengths": [
+        "Voice channels",
+        "Community servers",
+        "Bot ecosystem"
+      ]
+    }
+  ]
+}

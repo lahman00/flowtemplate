@@ -1,0 +1,63 @@
+{
+  "name": "Zoho Projects",
+  "slug": "zoho-projects",
+  "category": "project-management",
+  "description": "Zoho Projects is an online project management platform for planning, tracking, and collaborating on work, with deep integration into the wider Zoho suite.",
+  "website": "https://www.zoho.com/projects/",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Teams already using Zoho apps, and organizations across construction, IT, and services looking for an affordable, feature-rich project tool.",
+  "features": [
+    "Gantt charts for project plans and task scheduling",
+    "Task lists and Kanban boards",
+    "Timesheet module for billable and non-billable hours",
+    "Integration with Zoho Invoice for automatic billing",
+    "Drag-and-drop workflow automation",
+    "Custom fields, statuses, and modules",
+    "Resource allocation tools to prevent overload",
+    "Integrations with Slack, GitHub, Jira, and Office 365"
+  ],
+  "sources": [
+    "https://www.zoho.com/projects/",
+    "https://www.zoho.com/projects/features.html"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work management platform for tracking tasks, projects, and cross-team workflows.",
+      "best_for": "Teams that need structured task tracking and workflow automation",
+      "strengths": [
+        "Task dependencies",
+        "Timeline view",
+        "Workflow automation"
+      ]
+    },
+    {
+      "name": "Monday.com",
+      "slug": "monday",
+      "description": "A work operating system with customizable boards for managing projects and workflows.",
+      "best_for": "Teams wanting a highly visual, customizable workflow builder",
+      "strengths": [
+        "Custom boards",
+        "Automation",
+        "Visual dashboards"
+      ]
+    },
+    {
+      "name": "Wrike",
+      "slug": "wrike",
+      "description": "An AI-powered enterprise work management platform with Gantt charts, dashboards, and resource management.",
+      "best_for": "Cross-functional teams needing enterprise-grade project visibility",
+      "strengths": [
+        "Gantt charts",
+        "Resource management",
+        "AI dashboards"
+      ]
+    }
+  ]
+}

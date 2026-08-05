@@ -1,0 +1,37 @@
+{
+  "name": "Superhuman Mail",
+  "slug": "superhuman",
+  "category": "productivity",
+  "description": "Superhuman Mail is a productivity-focused email client for Gmail and Outlook that uses keyboard shortcuts, automatic triage, and AI features to help users process their inbox significantly faster.",
+  "website": "https://superhuman.com/mail",
+  "best_for": "Positioned as an AI-native email client for professionals who process high volumes of email and want to fly through their inbox faster with keyboard-driven workflows.",
+  "features": [
+    "Split Inbox that automatically triages email by sender type (team, VIPs, tools like Google Docs and Asana)",
+    "AI drafting and sending of emails on the user's behalf",
+    "Read statuses showing when recipients open an email and on what device",
+    "Snippets for automating common phrases and full email templates",
+    "Follow-up reminders with customizable timing windows",
+    "Collision detection to prevent duplicate team responses",
+    "Keyboard shortcuts and Instant Reply for rapid navigation and response",
+    "Integrated calendar viewing and event creation from within email"
+  ],
+  "sources": [
+    "https://superhuman.com/mail",
+    "https://help.superhuman.com/hc/en-us/articles/46191245096979-Superhuman-Suite"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Front",
+      "slug": "front",
+      "description": "A shared inbox and customer communication platform for teams managing high volumes of email.",
+      "best_for": "Teams that need a shared inbox with collaboration on customer-facing email",
+      "strengths": [
+        "Shared inbox",
+        "Team collaboration",
+        "Workflow automation"
+      ]
+    }
+  ],
+  "order": 53
+}

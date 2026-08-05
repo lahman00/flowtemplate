@@ -1,0 +1,62 @@
+{
+  "name": "Helpjuice",
+  "slug": "helpjuice",
+  "category": "knowledge-base",
+  "description": "Helpjuice is a cloud-based knowledge base platform that helps organizations create, organize, and search internal and customer-facing documentation, aiming to reduce support tickets and speed up onboarding.",
+  "website": "https://helpjuice.com",
+  "platforms": [
+    "Web",
+    "Browser extension (Chrome)"
+  ],
+  "best_for": "Positioned for support teams, operations, customer success, and high-growth SaaS companies looking to replace scattered documentation in tools like Notion, Confluence, or internal wikis.",
+  "features": [
+    "AI-powered search that interprets intent and forgives typos",
+    "AI content creation that drafts articles from Slack messages, support tickets, and emails",
+    "Swifty AI chatbot integrated into the knowledge base",
+    "Analytics dashboard tracking article usage, engagement, and topic consumption",
+    "Multi-language support with translation across 50+ languages",
+    "Customizable, branded themes with no developer required",
+    "Step-by-step visual tutorial creator",
+    "User and group-based access controls"
+  ],
+  "sources": [
+    "https://helpjuice.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Guru",
+      "slug": "guru",
+      "description": "An enterprise knowledge-management platform that organizes and continuously verifies company information.",
+      "best_for": "Enterprise teams needing verified, permission-scoped knowledge",
+      "strengths": [
+        "Knowledge verification",
+        "AI search",
+        "Permission-aware answers"
+      ]
+    },
+    {
+      "name": "Tettra",
+      "slug": "tettra",
+      "description": "An AI-powered internal knowledge base built around a Slack-first workflow for answering team questions.",
+      "best_for": "Teams that live in Slack and want a lightweight internal wiki",
+      "strengths": [
+        "Slack integration",
+        "AI Q&A bot",
+        "Content verification workflows"
+      ]
+    },
+    {
+      "name": "KnowledgeOwl",
+      "slug": "knowledgeowl",
+      "description": "Knowledge base software for centralizing internal and customer-facing documentation with custom theming.",
+      "best_for": "Compliance-focused teams replacing Confluence or SharePoint",
+      "strengths": [
+        "Custom theming",
+        "Version history",
+        "Role-based access control"
+      ]
+    }
+  ],
+  "order": 35
+}

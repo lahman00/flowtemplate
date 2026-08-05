@@ -1,0 +1,60 @@
+{
+  "name": "Shift4Shop",
+  "slug": "shift4shop",
+  "category": "ecommerce",
+  "description": "Shift4Shop is a turnkey ecommerce solution that lets businesses build a website and sell products online with an all-in-one platform covering design, payments, shipping, and marketing.",
+  "website": "https://www.shift4shop.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Small to mid-sized businesses and enterprises looking to launch or migrate an online store on an all-in-one hosted platform.",
+  "features": [
+    "Drag-and-drop website builder with 100+ mobile-friendly templates",
+    "Integrated credit card processing with PayPal support and Kount fraud protection",
+    "Real-time shipping integration with USPS, UPS, FedEx, and other carriers, including label printing",
+    "Product catalog and order tracking for inventory management",
+    "Automated cart abandonment recovery",
+    "Built-in email marketing, discounts, and coupon tools",
+    "Pre-optimized site structure for SEO",
+    "Multi-channel selling integrations with Facebook, eBay, and Amazon"
+  ],
+  "sources": [
+    "https://www.shift4shop.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "BigCommerce",
+      "slug": "bigcommerce",
+      "description": "A SaaS ecommerce platform for building and scaling online stores with built-in enterprise features.",
+      "best_for": "Growing retailers wanting built-in enterprise features without added transaction fees.",
+      "strengths": [
+        "Open SaaS architecture",
+        "Built-in B2B features",
+        "Multi-storefront support"
+      ]
+    },
+    {
+      "name": "Shopify",
+      "slug": "shopify",
+      "description": "A hosted commerce platform for building and managing online stores across web, mobile, and in-person sales.",
+      "best_for": "Merchants wanting a fully managed platform with a large app ecosystem.",
+      "strengths": [
+        "App ecosystem",
+        "Hosted infrastructure",
+        "Multi-channel selling"
+      ]
+    },
+    {
+      "name": "OpenCart",
+      "slug": "opencart",
+      "description": "A free, open-source PHP-based ecommerce platform with no monthly platform fees.",
+      "best_for": "Developers and agencies wanting a self-hosted, fee-free storefront.",
+      "strengths": [
+        "Free and open source",
+        "Large module marketplace",
+        "Multi-language support"
+      ]
+    }
+  ]
+}

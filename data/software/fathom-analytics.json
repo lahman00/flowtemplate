@@ -1,0 +1,43 @@
+{
+  "name": "Fathom Analytics",
+  "slug": "fathom-analytics",
+  "category": "analytics",
+  "description": "Fathom Analytics is a privacy-focused web analytics platform positioned as a simple, fast alternative to Google Analytics that protects visitor privacy without sacrificing actionable insights.",
+  "website": "https://usefathom.com/",
+  "platforms": ["Web"],
+  "best_for": "Developers and technical teams seeking straightforward analytics, privacy-conscious businesses and creators, and companies wanting faster site performance, including customers like IBM, GitHub, and Bootstrap.",
+  "features": [
+    "Event tracking for custom interactions like sign-ups, clicks, and ecommerce transactions",
+    "Real-time dashboard powered by a lightweight, 2kB script",
+    "Automated email reports on a weekly or monthly cadence",
+    "UTM-based campaign and newsletter performance tracking",
+    "Perpetual data retention with unlimited historical access",
+    "Bot detection to filter spam and scraper traffic",
+    "Developer-friendly API integrating with any CMS or framework, with no cookie consent banners required"
+  ],
+  "sources": ["https://usefathom.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Plausible Analytics",
+      "slug": "plausible",
+      "description": "A privacy-focused, cookieless web analytics platform with funnels, goals, and SEO-focused features.",
+      "best_for": "Teams wanting cookieless analytics with built-in funnel and campaign tracking.",
+      "strengths": ["Automatic scroll-depth tracking", "AI-tool traffic monitoring", "Real-time dashboards"]
+    },
+    {
+      "name": "Google Analytics",
+      "slug": "google-analytics",
+      "description": "A free analytics tool from Google measuring customer behavior across websites and apps.",
+      "best_for": "Businesses wanting free, easy measurement unified with Google's ad platforms.",
+      "strengths": ["Machine-learning insights", "Cross-platform attribution", "Google Ads integration"]
+    },
+    {
+      "name": "Matomo",
+      "slug": "matomo",
+      "description": "Privacy-first analytics with full data ownership via self-hosted or cloud deployment.",
+      "best_for": "Organizations wanting privacy-compliant analytics without vendor lock-in.",
+      "strengths": ["Unsampled data", "Cookieless tracking", "Self-hosted or cloud"]
+    }
+  ]
+}

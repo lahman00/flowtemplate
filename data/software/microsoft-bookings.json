@@ -1,0 +1,59 @@
+{
+  "name": "Microsoft Bookings",
+  "slug": "microsoft-bookings",
+  "category": "scheduling",
+  "description": "Microsoft Bookings is an appointment scheduling app, included with Microsoft 365, that lets organizations create online booking pages synced with Outlook calendars.",
+  "website": "https://www.microsoft.com/en-us/microsoft-365/business/scheduling-and-booking-app",
+  "platforms": [
+    "Web",
+    "Windows"
+  ],
+  "best_for": "Microsoft 365 organizations in financial services, healthcare, and education that want appointment booking built into their existing Outlook and Teams environment.",
+  "features": [
+    "Customer-facing online booking page",
+    "Real-time sync with Outlook calendars to prevent double-booking",
+    "Staff scheduling with multiple service providers per appointment type",
+    "Automated confirmation emails and calendar invitations",
+    "Customer self-service rescheduling and cancellation",
+    "Integrated app within Microsoft Teams"
+  ],
+  "sources": [
+    "https://www.microsoft.com/en-us/microsoft-365/business/scheduling-and-booking-app"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that lets people share availability links to book meetings without back-and-forth emails.",
+      "best_for": "Individuals and teams booking one-off or recurring meetings",
+      "strengths": [
+        "Scheduling links",
+        "Calendar sync",
+        "Team routing"
+      ]
+    },
+    {
+      "name": "Acuity Scheduling",
+      "slug": "acuity-scheduling",
+      "description": "An online appointment booking platform with branded booking pages, payments, and reminders.",
+      "best_for": "Service businesses needing 24/7 client self-booking",
+      "strengths": [
+        "Branded booking pages",
+        "Payments",
+        "Class scheduling"
+      ]
+    },
+    {
+      "name": "Setmore",
+      "slug": "setmore",
+      "description": "A free online appointment scheduling platform with booking pages, payments, and reminders.",
+      "best_for": "Small service businesses wanting a free booking solution",
+      "strengths": [
+        "Free plan",
+        "Payment integrations",
+        "Video meeting links"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Keap",
+  "slug": "keap",
+  "category": "crm",
+  "description": "Keap is a CRM and marketing automation platform for small businesses that combines contact management, sales pipelines, and automated follow-up with invoicing and a dedicated business phone line.",
+  "website": "https://keap.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Small business owners, service providers, coaches, agencies, and ecommerce businesses — Keap has served 200,000+ small businesses for over 20 years.",
+  "features": [
+    "CRM and contact management with segmentation",
+    "Marketing automation for lead nurturing and follow-up campaigns",
+    "Sales pipeline automation",
+    "Appointment scheduling and calendar booking",
+    "Automatic invoicing and payment collection",
+    "Landing pages and lead-capture forms",
+    "Dedicated business phone line for calls and texts",
+    "Keap AI content-generation assistant"
+  ],
+  "sources": [
+    "https://keap.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "An all-in-one CRM platform with marketing, sales, and service hubs.",
+      "best_for": "Growing businesses wanting an integrated marketing-to-sales CRM suite.",
+      "strengths": ["Free CRM tier", "Marketing automation", "Extensive integrations"]
+    },
+    {
+      "name": "Zoho CRM",
+      "slug": "zoho-crm",
+      "description": "An AI-powered CRM with omnichannel engagement and deep workflow automation.",
+      "best_for": "Businesses of any size wanting an affordable, feature-rich CRM.",
+      "strengths": ["Zia AI assistant", "Workflow automation", "Zoho app ecosystem"]
+    },
+    {
+      "name": "Nutshell",
+      "slug": "nutshell",
+      "description": "An AI-powered sales CRM combining pipeline management with built-in email marketing.",
+      "best_for": "Small teams wanting a comprehensive CRM without complex setup.",
+      "strengths": ["Email marketing built in", "AI call transcription", "Simple pipeline"]
+    }
+  ]
+}

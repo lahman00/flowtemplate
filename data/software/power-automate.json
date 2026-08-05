@@ -1,0 +1,65 @@
+{
+  "name": "Power Automate",
+  "slug": "power-automate",
+  "category": "automation",
+  "description": "Microsoft Power Automate is a low-code automation platform that combines cloud-based workflow automation (DPA) with robotic process automation (RPA) to connect apps, desktops, and legacy systems.",
+  "website": "https://www.microsoft.com/en-us/power-platform/products/power-automate",
+  "platforms": [
+    "Web",
+    "Windows",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Organizations already invested in Microsoft 365 and Azure that need to automate both cloud app workflows and legacy desktop processes with a single low-code platform.",
+  "features": [
+    "Cloud flows for connecting apps and services (DPA)",
+    "Desktop flows for attended and unattended RPA on legacy systems",
+    "Copilot for natural-language flow creation and editing",
+    "AI Builder for document and image processing",
+    "1,400+ prebuilt, certified connectors including native Microsoft 365 integration",
+    "Process mining and task mining to discover automation opportunities",
+    "Managed Environments with governance and data-loss-prevention controls",
+    "Mobile app for triggering flows, approvals, and push notifications"
+  ],
+  "sources": [
+    "https://www.microsoft.com/en-us/power-platform/products/power-automate",
+    "https://apps.apple.com/us/app/power-automate/id1094928825",
+    "https://learn.microsoft.com/en-us/power-platform/release-plan/2023wave1/power-automate/experience-improved-power-automate-mobile-app-ios"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform that connects thousands of web apps through simple trigger-and-action workflows.",
+      "best_for": "Teams that want fast, no-code automations between cloud apps",
+      "strengths": [
+        "Huge app directory",
+        "Easy setup",
+        "No-code workflows"
+      ]
+    },
+    {
+      "name": "UiPath",
+      "slug": "uipath",
+      "description": "An enterprise automation platform combining robotic process automation, AI agents, and process orchestration.",
+      "best_for": "Enterprises scaling RPA and agentic automation across complex systems",
+      "strengths": [
+        "Robotic process automation",
+        "Process and task mining",
+        "AI-powered agents"
+      ]
+    },
+    {
+      "name": "Workato",
+      "slug": "workato",
+      "description": "An enterprise integration and automation platform connecting SaaS and on-premises systems with AI agent orchestration.",
+      "best_for": "Enterprises needing deep integrations across many business functions",
+      "strengths": [
+        "500+ connectors",
+        "Enterprise governance",
+        "AI agent orchestration"
+      ]
+    }
+  ]
+}

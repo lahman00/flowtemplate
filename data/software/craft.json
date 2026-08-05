@@ -1,0 +1,65 @@
+{
+  "name": "Craft",
+  "slug": "craft",
+  "category": "productivity",
+  "description": "Craft is a notes and docs app that combines block-based writing with tasks, calendar events, and whiteboards, letting users capture ideas quickly on any device and refine them into polished, shareable documents.",
+  "website": "https://www.craft.do",
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows",
+    "iOS",
+    "iPadOS",
+    "Android"
+  ],
+  "best_for": "Positioned for individuals and teams who want a unified, design-focused workspace for notes, daily journaling, and documents that can be published or shared directly from the app.",
+  "features": [
+    "Block-based documents supporting docs, tasks, calendar events, and whiteboards",
+    "Daily Notes for daily capture and reflection",
+    "AI writing assistance for composing and refining content",
+    "Templates for jumpstarting different project types",
+    "Direct publishing and sharing from within the app",
+    "Cross-device sync for capturing ideas instantly and refining them later",
+    "MCP and API integrations with tools like Claude, ChatGPT, and Apple Shortcuts"
+  ],
+  "sources": [
+    "https://www.craft.do"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Notion",
+      "slug": "notion",
+      "description": "An all-in-one workspace combining documents, databases, project tracking, and team knowledge.",
+      "best_for": "Users who want structured databases alongside documents",
+      "strengths": [
+        "Flexible pages",
+        "Databases",
+        "Templates"
+      ]
+    },
+    {
+      "name": "Evernote",
+      "slug": "evernote",
+      "description": "A note-taking app for capturing, organizing, and searching notes, documents, and web clippings.",
+      "best_for": "Users who want strong web clipping and document scanning",
+      "strengths": [
+        "Web clipper",
+        "Document scanning",
+        "Powerful search"
+      ]
+    },
+    {
+      "name": "Microsoft OneNote",
+      "slug": "microsoft-onenote",
+      "description": "A free-form digital note-taking app organized into notebooks, sections, and pages with handwriting support.",
+      "best_for": "Users already in the Microsoft ecosystem",
+      "strengths": [
+        "Handwriting and ink",
+        "Free to use",
+        "Voice transcription"
+      ]
+    }
+  ],
+  "order": 54
+}

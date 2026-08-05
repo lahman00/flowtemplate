@@ -35,6 +35,11 @@ export const vendorLinksRawSchema = z.object({
   integrations: z.string().url().optional(),
   status: z.string().url().optional(),
   community: z.string().url().optional(),
+  // Sprint 20 Phase 7 — affiliate-readiness insertion points, same rule as
+  // the six above: schema-supported, never populated without a real URL.
+  trial: z.string().url().optional(),
+  deals: z.string().url().optional(),
+  enterprise: z.string().url().optional(),
 });
 
 export const softwareRawSchema = z.object({

@@ -1,0 +1,63 @@
+{
+  "name": "RingCentral",
+  "slug": "ringcentral",
+  "category": "communication",
+  "description": "RingCentral is a cloud communications platform providing business phone, team messaging, video meetings, and AI-powered customer engagement and contact center tools.",
+  "website": "https://www.ringcentral.com",
+  "platforms": [
+    "Web",
+    "Desktop",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Businesses of all sizes, from small teams to Fortune 1000 enterprises, that need unified phone, video, messaging, and contact center capabilities in one platform.",
+  "features": [
+    "Cloud-based business phone system (RingEX) with business SMS",
+    "Team messaging and chat",
+    "Video meetings and webinars",
+    "AI Receptionist for automated call answering and routing",
+    "AIR Pro no-code custom AI agent builder",
+    "AI Virtual Assistant (AVA) for meeting notes and task automation",
+    "RingCX omnichannel contact center with AI-powered quality management",
+    "500+ third-party app integrations via open APIs"
+  ],
+  "sources": [
+    "https://www.ringcentral.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zoom",
+      "slug": "zoom",
+      "description": "A video conferencing platform for meetings, webinars, and team chat used widely across businesses and education.",
+      "best_for": "Teams needing reliable, widely adopted video conferencing",
+      "strengths": [
+        "Reliable video quality",
+        "Webinars",
+        "Wide adoption"
+      ]
+    },
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A collaboration hub combining chat, video meetings, and file sharing tightly integrated with Microsoft 365.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": [
+        "Microsoft 365 integration",
+        "Chat and video in one app",
+        "Enterprise security"
+      ]
+    },
+    {
+      "name": "Webex",
+      "slug": "webex",
+      "description": "Cisco's AI-powered collaboration platform for video meetings, webinars, calling, and messaging.",
+      "best_for": "Organizations wanting video, calling, and messaging with in-house AI transcription",
+      "strengths": [
+        "AI meeting assistant",
+        "Real-time translation",
+        "Webinars"
+      ]
+    }
+  ]
+}

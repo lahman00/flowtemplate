@@ -1,0 +1,29 @@
+{
+  "name": "Postmark",
+  "slug": "postmark",
+  "category": "api",
+  "description": "Postmark is a transactional email API and SMTP service built for developers, focused on fast, reliable delivery, and has delivered billions of emails since 2010.",
+  "website": "https://postmarkapp.com/",
+  "platforms": ["Web"],
+  "best_for": "Startups and bootstrapped founders, agencies managing client communications, developers seeking straightforward integration, and companies migrating from competitors like SendGrid, Mailgun, or Amazon SES.",
+  "features": [
+    "Email API and SMTP service for flexible integration",
+    "Message Streams technology separating transactional and promotional email to protect deliverability",
+    "Prebuilt email templates for rapid deployment",
+    "Inbound email handling and webhooks for event tracking",
+    "Analytics and message retention",
+    "Bulk API for higher-volume sending",
+    "Support for multiple languages including Node.js, Python, Ruby, PHP, and C#"
+  ],
+  "sources": ["https://postmarkapp.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "SendGrid",
+      "slug": "sendgrid",
+      "description": "An email API and SMTP service, now operated under Twilio, for transactional and marketing email at scale.",
+      "best_for": "Companies wanting a single email provider that also handles marketing campaigns, not just transactional mail.",
+      "strengths": ["High-volume deliverability infrastructure", "Marketing email campaign tools", "Access to Twilio's broader communications ecosystem"]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "name": "Umbraco",
+  "slug": "umbraco",
+  "category": "cms",
+  "description": "Umbraco is an open-source, .NET-based content management system that lets developers and editors build and manage websites with flexible content modeling.",
+  "website": "https://umbraco.com",
+  "platforms": [
+    "Web",
+    "Self-hosted"
+  ],
+  "best_for": ".NET development teams and editors who want an open-source, editor-friendly CMS built on the latest .NET technology.",
+  "features": [
+    "Content modeling with schema definition and property editor configuration",
+    "Editor-friendly publishing workflows and user management",
+    "Integrated media management system",
+    "Multilingual and localization configuration for international sites",
+    "Extensible backoffice with server-side customization and package building",
+    "Frontend developer APIs for headless and coupled integrations",
+    "Built on the latest .NET technology",
+    "Umbraco Cloud managed hosting option"
+  ],
+  "sources": [
+    "https://docs.umbraco.com/umbraco-cms",
+    "https://docs.umbraco.com/umbraco-cloud"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "The world's most widely used CMS, powering everything from blogs to large-scale websites with a vast plugin and theme ecosystem.",
+      "best_for": "Individuals and businesses of all sizes needing a flexible, widely supported CMS",
+      "strengths": [
+        "Huge plugin ecosystem",
+        "Large community",
+        "Flexible themes"
+      ]
+    },
+    {
+      "name": "Drupal",
+      "slug": "drupal",
+      "description": "An open-source, API-first CMS for building structured, composable digital experiences across websites and channels.",
+      "best_for": "Enterprises and institutions needing a highly customizable, secure CMS",
+      "strengths": [
+        "Structured content modeling",
+        "10,000+ modules",
+        "Enterprise security"
+      ]
+    },
+    {
+      "name": "Joomla",
+      "slug": "joomla",
+      "description": "An open-source CMS built entirely by volunteers, offering multilingual support and flexible permission structures.",
+      "best_for": "Organizations needing multilingual sites and granular user permissions",
+      "strengths": [
+        "Multilingual support",
+        "10,000+ extensions",
+        "Open source"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "MuleSoft Anypoint Platform",
+  "slug": "mulesoft",
+  "category": "api",
+  "description": "MuleSoft Anypoint Platform is Salesforce's unified iPaaS and full-lifecycle API management solution, letting organizations securely design, build, deploy, secure, and manage APIs and integrations at scale in one platform.",
+  "website": "https://www.salesforce.com/mulesoft/anypoint-platform/",
+  "platforms": ["Web"],
+  "best_for": "Enterprise platform and integration teams needing to design, secure, and govern APIs across cloud, on-prem, and hybrid environments, with hundreds of prebuilt connectors for applications, databases, and industry protocols.",
+  "features": [
+    "API Manager for managing APIs, users, traffic analysis, and SLA monitoring in one interface",
+    "API security policies, client access management, and API-product grouping",
+    "Hundreds of prebuilt cloud connectors for enterprise applications and databases",
+    "Anypoint Flex Gateway and API Experience Hub for universal API management",
+    "Visual API Designer for design-first API development",
+    "Anypoint Studio with prebuilt connectors for building integrations",
+    "Automated MUnit testing and deployment to cloud, on-prem, or hybrid environments"
+  ],
+  "sources": ["https://www.salesforce.com/mulesoft/anypoint-platform/", "https://www.mulesoft.com/platform/anypoint-platform-features"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Kong",
+      "slug": "kong",
+      "description": "Provides API gateway and management products for securely connecting, governing, and monetizing APIs and AI tokens across any cloud.",
+      "best_for": "Teams wanting a cloud-agnostic API gateway with AI-agent-specific tooling.",
+      "strengths": ["AI Gateway/token governance", "Multi-cloud flexibility", "Developer Portal"]
+    },
+    {
+      "name": "Apigee",
+      "slug": "apigee",
+      "description": "Google Cloud's API management platform offering design, security, analytics, and lifecycle management for enterprise APIs.",
+      "best_for": "Enterprises already on Google Cloud needing integrated API governance and analytics.",
+      "strengths": ["API analytics/monitoring", "Developer portal", "Policy/quota enforcement"]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "Segment",
+  "slug": "segment",
+  "category": "analytics",
+  "description": "Segment is Twilio's customer data platform (CDP) that collects, cleans, and activates first-party customer data across a company's tools, unifying it into a single customer profile.",
+  "website": "https://www.twilio.com/en-us/segment",
+  "platforms": ["Web"],
+  "best_for": "Organizations seeking to unify fragmented customer data across systems, enable data-driven personalization at scale, and activate customer insights across marketing, sales, and service channels.",
+  "features": [
+    "Connections: a customer data pipeline collecting first-party data and routing it to 550+ destinations",
+    "Unify: builds unified customer profiles from disparate data sources",
+    "Engage: builds advanced audiences and orchestrates real-time customer journeys",
+    "Real-time data collection and activation",
+    "Integration with 750+ applications and destinations, including data warehouses",
+    "Combines customer data infrastructure with Twilio's communications capabilities"
+  ],
+  "sources": ["https://www.twilio.com/en-us/segment"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Amplitude",
+      "slug": "amplitude",
+      "description": "A product analytics platform combining analytics, feedback, experimentation, and feature management.",
+      "best_for": "Product, data, and engineering teams needing analytics with feature experimentation.",
+      "strengths": ["Instant query results", "Session replay and heatmaps", "Feature experimentation"]
+    },
+    {
+      "name": "Mixpanel",
+      "slug": "mixpanel",
+      "description": "A product intelligence platform combining analytics, session replay, experiments, and AI-powered insights.",
+      "best_for": "Product, data, and engineering teams wanting fast, data-driven product decisions.",
+      "strengths": ["Fast querying", "Session Replay", "Metric Trees"]
+    },
+    {
+      "name": "PostHog",
+      "slug": "posthog",
+      "description": "A product intelligence platform combining product analytics, session replay, feature flags, and a customer data pipeline in one suite.",
+      "best_for": "Engineering-led teams wanting analytics, experimentation, and data pipelines in a single self-hostable platform.",
+      "strengths": ["All-in-one product suite", "Open-source/self-hostable option", "Broad framework SDK support"]
+    }
+  ]
+}

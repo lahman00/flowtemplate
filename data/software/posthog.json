@@ -1,0 +1,43 @@
+{
+  "name": "PostHog",
+  "slug": "posthog",
+  "category": "analytics",
+  "description": "PostHog is a product intelligence platform that combines product analytics, web analytics, session replay, feature flags, experiments, and a customer data pipeline so teams can understand and improve user behavior.",
+  "website": "https://posthog.com/",
+  "platforms": ["Web"],
+  "best_for": "Product teams and developers at companies of any size wanting analytics, experimentation, and data infrastructure in one platform, with SDKs for Next.js, React, Python, and 20+ other frameworks/languages.",
+  "features": [
+    "Product analytics and web analytics",
+    "Session replay and heatmaps",
+    "Feature flags and no-code A/B testing experiments",
+    "Surveys for in-product feedback collection",
+    "Error tracking and AI observability (traces and logs)",
+    "Customer data platform (CDP) for routing event data to other tools",
+    "Managed data warehouse for querying product data"
+  ],
+  "sources": ["https://posthog.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Amplitude",
+      "slug": "amplitude",
+      "description": "A product analytics platform combining analytics, feedback, experimentation, and feature management.",
+      "best_for": "Product, data, and engineering teams needing analytics with feature experimentation.",
+      "strengths": ["Instant query results", "Session replay and heatmaps", "Feature experimentation"]
+    },
+    {
+      "name": "Mixpanel",
+      "slug": "mixpanel",
+      "description": "A product intelligence platform combining analytics, session replay, experiments, and AI-powered insights.",
+      "best_for": "Product, data, and engineering teams wanting fast, data-driven product decisions.",
+      "strengths": ["Fast querying", "Session Replay", "Metric Trees"]
+    },
+    {
+      "name": "Segment",
+      "slug": "segment",
+      "description": "Twilio's customer data platform for collecting, unifying, and activating first-party customer data.",
+      "best_for": "Organizations that primarily need a data pipeline to unify and route customer data across many tools.",
+      "strengths": ["550+ destination integrations", "Unified customer profiles", "Real-time activation"]
+    }
+  ]
+}

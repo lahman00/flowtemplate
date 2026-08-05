@@ -1,0 +1,45 @@
+{
+  "name": "LiveAgent",
+  "slug": "liveagent",
+  "category": "customer-support",
+  "description": "LiveAgent is an all-in-one customer service platform that merges email, live chat, phone, and social messaging into a single ticketing dashboard with a built-in call center.",
+  "website": "https://www.liveagent.com",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Businesses of various sizes handling multiple communication channels who want fast live chat and first-contact resolution in one dashboard.",
+  "features": [
+    "Multichannel ticketing that unifies email, chat, phone, and social messages",
+    "Built-in call center with IVR and call routing",
+    "Live chat widget marketed as one of the fastest on the market",
+    "AI chatbot answering common questions in 100+ languages",
+    "Social media integration for Facebook, Instagram, WhatsApp, Viber, and Telegram",
+    "Self-service knowledge base to deflect tickets",
+    "AI Answer Assistant for polishing and generating agent replies"
+  ],
+  "sources": [
+    "https://www.liveagent.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Zendesk",
+      "slug": "zendesk",
+      "description": "A customer service platform with ticketing, live chat, and AI-powered automation.",
+      "best_for": "Support teams of all sizes needing an established, feature-rich helpdesk.",
+      "strengths": ["Mature ticketing system", "AI automation", "Large app marketplace"]
+    },
+    {
+      "name": "Freshdesk",
+      "slug": "freshdesk",
+      "description": "A cloud-based help desk with ticketing, automation, and omnichannel support.",
+      "best_for": "Support teams wanting an affordable, easy-to-deploy helpdesk.",
+      "strengths": ["Omnichannel ticketing", "Automation", "Affordable tiers"]
+    },
+    {
+      "name": "Help Scout",
+      "slug": "help-scout",
+      "description": "A shared inbox and help desk platform built for personalized, human-feeling support.",
+      "best_for": "Small to mid-sized support teams wanting simple, email-centric ticketing.",
+      "strengths": ["Shared inbox", "Simplicity", "Beacon in-app help widget"]
+    }
+  ]
+}

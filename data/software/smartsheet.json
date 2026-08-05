@@ -1,0 +1,64 @@
+{
+  "name": "Smartsheet",
+  "slug": "smartsheet",
+  "category": "project-management",
+  "description": "Smartsheet is an intelligent work management platform that combines a spreadsheet-style grid interface with project tracking, automation, and enterprise reporting.",
+  "website": "https://www.smartsheet.com",
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Project and portfolio managers, enterprise PMOs, and IT teams who want spreadsheet-familiar tools with enterprise-grade governance.",
+  "features": [
+    "Grid and spreadsheet-style work views",
+    "Gantt charts for timeline and dependency tracking",
+    "Workflow automation to reduce manual work",
+    "Forms and centralized intake and approval workflows",
+    "Role-based dashboards and reporting",
+    "Resource planning and workload balancing",
+    "Integrations with Microsoft, Salesforce, Slack, and Jira"
+  ],
+  "sources": [
+    "https://www.smartsheet.com",
+    "https://www.smartsheet.com/platform"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Wrike",
+      "slug": "wrike",
+      "description": "An AI-powered enterprise work management platform with Gantt charts, dashboards, and resource management.",
+      "best_for": "Cross-functional teams needing enterprise-grade project visibility",
+      "strengths": [
+        "Gantt charts",
+        "Resource management",
+        "AI dashboards"
+      ]
+    },
+    {
+      "name": "Airtable",
+      "slug": "airtable",
+      "description": "A spreadsheet-database hybrid for building custom apps and tracking work.",
+      "best_for": "Teams that want database flexibility with a spreadsheet interface",
+      "strengths": [
+        "Flexible databases",
+        "Custom views",
+        "Automation"
+      ]
+    },
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A work management platform for tracking tasks, projects, and cross-team workflows.",
+      "best_for": "Teams that need structured task tracking and workflow automation",
+      "strengths": [
+        "Task dependencies",
+        "Timeline view",
+        "Workflow automation"
+      ]
+    }
+  ]
+}

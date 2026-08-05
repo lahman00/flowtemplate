@@ -1,0 +1,46 @@
+{
+  "name": "Zoho CRM",
+  "slug": "zoho-crm",
+  "category": "crm",
+  "description": "Zoho CRM is a cloud-based sales platform that uses the Zia AI assistant to manage leads, deals, and customer relationships with omnichannel engagement and no-code workflow automation.",
+  "website": "https://www.zoho.com/crm/",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Positioned for small businesses through enterprises across all industries, with Zoho reporting 300,000+ businesses worldwide using the platform.",
+  "features": [
+    "Zia AI assistant for capturing notes, updating deals, and creating tasks by voice",
+    "Canvas Design Studio for building custom record layouts from uploaded images",
+    "No-code workflow automation, cadences, and custom functions",
+    "Predictive AI and BI-driven sales forecasting",
+    "Omnichannel engagement across email, phone, chat, and social",
+    "Business-card scanning and duplicate-contact merging in the mobile app",
+    "Integration with 1,000+ apps via Zoho Marketplace"
+  ],
+  "sources": [
+    "https://www.zoho.com/crm/",
+    "https://www.zoho.com/crm/mobility.html"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "An all-in-one CRM platform with marketing, sales, and service hubs.",
+      "best_for": "Growing businesses wanting an integrated marketing-to-sales CRM suite.",
+      "strengths": ["Free CRM tier", "Marketing automation", "Extensive integrations"]
+    },
+    {
+      "name": "Salesforce",
+      "slug": "salesforce",
+      "description": "An enterprise-grade CRM platform with deep customization and a vast ecosystem of add-ons.",
+      "best_for": "Large enterprises needing extensive customization and scale.",
+      "strengths": ["Customizability", "AppExchange ecosystem", "Advanced analytics"]
+    },
+    {
+      "name": "Pipedrive",
+      "slug": "pipedrive",
+      "description": "A sales-focused CRM built around a visual, pipeline-first workflow.",
+      "best_for": "Sales teams wanting a simple, activity-based pipeline tool.",
+      "strengths": ["Visual pipeline", "Ease of use", "Sales automation"]
+    }
+  ]
+}

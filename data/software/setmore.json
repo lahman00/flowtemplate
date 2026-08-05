@@ -1,0 +1,63 @@
+{
+  "name": "Setmore",
+  "slug": "setmore",
+  "category": "scheduling",
+  "description": "Setmore is a free online appointment scheduling platform that helps businesses automate bookings with a customizable booking page, payments, and reminders.",
+  "website": "https://www.setmore.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "Windows",
+    "macOS"
+  ],
+  "best_for": "Salons, medical practices, fitness centers, and other service businesses wanting a free, easy-to-set-up booking system.",
+  "features": [
+    "Customizable, branded online booking page",
+    "Internal staff calendar with instant sync to the public booking page",
+    "Payment collection via Stripe, Square, and PayPal",
+    "Automated email and text reminders",
+    "Zoom and Google Meet integration for virtual appointments",
+    "Two-way calendar sync with Google Calendar and Office 365"
+  ],
+  "sources": [
+    "https://www.setmore.com",
+    "https://www.setmore.com/features"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that lets people share availability links to book meetings without back-and-forth emails.",
+      "best_for": "Individuals and teams booking one-off or recurring meetings",
+      "strengths": [
+        "Scheduling links",
+        "Calendar sync",
+        "Team routing"
+      ]
+    },
+    {
+      "name": "Acuity Scheduling",
+      "slug": "acuity-scheduling",
+      "description": "An online appointment booking platform with branded booking pages, payments, and reminders.",
+      "best_for": "Service businesses needing 24/7 client self-booking",
+      "strengths": [
+        "Branded booking pages",
+        "Payments",
+        "Class scheduling"
+      ]
+    },
+    {
+      "name": "Doodle",
+      "slug": "doodle",
+      "description": "A group scheduling tool that lets people poll participants to find the best meeting time.",
+      "best_for": "Groups coordinating a meeting time across many participants",
+      "strengths": [
+        "Group polling",
+        "Simplicity",
+        "Calendar integration"
+      ]
+    }
+  ]
+}

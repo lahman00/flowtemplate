@@ -1,0 +1,65 @@
+{
+  "name": "NordPass",
+  "slug": "nordpass",
+  "category": "security",
+  "description": "NordPass is a password manager built on zero-knowledge architecture that stores, autofills, and monitors credentials for individuals, families, and businesses.",
+  "website": "https://nordpass.com",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Individuals, families, and small-to-enterprise businesses wanting simple, zero-knowledge password management with compliance oversight.",
+  "features": [
+    "Zero-knowledge, end-to-end encryption using the XChaCha20 algorithm",
+    "Data Breach Scanner with alerts when company domains or emails appear on the dark web",
+    "Built-in authenticator for two-factor authentication",
+    "Passkey support for passwordless login",
+    "Sharing Hub for secure team credential sharing",
+    "Email masking to generate aliases and reduce phishing risk",
+    "Browser extensions for Chrome, Firefox, Safari, Opera, and Edge"
+  ],
+  "sources": [
+    "https://nordpass.com",
+    "https://nordpass.com/features/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Dashlane",
+      "slug": "dashlane",
+      "description": "A password manager and credential security platform with phishing and breach detection.",
+      "best_for": "Businesses wanting proactive credential risk detection",
+      "strengths": [
+        "Phishing detection",
+        "Secure sharing",
+        "Passkey support"
+      ]
+    },
+    {
+      "name": "Bitwarden",
+      "slug": "bitwarden",
+      "description": "An open-source password manager for individuals and organizations.",
+      "best_for": "Users and teams wanting an open-source, self-hostable option",
+      "strengths": [
+        "Open source",
+        "Self-hosting",
+        "Affordable pricing"
+      ]
+    },
+    {
+      "name": "1Password",
+      "slug": "1password",
+      "description": "A password manager and secrets vault for individuals, families, and businesses.",
+      "best_for": "Teams wanting a polished password manager with strong admin controls",
+      "strengths": [
+        "Vault sharing",
+        "Travel mode",
+        "Developer tools"
+      ]
+    }
+  ]
+}

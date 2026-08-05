@@ -1,0 +1,59 @@
+{
+  "name": "Tray.ai",
+  "slug": "tray-ai",
+  "category": "automation",
+  "description": "Tray.ai (the Tray Platform) is an enterprise orchestration platform that unifies data integration, workflow automation, and AI agent development with governed MCP tooling.",
+  "website": "https://tray.ai",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Enterprise teams deploying AI agents across departments who need integration, automation, and governed Model Context Protocol (MCP) tooling in one platform.",
+  "features": [
+    "Merlin Agent Builder for building conversational or autonomous AI agents",
+    "700+ pre-built connectors across CRM, marketing, finance, HR, and analytics systems",
+    "Visual workflow canvas (Tray Build) and code-native development (Tray Headless)",
+    "Agent Gateway providing managed MCP servers with 700+ connectors exposed as governed tools",
+    "Audit trails, observability, and role-based access control across all agent actions",
+    "Dynamic authentication for enterprise-scale deployments",
+    "SOC 2 Type II, HIPAA, and GDPR compliance"
+  ],
+  "sources": [
+    "https://tray.ai"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Workato",
+      "slug": "workato",
+      "description": "An enterprise integration and automation platform connecting SaaS and on-premises systems with AI agent orchestration.",
+      "best_for": "Enterprises needing deep integrations across many business functions",
+      "strengths": [
+        "500+ connectors",
+        "Enterprise governance",
+        "AI agent orchestration"
+      ]
+    },
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform that connects thousands of web apps through simple trigger-and-action workflows.",
+      "best_for": "Teams that want fast, no-code automations between cloud apps",
+      "strengths": [
+        "Huge app directory",
+        "Easy setup",
+        "No-code workflows"
+      ]
+    },
+    {
+      "name": "Make",
+      "slug": "make",
+      "description": "A visual automation platform for building multi-step workflows between apps with a drag-and-drop scenario builder.",
+      "best_for": "Teams that want visual, complex multi-step automations",
+      "strengths": [
+        "Visual scenario builder",
+        "Complex branching logic",
+        "Wide app support"
+      ]
+    }
+  ]
+}

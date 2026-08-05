@@ -1,0 +1,63 @@
+{
+  "name": "Constant Contact",
+  "slug": "constant-contact",
+  "category": "marketing",
+  "description": "Constant Contact is a digital and email marketing platform that helps small businesses build email and SMS campaigns, landing pages, and automations from a single tool, with integrations that keep contacts and order data in sync.",
+  "website": "https://www.constantcontact.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Positioned for small businesses that want an easy-to-use platform for email and SMS marketing, sign-up forms, and landing pages without needing a dedicated marketing team.",
+  "features": [
+    "Automated email sends for events like welcomes, birthdays, and re-sends to non-openers",
+    "SMS marketing with automated VIP alerts, abandoned-cart reminders, and event updates",
+    "Custom automation paths with branching and triggered actions",
+    "Website sign-up forms, pop-ups, and lead-generation landing pages",
+    "Real-time performance tracking and reporting",
+    "Integrations with popular CRMs and e-commerce platforms to sync contacts and orders"
+  ],
+  "sources": [
+    "https://www.constantcontact.com/features/view-all-features",
+    "https://www.constantcontact.com/features/sms",
+    "https://www.constantcontact.com/features/email-marketing-automation"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
+      "best_for": "Small to mid-sized businesses wanting AI content generation and a wide app ecosystem",
+      "strengths": [
+        "Drag-and-drop email builder",
+        "300+ integrations",
+        "AI content generation"
+      ]
+    },
+    {
+      "name": "Brevo",
+      "slug": "brevo",
+      "description": "An integrated marketing and CRM platform for email, SMS, WhatsApp, and chat campaigns.",
+      "best_for": "Businesses wanting multi-channel messaging with a built-in CRM",
+      "strengths": [
+        "WhatsApp and SMS channels",
+        "Built-in CRM",
+        "Freemium pricing"
+      ]
+    },
+    {
+      "name": "GetResponse",
+      "slug": "getresponse",
+      "description": "An all-in-one marketing platform combining email, automation, landing pages, and webinars.",
+      "best_for": "Businesses that also need webinars and AI-assisted landing pages",
+      "strengths": [
+        "AI send-time optimization",
+        "Webinars",
+        "Landing page builder"
+      ]
+    }
+  ],
+  "order": 41
+}

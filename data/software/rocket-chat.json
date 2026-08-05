@@ -1,0 +1,63 @@
+{
+  "name": "Rocket.Chat",
+  "slug": "rocket-chat",
+  "category": "communication",
+  "description": "Rocket.Chat is a secure communications platform that unifies messaging, voice, video, and AI within self-hosted, on-premises, or air-gapped deployments for organizations with strict security and data-sovereignty needs.",
+  "website": "https://www.rocket.chat",
+  "platforms": [
+    "Web",
+    "Desktop",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Government, defense, critical-infrastructure, and healthcare organizations that require self-hosted or air-gapped messaging with strict data-sovereignty and compliance controls.",
+  "features": [
+    "Unified messaging, voice, video, and screen sharing",
+    "Self-hosted, on-premises, and air-gapped deployment options",
+    "Zero-trust security model used in classified network environments",
+    "Federated communications for cross-organizational coordination",
+    "AI-powered conversation automation and insights",
+    "GDPR, ISO/IEC 27001, SOC 2, and HIPAA compliance",
+    "Comprehensive audit logs and data-retention policies",
+    "Open, extensible app ecosystem to avoid vendor lock-in"
+  ],
+  "sources": [
+    "https://www.rocket.chat"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Mattermost",
+      "slug": "mattermost",
+      "description": "An open-source, self-hostable team messaging platform designed for technical and security-conscious teams.",
+      "best_for": "Teams needing self-hosted, secure messaging",
+      "strengths": [
+        "Self-hosting",
+        "Open source",
+        "Security controls"
+      ]
+    },
+    {
+      "name": "Slack",
+      "slug": "slack",
+      "description": "A channel-based team messaging platform with deep app integrations and workflow automation.",
+      "best_for": "Teams wanting rich integrations and channel-based communication",
+      "strengths": [
+        "App ecosystem",
+        "Channel organization",
+        "Workflow automation"
+      ]
+    },
+    {
+      "name": "Microsoft Teams",
+      "slug": "microsoft-teams",
+      "description": "A collaboration hub combining chat, video meetings, and file sharing tightly integrated with Microsoft 365.",
+      "best_for": "Organizations already using Microsoft 365",
+      "strengths": [
+        "Microsoft 365 integration",
+        "Chat and video in one app",
+        "Enterprise security"
+      ]
+    }
+  ]
+}

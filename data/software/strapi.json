@@ -1,0 +1,61 @@
+{
+  "name": "Strapi",
+  "slug": "strapi",
+  "category": "cms",
+  "description": "Strapi is an open-source, TypeScript-based headless CMS that lets developers build and manage content APIs without vendor lock-in, while giving editors a familiar admin panel.",
+  "website": "https://strapi.io",
+  "platforms": [
+    "Web (Strapi Cloud)",
+    "Self-hosted"
+  ],
+  "best_for": "Developers who need a customizable, framework-agnostic headless CMS with full data ownership for websites, mobile apps, and e-commerce.",
+  "features": [
+    "Content-Type Builder for creating content models without code",
+    "Automatic REST and GraphQL API generation from content models",
+    "Components and dynamic zones for reusable, editor-arrangeable content blocks",
+    "Plugin marketplace with tested integrations",
+    "Framework-level customization of controllers, services, and middleware",
+    "Self-hosting on any infrastructure or managed Strapi Cloud with Postgres, CDN, and email",
+    "SOC 2 certification and GDPR compliance",
+    "Audit logs, review workflows, content history, and SSO for enterprise plans"
+  ],
+  "sources": [
+    "https://strapi.io"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Contentful",
+      "slug": "contentful",
+      "description": "A headless CMS providing structured content management and delivery through APIs for web and mobile apps.",
+      "best_for": "Teams needing an enterprise-ready headless CMS with strong API tooling",
+      "strengths": [
+        "Structured content modeling",
+        "Robust APIs",
+        "App ecosystem"
+      ]
+    },
+    {
+      "name": "Sanity",
+      "slug": "sanity",
+      "description": "A headless CMS built around structured content and a real-time collaborative editing environment.",
+      "best_for": "Developer teams wanting real-time collaboration and customizable editing tools",
+      "strengths": [
+        "Real-time collaboration",
+        "Customizable Studio",
+        "Structured content"
+      ]
+    },
+    {
+      "name": "Directus",
+      "slug": "directus",
+      "description": "A self-hostable headless CMS and backend that wraps any SQL database with instant REST and GraphQL APIs.",
+      "best_for": "Teams that want to turn an existing database into a governed API and admin panel",
+      "strengths": [
+        "Wraps existing SQL databases",
+        "Instant APIs",
+        "Self-hosted or cloud"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "Runway",
+  "slug": "runway",
+  "category": "ai",
+  "description": "Runway builds AI models and creative tools for generating and editing video, image, and audio content, offering a cloud-based creative suite (Runway Creative) alongside a developer API (Runway Dev).",
+  "website": "https://runway.com/",
+  "platforms": ["Web", "iOS", "Android"],
+  "best_for": "Individual creatives and design teams producing generated video and imagery, and software developers integrating AI media generation into their own products via API.",
+  "features": [
+    "Text-to-video and image-to-video generation with the Gen-4.5 video model",
+    "Runway Creative, an all-in-one cloud-based creative suite for generation and editing",
+    "Runway Dev, an API platform for building custom AI media pipelines",
+    "Customizable workflow endpoints combining multiple models and tasks",
+    "Mobile apps for Android and iOS",
+    "Enterprise-grade security options for organizations"
+  ],
+  "sources": ["https://runway.com/"],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Synthesia",
+      "slug": "synthesia",
+      "description": "An AI video platform focused on avatar-led, script-to-video content for business communication and training.",
+      "best_for": "Teams producing presenter-led training, sales, or marketing videos rather than generative/cinematic video.",
+      "strengths": ["240+ AI avatars", "160+ language dubbing and translation", "SCORM export for LMS integration"]
+    },
+    {
+      "name": "Midjourney",
+      "slug": "midjourney",
+      "description": "An AI image and video generation tool centered on text-to-image prompting and stylized visuals.",
+      "best_for": "Creators wanting stylized, prompt-driven imagery rather than a full creative/API media suite.",
+      "strengths": ["Prompt-based image generation", "Image-to-video", "Style reference system"]
+    },
+    {
+      "name": "ElevenLabs",
+      "slug": "elevenlabs",
+      "description": "An AI audio platform for voice generation, cloning, and conversational voice agents.",
+      "best_for": "Creators needing narration, dubbing, or voice agents to pair with generated video.",
+      "strengths": ["Large voice/language library", "Dubbing with emotion preservation", "Voice agent analytics"]
+    }
+  ]
+}

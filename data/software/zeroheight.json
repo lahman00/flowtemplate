@@ -1,0 +1,48 @@
+{
+  "name": "Zeroheight",
+  "slug": "zeroheight",
+  "category": "documentation",
+  "description": "Zeroheight is a design system documentation platform that creates a single source of truth by pulling together design and code, positioned as \"design system management for teams building with AI.\"",
+  "website": "https://zeroheight.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Designers, engineers, and leadership at organizations of any maturity stage (early-stage, scaling, or enterprise) who need to document and distribute a design system so teams and AI agents build from it consistently.",
+  "features": [
+    "Documentation tools for creating and updating design system content",
+    "Delivery tools for distributing the design system across teams and products",
+    "Adoption measurement and usage-insight tracking",
+    "Workflow automation and security controls for managing content at scale",
+    "AI-assisted documentation authoring and maintenance",
+    "Native integrations with Figma, Storybook, GitHub, and GitLab",
+    "Content APIs and custom plugins for surfacing design knowledge in other tools"
+  ],
+  "sources": [
+    "https://zeroheight.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Archbee",
+      "slug": "archbee",
+      "description": "A knowledge portal platform for turning documentation into searchable, interactive customer-facing portals.",
+      "best_for": "Technical teams building customer self-service docs.",
+      "strengths": [
+        "Native Git-like branching",
+        "Custom domain hosting",
+        "SOC2/GDPR compliance"
+      ]
+    },
+    {
+      "name": "Docusaurus",
+      "slug": "docusaurus",
+      "description": "An open source static site generator for building documentation websites with Markdown/MDX and React.",
+      "best_for": "Teams that want a self-hosted, code-based documentation site.",
+      "strengths": [
+        "MDX support",
+        "Versioning",
+        "React-based theming"
+      ]
+    }
+  ]
+}

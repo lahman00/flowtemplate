@@ -1,0 +1,60 @@
+{
+  "name": "Craft CMS",
+  "slug": "craft-cms",
+  "category": "cms",
+  "description": "Craft CMS is a content-first content management system built by Pixel & Tonic that prioritizes flexible content modeling over predetermined structures, for both coupled and headless implementations.",
+  "website": "https://craftcms.com",
+  "platforms": [
+    "Web (Craft Cloud)",
+    "Self-hosted"
+  ],
+  "best_for": "Agencies and developers building multi-site or e-commerce projects who want flexible content modeling without being locked into a rigid page structure.",
+  "features": [
+    "Customizable field types and flexible content modeling",
+    "Multi-site support with unlimited localization, translated into 25 languages in the control panel",
+    "Twig templating for coupled sites and a self-generating GraphQL API for decoupled apps",
+    "Extensible plugin framework with a built-in Plugin Store",
+    "Craft Commerce for e-commerce functionality",
+    "Third-party integrations including Salesforce, Mailchimp, and HubSpot",
+    "Craft Cloud managed hosting option"
+  ],
+  "sources": [
+    "https://craftcms.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "WordPress",
+      "slug": "wordpress",
+      "description": "The world's most widely used CMS, powering everything from blogs to large-scale websites with a vast plugin and theme ecosystem.",
+      "best_for": "Individuals and businesses of all sizes needing a flexible, widely supported CMS",
+      "strengths": [
+        "Huge plugin ecosystem",
+        "Large community",
+        "Flexible themes"
+      ]
+    },
+    {
+      "name": "Webflow",
+      "slug": "webflow",
+      "description": "A visual web design and CMS platform that lets designers build production-ready, responsive sites without writing code.",
+      "best_for": "Designers wanting full visual control without hand-coding",
+      "strengths": [
+        "Visual design control",
+        "Built-in CMS",
+        "Responsive design tools"
+      ]
+    },
+    {
+      "name": "Drupal",
+      "slug": "drupal",
+      "description": "An open-source, API-first CMS for building structured, composable digital experiences across websites and channels.",
+      "best_for": "Enterprises and institutions needing a highly customizable, secure CMS",
+      "strengths": [
+        "Structured content modeling",
+        "10,000+ modules",
+        "Enterprise security"
+      ]
+    }
+  ]
+}

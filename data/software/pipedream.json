@@ -1,0 +1,60 @@
+{
+  "name": "Pipedream",
+  "slug": "pipedream",
+  "category": "automation",
+  "description": "Pipedream is a developer-focused integration and automation platform for building workflows that connect APIs, AI, and databases with code-level control when needed.",
+  "website": "https://pipedream.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Developers who want visual workflow building with the option to drop into custom code, for connecting APIs and building AI agents.",
+  "features": [
+    "Visual workflow builder with time- and event-based triggers",
+    "3,000+ integrated apps with managed authentication",
+    "10,000+ pre-built triggers and actions",
+    "Code steps for custom Node.js, Python, Go, or Bash logic within a workflow",
+    "Pipedream Connect SDK for embedding integrations into your own product",
+    "AI agent builder for prompting, running, and deploying agents",
+    "Built-in data stores and queues for stateful workflows",
+    "MCP servers exposing 3,000+ APIs to AI assistants"
+  ],
+  "sources": [
+    "https://pipedream.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "n8n",
+      "slug": "n8n",
+      "description": "A source-available workflow automation tool combining visual building with custom code for technical teams.",
+      "best_for": "Technical teams that want self-hostable, code-extensible automation",
+      "strengths": [
+        "Self-hosting",
+        "Custom code steps",
+        "Visual workflow builder"
+      ]
+    },
+    {
+      "name": "Zapier",
+      "slug": "zapier",
+      "description": "A no-code automation platform that connects thousands of web apps through simple trigger-and-action workflows.",
+      "best_for": "Teams that want fast, no-code automations between cloud apps",
+      "strengths": [
+        "Huge app directory",
+        "Easy setup",
+        "No-code workflows"
+      ]
+    },
+    {
+      "name": "Make",
+      "slug": "make",
+      "description": "A visual automation platform for building multi-step workflows between apps with a drag-and-drop scenario builder.",
+      "best_for": "Teams that want visual, complex multi-step automations",
+      "strengths": [
+        "Visual scenario builder",
+        "Complex branching logic",
+        "Wide app support"
+      ]
+    }
+  ]
+}

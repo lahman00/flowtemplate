@@ -1,0 +1,60 @@
+{
+  "name": "Tettra",
+  "slug": "tettra",
+  "category": "knowledge-base",
+  "description": "Tettra is an AI-powered internal knowledge base that helps teams organize company information and answer repetitive questions directly inside Slack, reducing interruptions and keeping documentation current.",
+  "website": "https://tettra.com",
+  "platforms": [
+    "Web",
+    "Slack integration"
+  ],
+  "best_for": "Positioned for startups and growing companies, customer support teams, agencies, and HR/operations teams that want to eliminate repetitive questions and bottlenecked subject-matter experts.",
+  "features": [
+    "AI-powered Q&A bot (Kai) that answers questions from Slack or Tettra using existing content",
+    "Slack integration that embeds the knowledge base into channels and direct messages",
+    "Import of existing content from Google Docs, Notion, and PDFs",
+    "Knowledge management automation for subject-matter-expert verification of page accuracy",
+    "Page permissions and approval workflows",
+    "Search across the full knowledge base"
+  ],
+  "sources": [
+    "https://tettra.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Guru",
+      "slug": "guru",
+      "description": "An enterprise knowledge-management platform that organizes and continuously verifies company information.",
+      "best_for": "Larger enterprises needing permission-scoped AI answers",
+      "strengths": [
+        "Knowledge verification",
+        "AI search",
+        "Permission-aware answers"
+      ]
+    },
+    {
+      "name": "Helpjuice",
+      "slug": "helpjuice",
+      "description": "A cloud-based knowledge base platform for internal and customer-facing documentation with AI search and content creation.",
+      "best_for": "Support and customer-success teams building a searchable help center",
+      "strengths": [
+        "AI-powered search",
+        "AI article drafting",
+        "Usage analytics"
+      ]
+    },
+    {
+      "name": "Confluence",
+      "slug": "confluence",
+      "description": "Atlassian's team workspace for documentation, meeting notes, and internal knowledge.",
+      "best_for": "Teams already standardized on Atlassian tools",
+      "strengths": [
+        "Knowledge base",
+        "Permissions",
+        "Atlassian integration"
+      ]
+    }
+  ],
+  "order": 36
+}

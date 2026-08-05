@@ -1,0 +1,49 @@
+{
+  "name": "Supabase",
+  "slug": "supabase",
+  "category": "developer-tools",
+  "description": "Supabase is an open source Firebase alternative that provides a complete backend platform built on Postgres, letting developers build in a weekend and scale to millions of users.",
+  "website": "https://supabase.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Developers building web and mobile applications who want a self-hostable, open source backend with a real Postgres database and no vendor lock-in.",
+  "features": [
+    "Dedicated Postgres database with auto-generated REST and GraphQL APIs",
+    "Authentication with 20+ social login providers, email, phone/OTP, and magic links",
+    "Row Level Security policies enforced directly in Postgres",
+    "S3-compatible Storage with image transformations, served across 285+ cities",
+    "Edge Functions: distributed TypeScript/Deno serverless functions",
+    "Realtime: WebSocket-based database change listeners, presence, and broadcast",
+    "Vector toolkit using pgvector for AI embedding storage and search",
+    "SOC2 Type 2 compliance with availability across 16+ global regions"
+  ],
+  "sources": [
+    "https://supabase.com"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Firebase",
+      "slug": "firebase",
+      "description": "Google's app development platform providing a NoSQL database, authentication, hosting, and serverless functions.",
+      "best_for": "Teams building mobile-first apps who want deep Google Cloud integration.",
+      "strengths": [
+        "Firestore NoSQL database",
+        "Crashlytics",
+        "Google Cloud ecosystem"
+      ]
+    },
+    {
+      "name": "Render",
+      "slug": "render",
+      "description": "A cloud platform for deploying web services, background workers, cron jobs, static sites, and databases.",
+      "best_for": "Developers who want simple, managed cloud infrastructure without deep DevOps overhead.",
+      "strengths": [
+        "Autoscaling",
+        "Managed Postgres",
+        "Zero-downtime deploys"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "name": "Adobe Marketo Engage",
+  "slug": "marketo-engage",
+  "category": "marketing",
+  "description": "Adobe Marketo Engage is an enterprise marketing automation platform for B2B organizations, covering lead management, account-based marketing, email marketing, and cross-channel campaign orchestration with real-time behavioral data.",
+  "website": "https://business.adobe.com/products/marketo/adobe-marketo.html",
+  "best_for": "Positioned for enterprise B2B marketing and sales teams that need to manage complex, multi-decision-maker buying committees across the full lead and account lifecycle.",
+  "features": [
+    "Lead management with drill-down into lead, contact, account, and opportunity details",
+    "Account-based marketing (ABM) with Target Account Management for predictive, AI-powered ideal customer profile scoring",
+    "Sales Insight for keeping marketing and sales teams synced on account activity",
+    "Real-time lead and account activity tracking, including email opens and website visits",
+    "Audience building based on roles, intent signals, and buying stage",
+    "Dynamic content personalization across channels",
+    "Email marketing and campaign orchestration"
+  ],
+  "sources": [
+    "https://business.adobe.com/products/marketo/adobe-marketo.html",
+    "https://business.adobe.com/products/marketo/account-based-marketing.html",
+    "https://business.adobe.com/products/marketo/dynamic-content-personalization.html"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "ActiveCampaign",
+      "slug": "activecampaign",
+      "description": "An autonomous marketing platform where AI agents handle email, SMS, WhatsApp, and CRM tasks backed by customer data.",
+      "best_for": "Mid-market businesses wanting automation without enterprise complexity",
+      "strengths": [
+        "Active Intelligence AI",
+        "Visual automation builder",
+        "1,000+ integrations"
+      ]
+    },
+    {
+      "name": "Braze",
+      "slug": "braze",
+      "description": "A customer engagement platform for personalized, cross-channel messaging with AI-driven orchestration.",
+      "best_for": "B2C brands orchestrating messaging across app, email, and SMS",
+      "strengths": [
+        "Cross-channel orchestration",
+        "BrazeAI personalization",
+        "Real-time customer data platform"
+      ]
+    },
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "A CRM platform with marketing, sales, and service tools built around a shared customer database.",
+      "best_for": "Growing companies wanting marketing and CRM in one connected system",
+      "strengths": [
+        "Unified CRM",
+        "Marketing automation",
+        "Reporting"
+      ]
+    }
+  ],
+  "order": 44
+}

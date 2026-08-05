@@ -1,0 +1,60 @@
+{
+  "name": "YouCanBook.me",
+  "slug": "youcanbookme",
+  "category": "scheduling",
+  "description": "YouCanBook.me is an online scheduling tool that gives small businesses and service professionals branded booking pages with automated reminders and payment collection.",
+  "website": "https://youcanbook.me",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Small business owners, consultants, coaches, and service providers who want to automate appointment booking and cut administrative overhead.",
+  "features": [
+    "Branded booking pages with custom logos, colors, and backgrounds",
+    "Support for multiple appointment types and in-person or virtual meetings",
+    "Calendar sync with Google Calendar, Outlook, Apple Calendar, and Microsoft 365",
+    "Automated confirmation, reminder, and follow-up messages via email and SMS",
+    "Payment collection through Stripe, Apple Pay, and Google Pay",
+    "Multiple booking pages and role-based access for team scheduling",
+    "Integrations with over 7,000 apps via Zapier"
+  ],
+  "sources": [
+    "https://youcanbook.me",
+    "https://youcanbook.me/features"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Calendly",
+      "slug": "calendly",
+      "description": "A scheduling tool that lets people share availability links to book meetings without back-and-forth emails.",
+      "best_for": "Individuals and teams booking one-off or recurring meetings",
+      "strengths": [
+        "Scheduling links",
+        "Calendar sync",
+        "Team routing"
+      ]
+    },
+    {
+      "name": "Acuity Scheduling",
+      "slug": "acuity-scheduling",
+      "description": "An online appointment booking platform with branded booking pages, payments, and reminders.",
+      "best_for": "Service businesses needing 24/7 client self-booking",
+      "strengths": [
+        "Branded booking pages",
+        "Payments",
+        "Class scheduling"
+      ]
+    },
+    {
+      "name": "SavvyCal",
+      "slug": "savvycal",
+      "description": "A scheduling platform that lets recipients overlay their own calendar on a scheduling link.",
+      "best_for": "Professionals wanting a more collaborative scheduling-link experience",
+      "strengths": [
+        "Calendar overlay",
+        "Round robin",
+        "Custom branding"
+      ]
+    }
+  ]
+}

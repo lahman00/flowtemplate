@@ -1,0 +1,55 @@
+{
+  "name": "Toggl Track",
+  "slug": "toggl-track",
+  "category": "productivity",
+  "description": "Toggl Track is a time tracking tool for individuals and teams that turns one-click timers and background activity into reports on profitability, productivity, and billable hours across projects and clients.",
+  "website": "https://toggl.com/track/",
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "iOS",
+    "Android",
+    "Browser extension"
+  ],
+  "best_for": "Positioned for teams of any size that need to track billable hours, project profitability, and productivity, with an open API and 100+ integrations including Jira, Salesforce, and Asana.",
+  "features": [
+    "One-click timer across web, desktop, mobile, and browser extension",
+    "Background activity tracking that converts app and website usage into time entries",
+    "Calendar view with the ability to import calendar events",
+    "Customizable profitability and productivity reports",
+    "Workload analysis dashboards",
+    "Project- and client-specific financial tracking",
+    "Timesheet reports with approval workflows",
+    "100+ integrations plus an open API"
+  ],
+  "sources": [
+    "https://toggl.com/track/"
+  ],
+  "accessed_at": "2026-08-04",
+  "alternatives": [
+    {
+      "name": "Clockify",
+      "slug": "clockify",
+      "description": "A time tracking and timesheet app for teams, with reporting, scheduling, and a free unlimited-user plan.",
+      "best_for": "Teams wanting free time tracking for unlimited users",
+      "strengths": [
+        "Free plan for unlimited users",
+        "Timesheet approvals",
+        "Kiosk clock-in"
+      ]
+    },
+    {
+      "name": "Asana",
+      "slug": "asana",
+      "description": "A project management platform for planning, tracking, and reporting on team work.",
+      "best_for": "Teams that want project management alongside light time tracking via integrations",
+      "strengths": [
+        "Task management",
+        "Timeline views",
+        "Workflow automation"
+      ]
+    }
+  ],
+  "order": 50
+}
