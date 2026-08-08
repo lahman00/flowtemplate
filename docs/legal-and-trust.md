@@ -12,7 +12,7 @@ not by hand-editing both places separately.
 
 | Page | Route | What it actually says |
 |---|---|---|
-| Privacy Policy | `/privacy` | No accounts, no database, no cookies set by this site. |
+| Privacy Policy | `/privacy` | No accounts, no database, no cookies set until you consent to analytics. |
 | Terms of Service | `/terms` | General informational use; not professional advice. |
 | Disclaimer | `/disclaimer` | Verify pricing/features with the vendor; not legal/financial/security/procurement advice; user is responsible for their own decision. |
 | Affiliate Disclosure | `/affiliate-disclosure` | No link on the site is currently an affiliate link — stated as present-tense fact, not a hedge. Explains how a real affiliate link would be marked if one is ever added. |
@@ -21,7 +21,7 @@ not by hand-editing both places separately.
 | Corrections Policy | `/corrections-policy` | How to report an error, what to include, no guaranteed timeline, corrections are free. |
 | AI Usage Disclosure | `/ai-usage` | States plainly that AI/automation assists with drafting and validation, and does **not** claim every fact has been manually re-verified by a human. |
 | Accessibility Statement | `/accessibility` | States goals and current practices; explicitly does not claim WCAG conformance/certification. |
-| Cookie Policy | `/cookies` | States plainly that no cookies are set for analytics, advertising, or auth — verified by inspecting the codebase (see below), not assumed. |
+| Cookie Policy | `/cookies` | States plainly that no cookies are set for advertising or auth, ever, and none for analytics until you explicitly consent via the banner (Google Consent Mode v2, default denied) — see "GA4 consent mode" below. |
 | Trademark Notice | `/trademark-notice` | Product/company names belong to their owners; listing ≠ endorsement. |
 
 Every page uses the shared `components/LegalPageLayout.tsx` (breadcrumbs,
@@ -50,8 +50,22 @@ than assumed:
   JSON response; neither sets a cookie, reads a cookie, or touches
   `Set-Cookie` in any way. Re-verified as part of the same Sprint 11 audit.
 
-Because of this, no cookie consent banner was added — the task was
-explicit that one should only be added if actually required, and it isn't.
+Because of this, no cookie consent banner was added at that time — the
+task was explicit that one should only be added if actually required, and
+at that point it wasn't.
+
+## GA4 consent mode (later addition)
+
+Once Google Analytics was actually turned on for production, a consent
+banner became required and was added: `lib/consent.ts`,
+`components/GoogleAnalyticsConsent.tsx`, `components/ConsentBanner.tsx`,
+and `components/CookiePreferencesControl.tsx`. Google Consent Mode v2
+defaults every signal (`analytics_storage` included) to `denied` before
+anything else analytics-related runs; the real `gtag.js` script — the
+only piece that can set a cookie or contact Google — is only rendered
+into the tree (and only then does it load) after the visitor clicks
+"Allow analytics." The choice is stored in `localStorage`, not a cookie,
+and can be changed anytime on `/cookies`.
 
 ## `accessed_at` — making the Sources Policy true, not aspirational
 

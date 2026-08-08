@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageLayout } from "@/components/LegalPageLayout";
+import { CookiePreferencesControl } from "@/components/CookiePreferencesControl";
 import { SITE_EMAIL, SITE_NAME } from "@/lib/site";
 
 const TITLE = "Cookie Policy";
@@ -8,7 +9,7 @@ const PATH = "/cookies";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: `${SITE_NAME}'s actual cookie usage: none for analytics, advertising, or authentication.`,
+  description: `${SITE_NAME}'s actual cookie usage: none until you explicitly consent to analytics, and none for advertising or authentication ever.`,
   alternates: { canonical: PATH },
 };
 
@@ -22,37 +23,68 @@ export default function CookiesPage() {
           heading: "Current status",
           body: (
             <p>
-              As of the date at the top of this page, {SITE_NAME}{" "}
-              <strong className="text-white">does not use cookies for analytics,
-              advertising, authentication, or any other non-essential purpose, and no analytics
-              provider is configured in this deployment.</strong> There are no accounts to log
-              into, so there is nothing here that needs a cookie.
+              {SITE_NAME}{" "}
+              <strong className="text-white">
+                sets no cookies for advertising, authentication, or any other non-essential
+                purpose — ever
+              </strong>
+              . {SITE_NAME} uses Google Analytics (GA4) to understand how visitors use the site,
+              but{" "}
+              <strong className="text-white">
+                the analytics tag doesn&apos;t load and no cookie is set until you explicitly
+                choose &quot;Allow analytics&quot;
+              </strong>{" "}
+              in the banner shown on your first visit, or in the control at the bottom of this
+              page. There are no accounts to log into, so nothing here needs a cookie beyond that.
             </p>
           ),
         },
         {
-          heading: "Analytics support exists in the code, but is off",
+          heading: "How the analytics consent choice works",
           body: (
-            <p>
-              The codebase includes optional, disabled-by-default support for connecting an
-              analytics provider (Google Analytics, Plausible, or PostHog), switched on only by
-              setting specific environment variables — never hardcoded, never on by default. No
-              such environment variables are set for this site, so no analytics script loads and
-              no cookie is set. If that&apos;s ever turned on, this page will be updated first to
-              name the exact provider and, if it uses cookies, add an appropriate consent
-              mechanism before it goes live.
-            </p>
+            <>
+              <p>
+                This site uses Google&apos;s Consent Mode, the mechanism Google Analytics itself
+                provides for exactly this. Every visit starts with every consent signal
+                (including <code className="text-zinc-300">analytics_storage</code>) set to{" "}
+                <strong className="text-white">denied</strong>{" "}
+                by default — that default is set before anything else analytics-related runs. The
+                actual Google Analytics script is not loaded at all while consent is denied or
+                hasn&apos;t been decided yet; it only loads, and only then can it set a cookie,
+                after you click &quot;Allow analytics.&quot;
+              </p>
+              <p>
+                Your choice itself is remembered in your browser&apos;s local storage, not a
+                cookie — local storage isn&apos;t sent to any server, so recording &quot;this
+                visitor already decided&quot; doesn&apos;t require consent the way a tracking
+                cookie would.
+              </p>
+              <p>
+                Declining doesn&apos;t retroactively remove a cookie Google Analytics may have
+                already set if you previously allowed analytics and are now changing your mind —
+                browsers and Google&apos;s own cookie-expiry rules govern that, not this site. It
+                does immediately stop any new analytics activity.
+              </p>
+            </>
           ),
         },
         {
-          heading: "Why there's no cookie banner",
+          heading: "Your choice",
+          body: (
+            <>
+              <p>You can change your analytics choice at any time:</p>
+              <CookiePreferencesControl />
+            </>
+          ),
+        },
+        {
+          heading: "Other analytics providers supported, but not used",
           body: (
             <p>
-              Cookie consent banners exist to get permission before setting non-essential
-              cookies. Since {SITE_NAME}
-              {" "}doesn&apos;t set any today, there&apos;s nothing to ask
-              permission for — showing a banner anyway would be misleading, not more
-              transparent.
+              The codebase also includes disabled-by-default support for Plausible and PostHog as
+              alternative analytics providers, switched on only by environment variable — neither
+              is configured for this deployment, and neither is used alongside Google Analytics.
+              Only one provider can be active at a time.
             </p>
           ),
         },
@@ -74,9 +106,8 @@ export default function CookiesPage() {
           heading: "If this changes",
           body: (
             <p>
-              If analytics is ever turned on, or {SITE_NAME} adds cookies for advertising or
-              accounts in the future, this page — and an appropriate consent mechanism — will be
-              updated first, before those cookies are set.
+              If {SITE_NAME} ever adds cookies for advertising or accounts, or changes analytics
+              providers, this page will be updated first, before those cookies are set.
             </p>
           ),
         },

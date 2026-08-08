@@ -67,21 +67,30 @@ hardcoded, never on by default:
   `.env.example` for the full list.
 
 `<Analytics />` is rendered unconditionally in `app/layout.tsx`, but
-resolves to `null` whenever the provider is `"none"` — which is every page
-load in this repository, since no analytics environment variable is set.
-PostHog uses the official `posthog-js` package (`posthog.init()`) rather
-than a hand-reconstructed inline snippet, so its exact behavior matches
+resolves to `null` whenever the provider is `"none"`. PostHog uses the
+official `posthog-js` package (`posthog.init()`) rather than a
+hand-reconstructed inline snippet, so its exact behavior matches
 PostHog's own documented API instead of a best-effort copy from memory.
 
-Verified directly: fetched the homepage's rendered HTML and grepped for
-`googletagmanager.com`, `plausible.io`, and `posthog.com` — zero matches.
-The only incidental match was the dev-mode webpack chunk filename
-containing the literal string "PostHogAnalytics" (the component's own
-filename), not an actual tracking request.
+**Production now runs `provider: "ga"`** (GA4, `G-BBFL3YH9NZ`), gated
+behind Google Consent Mode v2 rather than loading unconditionally — see
+`components/GoogleAnalyticsConsent.tsx`. `getAnalyticsConfig()` itself is
+unchanged; only the `"ga"` branch of `<Analytics />` changed, from
+rendering the gtag.js scripts directly to delegating to
+`GoogleAnalyticsConsent`, which:
 
-Because this is a genuine change from "no analytics code exists at all"
-(true through Sprint 5) to "analytics code exists but is inert" (true as
-of Sprint 6), the Cookie Policy (`app/cookies/page.tsx`) was updated to
-describe this precisely — it no longer claims no analytics code exists,
-it states no analytics *provider is configured* in this deployment, and
-explains that the capability itself is real but off.
+1. Always sets every Consent Mode signal to `denied` by default the
+   moment it mounts (a JS state declaration, no network call, no cookie).
+2. Only renders (and only then loads) the real `gtag.js` script once the
+   visitor has explicitly clicked "Allow analytics" in the banner it
+   shows, or previously did so on an earlier visit (read from
+   `localStorage` via `lib/consent.ts`).
+
+Verified directly: fetched the homepage's rendered HTML pre-consent and
+grepped for `googletagmanager.com`/`gtag(` — zero matches. With
+`NEXT_PUBLIC_ANALYTICS_PROVIDER=ga`/`NEXT_PUBLIC_GA_MEASUREMENT_ID` set
+locally and consent granted, confirmed exactly one `gtag.js` script tag
+and one `gtag('config', ...)` call across the homepage, a software page,
+a category page, and a comparison page — no duplication, applied
+site-wide via the root layout as expected. See `docs/legal-and-trust.md`
+("GA4 consent mode") and `/cookies` for the full policy detail.

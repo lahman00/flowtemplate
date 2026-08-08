@@ -50,11 +50,14 @@ export default function PrivacyPage() {
           heading: "Cookies",
           body: (
             <p>
-              This site does not set its own cookies. See our{" "}
+              This site sets no cookies for advertising, authentication, or any other
+              non-essential purpose — ever. It does use Google Analytics, but the analytics
+              cookie is not set until you explicitly choose &quot;Allow analytics&quot; in the
+              banner shown on your first visit. See our{" "}
               <Link href="/cookies" className="text-white underline underline-offset-4">
                 Cookie Policy
               </Link>{" "}
-              for the full detail on this.
+              for the full detail on this, including how to change your choice.
             </p>
           ),
         },
