@@ -14,6 +14,25 @@
  *    the brief's explicit "external publication/outreach requires
  *    authorization" boundary.
  *
+ * Provider inventory (researched, not assumed — Phase 2 of the multi-agent
+ * build): NO free, official, programmatic backlink API exists.
+ *   - Ahrefs Webmaster Tools (AWT) is genuinely free, forever, for a
+ *     verified owner's OWN domain — up to 1,000 backlinks, exportable —
+ *     but it's a web dashboard, not an API. Ahrefs' actual API (v3) is
+ *     paid, unit-billed per request.
+ *   - Moz Link Explorer gives 10 free queries/month — too limited for a
+ *     recurring scheduled agent, and also dashboard-oriented.
+ *   - No open-source or scraped alternative is used here: "do not use
+ *     scraping where an official integration is available" doesn't even
+ *     apply cleanly (there's no official free API to prefer over
+ *     scraping) — but scraping a third party's dashboard/data without
+ *     their API is its own legitimacy problem, not attempted.
+ *   - Practical near-term recommendation for the owner: periodically
+ *     check Ahrefs Webmaster Tools manually (free, one-time domain
+ *     verification, zero ongoing cost) rather than waiting on an
+ *     automated integration — this agent stays blocked for automation
+ *     either way pending a paid API decision.
+ *
  * Required to unblock: an account + API key for a backlink-data provider,
  * made available via an env var (never committed).
  */

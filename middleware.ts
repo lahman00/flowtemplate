@@ -15,6 +15,14 @@ import { NextResponse, type NextRequest } from "next/server";
  * /internal/ request gets 401 — never falls back to "open," which would
  * silently undo the protection in an environment where the credentials
  * were simply forgotten.
+ *
+ * KNOWN TECH DEBT (recorded, not urgent): Next.js 16 deprecated the
+ * `middleware.ts` file convention in favor of `proxy.ts` (same export
+ * shape) — `next build` emits a deprecation warning but the feature works
+ * identically today. Not renamed yet because it's a pure naming-convention
+ * change with zero functional difference and zero urgency; rename to
+ * proxy.ts whenever convenient, or if the convention is ever fully removed
+ * (which would be a real build break, not just a warning).
  */
 export function middleware(request: NextRequest) {
   const user = process.env.INTERNAL_DASHBOARD_USER;

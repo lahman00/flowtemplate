@@ -279,6 +279,13 @@ execution, external outreach, deployment, or paid API usage through a GET
 request; Basic Auth adds access control on top of behavior that was
 already read-only.
 
+**Recorded tech debt, not urgent**: Next.js 16 deprecated the
+`middleware.ts` file convention in favor of `proxy.ts` (identical export
+shape) — a build-time warning only, no functional difference today. See
+the comment at the top of `middleware.ts`. Not prioritized over the
+growth-integration work above since it isn't causing any actual production
+issue.
+
 ## Cost control
 
 - Deterministic code for everything deterministic: URL checks, duplicate
