@@ -330,9 +330,14 @@ export default function MaintenanceDashboardPage() {
           <p className="text-sm text-zinc-500">
             Full detailed reports live under <code className="rounded bg-white/10 px-1.5 py-0.5">var/maintenance/</code> (gitignored, local only).
           </p>
-          <ButtonLink href="/internal/revenue" variant="secondary" className="mt-6">
-            View revenue dashboard
-          </ButtonLink>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <ButtonLink href="/internal/revenue" variant="secondary">
+              View revenue dashboard
+            </ButtonLink>
+            <ButtonLink href="/internal/growth" variant="secondary">
+              View growth/QA dashboard
+            </ButtonLink>
+          </div>
         </section>
       </Container>
     </main>

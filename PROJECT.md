@@ -136,6 +136,31 @@ handful of hand-written pages.
   notification abstraction (email/Slack/Telegram webhooks, no real
   credentials). Nothing in this system publishes a factual change or
   pushes to `main` automatically — every finding is a report for a human.
+- **GA4 production activation** — Google Analytics turned on in production
+  (measurement ID `G-BBFL3YH9NZ`) behind Google Consent Mode v2: every
+  signal defaults to denied, the real `gtag.js` script is only rendered
+  (and only then can it load or set a cookie) after a visitor explicitly
+  clicks "Allow analytics" in a new banner, with a "change your choice"
+  control on `/cookies`. Manually verified against live production —
+  pre-consent absence, post-consent exactly-once loading, no duplication
+  on SPA navigation, decline/persist behavior.
+- **Growth/QA agent swarm** — a registry of 40 narrow, single-responsibility
+  agents (30 enabled/deterministic, 10 honestly blocked on missing
+  external credentials — never faked) spanning SEO, growth/marketing
+  discovery, content-quality, and QA/monitoring, coordinated by a central
+  orchestrator: dependency-ordered parallel dispatch, cross-agent finding
+  dedup, centralized impact scoring, PASS/WARN/FAIL QA rollup. Wraps the
+  six Sprint 12 maintenance agents rather than duplicating them; adds real
+  new checks (live-sampled redirect/broken-URL crawl, category depth,
+  duplicate/templated-content detection, internal-link-opportunity graph,
+  cannibalization detection, tag-cluster category opportunities,
+  freshness×revenue-tier triage, persona-based content opportunities,
+  production smoke checks, GA4 consent regression guards). Four operation
+  modes (`agents:quick/daily/weekly/full`); results at `/internal/growth`
+  and `var/agents/latest-report.md`. First test suite in this repo
+  (`vitest`, `tests/agents/`, 38 tests) covers registry validation, dedup,
+  scoring, malformed/timeout/partial-failure handling, and a real GA4
+  regression guard.
 
 See `docs/` for full architecture documentation:
 
@@ -154,17 +179,23 @@ See `docs/` for full architecture documentation:
   report formats, GitHub Actions behavior, and the human approval workflow
 - `docs/maintenance-notifications.md` — the provider-neutral notification
   abstraction (disabled by default)
+- `docs/agents-architecture.md` — the growth/QA agent swarm: registry,
+  orchestrator, scoring formula, every agent's responsibility, blocked
+  agents and how to unblock them, how to add/disable an agent, testing
 
 ## Rules that have held across every sprint
 
 - No database — the dataset is JSON files, validated at build time.
 - No authentication.
-- No cookies for analytics, advertising, or auth — verified by inspecting
-  the codebase, not assumed; no cookie banner because none is needed.
+- No cookies for advertising or auth, ever. Google Analytics (GA4) is
+  active in production behind Google Consent Mode v2 (default denied): no
+  cookie is set until a visitor explicitly clicks "Allow analytics" in the
+  banner shown on first visit — see `docs/legal-and-trust.md`.
 - No fabricated facts: no invented pricing, ratings, reviews, founding
   dates, affiliate relationships, or compliance certifications. Every
   software entry cites at least one official source with an access date;
   fields with no verified source stay unpopulated rather than guessed.
-- No automatic publishing: nothing in the maintenance system (Sprint 12)
-  edits `data/`, commits, pushes, or merges on its own — every finding is
-  a local report for a human to review and act on by hand.
+- No automatic publishing: nothing in the maintenance system or the
+  growth/QA agent swarm edits `data/`, commits, pushes, or merges on its
+  own — every finding is a local report for a human to review and act on
+  by hand.

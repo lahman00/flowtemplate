@@ -25,6 +25,11 @@ npm run build           # production build (also runs TypeScript checks)
 npm run lint             # ESLint
 npm run validate:data    # validate every data/software/*.json and data/categories entry
 npm run maintenance       # run all 6 maintenance agents + write a combined report
+npm run agents:quick      # fast production-health check (typecheck/lint/data/smoke/GA4)
+npm run agents:daily      # quick + build verification + SEO/recommendation regressions
+npm run agents:weekly     # daily + the full growth/content/link/freshness swarm
+npm run agents:full       # every enabled agent, regardless of mode
+npm test                  # vitest — tests the agent system itself
 ```
 
 Run `validate:data` after editing any data file — it checks the same rules
@@ -71,12 +76,16 @@ lib/
   recommend/                          Deterministic recommendation engine (scoring, keywords, events)
   revenue/                             Affiliate manager, activation, revenue scoring, outbound events
   maintenance/                          Link/freshness/SEO/regression/opportunity agents (Sprint 12)
+  agents/                                Growth/QA swarm: registry, orchestrator, scoring, dedupe, state
 components/               Reusable UI components (incl. LegalPageLayout, recommend/ wizard pieces)
 config/                    Local-only credential templates (see config/*.example.json)
 types/maintenance.ts       Shared types for the maintenance system
+types/agents.ts            Shared types for the growth/QA agent swarm
 scripts/
   validate-data.ts           Standalone data validator (npm run validate:data)
   maintenance/                 One script per maintenance agent + the master run-all.ts
+  agents/                        One file per growth/QA agent + the CLI entrypoint (run.ts)
+tests/agents/              vitest suite for the growth/QA agent swarm (npm test)
 .github/workflows/maintenance.yml   Weekly scheduled maintenance run (see docs/maintenance-system.md)
 docs/                      Architecture documentation
 .env.example               Every supported environment variable, all optional
@@ -117,6 +126,19 @@ Runs weekly via GitHub Actions and on demand via `npm run maintenance`; a
 private dashboard at `/internal/maintenance` (noindex, not linked) shows
 the latest report. See [`docs/maintenance-system.md`](docs/maintenance-system.md)
 and [`docs/maintenance-notifications.md`](docs/maintenance-notifications.md).
+
+## Growth/QA agent swarm
+
+40 registry entries (30 enabled, 10 honestly blocked on missing external
+credentials — never faked) covering SEO, growth/marketing discovery,
+content-quality, and QA/monitoring — all deterministic TypeScript, no live
+LLM calls. Wraps the six maintenance agents above rather than duplicating
+them, adds real new checks (internal-link opportunity, cannibalization
+detection, category-tag clustering, live production smoke checks, GA4
+consent regression guards), and centrally scores/dedupes every finding.
+Run via `npm run agents:quick|daily|weekly|full`; results at
+`/internal/growth` (noindex, not linked) and `var/agents/latest-report.md`.
+See [`docs/agents-architecture.md`](docs/agents-architecture.md).
 
 ## Legal and trust
 

@@ -59,7 +59,8 @@ function isFieldPresent(software: Software, key: keyof Software): boolean {
   return true;
 }
 
-function scoreSoftware(software: Software, now: Date): FreshnessScore {
+/** Exported so other agents (e.g. scripts/agents/growth/freshness-revenue-priority.ts) can reuse the same scoring logic without re-running/re-writing this whole agent's report. */
+export function scoreSoftware(software: Software, now: Date): FreshnessScore {
   const factors: FreshnessFactor[] = [];
 
   // Source access date: present (schema-required) vs. genuinely missing.

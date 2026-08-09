@@ -14,7 +14,12 @@
     "maintenance:seo": "tsx scripts/maintenance/seo.ts",
     "maintenance:recommendations": "tsx scripts/maintenance/recommendations.ts",
     "maintenance:comparisons": "tsx scripts/maintenance/comparisons.ts",
-    "maintenance:affiliate": "tsx scripts/maintenance/affiliate.ts"
+    "maintenance:affiliate": "tsx scripts/maintenance/affiliate.ts",
+    "agents:quick": "tsx scripts/agents/run.ts --mode=quick",
+    "agents:daily": "tsx scripts/agents/run.ts --mode=daily",
+    "agents:weekly": "tsx scripts/agents/run.ts --mode=weekly",
+    "agents:full": "tsx scripts/agents/run.ts --mode=full",
+    "test": "vitest run"
   },
   "dependencies": {
     "lucide-react": "^1.28.0",
@@ -33,6 +38,7 @@
     "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
     "tsx": "^4.23.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }
