@@ -305,14 +305,14 @@ already read-only.
 
 ## The full registry
 
-44 entries: **30 enabled/runnable, 14 honestly blocked** (specified, with a
+44 entries: **31 enabled/runnable, 13 honestly blocked** (specified, with a
 real adapter interface, `enabled: false`, `run: null` — never a faked
 result). Most blocked entries are genuinely IMPLEMENTED and unit-tested
 (Google Search Console via a real service-account JWT auth flow + REST
-client; Bing Webmaster via a real API-key client; IndexNow submission is
-fully real and needs no credential at all, held disabled only pending one
-live end-to-end verification post-deploy) — blocked means "no credential
-configured," not "no code exists." `lib/agents/registry.ts` is the actual
+client; Bing Webmaster via a real API-key client) — blocked means "no
+credential configured," not "no code exists." IndexNow submission needed
+no credential at all — implemented, unit-tested, live end-to-end verified
+against the real API (HTTP 202), and enabled. `lib/agents/registry.ts` is the actual
 source of truth; this table is generated from it and may drift if the
 registry changes without this doc being updated — when in doubt, read the
 registry.
@@ -325,7 +325,7 @@ registry.
 | `seo-redirect-broken-url-check` | yes | daily, weekly, full | L0 | Catch broken or unexpectedly-redirecting internal routes on the live site. |
 | `seo-category-coverage-depth` | yes | weekly, full | L2 | Identify categories too thin to be a strong landing page. |
 | `seo-search-console-signals` | **blocked** | weekly, full | L0 | Feed real per-URL indexing state into the swarm — DISCOVERED/CRAWLED/INDEXED are different states from 'in the sitemap.' |
-| `seo-indexnow-submit` | **blocked** | weekly, full | L1 | Notify IndexNow-participating search engines (Bing, Yandex, Seznam.cz, Naver — not Google, which doesn't participate) of new URLs. |
+| `seo-indexnow-submit` | yes | weekly, full | L1 | Notify IndexNow-participating search engines (Bing, Yandex, Seznam.cz, Naver — not Google, which doesn't participate) of new URLs. |
 | `seo-bing-webmaster-signals` | **blocked** | weekly, full | L0 | Feed real Bing-side query performance into the swarm, cross-checkable against the Google Search Console CTR agent. |
 | `seo-search-console-ranking-movement` | **blocked** | weekly, full | L1 | Detect real, significant ranking movement per query. |
 
@@ -399,7 +399,6 @@ precisely what credential/API is missing. None of them fake a result.
 |---|---|---|---|
 | Google Search Console API credentials (`GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT` + `GOOGLE_SEARCH_CONSOLE_PROPERTY`) | `seo-search-console-signals`, `growth-search-console-ctr-opportunity`, `seo-search-console-ranking-movement`, `growth-search-console-winner-loser`, `growth-search-console-content-opportunity`, and (via dependency) `growth-longtail-query-discovery`, `growth-high-impression-low-ctr-detector`* | `scripts/agents/seo/lib/google-service-account-auth.ts`, `google-search-console-client.ts` | **Real, unit-tested** (real RSA JWT signing verified with `node:crypto`, real REST client — `tests/agents/google-search-console.test.ts`, `tests/agents/search-console-agents.test.ts`). Owner must create a GCP service account with the Search Console API enabled, add its email as a Search Console user (read access) on the property, and provide the JSON key. |
 | Bing Webmaster Tools API key (`BING_WEBMASTER_API_KEY` + `BING_WEBMASTER_SITE_URL`) | `seo-bing-webmaster-signals` | `scripts/agents/seo/lib/bing-webmaster-client.ts` | **Real, unit-tested.** Simple API-key auth (no OAuth) — owner verifies the site in Bing Webmaster Tools (often a one-click import from an already-verified GSC property) and generates a key from Settings → API Access. |
-| — (no credential needed) | `seo-indexnow-submit` | `scripts/agents/seo/lib/indexnow-client.ts` | **Real, unit-tested, and needs no account at all** — the key is self-issued (`public/64571916632587e2f714c221fb8ccc42.txt`, already committed and deployed). Held disabled pending one live end-to-end verification (per this task's own "test before enabling" instruction), not a credential gap. |
 | Keyword-volume API (Keyword Planner/Ahrefs/SEMrush-class) | `growth-search-demand-discovery`, `growth-commercial-intent-keyword-discovery` | `scripts/agents/growth/keyword-demand-adapter.ts` | Interface only — no free/official option exists (see the Phase 2 inventory in the session report); would require a paid subscription, not purchased without explicit approval. |
 | Automated external web monitoring (no scheduled-job equivalent of the interactive WebSearch/WebFetch tools exists here) | `growth-emerging-tool-discovery`, `growth-competitor-gap-discovery`, `growth-distribution-opportunity-discovery` | `scripts/agents/growth/external-monitoring-adapter.ts` | Interface only. |
 | Backlink-data API (Ahrefs/Moz/Semrush-class) | `growth-backlink-opportunity-discovery` | `scripts/agents/growth/backlink-adapter.ts` | Interface only — no free/official option exists; paid, not purchased without explicit approval. |
@@ -423,10 +422,12 @@ For the three genuinely credential-gated groups above (Search Console, Bing, key
 5. Run `npm run agents:full` once and read the result before trusting it
    in a scheduled run.
 
-For `seo-indexnow-submit` specifically (no credential needed): confirm
-`https://miloosh.com/64571916632587e2f714c221fb8ccc42.txt` returns the
-key as plain text, then run one live submission and check the response
-status before flipping `enabled: true`.
+`seo-indexnow-submit` already went through exactly this process and is
+enabled: the key file was confirmed live at
+`https://miloosh.com/64571916632587e2f714c221fb8ccc42.txt`, one real
+submission was sent to `https://api.indexnow.org/indexnow` and returned
+HTTP 202 ("URL received; key validation pending"), and only then was
+`enabled: true` set with its real `run` function wired in.
 
 ## GA4 coverage gap — what's actually automated vs. what was manually verified
 

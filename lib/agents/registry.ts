@@ -39,6 +39,12 @@ import { run as ga4ConsentCodeAuditRun } from "@/scripts/agents/qa/ga4-consent-c
 // agent's run function, so it's structurally impossible for one to
 // execute by accident. Import and wire in `run:` for each entry below
 // only when flipping `enabled: true` with a real credential configured.
+//
+// seo-indexnow-submit is the one exception: it needs no credential (see
+// its registry entry) and was live-verified end-to-end against the real
+// IndexNow API (HTTP 202 "URL received") before enabling — so its run
+// function IS imported and wired in below.
+import { run as indexNowSubmitRun } from "@/scripts/agents/seo/indexnow-submit";
 
 /**
  * The agent registry — the single source of truth for what the swarm can
@@ -303,10 +309,10 @@ export const AGENT_REGISTRY: AgentDefinition[] = [
     successCriteria: "IndexNow returns HTTP 200 or 202 for the submitted batch.",
     failureCriteria: "IndexNow returns a non-2xx status, or the request throws.",
     verificationAgent: null,
-    enabled: false,
-    blockedReason: "Fully implemented and unit-tested (tests/agents/indexnow.test.ts), but held disabled pending one live end-to-end verification after the key file (public/64571916632587e2f714c221fb8ccc42.txt) is deployed and confirmed reachable at https://miloosh.com/64571916632587e2f714c221fb8ccc42.txt — per this task's own 'test the adapter before enabling the agent' instruction, not a missing-credential block like every other blocked agent here.",
-    version: "0.9.0-pending-live-verification",
-    run: null,
+    enabled: true,
+    blockedReason: null,
+    version: "1.0.0",
+    run: indexNowSubmitRun,
   },
   {
     id: "seo-bing-webmaster-signals",
