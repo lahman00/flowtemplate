@@ -54,7 +54,7 @@ describe("submitUrlsToIndexNow", () => {
 });
 
 describe("IndexNow submission state (do not repeatedly submit unchanged URLs)", () => {
-  const emptyState: AgentSwarmState = { lastRunAt: {}, firstSeenAt: {}, dismissedKeys: [], indexNowSubmittedAt: {} };
+  const emptyState: AgentSwarmState = { lastRunAt: {}, firstSeenAt: {}, dismissedKeys: [], indexNowSubmittedAt: {}, urlInspectionCache: {} };
 
   it("treats every URL as new on first run", () => {
     const urls = ["https://miloosh.com/", "https://miloosh.com/software/notion"];

@@ -4,12 +4,17 @@ import { fetchAccessToken, parseServiceAccountEnv, type GoogleServiceAccountKey 
  * Minimal, real REST client for the two Google Search Console API surfaces
  * this system needs:
  *  - Search Analytics: query (POST .../searchAnalytics/query) — query,
- *    page, clicks, impressions, ctr, position, date. Endpoint and scope
- *    verified against current Google documentation before writing this
- *    (developers.google.com/webmaster-tools/v1/searchanalytics/query).
+ *    page, clicks, impressions, ctr, position, date. Endpoint, scope,
+ *    rowLimit range (1-25,000, default 1,000), and startRow-based
+ *    pagination verified against current Google documentation before
+ *    writing this (developers.google.com/webmaster-tools/v1/searchanalytics/query).
  *  - URL Inspection: index (POST .../urlInspection/index:inspect) — real
  *    DISCOVERED/CRAWLED/INDEXED state per URL, a different API surface
  *    (searchconsole.googleapis.com, not www.googleapis.com/webmasters).
+ *    Full IndexStatusInspectionResult field set (verdict, coverageState,
+ *    robotsTxtState, indexingState, pageFetchState, googleCanonical,
+ *    userCanonical, crawledAs, lastCrawlTime) verified against current
+ *    Google documentation, not assumed.
  *
  * No `googleapis` dependency — plain `fetch` against the documented REST
  * endpoints, auth via google-service-account-auth.ts. Every function here
@@ -19,10 +24,32 @@ import { fetchAccessToken, parseServiceAccountEnv, type GoogleServiceAccountKey 
  *     Search Console user (read access) on the property below.
  *   GOOGLE_SEARCH_CONSOLE_PROPERTY — the exact property as it appears in
  *     Search Console: either a URL-prefix property like
- *     "https://miloosh.com/" or a domain property like "sc-domain:miloosh.com".
+ *     "https://miloosh.com/" or a domain property like
+ *     "sc-domain:miloosh.com" (the target property here). Domain
+ *     properties are passed through `encodeURIComponent` exactly like
+ *     URL-prefix ones — the colon becomes `%3A` in the request path
+ *     (`.../sites/sc-domain%3Amiloosh.com/...`), matching Google's own
+ *     documented request-path convention for both property types (no
+ *     special-casing needed — confirmed against developers.google.com's
+ *     Sites.get reference, which uses the identical siteUrl path
+ *     parameter for both forms).
+ *
+ * Quota discipline (per Google's documented limits — developers.google.com/webmaster-tools/limits):
+ * URL Inspection is 2,000 queries/day and 600/minute PER PROPERTY — the
+ * hard constraint driving lib/agents/state.ts's inspection cooldown (this
+ * client makes the calls; it does not decide which URLs to call it with —
+ * that policy lives in the calling agent). Search Analytics has no
+ * comparably tight documented quota but this client still paginates
+ * explicitly (queryAllSearchAnalytics) rather than assuming one page
+ * covers every row, and retries a real 429 with backoff rather than
+ * treating a quota response as a hard failure.
  */
 
 const SEARCH_ANALYTICS_SCOPE = "https://www.googleapis.com/auth/webmasters.readonly";
+const MAX_ROW_LIMIT = 25_000;
+const DEFAULT_ROW_LIMIT = 1_000;
+const MAX_RETRY_ATTEMPTS = 3;
+const RETRY_BASE_DELAY_MS = 1_000;
 
 export type SearchAnalyticsRow = {
   keys: string[]; // one per requested dimension, in order
@@ -37,6 +64,7 @@ export type SearchAnalyticsQuery = {
   endDate: string;
   dimensions: Array<"query" | "page" | "date" | "country" | "device">;
   rowLimit?: number;
+  startRow?: number;
 };
 
 export type UrlInspectionResult = {
@@ -45,7 +73,30 @@ export type UrlInspectionResult = {
   coverageState: string | null;
   indexingState: string | null;
   lastCrawlTime: string | null;
+  robotsTxtState: string | null;
+  pageFetchState: string | null;
+  googleCanonical: string | null;
+  userCanonical: string | null;
+  crawledAs: string | null;
 };
+
+async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/** Retries a real 429 (quota exceeded) with exponential backoff. Any other non-ok status fails immediately — only quota responses are worth retrying. */
+async function fetchWithQuotaRetry(url: string, init: RequestInit): Promise<Response> {
+  let lastResponse: Response | null = null;
+  for (let attempt = 1; attempt <= MAX_RETRY_ATTEMPTS; attempt++) {
+    const res = await fetch(url, init);
+    if (res.status !== 429) return res;
+    lastResponse = res;
+    if (attempt < MAX_RETRY_ATTEMPTS) {
+      await sleep(RETRY_BASE_DELAY_MS * 2 ** (attempt - 1));
+    }
+  }
+  return lastResponse!;
+}
 
 export class GoogleSearchConsoleClient {
   constructor(
@@ -65,14 +116,19 @@ export class GoogleSearchConsoleClient {
     return token.access_token;
   }
 
-  /** Real POST to .../sites/{property}/searchAnalytics/query. */
+  /** Real POST to .../sites/{property}/searchAnalytics/query — a single page (≤25,000 rows, per Google's documented max). Retries a real 429 with backoff. */
   async querySearchAnalytics(query: SearchAnalyticsQuery): Promise<SearchAnalyticsRow[]> {
+    const rowLimit = query.rowLimit ?? DEFAULT_ROW_LIMIT;
+    if (rowLimit < 1 || rowLimit > MAX_ROW_LIMIT) {
+      throw new Error(`rowLimit must be between 1 and ${MAX_ROW_LIMIT} (Search Console API's documented range); got ${rowLimit}.`);
+    }
+
     const accessToken = await this.accessToken();
     const url = `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(this.propertyUrl)}/searchAnalytics/query`;
-    const res = await fetch(url, {
+    const res = await fetchWithQuotaRetry(url, {
       method: "POST",
       headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-      body: JSON.stringify(query),
+      body: JSON.stringify({ ...query, rowLimit }),
     });
     if (!res.ok) {
       const body = await res.text();
@@ -82,10 +138,31 @@ export class GoogleSearchConsoleClient {
     return json.rows ?? [];
   }
 
-  /** Real POST to searchconsole.googleapis.com's URL Inspection API. */
+  /**
+   * Pages through Search Analytics via startRow until a page returns fewer
+   * rows than requested (Google's own documented end-of-results signal —
+   * a startRow past the end returns 0 rows, not an error). Bounded by
+   * maxRows so a runaway query can't page forever.
+   */
+  async queryAllSearchAnalytics(query: Omit<SearchAnalyticsQuery, "startRow">, maxRows = 5_000): Promise<SearchAnalyticsRow[]> {
+    const pageSize = query.rowLimit ?? DEFAULT_ROW_LIMIT;
+    const allRows: SearchAnalyticsRow[] = [];
+    let startRow = 0;
+
+    while (allRows.length < maxRows) {
+      const page = await this.querySearchAnalytics({ ...query, rowLimit: pageSize, startRow });
+      allRows.push(...page);
+      if (page.length < pageSize) break; // last page
+      startRow += pageSize;
+    }
+
+    return allRows.slice(0, maxRows);
+  }
+
+  /** Real POST to searchconsole.googleapis.com's URL Inspection API. Retries a real 429 with backoff. */
   async inspectUrl(inspectionUrl: string): Promise<UrlInspectionResult> {
     const accessToken = await this.accessToken();
-    const res = await fetch("https://searchconsole.googleapis.com/v1/urlInspection/index:inspect", {
+    const res = await fetchWithQuotaRetry("https://searchconsole.googleapis.com/v1/urlInspection/index:inspect", {
       method: "POST",
       headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
       body: JSON.stringify({ inspectionUrl, siteUrl: this.propertyUrl }),
@@ -96,7 +173,17 @@ export class GoogleSearchConsoleClient {
     }
     const json = (await res.json()) as {
       inspectionResult?: {
-        indexStatusResult?: { verdict?: string; coverageState?: string; indexingState?: string; lastCrawlTime?: string };
+        indexStatusResult?: {
+          verdict?: string;
+          coverageState?: string;
+          indexingState?: string;
+          lastCrawlTime?: string;
+          robotsTxtState?: string;
+          pageFetchState?: string;
+          googleCanonical?: string;
+          userCanonical?: string;
+          crawledAs?: string;
+        };
       };
     };
     const result = json.inspectionResult?.indexStatusResult;
@@ -106,6 +193,11 @@ export class GoogleSearchConsoleClient {
       coverageState: result?.coverageState ?? null,
       indexingState: result?.indexingState ?? null,
       lastCrawlTime: result?.lastCrawlTime ?? null,
+      robotsTxtState: result?.robotsTxtState ?? null,
+      pageFetchState: result?.pageFetchState ?? null,
+      googleCanonical: result?.googleCanonical ?? null,
+      userCanonical: result?.userCanonical ?? null,
+      crawledAs: result?.crawledAs ?? null,
     };
   }
 }

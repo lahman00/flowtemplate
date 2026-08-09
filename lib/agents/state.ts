@@ -23,6 +23,19 @@ export type AgentSwarmState = {
   dismissedKeys: string[];
   /** url -> ISO timestamp of the last successful IndexNow submission. The sole purpose of this map is Section C's explicit "do not repeatedly submit unchanged URLs" rule — a URL already in here is skipped on future runs. */
   indexNowSubmittedAt: Record<string, string>;
+  /**
+   * url -> last URL Inspection API result + when it was fetched. Google's
+   * URL Inspection API is quota-limited (2,000 queries/day, 600/minute,
+   * PER PROPERTY — not per agent, so every GSC-backed agent that inspects
+   * URLs shares this one cache) — this is the mechanism that makes
+   * "sample, don't repeatedly re-inspect everything" real rather than
+   * aspirational. `result` is intentionally untyped here (a plain object,
+   * not the real `UrlInspectionResult` type) so this file — part of
+   * lib/agents/, the layer scripts/agents/* depends ON, never the
+   * other way — doesn't need to import a type from scripts/agents/seo/;
+   * callers cast it back to the real type themselves.
+   */
+  urlInspectionCache: Record<string, { checkedAt: string; result: Record<string, unknown> }>;
 };
 
 const EMPTY_STATE: AgentSwarmState = {
@@ -30,6 +43,7 @@ const EMPTY_STATE: AgentSwarmState = {
   firstSeenAt: {},
   dismissedKeys: [],
   indexNowSubmittedAt: {},
+  urlInspectionCache: {},
 };
 
 export function readState(): AgentSwarmState {
@@ -41,6 +55,7 @@ export function readState(): AgentSwarmState {
       firstSeenAt: parsed.firstSeenAt ?? {},
       dismissedKeys: parsed.dismissedKeys ?? [],
       indexNowSubmittedAt: parsed.indexNowSubmittedAt ?? {},
+      urlInspectionCache: parsed.urlInspectionCache ?? {},
     };
   } catch {
     return { ...EMPTY_STATE };
@@ -76,7 +91,13 @@ export function updateState(
   }
   void currentKeySet; // pruning is implicit: only keys present this run survive into the new firstSeenAt map
 
-  return { lastRunAt, firstSeenAt, dismissedKeys: state.dismissedKeys, indexNowSubmittedAt: state.indexNowSubmittedAt };
+  return {
+    lastRunAt,
+    firstSeenAt,
+    dismissedKeys: state.dismissedKeys,
+    indexNowSubmittedAt: state.indexNowSubmittedAt,
+    urlInspectionCache: state.urlInspectionCache,
+  };
 }
 
 export function isDismissed(state: AgentSwarmState, dedupeKey: string): boolean {
@@ -93,4 +114,40 @@ export function recordIndexNowSubmission(state: AgentSwarmState, urls: string[],
   const indexNowSubmittedAt = { ...state.indexNowSubmittedAt };
   for (const url of urls) indexNowSubmittedAt[url] = now;
   return { ...state, indexNowSubmittedAt };
+}
+
+/** Default URL Inspection cooldown — a URL inspected within this window is served from cache rather than re-inspected. 7 days: index status rarely changes faster than that, and it keeps daily usage far below the 2,000/day quota even inspecting every URL in a much larger future catalog. */
+export const DEFAULT_INSPECTION_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+
+/** True if `url` was inspected within `cooldownMs` and can be served from cache instead of a new API call. */
+export function isInspectionCached(state: AgentSwarmState, url: string, cooldownMs = DEFAULT_INSPECTION_COOLDOWN_MS, now = Date.now()): boolean {
+  const cached = state.urlInspectionCache[url];
+  if (!cached) return false;
+  return now - new Date(cached.checkedAt).getTime() < cooldownMs;
+}
+
+/** Splits `urls` into ones still fresh in cache vs. ones that genuinely need a new URL Inspection API call — the core "respect quotas, sample don't re-inspect everything" mechanism. */
+export function partitionByInspectionCache(
+  state: AgentSwarmState,
+  urls: string[],
+  cooldownMs = DEFAULT_INSPECTION_COOLDOWN_MS,
+  now = Date.now()
+): { cached: string[]; needsInspection: string[] } {
+  const cached: string[] = [];
+  const needsInspection: string[] = [];
+  for (const url of urls) {
+    (isInspectionCached(state, url, cooldownMs, now) ? cached : needsInspection).push(url);
+  }
+  return { cached, needsInspection };
+}
+
+export function getCachedInspection<T extends Record<string, unknown>>(state: AgentSwarmState, url: string): T | null {
+  const cached = state.urlInspectionCache[url];
+  return cached ? (cached.result as T) : null;
+}
+
+/** Records a fresh URL Inspection result. `result` is stored as-is (plain object) — see AgentSwarmState.urlInspectionCache's own doc comment for why this file doesn't import the real result type. */
+export function recordInspection(state: AgentSwarmState, url: string, result: Record<string, unknown>, now = new Date().toISOString()): AgentSwarmState {
+  const urlInspectionCache = { ...state.urlInspectionCache, [url]: { checkedAt: now, result } };
+  return { ...state, urlInspectionCache };
 }

@@ -187,6 +187,36 @@ handful of hand-written pages.
   received") before flipping it on. Keyword-volume and backlink-data
   agents remain blocked — no free/official API exists
   for either; not purchased without explicit approval.
+- **Phase 3 — Google Search Console indexation-analysis workflow** —
+  built against the owner's real GSC baseline (1,358 sitemap URLs, 38
+  indexed, 1,320 not indexed — dominated by 1,307 "Crawled - currently
+  not indexed", explicitly not treated as a technical failure). Hardened
+  the GSC client with quota-aware retry/backoff, full `searchAnalytics`
+  pagination, and an expanded URL Inspection field set (robots/fetch
+  state, Google vs. user canonical). Added a shared 7-day inspection
+  cache (`urlInspectionCache` in agent state) so the whole workflow makes
+  one inspection pass per URL per run, not one per agent — required to
+  respect the Inspection API's 2,000/day quota. Built five new agents on
+  top of it: index-coverage classification (rewritten `classify()` with
+  a regression-tested guard against misreading "Crawled - currently not
+  indexed" as indexed), an indexed-vs-non-indexed comparator (quota-
+  aware biased sampling: homepage + all categories + a software spread +
+  a comparison-page sample, since a naive random sample would likely
+  contain zero indexed URLs at a 2.8% indexed rate), canonical-
+  consistency and crawl-recency analyzers, and an evidence-graded
+  priority-candidate selector (revenue tier used strictly as a tiebreak,
+  never as a sole selection reason — enforced by a dedicated regression
+  test) feeding an experiment tracker/verifier for later before/after
+  comparison. Every cross-group finding is deliberately evidence-graded
+  (observation/hypothesis/confidence/proposed test) rather than asserting
+  causation. Dated GSC snapshots (`var/agents/gsc-snapshots.json`) seeded
+  with the owner-reported baseline, labeled `source: "owner-reported"` so
+  it's never confused with a live API pull. Registry grew from 44 to 49
+  entries (31 enabled, 18 blocked — all ten GSC-dependent agents remain
+  disabled; none enabled without a real authenticated API call). Test
+  suite grew accordingly; see `docs/agents-architecture.md`
+  "Google Search Console — connecting real data" for the exact owner
+  steps needed to unblock it.
 
 See `docs/` for full architecture documentation:
 

@@ -80,14 +80,14 @@ describe("GoogleSearchConsoleClient", () => {
     vi.unstubAllGlobals();
   });
 
-  function mockFetchSequence(responses: Array<{ ok: boolean; json: unknown }>) {
+  function mockFetchSequence(responses: Array<{ ok: boolean; json: unknown; status?: number }>) {
     let call = 0;
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => {
         const r = responses[call];
         call += 1;
-        return { ok: r.ok, status: r.ok ? 200 : 400, json: async () => r.json, text: async () => JSON.stringify(r.json) } as Response;
+        return { ok: r.ok, status: r.status ?? (r.ok ? 200 : 400), json: async () => r.json, text: async () => JSON.stringify(r.json) } as Response;
       })
     );
   }
@@ -136,5 +136,142 @@ describe("GoogleSearchConsoleClient", () => {
 
     const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
     await expect(client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"] })).rejects.toThrow(/Search Analytics query failed/);
+  });
+
+  it("encodes a domain property's colon exactly as Google's documented siteUrl path parameter expects", async () => {
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: true, json: { rows: [] } },
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "sc-domain:miloosh.com");
+    await client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"] });
+
+    const secondCall = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[1];
+    expect(secondCall[0]).toContain("sites/sc-domain%3Amiloosh.com/searchAnalytics/query");
+  });
+
+  it("returns real, undecorated empty results for a property with no data rather than throwing", async () => {
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: true, json: {} }, // Google omits `rows` entirely when there's nothing to report
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    const rows = await client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"] });
+    expect(rows).toEqual([]);
+  });
+
+  it("rejects a rowLimit outside Google's documented 1-25,000 range before making any network call", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    await expect(client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"], rowLimit: 25_001 })).rejects.toThrow(/rowLimit/);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("retries a real 429 (quota exceeded) response with backoff and succeeds if a later attempt is accepted", async () => {
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" }, status: 200 },
+      { ok: false, json: { error: { message: "Quota exceeded" } }, status: 429 },
+      { ok: true, json: { rows: [{ keys: ["a"], clicks: 1, impressions: 10, ctr: 0.1, position: 5 }] }, status: 200 },
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    const rows = await client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"] });
+    expect(rows).toHaveLength(1);
+  }, 10_000);
+
+  it("gives up after repeated 429s rather than retrying forever", async () => {
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" }, status: 200 },
+      { ok: false, json: { error: { message: "Quota exceeded" } }, status: 429 },
+      { ok: false, json: { error: { message: "Quota exceeded" } }, status: 429 },
+      { ok: false, json: { error: { message: "Quota exceeded" } }, status: 429 },
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    await expect(client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"] })).rejects.toThrow(/429/);
+  }, 15_000);
+
+  it("paginates via startRow until a page returns fewer rows than requested (Google's documented end-of-results signal)", async () => {
+    const page1 = Array.from({ length: 3 }, (_, i) => ({ keys: [`q${i}`], clicks: 1, impressions: 10, ctr: 0.1, position: 5 }));
+    const page2 = [{ keys: ["q-last"], clicks: 1, impressions: 10, ctr: 0.1, position: 5 }];
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: true, json: { rows: page1 } },
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: true, json: { rows: page2 } }, // shorter than pageSize -> stop
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    const rows = await client.queryAllSearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"], rowLimit: 3 });
+    expect(rows).toHaveLength(4);
+    expect(rows.map((r) => r.keys[0])).toEqual(["q0", "q1", "q2", "q-last"]);
+  });
+
+  it("stops pagination at maxRows even if the API would return more (bounded, not unbounded)", async () => {
+    const fullPage = Array.from({ length: 3 }, (_, i) => ({ keys: [`q${i}`], clicks: 1, impressions: 10, ctr: 0.1, position: 5 }));
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: true, json: { rows: fullPage } },
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: true, json: { rows: fullPage } },
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    const rows = await client.queryAllSearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"], rowLimit: 3 }, 5);
+    expect(rows).toHaveLength(5); // 6 fetched across 2 pages, capped to maxRows=5
+  });
+
+  it("parses the full IndexStatusInspectionResult field set, including canonical and robots state", async () => {
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      {
+        ok: true,
+        json: {
+          inspectionResult: {
+            indexStatusResult: {
+              verdict: "NEUTRAL",
+              coverageState: "Crawled - currently not indexed",
+              indexingState: "INDEXING_ALLOWED",
+              lastCrawlTime: "2026-08-01T00:00:00Z",
+              robotsTxtState: "ALLOWED",
+              pageFetchState: "SUCCESSFUL",
+              googleCanonical: "https://miloosh.com/software/notion",
+              userCanonical: "https://miloosh.com/software/notion",
+              crawledAs: "MOBILE",
+            },
+          },
+        },
+      },
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    const result = await client.inspectUrl("https://miloosh.com/software/notion");
+    expect(result.coverageState).toBe("Crawled - currently not indexed");
+    expect(result.googleCanonical).toBe("https://miloosh.com/software/notion");
+    expect(result.userCanonical).toBe("https://miloosh.com/software/notion");
+    expect(result.robotsTxtState).toBe("ALLOWED");
+    expect(result.crawledAs).toBe("MOBILE");
+  });
+
+  it("handles a partial/malformed response (missing inspectionResult) without throwing — falls back to UNKNOWN", async () => {
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: true, json: {} },
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    const result = await client.inspectUrl("https://miloosh.com/software/notion");
+    expect(result.verdict).toBe("UNKNOWN");
+    expect(result.googleCanonical).toBeNull();
+  });
+
+  it("surfaces a real auth failure (bad/expired service-account key) clearly, rather than a confusing downstream error", async () => {
+    mockFetchSequence([{ ok: false, json: { error: "invalid_grant", error_description: "Invalid JWT Signature." }, status: 401 }]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    await expect(client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"] })).rejects.toThrow(/Google OAuth2 token exchange failed/);
+  });
+
+  it("throws a clear error on a failed URL Inspection call rather than returning a fabricated result", async () => {
+    mockFetchSequence([
+      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
+      { ok: false, json: { error: { message: "Site not verified" } }, status: 403 },
+    ]);
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    await expect(client.inspectUrl("https://miloosh.com/software/notion")).rejects.toThrow(/URL Inspection failed/);
   });
 });

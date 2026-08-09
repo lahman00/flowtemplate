@@ -1,5 +1,6 @@
 import { getAllSoftware } from "@/data/software";
 import { makeFinding } from "@/lib/agents/finding";
+import { wordSet, jaccardSimilarity } from "@/scripts/agents/shared/text-similarity";
 import type { AgentRunFn } from "@/types/agents";
 
 /**
@@ -14,24 +15,6 @@ import type { AgentRunFn } from "@/types/agents";
 
 const CANNIBALIZATION_THRESHOLD = 0.6;
 
-function wordSet(text: string): Set<string> {
-  return new Set(
-    text
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, "")
-      .split(/\s+/)
-      .filter((w) => w.length > 2)
-  );
-}
-
-function jaccard(a: Set<string>, b: Set<string>): number {
-  if (a.size === 0 || b.size === 0) return 0;
-  let intersection = 0;
-  for (const word of a) if (b.has(word)) intersection += 1;
-  const union = a.size + b.size - intersection;
-  return union === 0 ? 0 : intersection / union;
-}
-
 export const run: AgentRunFn = async () => {
   const agentId = "growth-cannibalization-detector";
   const byCategory = new Map<string, ReturnType<typeof getAllSoftware>>();
@@ -45,7 +28,7 @@ export const run: AgentRunFn = async () => {
       for (let j = i + 1; j < entries.length; j++) {
         const a = entries[i];
         const b = entries[j];
-        const similarity = jaccard(wordSet(a.bestFor), wordSet(b.bestFor));
+        const similarity = jaccardSimilarity(wordSet(a.bestFor), wordSet(b.bestFor));
         if (similarity < CANNIBALIZATION_THRESHOLD) continue;
 
         findings.push(

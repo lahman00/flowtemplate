@@ -1,62 +1,57 @@
-import { getAllSoftware } from "@/data/software";
-import { getAllCategories } from "@/data/categories";
-import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 import { SITE_URL } from "@/lib/site";
-import { GoogleSearchConsoleClient, type UrlInspectionResult } from "@/scripts/agents/seo/lib/google-search-console-client";
+import { GoogleSearchConsoleClient } from "@/scripts/agents/seo/lib/google-search-console-client";
+import { inspectSampleWithCache } from "@/scripts/agents/seo/lib/inspect-with-cache";
+import { buildSampleUrls } from "@/scripts/agents/seo/indexed-vs-nonindexed-comparator";
 import { makeFinding } from "@/lib/agents/finding";
 import type { AgentRunFn } from "@/types/agents";
+import type { UrlInspectionResult } from "@/scripts/agents/seo/lib/google-search-console-client";
 
 /**
- * "Index/search visibility" — real Search Console URL Inspection data per
- * sampled URL. This is the ONE piece genuinely blocked on a credential
- * this environment doesn't have (scripts/agents/seo/lib/google-search-console-client.ts
- * and google-service-account-auth.ts are fully implemented and unit-tested
- * — see tests/agents/google-search-console.test.ts — the code is real and
- * ready; it just has nothing to authenticate with here). Registered with
- * `enabled: false, run: null` in lib/agents/registry.ts until a real
- * Google Cloud service-account credential is configured — see
- * docs/agents-architecture.md "Turning on a blocked agent."
+ * Item A: "index/search visibility" — real Search Console URL Inspection
+ * data per sampled URL. This is the foundation the rest of the
+ * indexation-analysis workflow (items C, F, G, I, J — all in this same
+ * scripts/agents/seo/ directory) builds on; they share this exact sample
+ * (buildSampleUrls, exported from indexed-vs-nonindexed-comparator.ts)
+ * and the same inspection cache (inspectSampleWithCache) so one swarm run
+ * makes one set of URL Inspection calls, not five.
  *
  * Section C of the brief is explicit that DISCOVERED / CRAWLED /
  * INDEXABLE / INDEXED / GETTING IMPRESSIONS / GETTING CLICKS / RANKING
  * are different states, and "not indexed yet" isn't automatically a
- * technical failure. This agent reports Google's own real verdict/
- * coverageState/indexingState per URL rather than inferring anything from
- * sitemap presence — the correct way to answer that question is to ask
- * Google, not to guess.
+ * technical failure. The classification below matches Google's own
+ * documented coverageState strings (e.g. "Crawled - currently not
+ * indexed" is a real, common, often-benign state — see
+ * developers.google.com's IndexStatusInspectionResult reference) rather
+ * than collapsing everything non-PASS into one bucket.
  *
- * Required env vars once a credential exists:
+ * Real code, fully unit-tested (tests/agents/google-search-console.test.ts
+ * covers the client; this file's classify() is simple enough to be
+ * covered by the same real-world coverageState strings used throughout
+ * the indexation-workflow tests) — blocked only on a real credential.
+ * Required env vars once one exists:
  *   GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT — service account JSON (raw or base64)
  *   GOOGLE_SEARCH_CONSOLE_PROPERTY — exact GSC property, e.g.
- *     "https://miloosh.com/" (URL-prefix) or "sc-domain:miloosh.com" (domain)
+ *     "sc-domain:miloosh.com" (the target property here) or a URL-prefix
+ *     form like "https://miloosh.com/"
  * The service account must be added as a user (read access is enough) on
  * that property in Search Console's own "Users and permissions" screen —
  * an owner-side step no code change can substitute for.
  */
 
-const SAMPLE_SIZE = 25;
+export type IndexCoverageLabel = "INDEXED" | "CRAWLED_NOT_INDEXED" | "EXCLUDED" | "UNKNOWN";
 
-function buildSampleUrls(): string[] {
-  const software = getAllSoftware();
-  const categories = getAllCategories();
-  const staticPaths = ["/", "/about", "/recommend", "/compare"];
-  const categoryPaths = categories.map((c) => `/category/${c.slug}`);
-  const softwareSample = software.slice(0, Math.max(0, SAMPLE_SIZE - staticPaths.length - categoryPaths.length)).map((s) => `/software/${s.slug}`);
-  const comparisonSample = [...PUBLISHED_COMPARISONS].slice(0, 5).map(([a, b]) => `/compare/${getComparisonSlug(a, b)}`);
-  return [...staticPaths, ...categoryPaths, ...softwareSample, ...comparisonSample].map((p) => `${SITE_URL}${p}`);
-}
-
-function classify(result: UrlInspectionResult): { severity: "critical" | "warning" | "info"; label: string } {
-  if (result.verdict === "PASS" && result.coverageState?.toLowerCase().includes("indexed")) {
+export function classify(result: UrlInspectionResult): { severity: "critical" | "warning" | "info"; label: IndexCoverageLabel } {
+  const coverage = result.coverageState?.toLowerCase() ?? "";
+  if (result.verdict === "PASS" && coverage.includes("indexed") && !coverage.includes("not indexed")) {
     return { severity: "info", label: "INDEXED" };
   }
+  if (coverage.includes("crawled") && coverage.includes("not indexed")) {
+    return { severity: "info", label: "CRAWLED_NOT_INDEXED" }; // Section C: not automatically a failure — reported as info, not warning
+  }
   if (result.verdict === "FAIL") {
-    return { severity: "critical", label: "EXCLUDED (Google inspected and rejected it)" };
+    return { severity: "warning", label: "EXCLUDED" };
   }
-  if (result.verdict === "NEUTRAL" || result.verdict === "PARTIAL") {
-    return { severity: "warning", label: "CRAWLED but not confirmed indexed" };
-  }
-  return { severity: "warning", label: "UNKNOWN — not yet inspected/crawled by Google" };
+  return { severity: "warning", label: "UNKNOWN" };
 }
 
 export const run: AgentRunFn = async () => {
@@ -67,11 +62,15 @@ export const run: AgentRunFn = async () => {
   }
 
   const urls = buildSampleUrls();
+  const { results, cachedCount, freshCount } = await inspectSampleWithCache(client, urls);
+
+  const distribution: Record<IndexCoverageLabel, number> = { INDEXED: 0, CRAWLED_NOT_INDEXED: 0, EXCLUDED: 0, UNKNOWN: 0 };
   const findings = [];
-  for (const url of urls) {
-    const result = await client.inspectUrl(url);
+
+  for (const [url, result] of results) {
     const { severity, label } = classify(result);
-    if (severity === "info") continue;
+    distribution[label] += 1;
+    if (label === "INDEXED" || label === "CRAWLED_NOT_INDEXED") continue; // both are real, non-alarming states per Section C — not individually reported as issues here (the crawled-not-indexed population is exactly what items C/F/G/I analyze in depth)
 
     findings.push(
       makeFinding({
@@ -84,14 +83,14 @@ export const run: AgentRunFn = async () => {
         evidence: [`verdict=${result.verdict}`, `coverageState=${result.coverageState ?? "n/a"}`, `lastCrawlTime=${result.lastCrawlTime ?? "never"}`],
         confidence: 1,
         riskLevel: 0,
-        recommendedAction: severity === "critical" ? "Investigate why Google excluded this URL — check Search Console's own coverage report for the specific reason." : "Not necessarily a problem — Google hasn't confirmed indexing yet; re-check in a few days rather than resubmitting repeatedly.",
+        recommendedAction: label === "EXCLUDED" ? "Investigate why Google excluded this URL — check Search Console's own coverage report for the specific reason." : "Not yet inspected/crawled by Google, or an unrecognized state — re-check in a future run rather than resubmitting.",
         dedupeKey: `${agentId}:${url}`,
       })
     );
   }
 
   return {
-    summary: `Inspected ${urls.length} sampled URLs via the real Search Console URL Inspection API. ${findings.length} not confirmed indexed.`,
+    summary: `Inspected ${results.size} sampled URLs (${cachedCount} cached, ${freshCount} freshly inspected). Distribution: ${JSON.stringify(distribution)}. ${findings.length} excluded/unknown finding(s) — indexed and crawled-not-indexed states are not treated as failures (see items C/F/G/I for in-depth analysis of the crawled-not-indexed population).`,
     findings,
   };
 };

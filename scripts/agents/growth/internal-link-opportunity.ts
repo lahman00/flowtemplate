@@ -24,7 +24,8 @@ import type { AgentRunFn } from "@/types/agents";
 
 const LOW_INBOUND_THRESHOLD = 2; // category link + at most 1 other
 
-function computeInboundCounts(allSoftware: Software[]): Map<string, number> {
+/** Exported so other agents (e.g. seo-indexed-vs-nonindexed-comparator.ts's internal-link-strength dimension) can reuse this same computation instead of re-deriving it. */
+export function computeInboundCounts(allSoftware: Software[]): Map<string, number> {
   const counts = new Map<string, number>();
   for (const s of allSoftware) counts.set(s.slug, 1); // its own category page
 

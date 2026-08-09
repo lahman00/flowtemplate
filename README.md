@@ -129,7 +129,7 @@ and [`docs/maintenance-notifications.md`](docs/maintenance-notifications.md).
 
 ## Growth/QA agent swarm
 
-44 registry entries (31 enabled, 13 honestly blocked on missing external
+49 registry entries (31 enabled, 18 honestly blocked on missing external
 credentials — real, unit-tested adapters ready to go, including a live
 end-to-end-verified IndexNow integration that needed no credential at
 all — never faked) covering SEO, growth/marketing discovery,
@@ -138,6 +138,12 @@ LLM calls. Wraps the six maintenance agents above rather than duplicating
 them, adds real new checks (internal-link opportunity, cannibalization
 detection, category-tag clustering, live production smoke checks, GA4
 consent regression guards), and centrally scores/dedupes every finding.
+Includes a full Google Search Console indexation-analysis workflow (index
+coverage classification, indexed-vs-non-indexed comparison, canonical and
+crawl-recency checks, evidence-graded priority-candidate selection, and
+experiment verification) — real code and tests, blocked only on the
+owner granting a Search Console service account (see
+[`docs/agents-architecture.md`](docs/agents-architecture.md#google-search-console--connecting-real-data-priority-1)).
 Run via `npm run agents:quick|daily|weekly|full`; results at
 `/internal/growth` (noindex, not linked) and `var/agents/latest-report.md`.
 See [`docs/agents-architecture.md`](docs/agents-architecture.md).

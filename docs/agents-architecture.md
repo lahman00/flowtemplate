@@ -41,7 +41,7 @@ reason, and that's accurate, not a bug.
 types/agents.ts              shared types: AgentDefinition, Finding,
                               AgentRunResult, AgentSwarmReport, etc.
 lib/agents/
-  registry.ts                 the single source of truth — 44 entries
+  registry.ts                 the single source of truth — 49 entries
   orchestrator.ts              runSwarm(mode) — the Growth Orchestrator
   scoring.ts                   computeImpactScore() — the priority formula
   dedupe.ts                    dedupeFindings() — cross-agent dedup
@@ -312,19 +312,18 @@ issue.
 
 ## The full registry
 
-44 entries: **31 enabled/runnable, 13 honestly blocked** (specified, with a
+49 entries: **31 enabled/runnable, 18 honestly blocked** (specified, with a
 real adapter interface, `enabled: false`, `run: null` — never a faked
-result). Most blocked entries are genuinely IMPLEMENTED and unit-tested
-(Google Search Console via a real service-account JWT auth flow + REST
-client; Bing Webmaster via a real API-key client) — blocked means "no
-credential configured," not "no code exists." IndexNow submission needed
-no credential at all — implemented, unit-tested, live end-to-end verified
-against the real API (HTTP 202), and enabled. `lib/agents/registry.ts` is the actual
-source of truth; this table is generated from it and may drift if the
-registry changes without this doc being updated — when in doubt, read the
-registry.
+result). Most blocked entries are genuinely IMPLEMENTED and unit-tested —
+blocked means "no credential configured," not "no code exists." This
+includes the full indexation-analysis workflow (Phase 3 priority #1 —
+see "Google Search Console — connecting real data" below for exactly what
+that means and what an owner needs to do). `lib/agents/registry.ts` is the
+actual source of truth; this table is generated from it and may drift if
+the registry changes without this doc being updated — when in doubt, read
+the registry.
 
-### seo (7)
+### seo (12)
 
 | id | enabled | modes | risk | single responsibility |
 |---|---|---|---|---|
@@ -335,6 +334,11 @@ registry.
 | `seo-indexnow-submit` | yes | weekly, full | L1 | Notify IndexNow-participating search engines (Bing, Yandex, Seznam.cz, Naver — not Google, which doesn't participate) of new URLs. |
 | `seo-bing-webmaster-signals` | **blocked** | weekly, full | L0 | Feed real Bing-side query performance into the swarm, cross-checkable against the Google Search Console CTR agent. |
 | `seo-search-console-ranking-movement` | **blocked** | weekly, full | L1 | Detect real, significant ranking movement per query. |
+| `seo-indexed-vs-nonindexed-comparator` | **blocked** | weekly, full | L2 | Find measurable, evidence-graded differences between indexed and crawled-not-indexed pages. |
+| `seo-canonical-consistency-analyzer` | **blocked** | weekly, full | L1 | Detect canonical-tag mismatches using real URL Inspection data. |
+| `seo-crawl-recency-analyzer` | **blocked** | weekly, full | L1 | Detect stale, blocked, or failed crawls among non-indexed pages using real URL Inspection data. |
+| `seo-priority-candidate-selector` | **blocked** | weekly, full | L2 | Pick a small, evidence-based batch of URLs worth an indexation experiment. |
+| `seo-experiment-verifier` | **blocked** | weekly, full | L0 | Report whether previously-selected experiment candidates' indexing state has changed. |
 
 ### growth (18)
 
@@ -358,6 +362,13 @@ registry.
 | `growth-search-console-ctr-opportunity` | **blocked** | weekly, full | L2 | Detect real impression-vs-click gaps worth a title/description rewrite. |
 | `growth-search-console-winner-loser` | **blocked** | weekly, full | L1 | Detect real, significant traffic movement per page. |
 | `growth-search-console-content-opportunity` | **blocked** | weekly, full | L3 | Detect real content gaps backed by actual query impressions. |
+
+Two brief items were deliberately **not** built as separate agents:
+"Alternative-keyword discovery" and "'X vs Y' opportunity discovery" are
+already exactly what `maint-comparisons` does (direct-alternative and
+same-category candidate scoring) — a second agent would just relabel the
+same computation. "Growth experiment prioritization" is the orchestrator's
+own scoring/ranking step (see "Scoring" above), not a standalone agent.
 
 ### content (3)
 
@@ -388,14 +399,6 @@ registry.
 | `qa-ga4-consent-static-check` | yes | quick, daily, weekly, full | L0 | Catch a GA4 consent-gating regression visible in server-rendered HTML. |
 | `qa-ga4-consent-code-audit` | yes | quick, daily, weekly, full | L0 | Catch a GA4 consent-gating regression at the source-code level. |
 
-Two brief items were deliberately **not** built as separate agents:
-"Alternative-keyword discovery" and "'X vs Y' opportunity discovery" are
-already exactly what `maint-comparisons` does (direct-alternative and
-same-category candidate scoring) — a second agent would just relabel the
-same computation. "Growth experiment prioritization" is the orchestrator's
-own scoring/ranking step (see "Scoring" above), not a standalone agent.
-
-
 ## Blocked agents — real, specified, honestly not running
 
 Every blocked agent has a file under `scripts/agents/{domain}/` defining
@@ -404,13 +407,52 @@ precisely what credential/API is missing. None of them fake a result.
 
 | Missing capability | Blocks | Adapter file | Status |
 |---|---|---|---|
-| Google Search Console API credentials (`GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT` + `GOOGLE_SEARCH_CONSOLE_PROPERTY`) | `seo-search-console-signals`, `growth-search-console-ctr-opportunity`, `seo-search-console-ranking-movement`, `growth-search-console-winner-loser`, `growth-search-console-content-opportunity`, and (via dependency) `growth-longtail-query-discovery`, `growth-high-impression-low-ctr-detector`* | `scripts/agents/seo/lib/google-service-account-auth.ts`, `google-search-console-client.ts` | **Real, unit-tested** (real RSA JWT signing verified with `node:crypto`, real REST client — `tests/agents/google-search-console.test.ts`, `tests/agents/search-console-agents.test.ts`). Owner must create a GCP service account with the Search Console API enabled, add its email as a Search Console user (read access) on the property, and provide the JSON key. |
+| Google Search Console API credentials (`GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT` + `GOOGLE_SEARCH_CONSOLE_PROPERTY`) | `seo-search-console-signals`, `growth-search-console-ctr-opportunity`, `seo-search-console-ranking-movement`, `growth-search-console-winner-loser`, `growth-search-console-content-opportunity`, `seo-indexed-vs-nonindexed-comparator`, `seo-canonical-consistency-analyzer`, `seo-crawl-recency-analyzer`, `seo-priority-candidate-selector`, `seo-experiment-verifier`, and (via dependency) `growth-longtail-query-discovery`, `growth-high-impression-low-ctr-detector`* | `scripts/agents/seo/lib/google-service-account-auth.ts`, `google-search-console-client.ts` | **Real, unit-tested** (real RSA JWT signing verified with `node:crypto`, real REST client, pagination, 429 retry — see the "Testing" section below for the full list). Owner must create a GCP service account with the Search Console API enabled, add its email as a Search Console user (read access) on the property, and provide the JSON key. **Exact steps: see "Google Search Console — connecting real data" below.** |
 | Bing Webmaster Tools API key (`BING_WEBMASTER_API_KEY` + `BING_WEBMASTER_SITE_URL`) | `seo-bing-webmaster-signals` | `scripts/agents/seo/lib/bing-webmaster-client.ts` | **Real, unit-tested.** Simple API-key auth (no OAuth) — owner verifies the site in Bing Webmaster Tools (often a one-click import from an already-verified GSC property) and generates a key from Settings → API Access. |
 | Keyword-volume API (Keyword Planner/Ahrefs/SEMrush-class) | `growth-search-demand-discovery`, `growth-commercial-intent-keyword-discovery` | `scripts/agents/growth/keyword-demand-adapter.ts` | Interface only — no free/official option exists (see the Phase 2 inventory in the session report); would require a paid subscription, not purchased without explicit approval. |
 | Automated external web monitoring (no scheduled-job equivalent of the interactive WebSearch/WebFetch tools exists here) | `growth-emerging-tool-discovery`, `growth-competitor-gap-discovery`, `growth-distribution-opportunity-discovery` | `scripts/agents/growth/external-monitoring-adapter.ts` | Interface only. |
 | Backlink-data API (Ahrefs/Moz/Semrush-class) | `growth-backlink-opportunity-discovery` | `scripts/agents/growth/backlink-adapter.ts` | Interface only — no free/official option exists; paid, not purchased without explicit approval. |
 
 \* `growth-longtail-query-discovery` and `growth-high-impression-low-ctr-detector` in the dependency list above are historical references from before Phase 2's CTR agent was renamed to `growth-search-console-ctr-opportunity`; `growth-longtail-query-discovery` itself remains a real gap not yet built (Search Console query data alone doesn't distinguish "long-tail" — that needs a length/specificity heuristic on top, not yet implemented).
+
+## Google Search Console — connecting real data (priority #1)
+
+Ten agents are ready and waiting on exactly one thing: a real Google
+credential. Everything below this environment can do (write the auth
+flow, the API client, the indexation-analysis workflow, the tests) is
+done. What's left requires the site owner's own Google account and
+Search Console access — genuinely not automatable from here.
+
+### Exact steps for the owner
+
+1. **Confirm you already have Search Console access to `sc-domain:miloosh.com`** at
+   [search.google.com/search-console](https://search.google.com/search-console) —
+   this system assumes that property already exists and is verified
+   (it's the source of the baseline numbers used to seed this workflow:
+   1,358 sitemap URLs / 38 indexed / 1,307 crawled-not-indexed). If it
+   isn't verified yet, verify it first (DNS TXT record is the standard
+   method for a domain property) — that step alone needs your own DNS
+   provider access, also not automatable from here.
+2. **Create a Google Cloud service account:**
+   - Go to [console.cloud.google.com](https://console.cloud.google.com/), create a project (or pick an existing one) — no billing account is required for this API.
+   - In that project, go to **APIs & Services → Library**, search for **"Google Search Console API"**, and click **Enable**.
+   - Go to **APIs & Services → Credentials → Create Credentials → Service account**. Give it any name (e.g. `miloosh-search-console-reader`). No roles need to be granted at the GCP project level — access is granted inside Search Console itself, in the next step.
+   - Open the new service account, go to the **Keys** tab, **Add Key → Create new key → JSON**. This downloads a `.json` file — **treat it like a password**, never paste its contents in chat.
+3. **Grant that service account read access inside Search Console:**
+   - In Search Console for `sc-domain:miloosh.com`, go to **Settings → Users and permissions → Add user**.
+   - Enter the service account's email address (the `client_email` field inside the JSON file you downloaded — looks like `miloosh-search-console-reader@your-project.iam.gserviceaccount.com`).
+   - Permission level: **Restricted (read-only)** is sufficient — this system only ever reads (`webmasters.readonly` scope; see `scripts/agents/seo/lib/google-search-console-client.ts`), never writes anything to Search Console itself.
+4. **Provide two values** (via Vercel's environment variables, the same mechanism already used for `GOOGLE_...`-style secrets elsewhere in this project — never paste the raw JSON key into chat):
+   - `GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT` — the entire contents of the downloaded JSON key file, either pasted as-is or base64-encoded first (`base64 -i key.json | pbcopy` on macOS) — base64 avoids any shell/UI quoting issues with the key's embedded newlines.
+   - `GOOGLE_SEARCH_CONSOLE_PROPERTY` — exactly `sc-domain:miloosh.com`.
+
+Once both env vars are set in Vercel (or provided some other way this
+environment can read them), the next step is something this environment
+*can* do without further owner action: run `npm run agents:full` once,
+inspect the real output, and — only if a real authenticated call
+succeeds — flip `enabled: true` for the ten Search-Console-dependent
+agents in `lib/agents/registry.ts` (per this task's own "do not enable
+until a real authenticated API call succeeds" rule).
 
 ### Turning on a blocked agent
 

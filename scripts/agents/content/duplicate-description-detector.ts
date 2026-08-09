@@ -1,5 +1,6 @@
 import { getAllSoftware } from "@/data/software";
 import { makeFinding } from "@/lib/agents/finding";
+import { wordSet, jaccardSimilarity } from "@/scripts/agents/shared/text-similarity";
 import type { AgentRunFn } from "@/types/agents";
 
 /**
@@ -14,24 +15,6 @@ import type { AgentRunFn } from "@/types/agents";
  */
 
 const NEAR_DUPLICATE_THRESHOLD = 0.75;
-
-function wordSet(text: string): Set<string> {
-  return new Set(
-    text
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, "")
-      .split(/\s+/)
-      .filter((w) => w.length > 2)
-  );
-}
-
-function jaccard(a: Set<string>, b: Set<string>): number {
-  if (a.size === 0 || b.size === 0) return 0;
-  let intersection = 0;
-  for (const word of a) if (b.has(word)) intersection += 1;
-  const union = a.size + b.size - intersection;
-  return union === 0 ? 0 : intersection / union;
-}
 
 export const run: AgentRunFn = async () => {
   const agentId = "content-duplicate-description-detector";
@@ -70,7 +53,7 @@ export const run: AgentRunFn = async () => {
       const b = wordSets[j];
       const pairKey = [a.slug, b.slug].sort().join(",");
       if (seen.has(pairKey)) continue;
-      const similarity = jaccard(a.words, b.words);
+      const similarity = jaccardSimilarity(a.words, b.words);
       if (similarity < NEAR_DUPLICATE_THRESHOLD) continue;
       seen.add(pairKey);
       findings.push(
