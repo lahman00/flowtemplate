@@ -41,7 +41,7 @@ reason, and that's accurate, not a bug.
 types/agents.ts              shared types: AgentDefinition, Finding,
                               AgentRunResult, AgentSwarmReport, etc.
 lib/agents/
-  registry.ts                 the single source of truth — 40 entries
+  registry.ts                 the single source of truth — 44 entries
   orchestrator.ts              runSwarm(mode) — the Growth Orchestrator
   scoring.ts                   computeImpactScore() — the priority formula
   dedupe.ts                    dedupeFindings() — cross-agent dedup
@@ -305,23 +305,31 @@ already read-only.
 
 ## The full registry
 
-40 entries: **30 enabled/runnable, 10 honestly blocked** (specified, with a
+44 entries: **30 enabled/runnable, 14 honestly blocked** (specified, with a
 real adapter interface, `enabled: false`, `run: null` — never a faked
-result). `lib/agents/registry.ts` is the actual source of truth; this
-table is generated from it and may drift if the registry changes without
-this doc being updated — when in doubt, read the registry.
+result). Most blocked entries are genuinely IMPLEMENTED and unit-tested
+(Google Search Console via a real service-account JWT auth flow + REST
+client; Bing Webmaster via a real API-key client; IndexNow submission is
+fully real and needs no credential at all, held disabled only pending one
+live end-to-end verification post-deploy) — blocked means "no credential
+configured," not "no code exists." `lib/agents/registry.ts` is the actual
+source of truth; this table is generated from it and may drift if the
+registry changes without this doc being updated — when in doubt, read the
+registry.
 
-### seo (5)
+### seo (7)
 
 | id | enabled | modes | risk | single responsibility |
 |---|---|---|---|---|
 | `maint-seo` | yes | daily, weekly, full | L0 | Catch structural SEO regressions in the codebase itself. |
 | `seo-redirect-broken-url-check` | yes | daily, weekly, full | L0 | Catch broken or unexpectedly-redirecting internal routes on the live site. |
 | `seo-category-coverage-depth` | yes | weekly, full | L2 | Identify categories too thin to be a strong landing page. |
-| `seo-search-console-signals` | **blocked** | weekly, full | L0 | Feed real indexing-state and query-performance data into the swarm. |
-| `seo-indexnow-bing-signals` | **blocked** | weekly, full | L1 | Notify Bing of new/changed URLs and feed real Bing-side signals into the swarm. |
+| `seo-search-console-signals` | **blocked** | weekly, full | L0 | Feed real per-URL indexing state into the swarm — DISCOVERED/CRAWLED/INDEXED are different states from 'in the sitemap.' |
+| `seo-indexnow-submit` | **blocked** | weekly, full | L1 | Notify IndexNow-participating search engines (Bing, Yandex, Seznam.cz, Naver — not Google, which doesn't participate) of new URLs. |
+| `seo-bing-webmaster-signals` | **blocked** | weekly, full | L0 | Feed real Bing-side query performance into the swarm, cross-checkable against the Google Search Console CTR agent. |
+| `seo-search-console-ranking-movement` | **blocked** | weekly, full | L1 | Detect real, significant ranking movement per query. |
 
-### growth (16)
+### growth (18)
 
 | id | enabled | modes | risk | single responsibility |
 |---|---|---|---|---|
@@ -340,14 +348,9 @@ this doc being updated — when in doubt, read the registry.
 | `growth-competitor-gap-discovery` | **blocked** | weekly, full | L0 | Discover comparison-page gaps relative to competitors. |
 | `growth-distribution-opportunity-discovery` | **blocked** | weekly, full | L1 | Discover legitimate distribution/listing opportunities. |
 | `growth-backlink-opportunity-discovery` | **blocked** | weekly, full | L1 | Discover legitimate backlink opportunities. |
-| `growth-high-impression-low-ctr-detector` | **blocked** | weekly, full | L0 | Detect real impression-vs-click gaps worth a title/description rewrite. |
-
-Two brief items were deliberately **not** built as separate agents:
-"Alternative-keyword discovery" and "'X vs Y' opportunity discovery" are
-already exactly what `maint-comparisons` does (direct-alternative and
-same-category candidate scoring) — a second agent would just relabel the
-same computation. "Growth experiment prioritization" is the orchestrator's
-own scoring/ranking step (see "Scoring" above), not a standalone agent.
+| `growth-search-console-ctr-opportunity` | **blocked** | weekly, full | L2 | Detect real impression-vs-click gaps worth a title/description rewrite. |
+| `growth-search-console-winner-loser` | **blocked** | weekly, full | L1 | Detect real, significant traffic movement per page. |
+| `growth-search-console-content-opportunity` | **blocked** | weekly, full | L3 | Detect real content gaps backed by actual query impressions. |
 
 ### content (3)
 
@@ -378,32 +381,52 @@ own scoring/ranking step (see "Scoring" above), not a standalone agent.
 | `qa-ga4-consent-static-check` | yes | quick, daily, weekly, full | L0 | Catch a GA4 consent-gating regression visible in server-rendered HTML. |
 | `qa-ga4-consent-code-audit` | yes | quick, daily, weekly, full | L0 | Catch a GA4 consent-gating regression at the source-code level. |
 
+Two brief items were deliberately **not** built as separate agents:
+"Alternative-keyword discovery" and "'X vs Y' opportunity discovery" are
+already exactly what `maint-comparisons` does (direct-alternative and
+same-category candidate scoring) — a second agent would just relabel the
+same computation. "Growth experiment prioritization" is the orchestrator's
+own scoring/ranking step (see "Scoring" above), not a standalone agent.
+
+
 ## Blocked agents — real, specified, honestly not running
 
 Every blocked agent has a file under `scripts/agents/{domain}/` defining
 the exact adapter interface it would use once unblocked, and states
 precisely what credential/API is missing. None of them fake a result.
 
-| Missing capability | Blocks | Adapter file |
-|---|---|---|
-| Google Search Console API credentials | `seo-search-console-signals`, and (via dependency) `growth-longtail-query-discovery`, `growth-high-impression-low-ctr-detector` | `scripts/agents/seo/search-console-signals.ts` |
-| Bing Webmaster Tools API / IndexNow key | `seo-indexnow-bing-signals` | `scripts/agents/seo/indexnow-bing-signals.ts` |
-| Keyword-volume API (Keyword Planner/Ahrefs/SEMrush-class) | `growth-search-demand-discovery`, `growth-commercial-intent-keyword-discovery` | `scripts/agents/growth/keyword-demand-adapter.ts` |
-| Automated external web monitoring (no scheduled-job equivalent of the interactive WebSearch/WebFetch tools exists here) | `growth-emerging-tool-discovery`, `growth-competitor-gap-discovery`, `growth-distribution-opportunity-discovery` | `scripts/agents/growth/external-monitoring-adapter.ts` |
-| Backlink-data API (Ahrefs/Moz/Semrush-class) | `growth-backlink-opportunity-discovery` | `scripts/agents/growth/backlink-adapter.ts` |
+| Missing capability | Blocks | Adapter file | Status |
+|---|---|---|---|
+| Google Search Console API credentials (`GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT` + `GOOGLE_SEARCH_CONSOLE_PROPERTY`) | `seo-search-console-signals`, `growth-search-console-ctr-opportunity`, `seo-search-console-ranking-movement`, `growth-search-console-winner-loser`, `growth-search-console-content-opportunity`, and (via dependency) `growth-longtail-query-discovery`, `growth-high-impression-low-ctr-detector`* | `scripts/agents/seo/lib/google-service-account-auth.ts`, `google-search-console-client.ts` | **Real, unit-tested** (real RSA JWT signing verified with `node:crypto`, real REST client — `tests/agents/google-search-console.test.ts`, `tests/agents/search-console-agents.test.ts`). Owner must create a GCP service account with the Search Console API enabled, add its email as a Search Console user (read access) on the property, and provide the JSON key. |
+| Bing Webmaster Tools API key (`BING_WEBMASTER_API_KEY` + `BING_WEBMASTER_SITE_URL`) | `seo-bing-webmaster-signals` | `scripts/agents/seo/lib/bing-webmaster-client.ts` | **Real, unit-tested.** Simple API-key auth (no OAuth) — owner verifies the site in Bing Webmaster Tools (often a one-click import from an already-verified GSC property) and generates a key from Settings → API Access. |
+| — (no credential needed) | `seo-indexnow-submit` | `scripts/agents/seo/lib/indexnow-client.ts` | **Real, unit-tested, and needs no account at all** — the key is self-issued (`public/64571916632587e2f714c221fb8ccc42.txt`, already committed and deployed). Held disabled pending one live end-to-end verification (per this task's own "test before enabling" instruction), not a credential gap. |
+| Keyword-volume API (Keyword Planner/Ahrefs/SEMrush-class) | `growth-search-demand-discovery`, `growth-commercial-intent-keyword-discovery` | `scripts/agents/growth/keyword-demand-adapter.ts` | Interface only — no free/official option exists (see the Phase 2 inventory in the session report); would require a paid subscription, not purchased without explicit approval. |
+| Automated external web monitoring (no scheduled-job equivalent of the interactive WebSearch/WebFetch tools exists here) | `growth-emerging-tool-discovery`, `growth-competitor-gap-discovery`, `growth-distribution-opportunity-discovery` | `scripts/agents/growth/external-monitoring-adapter.ts` | Interface only. |
+| Backlink-data API (Ahrefs/Moz/Semrush-class) | `growth-backlink-opportunity-discovery` | `scripts/agents/growth/backlink-adapter.ts` | Interface only — no free/official option exists; paid, not purchased without explicit approval. |
+
+\* `growth-longtail-query-discovery` and `growth-high-impression-low-ctr-detector` in the dependency list above are historical references from before Phase 2's CTR agent was renamed to `growth-search-console-ctr-opportunity`; `growth-longtail-query-discovery` itself remains a real gap not yet built (Search Console query data alone doesn't distinguish "long-tail" — that needs a length/specificity heuristic on top, not yet implemented).
 
 ### Turning on a blocked agent
 
+For the three genuinely credential-gated groups above (Search Console, Bing, keyword/backlink APIs):
+
 1. Obtain the real credential/API key.
-2. Implement the adapter's `isConfigured()`/fetch methods for real in its
-   file (the type interface is already correct — only the implementation
-   is a stub).
-3. Set `enabled: true` and `run: <the real run function>` for that agent
-   in `lib/agents/registry.ts`.
-4. Add a test in `tests/agents/` covering the new agent's own logic (mock
-   the adapter, don't hit the real API in tests).
+2. For Search Console/Bing, the client code is already real — just set
+   the env vars it reads (see the table above). For keyword/backlink
+   agents, implement the adapter's `isConfigured()`/fetch methods for
+   real in its file first.
+3. Set `enabled: true` and import + assign the real `run` function for
+   that agent in `lib/agents/registry.ts` (deliberately not imported
+   while disabled — see the comment above the imports in that file).
+4. The unit tests already cover the logic; add a live smoke test only if
+   you want extra confidence beyond what's already tested.
 5. Run `npm run agents:full` once and read the result before trusting it
    in a scheduled run.
+
+For `seo-indexnow-submit` specifically (no credential needed): confirm
+`https://miloosh.com/64571916632587e2f714c221fb8ccc42.txt` returns the
+key as plain text, then run one live submission and check the response
+status before flipping `enabled: true`.
 
 ## GA4 coverage gap — what's actually automated vs. what was manually verified
 

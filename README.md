@@ -129,8 +129,10 @@ and [`docs/maintenance-notifications.md`](docs/maintenance-notifications.md).
 
 ## Growth/QA agent swarm
 
-40 registry entries (30 enabled, 10 honestly blocked on missing external
-credentials — never faked) covering SEO, growth/marketing discovery,
+44 registry entries (30 enabled, 14 honestly blocked — most on missing
+external credentials with real, unit-tested adapters ready to go; one
+(IndexNow) needs no credential at all and is pending a live verification
+step — never faked) covering SEO, growth/marketing discovery,
 content-quality, and QA/monitoring — all deterministic TypeScript, no live
 LLM calls. Wraps the six maintenance agents above rather than duplicating
 them, adds real new checks (internal-link opportunity, cannibalization

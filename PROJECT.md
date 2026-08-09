@@ -161,6 +161,31 @@ handful of hand-written pages.
   (`vitest`, `tests/agents/`, 38 tests) covers registry validation, dedup,
   scoring, malformed/timeout/partial-failure handling, and a real GA4
   regression guard.
+- **Production-exposure review + access gate** — audited `/internal/growth`
+  and `/internal/maintenance` as an unauthenticated visitor: no secrets,
+  keys, credentials, or tokens found; one real latent gap (a QA agent's
+  captured build/lint output could leak an absolute local filesystem path
+  on failure) found and fixed before it ever shipped. All five `/internal/*`
+  pages now gated behind HTTP Basic Auth (`middleware.ts`, fails closed if
+  credentials aren't set) — the smallest available mechanism, no new
+  dependency, no login system. Credentials rotated at least once since
+  (old ones verified invalidated) — see `docs/agents-architecture.md`
+  "Access control."
+- **Phase 2 — unblocking external-data agents** — registry grew from 40 to
+  44 entries (30 enabled, 14 blocked). Google Search Console: a real
+  service-account JWT auth flow (`node:crypto` only, no new dependency)
+  and REST client, unit-tested with genuine RSA signature verification,
+  powering five agents (index/search-visibility, CTR opportunity, ranking
+  movement, growth winner/loser, content opportunity) — all correctly
+  held disabled pending an owner-provided service-account credential (a
+  real account/access requirement, not a code gap). Bing Webmaster Tools:
+  a real API-key REST client, same story. IndexNow: fully implemented,
+  tested, and deployed — genuinely needs no account or signup (the
+  protocol's own design), self-issued key committed and live at
+  `https://miloosh.com/64571916632587e2f714c221fb8ccc42.txt`, held
+  disabled only pending one live end-to-end submission test. Keyword-volume
+  and backlink-data agents remain blocked — no free/official API exists
+  for either; not purchased without explicit approval.
 
 See `docs/` for full architecture documentation:
 

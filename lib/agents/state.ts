@@ -21,12 +21,15 @@ export type AgentSwarmState = {
   firstSeenAt: Record<string, string>;
   /** dedupeKeys a human has explicitly dismissed — these are suppressed from future reports even if an agent finds them again, until removed from this list. Empty by default; nothing writes to this today except a future manual edit or CLI flag. */
   dismissedKeys: string[];
+  /** url -> ISO timestamp of the last successful IndexNow submission. The sole purpose of this map is Section C's explicit "do not repeatedly submit unchanged URLs" rule — a URL already in here is skipped on future runs. */
+  indexNowSubmittedAt: Record<string, string>;
 };
 
 const EMPTY_STATE: AgentSwarmState = {
   lastRunAt: {},
   firstSeenAt: {},
   dismissedKeys: [],
+  indexNowSubmittedAt: {},
 };
 
 export function readState(): AgentSwarmState {
@@ -37,6 +40,7 @@ export function readState(): AgentSwarmState {
       lastRunAt: parsed.lastRunAt ?? {},
       firstSeenAt: parsed.firstSeenAt ?? {},
       dismissedKeys: parsed.dismissedKeys ?? [],
+      indexNowSubmittedAt: parsed.indexNowSubmittedAt ?? {},
     };
   } catch {
     return { ...EMPTY_STATE };
@@ -72,9 +76,21 @@ export function updateState(
   }
   void currentKeySet; // pruning is implicit: only keys present this run survive into the new firstSeenAt map
 
-  return { lastRunAt, firstSeenAt, dismissedKeys: state.dismissedKeys };
+  return { lastRunAt, firstSeenAt, dismissedKeys: state.dismissedKeys, indexNowSubmittedAt: state.indexNowSubmittedAt };
 }
 
 export function isDismissed(state: AgentSwarmState, dedupeKey: string): boolean {
   return state.dismissedKeys.includes(dedupeKey);
+}
+
+/** URLs from `candidates` never submitted to IndexNow before, per state. */
+export function unsubmittedToIndexNow(state: AgentSwarmState, candidates: string[]): string[] {
+  return candidates.filter((url) => !state.indexNowSubmittedAt[url]);
+}
+
+/** Records a successful IndexNow submission so these URLs are skipped on future runs (Section C: "do not repeatedly submit unchanged URLs"). */
+export function recordIndexNowSubmission(state: AgentSwarmState, urls: string[], now = new Date().toISOString()): AgentSwarmState {
+  const indexNowSubmittedAt = { ...state.indexNowSubmittedAt };
+  for (const url of urls) indexNowSubmittedAt[url] = now;
+  return { ...state, indexNowSubmittedAt };
 }
