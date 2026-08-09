@@ -211,9 +211,73 @@ normal env var.
   disallowed via `app/robots.ts`'s existing `/internal/` rule, not linked
   from the public site (same posture as `/internal/maintenance`,
   `/internal/revenue`, `/internal/outbound-clicks`, `/internal/recommendations`).
-  Links to and from `/internal/maintenance`.
+  Links to and from `/internal/maintenance`. **Also gated behind HTTP Basic
+  Auth** (`middleware.ts`, matches `/internal/:path*`) — see "Access
+  control" below. This is new as of the production-exposure review that
+  shipped alongside this system; the other four `/internal/` pages picked
+  up the same gate as a side effect of matching the whole prefix, since
+  gating only the two newest pages while leaving the pre-existing revenue/
+  outbound-click dashboards open made no sense.
 - CLI output (`npm run agents:*`) prints a summary and the top 10
   opportunities by impact directly to the terminal.
+
+## Access control
+
+A production-exposure review (post-implementation, before deploy) audited
+`/internal/growth` and `/internal/maintenance` as an unauthenticated
+visitor would see them. Findings:
+
+- **No secrets, API keys, env vars, credentials, tokens, or account IDs
+  are rendered on either page.** `maint-affiliate`'s activation-status
+  check (`lib/revenue/affiliate-manager.ts`) was already designed to
+  expose only `{slug, programExists, isActive: boolean}` — never the real
+  affiliate URL/ID; that guarantee holds through this system's wrapper
+  unchanged.
+- **One real gap, found and fixed**: `qa-typescript-verification` /
+  `qa-lint-verification` / `qa-data-validation` / `qa-build-verification`
+  (`scripts/agents/qa/shell-check.ts`) capture raw `tsc`/`eslint`/`npm`
+  output on failure, which routinely includes the full absolute
+  filesystem path (`/Users/<name>/<project>/lib/foo.ts:12:3` — every
+  file reference is resolved from `cwd`). Neither dashboard page actually
+  renders a finding's `evidence` field today, so this was latent, not
+  live — but the next person to add an evidence column to the dashboard
+  would have shipped exactly that leak. Fixed by stripping the repo-root
+  prefix from any captured shell output before it's ever captured
+  (`sanitizeOutput` in `shell-check.ts`), so only repo-relative paths
+  (already public — this repo is public on GitHub) can appear even in a
+  future failure.
+- **Repo-relative file paths** (e.g. `lib/generators.ts` as a finding's
+  `location`) do appear in some findings. Not treated as an exposure:
+  this repository is public on GitHub, so its own file layout is already
+  fully visible to anyone regardless of this dashboard.
+- **Real business-operational detail is genuinely visible**: which
+  affiliate programs are confirmed-but-not-activated, revenue-tier
+  classification per product, content-strategy gaps (thin categories,
+  cannibalization risk, stale-content flags). None of this is a
+  credential, but it's real competitive/operational information that
+  wasn't previously assembled in one place — and the review's own brief
+  asked "does this dashboard contain information that should not be
+  public," not narrowly "does it contain secrets."
+
+Given that last point, both dashboards are now gated behind **HTTP Basic
+Auth via `middleware.ts`**, matching `/internal/:path*` (the same prefix
+`app/robots.ts` already disallows). Deliberately the smallest mechanism
+available — no new dependency, no login page, no session/cookie/database,
+~40 lines: check the `Authorization` header against
+`INTERNAL_DASHBOARD_USER`/`INTERNAL_DASHBOARD_PASSWORD`, return 401
+otherwise. **Fails closed**: if either env var is unset, every
+`/internal/` request gets 401, never an open fallback. This necessarily
+also gates the four pre-existing `/internal/` pages
+(`/internal/revenue`, `/internal/outbound-clicks`, `/internal/recommendations`,
+in addition to `/internal/maintenance`) — gating only the two pages this
+task added while leaving the others open would have been inconsistent
+with no real justification. Read-only confirmation: neither dashboard has
+a POST handler, a Server Action, or any client-side mutation — every
+`/internal/*` page is a plain Server Component reading a local file, so
+this system was already incapable of triggering a mutation, agent
+execution, external outreach, deployment, or paid API usage through a GET
+request; Basic Auth adds access control on top of behavior that was
+already read-only.
 
 ## Cost control
 

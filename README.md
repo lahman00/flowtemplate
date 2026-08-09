@@ -52,7 +52,7 @@ app/                    Routes (App Router)
   category/[slug]/        One page per category
   compare/                 /compare index + /compare/[a-vs-b] curated pairs
   recommend/                Recommendation wizard + /recommend/results
-  internal/                  Private admin dashboards (noindex, not linked)
+  internal/                  Private admin dashboards (noindex, not linked, HTTP Basic Auth via middleware.ts)
   api/                        outbound-click / recommendation-click endpoints
   about|contact|privacy|terms/
   affiliate-disclosure|disclaimer|editorial-policy|sources-policy|
