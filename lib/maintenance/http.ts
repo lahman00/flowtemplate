@@ -45,6 +45,23 @@ const BOT_USER_AGENT = "Mozilla/5.0 (compatible; MilooshMaintenanceBot/1.0; +htt
 const BROWSER_USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
+/**
+ * A direct 403 (not a network-level hang, which is handled separately
+ * above) can still be automated-traffic blocking rather than a genuinely
+ * broken link — Cloudflare and Akamai's edge WAFs return 403 with
+ * distinctive headers *before* the origin even sees the request. Verified
+ * against real responses from several vendors in this dataset (Canva,
+ * OpenAI, Midjourney, Umbraco all send `cf-mitigated: challenge` +
+ * `server: cloudflare`; Webex sends `server: AkamaiGHost`) rather than
+ * assumed — a 403 without one of these specific signatures is still
+ * reported as a genuine client_error.
+ */
+function isKnownBotProtectionResponse(response: Response): boolean {
+  const server = response.headers.get("server")?.toLowerCase() ?? "";
+  const cfMitigated = response.headers.get("cf-mitigated");
+  return Boolean(cfMitigated) || server.includes("cloudflare") || server.includes("akamaighost");
+}
+
 function hostnamesMatch(a: string, b: string): boolean {
   const stripWww = (host: string) => host.replace(/^www\./, "");
   return stripWww(a) === stripWww(b);
@@ -196,6 +213,17 @@ export async function checkUrl(rawUrl: string): Promise<LinkCheckResult> {
     }
     if (response.status === 410) {
       return { url: rawUrl, outcome: "gone", httpStatus: 410, redirectHops: hop, redirectChain: chain, checkedAt };
+    }
+    if (response.status === 403 && isKnownBotProtectionResponse(response)) {
+      return {
+        url: rawUrl,
+        outcome: "bot_blocked",
+        httpStatus: 403,
+        redirectHops: hop,
+        redirectChain: chain,
+        checkedAt,
+        details: `Blocked with HTTP 403 by an edge WAF (server: ${response.headers.get("server") ?? "unknown"}) before reaching the origin — a known bot-protection signature, not evidence the link is broken.`,
+      };
     }
     if (response.status >= 400 && response.status < 500) {
       return {

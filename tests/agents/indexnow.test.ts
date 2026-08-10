@@ -27,6 +27,18 @@ describe("submitUrlsToIndexNow", () => {
     });
   });
 
+  it("builds a well-formed keyLocation even when siteUrl has no trailing slash (regression: SITE_URL never has one in production)", async () => {
+    const fetchMock = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(async () => ({ status: 200 }) as Response);
+    vi.stubGlobal("fetch", fetchMock);
+
+    await submitUrlsToIndexNow(["https://miloosh.com/software/notion"], "https://miloosh.com");
+
+    const [, init] = fetchMock.mock.calls[0]!;
+    const body = JSON.parse(init.body as string);
+    expect(body.keyLocation).toBe(`https://miloosh.com/${INDEXNOW_KEY}.txt`);
+    expect(body.keyLocation).not.toBe(`https://miloosh.com${INDEXNOW_KEY}.txt`);
+  });
+
   it("treats HTTP 200 and 202 as success", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => ({ status: 202 }) as Response));
     const result = await submitUrlsToIndexNow(["https://miloosh.com/"], "https://miloosh.com/");

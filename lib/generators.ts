@@ -24,9 +24,20 @@ export function truncateAtWord(text: string, maxLength: number): string {
   return `${(lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated).trimEnd()}…`;
 }
 
+/**
+ * Prefers the product-specific description on its own — appending the
+ * generic "Compare N alternatives" CTA only when it actually fits within
+ * the SERP-safe budget. The old version always appended the CTA first and
+ * truncated after, so on any description over ~90 chars (the majority) the
+ * CTA text was silently sliced away and every page ended mid-sentence with
+ * an ellipsis for zero benefit.
+ */
 export function generateMetaDescription(software: Software): string {
-  const full = `${software.description} Compare ${software.alternatives.length} real alternatives to find the best fit for your team.`;
-  return truncateAtWord(full, META_DESCRIPTION_MAX_LENGTH);
+  const cta = `Compare ${software.alternatives.length} real alternatives to find the best fit for your team.`;
+  const withCta = `${software.description} ${cta}`;
+  if (withCta.length <= META_DESCRIPTION_MAX_LENGTH) return withCta;
+  if (software.description.length <= META_DESCRIPTION_MAX_LENGTH) return software.description;
+  return truncateAtWord(software.description, META_DESCRIPTION_MAX_LENGTH);
 }
 
 export function generateIntro(software: Software): string {

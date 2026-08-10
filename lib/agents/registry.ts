@@ -75,7 +75,11 @@ export const AGENT_REGISTRY: AgentDefinition[] = [
     riskLevel: 0,
     costClass: "cheap",
     modelRequirement: "none",
-    timeoutMs: 120_000,
+    // 397 live URLs at concurrency 6 measured ~105s standalone (2026-08-10);
+    // 120s left too little margin under concurrent swarm load and caused a
+    // real timeout failure in a FULL run. Raised with room to grow as the
+    // dataset does, rather than re-tuning every time the URL count rises.
+    timeoutMs: 180_000,
     retryPolicy: { maxAttempts: 1, backoffMs: 0 },
     successCriteria: "Completes a bounded-concurrency check of every collected URL without throwing.",
     failureCriteria: "An unhandled exception during URL collection or checking.",

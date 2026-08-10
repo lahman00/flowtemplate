@@ -26,6 +26,10 @@ function hostFromUrl(url: string): string {
   return new URL(url).host;
 }
 
+function keyLocationFor(siteUrl: string, key: string): string {
+  return `${siteUrl.replace(/\/$/, "")}/${key}.txt`;
+}
+
 /** Real POST to the IndexNow bulk endpoint. Never mocked outside tests. */
 export async function submitUrlsToIndexNow(urls: string[], siteUrl: string, key: string = INDEXNOW_KEY): Promise<IndexNowSubmitResult> {
   if (urls.length === 0) {
@@ -41,7 +45,7 @@ export async function submitUrlsToIndexNow(urls: string[], siteUrl: string, key:
     body: JSON.stringify({
       host: hostFromUrl(siteUrl),
       key,
-      keyLocation: `${siteUrl}${key}.txt`,
+      keyLocation: keyLocationFor(siteUrl, key),
       urlList: urls,
     }),
   });
