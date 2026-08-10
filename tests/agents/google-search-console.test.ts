@@ -73,6 +73,15 @@ describe("parseServiceAccountEnv", () => {
   it("throws a clear error when required fields are missing", () => {
     expect(() => parseServiceAccountEnv(JSON.stringify({ client_email: "x" }))).toThrow(/private_key/);
   });
+
+  it("throws an actionable error (not a raw JSON.parse SyntaxError) for a value with an extra wrapping layer of quotes — regression: confirmed live in production on 2026-08-10, where this exact shape decoded to garbled bytes and failed with an opaque native error", () => {
+    const wrappedInExtraQuotes = JSON.stringify(JSON.stringify(TEST_KEY));
+    expect(() => parseServiceAccountEnv(wrappedInExtraQuotes)).toThrow(/extra layer of escaping|wrapping layer of quotes/);
+  });
+
+  it("throws an actionable error for a value that is neither raw JSON nor valid base64 JSON", () => {
+    expect(() => parseServiceAccountEnv("not json and not base64 either !!!")).toThrow(/wrapping layer of quotes\/escaping/);
+  });
 });
 
 describe("GoogleSearchConsoleClient", () => {

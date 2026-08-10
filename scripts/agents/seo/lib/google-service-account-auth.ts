@@ -74,10 +74,34 @@ export async function fetchAccessToken(key: GoogleServiceAccountKey, scope: stri
   return (await res.json()) as AccessTokenResponse;
 }
 
-/** Parses the service-account JSON key from an env var. Accepts either raw JSON or base64-encoded JSON (base64 avoids shell/CI quoting issues with the private key's embedded newlines). */
+/**
+ * Parses the service-account JSON key from an env var. Accepts either raw
+ * JSON or base64-encoded JSON (base64 avoids shell/CI quoting issues with
+ * the private key's embedded newlines).
+ *
+ * Confirmed in production (2026-08-10): a value that is neither raw JSON
+ * (doesn't start with "{") nor valid base64 of JSON — e.g. the whole key
+ * pasted with an extra wrapping layer of quotes/escaping — decodes to
+ * garbled bytes and fails with an opaque native `SyntaxError` from
+ * `JSON.parse` that doesn't say what actually went wrong. Wrapping it here
+ * gives whoever's debugging a credential a real, actionable message
+ * instead of "Unexpected token" on unprintable bytes.
+ */
 export function parseServiceAccountEnv(raw: string): GoogleServiceAccountKey {
-  const text = raw.trim().startsWith("{") ? raw : Buffer.from(raw, "base64").toString("utf-8");
-  const parsed = JSON.parse(text) as Partial<GoogleServiceAccountKey>;
+  const looksLikeRawJson = raw.trim().startsWith("{");
+  const text = looksLikeRawJson ? raw : Buffer.from(raw, "base64").toString("utf-8");
+
+  let parsed: Partial<GoogleServiceAccountKey>;
+  try {
+    parsed = JSON.parse(text) as Partial<GoogleServiceAccountKey>;
+  } catch {
+    throw new Error(
+      looksLikeRawJson
+        ? "Service account value starts with '{' but isn't valid JSON — check for truncation or an extra layer of escaping."
+        : "Service account value doesn't start with '{' and isn't valid base64-encoded JSON either — it likely has an extra wrapping layer of quotes/escaping around it. Paste either the raw JSON key file contents (starting with '{'), or that same text base64-encoded, with nothing else added."
+    );
+  }
+
   if (!parsed.client_email || !parsed.private_key) {
     throw new Error("Service account JSON is missing client_email or private_key.");
   }

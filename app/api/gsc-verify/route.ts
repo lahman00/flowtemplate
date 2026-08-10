@@ -32,7 +32,22 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "not found" }, { status: 404 });
   }
 
-  const client = GoogleSearchConsoleClient.fromEnv();
+  let client: GoogleSearchConsoleClient | null;
+  try {
+    client = GoogleSearchConsoleClient.fromEnv();
+  } catch (e) {
+    // fromEnv() parses the service-account value synchronously and throws
+    // on malformed JSON/base64 — confirmed live 2026-08-10: this crashed
+    // the route with an opaque empty 500 before this try/catch existed.
+    return NextResponse.json({
+      configured: true,
+      authenticated: false,
+      propertyAccessible: false,
+      error: e instanceof Error ? e.message : String(e),
+      searchAnalytics: null,
+      urlInspections: [],
+    });
+  }
   if (!client) {
     // Diagnostic only: variable NAMES are not secrets, only values are —
     // this reveals a naming/scoping mismatch without ever touching a value.
