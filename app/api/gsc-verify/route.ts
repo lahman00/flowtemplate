@@ -43,6 +43,9 @@ export async function GET(request: NextRequest) {
       propertyAccessible: false,
       error: "env vars not present in this runtime",
       relevantEnvKeysPresent: relevantKeys,
+      // Lengths only, never content — disambiguates "key missing" from "key present but empty string."
+      serviceAccountValueLength: process.env.GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT?.length ?? null,
+      propertyValueLength: process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY?.length ?? null,
       totalEnvKeyCount: Object.keys(process.env).length,
       searchAnalytics: null,
       urlInspections: [],
