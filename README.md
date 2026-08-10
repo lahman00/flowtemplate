@@ -129,7 +129,7 @@ and [`docs/maintenance-notifications.md`](docs/maintenance-notifications.md).
 
 ## Growth/QA agent swarm
 
-49 registry entries (31 enabled, 18 honestly blocked on missing external
+50 registry entries (32 enabled, 18 honestly blocked on missing external
 credentials — real, unit-tested adapters ready to go, including a live
 end-to-end-verified IndexNow integration that needed no credential at
 all — never faked) covering SEO, growth/marketing discovery,

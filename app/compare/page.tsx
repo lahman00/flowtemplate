@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowUpRight, GitCompare } from "lucide-react";
+import { GitCompare } from "lucide-react";
 import { Container } from "@/components/Container";
-import { Card } from "@/components/Card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SearchForm } from "@/components/SearchForm";
+import { CompareGrid } from "@/components/CompareGrid";
 import { JsonLd } from "@/components/JsonLd";
 import { getSoftware } from "@/data/software";
-import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
+import { PUBLISHED_COMPARISONS } from "@/data/comparisons";
 import { getCategoryName } from "@/data/categories";
 import { getBreadcrumbJsonLd } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/site";
@@ -58,31 +57,22 @@ export default function ComparePage() {
         <section className="mt-14">
           <SectionHeading
             title={`${comparisons.length} comparisons`}
-            description="Pick a pair below to see a full side-by-side breakdown."
+            description="Pick a pair below to see a full side-by-side breakdown, or filter to find one fast."
           />
 
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {comparisons.map(({ softwareA, softwareB }) => (
-              <Link
-                key={getComparisonSlug(softwareA.slug, softwareB.slug)}
-                href={`/compare/${getComparisonSlug(softwareA.slug, softwareB.slug)}`}
-                className="group block h-full"
-              >
-                <Card className="flex h-full flex-col group-hover:border-white/25 group-hover:bg-white/[0.05]">
-                  <div className="flex items-start justify-between gap-4">
-                    <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
-                      {getCategoryName(softwareA.category) === getCategoryName(softwareB.category)
-                        ? getCategoryName(softwareA.category)
-                        : `${getCategoryName(softwareA.category)} · ${getCategoryName(softwareB.category)}`}
-                    </p>
-                    <ArrowUpRight className="h-5 w-5 shrink-0 text-zinc-600 transition group-hover:text-white" />
-                  </div>
-                  <h3 className="mt-2 text-xl font-semibold text-white">
-                    {softwareA.name} vs {softwareB.name}
-                  </h3>
-                </Card>
-              </Link>
-            ))}
+          <div className="mt-8">
+            <CompareGrid
+              items={comparisons.map(({ softwareA, softwareB }) => ({
+                slugA: softwareA.slug,
+                nameA: softwareA.name,
+                slugB: softwareB.slug,
+                nameB: softwareB.name,
+                categoryLabel:
+                  getCategoryName(softwareA.category) === getCategoryName(softwareB.category)
+                    ? getCategoryName(softwareA.category)
+                    : `${getCategoryName(softwareA.category)} · ${getCategoryName(softwareB.category)}`,
+              }))}
+            />
           </div>
         </section>
 

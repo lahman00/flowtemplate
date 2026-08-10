@@ -13,6 +13,7 @@ import { getSoftwareByCategory } from "@/lib/related";
 import { getBreadcrumbJsonLd, getCategoryJsonLd } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/site";
 import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
+import { generateCategorySynthesis } from "@/lib/category";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -85,7 +86,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category.name}
           </h1>
 
-          <p className="mt-6 text-lg leading-8 text-zinc-400">{category.description}</p>
+          <p className="mt-6 text-lg leading-8 text-zinc-400">
+            {generateCategorySynthesis(category, software)}
+          </p>
         </header>
 
         <section className="mt-14">

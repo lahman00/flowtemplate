@@ -217,6 +217,36 @@ handful of hand-written pages.
   suite grew accordingly; see `docs/agents-architecture.md`
   "Google Search Console — connecting real data" for the exact owner
   steps needed to unblock it.
+- **Autonomous growth/QA work shift (2026-08-10)** — owner-directed
+  extended session focused on real traffic/revenue impact rather than
+  agent-count growth. Found and fixed three real production bugs: IndexNow
+  was sending a malformed `keyLocation` (missing path separator) and
+  getting rejected with HTTP 422 on every real submission; the meta-
+  description generator always appended a boilerplate CTA before
+  truncating, so all 217/217 software pages were truncated even when the
+  CTA never fit (now 177/217, and only pages with genuinely long sourced
+  descriptions); the link checker misclassified direct Cloudflare/Akamai
+  403s (verified via a real browser hitting a live Cloudflare challenge
+  page) as generic "client_error" instead of bot-blocking. Content
+  forensics on the three templates (no GSC access yet) found comparison
+  pages are 81.5% of the sitemap (1,107/1,358) and collapsed to just 12
+  distinct intro-sentence shapes across the whole corpus — fixed by
+  grounding the second sentence in each pair's real feature/platform
+  counts (12 → 290 shapes). Added a category-page synthesis sentence
+  (real platform-coverage data, not editorial claims) and a client-side
+  filter on `/compare` (1,107 links now findable without removing any
+  from the crawled HTML). Selected and recorded a 15-URL experiment
+  cohort via the existing experiment-tracker for later GSC comparison.
+  Closed a real revenue-documentation gap: 9 of 15 Tier A products with
+  a confirmed affiliate program had no application checklist entry —
+  added using already-sourced research, no new fetches. Registry grew
+  from 49 to 50 entries (32 enabled, 18 blocked — the one addition,
+  content-comparison-similarity-analyzer, needed no credential).
+  Internal linking confirmed comprehensive (0 findings, no orphans).
+  Discovered but deliberately did not act on: 0/217 software entries
+  have `pricing.model`/`links.*`/`founded`/`company`/`pros`/`cons`/
+  `faq`/`tags` populated — a systemic dataset gap, not specific to the
+  7 products the freshness scorer flagged as "stale."
 
 See `docs/` for full architecture documentation:
 
