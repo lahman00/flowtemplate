@@ -34,7 +34,19 @@ export async function GET(request: NextRequest) {
 
   const client = GoogleSearchConsoleClient.fromEnv();
   if (!client) {
-    return NextResponse.json({ configured: false, authenticated: false, propertyAccessible: false, error: "env vars not present in this runtime", searchAnalytics: null, urlInspections: [] });
+    // Diagnostic only: variable NAMES are not secrets, only values are —
+    // this reveals a naming/scoping mismatch without ever touching a value.
+    const relevantKeys = Object.keys(process.env).filter((k) => k.includes("GOOGLE") || k.includes("SEARCH_CONSOLE"));
+    return NextResponse.json({
+      configured: false,
+      authenticated: false,
+      propertyAccessible: false,
+      error: "env vars not present in this runtime",
+      relevantEnvKeysPresent: relevantKeys,
+      totalEnvKeyCount: Object.keys(process.env).length,
+      searchAnalytics: null,
+      urlInspections: [],
+    });
   }
 
   const endDate = new Date();
