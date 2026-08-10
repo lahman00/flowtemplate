@@ -91,6 +91,23 @@ function lowercaseForSentence(name: string): string {
   return name === name.toUpperCase() ? name : name.toLowerCase();
 }
 
+/**
+ * Second sentence is grounded in real per-product numbers (feature count,
+ * platform count) rather than the fixed "Here's how they compare on
+ * official platforms, features, and positioning" boilerplate that used to
+ * be identical across all 1,107 comparison pages regardless of which pair
+ * — a content-forensics pass (2026-08-10) found only 12 distinct intro
+ * sentence shapes across the whole corpus and >0.5 word-overlap similarity
+ * on 82% of comparison pairs sharing a product. Every product already has
+ * `features` and `platforms` populated (validate:data enforces non-empty
+ * arrays), so this has full coverage with no "Not yet documented" gap.
+ */
+function generateComparisonFactSentence(softwareA: Software, softwareB: Software): string {
+  const platformsA = softwareA.platforms?.length ?? 0;
+  const platformsB = softwareB.platforms?.length ?? 0;
+  return `${softwareA.name} lists ${softwareA.features.length} features across ${platformsA} platform${platformsA === 1 ? "" : "s"}; ${softwareB.name} lists ${softwareB.features.length} features across ${platformsB} platform${platformsB === 1 ? "" : "s"} — see the full breakdown below, sourced from each vendor's own site rather than ratings or reviews.`;
+}
+
 /** Factual, grounded intro — states what's being compared and why, nothing evaluative. */
 export function generateComparisonIntro(softwareA: Software, softwareB: Software): string {
   const categoryA = getCategoryName(softwareA.category);
@@ -100,7 +117,7 @@ export function generateComparisonIntro(softwareA: Software, softwareB: Software
       ? lowercaseForSentence(categoryA)
       : `tools people compare when choosing between ${lowercaseForSentence(categoryA)} and ${lowercaseForSentence(categoryB)}`;
 
-  return `${softwareA.name} and ${softwareB.name} are both ${categoryPhrase} options. Here's how they compare on official platforms, features, and positioning — sourced from each vendor's own site, not from ratings or reviews.`;
+  return `${softwareA.name} and ${softwareB.name} are both ${categoryPhrase} options. ${generateComparisonFactSentence(softwareA, softwareB)}`;
 }
 
 /**

@@ -10,6 +10,7 @@ import { run as redirectBrokenUrlCheckRun } from "@/scripts/agents/seo/redirect-
 import { run as categoryCoverageDepthRun } from "@/scripts/agents/seo/category-coverage-depth";
 import { run as duplicateDescriptionRun } from "@/scripts/agents/content/duplicate-description-detector";
 import { run as templatedRepetitionRun } from "@/scripts/agents/content/templated-repetition-detector";
+import { run as comparisonSimilarityRun } from "@/scripts/agents/content/comparison-similarity-analyzer";
 import { run as titleDescriptionQualityRun } from "@/scripts/agents/growth/title-description-quality";
 import { run as internalLinkOpportunityRun } from "@/scripts/agents/growth/internal-link-opportunity";
 import { run as cannibalizationDetectorRun } from "@/scripts/agents/growth/cannibalization-detector";
@@ -396,6 +397,31 @@ export const AGENT_REGISTRY: AgentDefinition[] = [
     blockedReason: null,
     version: "1.0.0",
     run: templatedRepetitionRun,
+  },
+  {
+    id: "content-comparison-similarity-analyzer",
+    name: "Comparison Similarity Analyzer",
+    domain: "content",
+    description: "Measures word-overlap similarity among comparison pages that share a product (e.g. every notion-vs-X page against every other) — comparisons are 81.5% of the sitemap, the highest-volume, highest-risk template for near-duplicate content. Reports one systemic finding, not one per pair.",
+    singleResponsibility: "Quantify comparison-page content overlap as an objective, evidence-graded fact for the indexation-analysis workflow.",
+    inputs: ["data/comparisons.ts", "data/software/*.json", "lib/comparison.ts generated output"],
+    outputs: ["Finding[] (issue, systemic only)"],
+    trigger: "scheduled",
+    modes: ["weekly", "full"],
+    dependencies: [],
+    permissions: ["read data/comparisons", "read data/software"],
+    riskLevel: 1,
+    costClass: "free",
+    modelRequirement: "none",
+    timeoutMs: 30_000,
+    retryPolicy: { maxAttempts: 1, backoffMs: 0 },
+    successCriteria: "Completes the shared-product pairwise comparison without throwing.",
+    failureCriteria: "An unhandled exception.",
+    verificationAgent: null,
+    enabled: true,
+    blockedReason: null,
+    version: "1.0.0",
+    run: comparisonSimilarityRun,
   },
 
   // ---------------------------------------------------------------------
