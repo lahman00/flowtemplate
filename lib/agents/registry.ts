@@ -290,7 +290,7 @@ export const AGENT_REGISTRY: AgentDefinition[] = [
     failureCriteria: "An unhandled exception (including a real auth/API failure).",
     verificationAgent: null,
     enabled: false,
-    blockedReason: "Adapter is real and unit-tested; needs a real Google Cloud service-account credential (GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT) added as a user on the Search Console property (GOOGLE_SEARCH_CONSOLE_PROPERTY) — owner action, not a code gap.",
+    blockedReason: "Adapter is real and unit-tested. Both env vars are now set in Vercel production (confirmed 2026-08-10 via a live diagnostic call from that runtime), but GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT's value doesn't parse — it's neither raw JSON nor valid base64, likely an extra wrapping layer of quotes/escaping around the pasted value (see the actionable error parseServiceAccountEnv now raises). Owner needs to re-paste the service-account JSON key correctly — not a code gap.",
     version: "0.2.0-blocked",
     run: null,
   },
