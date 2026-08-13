@@ -105,35 +105,51 @@ export async function GET(request: NextRequest) {
 
   const urlInspections: Array<{ url: string; verdict: string; coverageState: string | null; indexingState: string | null; lastCrawlTime: string | null; robotsTxtState: string | null; pageFetchState: string | null; googleCanonical: string | null; userCanonical: string | null; error?: string }> = [];
 
-  for (const url of allInspectionUrls) {
-    try {
-      const result = await client.inspectUrl(url);
-      urlInspections.push({
-        url: result.url,
-        verdict: result.verdict,
-        coverageState: result.coverageState,
-        indexingState: result.indexingState,
-        lastCrawlTime: result.lastCrawlTime,
-        robotsTxtState: result.robotsTxtState,
-        pageFetchState: result.pageFetchState,
-        googleCanonical: result.googleCanonical,
-        userCanonical: result.userCanonical,
-      });
-    } catch (e) {
-      urlInspections.push({
-        url,
-        verdict: "UNKNOWN",
-        coverageState: null,
-        indexingState: null,
-        lastCrawlTime: null,
-        robotsTxtState: null,
-        pageFetchState: null,
-        googleCanonical: null,
-        userCanonical: null,
-        error: e instanceof Error ? e.message : String(e),
-      });
+  // Confirmed live (2026-08-10): URL Inspection calls run purely sequentially
+  // over ~65 URLs hit Vercel's function timeout even after fixing the OAuth
+  // token-caching bug — each Inspection call is individually slow. The
+  // documented quota (600/min per property) allows real concurrency; bounded
+  // worker-pool mirrors lib/maintenance/http.ts's checkUrlsWithConcurrency.
+  const INSPECTION_CONCURRENCY = 8;
+  const inspectionResults: typeof urlInspections = new Array(allInspectionUrls.length);
+  let nextIndex = 0;
+
+  async function inspectWorker() {
+    while (nextIndex < allInspectionUrls.length) {
+      const index = nextIndex++;
+      const url = allInspectionUrls[index]!;
+      try {
+        const result = await client!.inspectUrl(url);
+        inspectionResults[index] = {
+          url: result.url,
+          verdict: result.verdict,
+          coverageState: result.coverageState,
+          indexingState: result.indexingState,
+          lastCrawlTime: result.lastCrawlTime,
+          robotsTxtState: result.robotsTxtState,
+          pageFetchState: result.pageFetchState,
+          googleCanonical: result.googleCanonical,
+          userCanonical: result.userCanonical,
+        };
+      } catch (e) {
+        inspectionResults[index] = {
+          url,
+          verdict: "UNKNOWN",
+          coverageState: null,
+          indexingState: null,
+          lastCrawlTime: null,
+          robotsTxtState: null,
+          pageFetchState: null,
+          googleCanonical: null,
+          userCanonical: null,
+          error: e instanceof Error ? e.message : String(e),
+        };
+      }
     }
   }
+
+  await Promise.all(Array.from({ length: Math.min(INSPECTION_CONCURRENCY, allInspectionUrls.length) }, () => inspectWorker()));
+  urlInspections.push(...inspectionResults);
 
   return NextResponse.json({
     configured: true,
