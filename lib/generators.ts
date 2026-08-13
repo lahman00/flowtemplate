@@ -63,13 +63,35 @@ export function generateComparisonIntro(software: Software): string {
   return `See how the top ${software.name} alternatives compare on use case fit and core strengths.`;
 }
 
-/** Data-driven "how to choose" guidance, grounded in whatever platforms/features this entry actually has. */
+function stripTrailingPeriod(text: string): string {
+  return text.endsWith(".") ? text.slice(0, -1) : text;
+}
+
+/**
+ * Data-driven "how to choose" guidance. Used to be fixed boilerplate,
+ * identical on all 217 software pages regardless of which alternatives
+ * they actually list — real Search Console data (Operation First Click,
+ * 2026-08-14) showed the overwhelming majority of this site's real search
+ * impressions are "[product] alternatives"/"[product] vs [competitor]"
+ * queries, which this generic text did nothing to address. Now names each
+ * real listed alternative and its own sourced `bestFor` field verbatim
+ * (not spliced into a lowercased sentence — comparison.ts's
+ * generateWhoShouldChoose hit exactly this bug before: some bestFor text
+ * starts with the product's own name, e.g. "HubSpot positions...", and a
+ * naive first-letter lowercase mangles it into "hubSpot positions...").
+ */
 export function generateChoosingGuide(software: Software): string {
   const platformsNote = software.platforms?.length
     ? ` Confirm it runs on the platforms you need (${software.platforms.join(", ")}) before switching.`
     : "";
 
-  return `Start with the workflow you need to improve. Compare ease of use, collaboration features, integrations, customization, and the effort required to migrate your existing data.${platformsNote}`;
+  if (software.alternatives.length === 0) {
+    return `Start with the workflow you need to improve. Compare ease of use, collaboration features, integrations, customization, and the effort required to migrate your existing data.${platformsNote}`;
+  }
+
+  const altSummary = software.alternatives.map((alt) => `${alt.name} (${stripTrailingPeriod(alt.bestFor)})`).join("; ");
+
+  return `Before switching to ${software.name}, weigh it against its listed alternatives: ${altSummary}. Compare each against the workflow you actually run today — integrations, customization, and the effort required to migrate your existing data usually matter more than headline features.${platformsNote}`;
 }
 
 export function generateFaq(software: Software): FaqItem[] {

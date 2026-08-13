@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { generateMetaDescription, META_DESCRIPTION_MAX_LENGTH } from "@/lib/generators";
+import { generateMetaDescription, META_DESCRIPTION_MAX_LENGTH, generateChoosingGuide } from "@/lib/generators";
 import type { Software } from "@/data/software";
 
 function software(overrides: Partial<Software>): Software {
@@ -39,5 +39,42 @@ describe("generateMetaDescription", () => {
     expect(result.length).toBeLessThanOrEqual(META_DESCRIPTION_MAX_LENGTH);
     expect(result.endsWith("…")).toBe(true);
     expect(result).not.toContain("Compare");
+  });
+});
+
+describe("generateChoosingGuide (Operation First Click, 2026-08-14: real per-alternative data instead of fixed boilerplate)", () => {
+  it("names each real listed alternative and its own sourced bestFor text verbatim", () => {
+    const s = software({
+      name: "Sprout Social",
+      alternatives: [
+        { name: "Hootsuite", slug: "hootsuite", description: "d", bestFor: "Social media managers and enterprises.", strengths: ["a"] },
+        { name: "Buffer", slug: "buffer", description: "d", bestFor: "Creators and small businesses.", strengths: ["a"] },
+      ],
+    });
+    const result = generateChoosingGuide(s);
+    expect(result).toContain("Hootsuite (Social media managers and enterprises)");
+    expect(result).toContain("Buffer (Creators and small businesses)");
+    expect(result).toContain("Sprout Social");
+  });
+
+  it("never lowercases bestFor's first letter — regression: comparison.ts hit this exact bug when a product's own name opens the sentence (e.g. 'HubSpot positions...' -> 'hubSpot positions...')", () => {
+    const s = software({
+      alternatives: [{ name: "HubSpot", slug: "hubspot", description: "d", bestFor: "HubSpot positions itself for growing teams.", strengths: ["a"] }],
+    });
+    const result = generateChoosingGuide(s);
+    expect(result).toContain("HubSpot positions itself for growing teams");
+    expect(result).not.toContain("hubSpot positions");
+  });
+
+  it("falls back to the generic guidance only when there are genuinely no alternatives on record", () => {
+    const s = software({ alternatives: [] });
+    const result = generateChoosingGuide(s);
+    expect(result).toContain("Start with the workflow you need to improve");
+  });
+
+  it("still includes the platforms note when platforms are set", () => {
+    const s = software({ platforms: ["Web", "macOS"], alternatives: [{ name: "A", slug: "a", description: "d", bestFor: "teams", strengths: ["x"] }] });
+    const result = generateChoosingGuide(s);
+    expect(result).toContain("Web, macOS");
   });
 });
