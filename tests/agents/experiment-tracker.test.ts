@@ -1,13 +1,35 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, beforeAll, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { recordCandidateSelection, candidatesReadyForVerification, recordVerificationOutcome, readExperimentCandidates } from "@/lib/agents/experiment-tracker";
 
 const TRACKER_PATH = path.join(process.cwd(), "var", "agents", "experiment-candidates.json");
 
-// Isolate this suite from any real tracker file the live agents may have written.
+/**
+ * Regression (2026-08-10): this suite used to only delete the real tracker
+ * file in beforeEach and never restore it, which permanently destroyed
+ * real recorded experiment candidates every time the full test suite ran
+ * — the "isolation" only worked one direction. Now backs up whatever was
+ * really there before the suite runs and restores it exactly afterward,
+ * so isolation doesn't come at the cost of real data.
+ */
+let realBackup: string | null = null;
+
+beforeAll(() => {
+  realBackup = fs.existsSync(TRACKER_PATH) ? fs.readFileSync(TRACKER_PATH, "utf-8") : null;
+});
+
 beforeEach(() => {
   fs.rmSync(TRACKER_PATH, { force: true });
+});
+
+afterAll(() => {
+  if (realBackup !== null) {
+    fs.mkdirSync(path.dirname(TRACKER_PATH), { recursive: true });
+    fs.writeFileSync(TRACKER_PATH, realBackup);
+  } else {
+    fs.rmSync(TRACKER_PATH, { force: true });
+  }
 });
 
 describe("experiment tracker (item J's data source)", () => {
