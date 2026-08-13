@@ -205,8 +205,7 @@ describe("GoogleSearchConsoleClient", () => {
     mockFetchSequence([
       { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
       { ok: true, json: { rows: page1 } },
-      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
-      { ok: true, json: { rows: page2 } }, // shorter than pageSize -> stop
+      { ok: true, json: { rows: page2 } }, // shorter than pageSize -> stop. No second token fetch: the client caches it for its lifetime.
     ]);
     const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
     const rows = await client.queryAllSearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"], rowLimit: 3 });
@@ -219,12 +218,30 @@ describe("GoogleSearchConsoleClient", () => {
     mockFetchSequence([
       { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
       { ok: true, json: { rows: fullPage } },
-      { ok: true, json: { access_token: "fake-token", expires_in: 3600, token_type: "Bearer" } },
-      { ok: true, json: { rows: fullPage } },
+      { ok: true, json: { rows: fullPage } }, // no second token fetch: cached across both pages.
     ]);
     const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
     const rows = await client.queryAllSearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"], rowLimit: 3 }, 5);
     expect(rows).toHaveLength(5); // 6 fetched across 2 pages, capped to maxRows=5
+  });
+
+  it("caches the access token across multiple calls on the same client instead of re-fetching it every time — regression: a ~65-call real batch hit Vercel's function timeout because every single call paid for its own OAuth round-trip", async () => {
+    const fetchMock = vi.fn<(url: string) => Promise<Response>>(async (url: string) => {
+      if (url.includes("oauth2.googleapis.com")) {
+        return { ok: true, status: 200, json: async () => ({ access_token: "fake-token", expires_in: 3600, token_type: "Bearer" }) } as Response;
+      }
+      return { ok: true, status: 200, json: async () => ({ rows: [] }) } as Response;
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const client = new GoogleSearchConsoleClient(TEST_KEY, "https://miloosh.com/");
+    await client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["query"] });
+    await client.querySearchAnalytics({ startDate: "2026-07-01", endDate: "2026-07-28", dimensions: ["page"] });
+    await client.inspectUrl("https://miloosh.com/software/notion");
+
+    const tokenCalls = fetchMock.mock.calls.filter(([url]) => url.includes("oauth2.googleapis.com"));
+    expect(tokenCalls).toHaveLength(1);
+    expect(fetchMock).toHaveBeenCalledTimes(4); // 1 token fetch + 3 real API calls
   });
 
   it("parses the full IndexStatusInspectionResult field set, including canonical and robots state", async () => {

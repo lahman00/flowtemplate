@@ -98,7 +98,12 @@ async function fetchWithQuotaRetry(url: string, init: RequestInit): Promise<Resp
   return lastResponse!;
 }
 
+/** Refresh this many seconds before the token's real expiry, not exactly at it — avoids a request racing an about-to-expire token. */
+const TOKEN_REFRESH_MARGIN_MS = 60_000;
+
 export class GoogleSearchConsoleClient {
+  private cachedToken: { value: string; expiresAt: number } | null = null;
+
   constructor(
     private readonly key: GoogleServiceAccountKey,
     private readonly propertyUrl: string
@@ -111,8 +116,21 @@ export class GoogleSearchConsoleClient {
     return new GoogleSearchConsoleClient(parseServiceAccountEnv(rawKey), property);
   }
 
+  /**
+   * Caches the access token for the client's lifetime instead of exchanging
+   * a fresh one on every single API call. Confirmed live (2026-08-10): a
+   * ~65-call batch (one full indexation-sample URL Inspection pass) hit
+   * Vercel's function timeout without this — every call was paying for its
+   * own JWT-sign + OAuth2 round-trip on top of the actual Search Console
+   * request. Google's token is valid for `expires_in` seconds (normally
+   * 3600); reused here until TOKEN_REFRESH_MARGIN_MS before that.
+   */
   private async accessToken(): Promise<string> {
+    if (this.cachedToken && this.cachedToken.expiresAt > Date.now()) {
+      return this.cachedToken.value;
+    }
     const token = await fetchAccessToken(this.key, SEARCH_ANALYTICS_SCOPE);
+    this.cachedToken = { value: token.access_token, expiresAt: Date.now() + token.expires_in * 1000 - TOKEN_REFRESH_MARGIN_MS };
     return token.access_token;
   }
 
