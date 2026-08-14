@@ -149,4 +149,29 @@ describe("affiliate pipeline state transitions", () => {
       "submitted",
     ]);
   });
+
+  it("a program stuck behind a network approval can move to waiting_on_network from needs_owner_action or verified", async () => {
+    await setPipelineStatus("miro", "program_found");
+    await setPipelineStatus("miro", "verified");
+    await setPipelineStatus("miro", "needs_owner_action", { ownerActionRequired: "Needs a PartnerStack account." });
+    const updated = await setPipelineStatus("miro", "waiting_on_network", {
+      note: "PartnerStack Network Profile submitted; owner action complete.",
+    });
+    expect(updated.status).toBe("waiting_on_network");
+    expect(updated.ownerActionRequired).toBeNull(); // cleared — nothing left for the owner to do on this program specifically
+  });
+
+  it("waiting_on_network resolves forward once the network responds", async () => {
+    await setPipelineStatus("airtable", "program_found");
+    await setPipelineStatus("airtable", "verified");
+    await setPipelineStatus("airtable", "waiting_on_network");
+    await expect(setPipelineStatus("airtable", "ready_to_apply")).resolves.not.toThrow();
+  });
+
+  it("waiting_on_network cannot jump straight to submitted", async () => {
+    await setPipelineStatus("zendesk", "program_found");
+    await setPipelineStatus("zendesk", "verified");
+    await setPipelineStatus("zendesk", "waiting_on_network");
+    await expect(setPipelineStatus("zendesk", "submitted")).rejects.toThrow(/Invalid affiliate pipeline transition/);
+  });
 });

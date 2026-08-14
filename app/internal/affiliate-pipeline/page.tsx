@@ -9,6 +9,7 @@ import { getRankedApplicationCandidates } from "@/lib/revenue/affiliate-priority
 import { buildApplicationPack, APPLICANT_LINKEDIN_URL } from "@/lib/revenue/application-pack";
 import { countByPipelineStatus } from "@/lib/revenue/affiliate-pipeline";
 import { markSubmittedAction, markApprovedAction, markRejectedAction } from "@/lib/revenue/affiliate-pipeline-actions";
+import { readNetworkStatuses } from "@/lib/revenue/affiliate-network-status";
 
 /**
  * Affiliate Revenue Engine, Phase 7 / Completion Pass — owner application
@@ -50,11 +51,19 @@ const STATUS_LABEL: Record<string, string> = {
   program_closed: "Program closed",
   needs_owner_action: "Needs owner action",
   needs_more_research: "Needs more research",
+  waiting_on_network: "Waiting on network approval",
+};
+
+const NETWORK_STATUS_LABEL: Record<string, string> = {
+  not_applied: "Not applied",
+  pending_review: "Pending review",
+  approved: "Approved",
+  rejected: "Rejected",
 };
 
 function statusTone(status: string): string {
   if (["earning", "activated", "affiliate_link_received", "approved"].includes(status)) return "border-emerald-500/30 text-emerald-300";
-  if (["pending_review", "submitted", "application_in_progress"].includes(status)) return "border-amber-500/30 text-amber-300";
+  if (["pending_review", "submitted", "application_in_progress", "waiting_on_network"].includes(status)) return "border-amber-500/30 text-amber-300";
   if (["rejected", "no_program", "program_closed", "needs_owner_action"].includes(status)) return "border-red-500/30 text-red-300";
   return "border-white/10 text-zinc-400";
 }
@@ -62,11 +71,14 @@ function statusTone(status: string): string {
 export default async function AffiliatePipelinePage() {
   const ranked = await getRankedApplicationCandidates();
   const statusCounts = await countByPipelineStatus();
+  const networkStatuses = await readNetworkStatuses();
 
   const notYetStarted = (r: (typeof ranked)[number]) =>
     r.pipelineStatus === "unresearched" || r.pipelineStatus === "verified" || r.pipelineStatus === "ready_to_apply";
   const ready = ranked.filter((r) => notYetStarted(r) && r.readyToApply);
-  const waiting = ranked.filter((r) => ["submitted", "pending_review", "application_in_progress"].includes(r.pipelineStatus));
+  const waiting = ranked.filter((r) =>
+    ["submitted", "pending_review", "application_in_progress", "waiting_on_network"].includes(r.pipelineStatus)
+  );
   const blocked = ranked.filter(
     (r) => ["needs_owner_action", "rejected", "program_closed"].includes(r.pipelineStatus) || (notYetStarted(r) && !r.readyToApply)
   );
@@ -97,7 +109,7 @@ export default async function AffiliatePipelinePage() {
           ) : null}
         </header>
 
-        <section className="mt-12 grid gap-6 sm:grid-cols-4">
+        <section className="mt-12 grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
           <Card>
             <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Confirmed programs</p>
             <p className="mt-2 text-3xl font-bold text-white">{ranked.length}</p>
@@ -105,6 +117,10 @@ export default async function AffiliatePipelinePage() {
           <Card>
             <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Submitted / pending</p>
             <p className="mt-2 text-3xl font-bold text-white">{statusCounts.submitted + statusCounts.pending_review}</p>
+          </Card>
+          <Card>
+            <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Waiting on network</p>
+            <p className="mt-2 text-3xl font-bold text-white">{statusCounts.waiting_on_network}</p>
           </Card>
           <Card>
             <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Approved / earning</p>
@@ -186,7 +202,11 @@ export default async function AffiliatePipelinePage() {
         </section>
 
         <section className="mt-14">
-          <SectionHeading eyebrow="Waiting" title="Submitted, awaiting the vendor" />
+          <SectionHeading
+            eyebrow="Waiting"
+            title="Submitted, awaiting a decision"
+            description="Some of these are waiting on the vendor's own review; others are waiting on a network-level approval (e.g. PartnerStack) that gates several programs at once — see Affiliate networks below."
+          />
           <div className="mt-8 grid gap-4">
             {waiting.length === 0 ? (
               <Card><p className="text-sm text-zinc-500">Nothing waiting right now.</p></Card>
@@ -197,24 +217,50 @@ export default async function AffiliatePipelinePage() {
                     <span className="font-medium text-white">{r.name}</span>
                     <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
                   </div>
-                  <div className="flex gap-2">
-                    <form action={markApprovedAction.bind(null, r.slug)}>
-                      <button
-                        type="submit"
-                        className="rounded-lg border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-500/10"
-                      >
-                        Mark approved
-                      </button>
-                    </form>
-                    <form action={markRejectedAction.bind(null, r.slug)}>
-                      <button
-                        type="submit"
-                        className="rounded-lg border border-red-500/30 px-3 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-500/10"
-                      >
-                        Mark rejected
-                      </button>
-                    </form>
+                  {r.pipelineStatus === "waiting_on_network" ? (
+                    <span className="text-sm text-zinc-500">Will move to Ready once the network approves.</span>
+                  ) : (
+                    <div className="flex gap-2">
+                      <form action={markApprovedAction.bind(null, r.slug)}>
+                        <button
+                          type="submit"
+                          className="rounded-lg border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-500/10"
+                        >
+                          Mark approved
+                        </button>
+                      </form>
+                      <form action={markRejectedAction.bind(null, r.slug)}>
+                        <button
+                          type="submit"
+                          className="rounded-lg border border-red-500/30 px-3 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-500/10"
+                        >
+                          Mark rejected
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </Card>
+              ))
+            )}
+          </div>
+        </section>
+
+        <section className="mt-14">
+          <SectionHeading eyebrow="Networks" title="Affiliate network relationships" description="Network-level status — separate from individual program applications, but several programs are gated behind these." />
+          <div className="mt-8 grid gap-4">
+            {networkStatuses.length === 0 ? (
+              <Card><p className="text-sm text-zinc-500">No network-level relationships recorded yet.</p></Card>
+            ) : (
+              networkStatuses.map((n) => (
+                <Card key={n.network} className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="font-medium text-white">{n.network}</span>
+                    <Badge className={statusTone(n.status)}>{NETWORK_STATUS_LABEL[n.status]}</Badge>
                   </div>
+                  <span className="text-sm text-zinc-500">
+                    {n.submittedAt ? `Submitted ${n.submittedAt.slice(0, 10)}` : null}
+                    {n.notes ? ` — ${n.notes}` : null}
+                  </span>
                 </Card>
               ))
             )}

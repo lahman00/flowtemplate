@@ -36,7 +36,9 @@ export type AffiliatePipelineStatus =
   | "no_program"
   | "program_closed"
   | "needs_owner_action"
-  | "needs_more_research";
+  | "needs_more_research"
+  /** Individual program can't be applied to yet because it's gated behind a network-level relationship (e.g. a PartnerStack "Network Profile") that's itself pending_review — see lib/revenue/affiliate-network-status.ts. Distinct from needs_owner_action: there's nothing left for the owner to do on THIS program until the network responds. */
+  | "waiting_on_network";
 
 export type AffiliatePipelineEntry = {
   slug: string;
@@ -63,7 +65,7 @@ function hasBlobToken(): boolean {
 const VALID_TRANSITIONS: Record<AffiliatePipelineStatus, AffiliatePipelineStatus[]> = {
   unresearched: ["program_found", "no_program", "needs_more_research"],
   program_found: ["verified", "needs_more_research", "no_program"],
-  verified: ["ready_to_apply", "program_closed", "needs_owner_action"],
+  verified: ["ready_to_apply", "program_closed", "needs_owner_action", "waiting_on_network"],
   ready_to_apply: ["application_in_progress", "needs_owner_action"],
   application_in_progress: ["submitted", "needs_owner_action"],
   submitted: ["pending_review", "needs_owner_action"],
@@ -83,8 +85,10 @@ const VALID_TRANSITIONS: Record<AffiliatePipelineStatus, AffiliatePipelineStatus
     "pending_review",
     "approved",
     "affiliate_link_received",
+    "waiting_on_network",
   ], // resumes wherever it was once the owner acts — not a strict single next state
   needs_more_research: ["program_found", "no_program", "verified"],
+  waiting_on_network: ["ready_to_apply", "needs_owner_action", "no_program"], // network approves -> ready_to_apply; network rejects/closes -> needs_owner_action to decide next step
 };
 
 export function isValidTransition(from: AffiliatePipelineStatus, to: AffiliatePipelineStatus): boolean {
@@ -181,7 +185,7 @@ export async function setPipelineStatus(
   const updated: AffiliatePipelineEntry = {
     ...entry,
     status,
-    ownerActionRequired: status === "needs_owner_action" ? (options.ownerActionRequired ?? entry.ownerActionRequired ?? "See notes.") : status === "verified" || status === "ready_to_apply" ? null : entry.ownerActionRequired,
+    ownerActionRequired: status === "needs_owner_action" ? (options.ownerActionRequired ?? entry.ownerActionRequired ?? "See notes.") : status === "verified" || status === "ready_to_apply" || status === "waiting_on_network" ? null : entry.ownerActionRequired,
     submittedAt: status === "submitted" ? now : entry.submittedAt,
     approvedAt: status === "approved" ? now : entry.approvedAt,
     rejectedAt: status === "rejected" ? now : entry.rejectedAt,

@@ -11,6 +11,7 @@ const VALID_STATUSES = [
   "unresearched", "program_found", "verified", "ready_to_apply", "application_in_progress",
   "submitted", "pending_review", "approved", "rejected", "affiliate_link_received", "activated",
   "earning", "no_program", "program_closed", "needs_owner_action", "needs_more_research",
+  "waiting_on_network",
 ];
 
 function parseFlag(args: string[], name: string): string | undefined {
