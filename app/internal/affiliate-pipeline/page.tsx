@@ -8,7 +8,7 @@ import { CopyButton } from "@/components/CopyButton";
 import { getRankedApplicationCandidates } from "@/lib/revenue/affiliate-priority";
 import { buildApplicationPack, APPLICANT_LINKEDIN_URL } from "@/lib/revenue/application-pack";
 import { countByPipelineStatus } from "@/lib/revenue/affiliate-pipeline";
-import { markSubmittedAction, markApprovedAction, markRejectedAction } from "@/lib/revenue/affiliate-pipeline-actions";
+import { markSubmittedAction, markApprovedAction, markRejectedAction, markNeedsOwnerActionAction } from "@/lib/revenue/affiliate-pipeline-actions";
 import { readNetworkStatuses } from "@/lib/revenue/affiliate-network-status";
 
 /**
@@ -73,9 +73,30 @@ export default async function AffiliatePipelinePage() {
   const statusCounts = await countByPipelineStatus();
   const networkStatuses = await readNetworkStatuses();
 
+  /**
+   * PartnerStack Application Sprint (2026-08-14) — a dedicated queue for
+   * the confirmed PartnerStack-network programs, derived from the same
+   * stored data as everything else (not a hardcoded slug list) so it
+   * stays correct if more PartnerStack programs get added later. This is
+   * the workflow the owner actually uses: Open application -> apply on
+   * PartnerStack directly -> Mark submitted -> the next program surfaces
+   * automatically on the next render (no client-side state needed, since
+   * this page is force-dynamic and re-reads real Blob state every time).
+   */
+  const partnerStackPrograms = ranked.filter((r) => {
+    const pack = buildApplicationPack(r.slug);
+    return pack?.program?.networkName === "PartnerStack";
+  });
+  const psRemaining = partnerStackPrograms.filter((r) => r.pipelineStatus === "ready_to_apply");
+  const psOwnerAction = partnerStackPrograms.filter((r) => r.pipelineStatus === "needs_owner_action");
+  const psDone = partnerStackPrograms.filter((r) => r.pipelineStatus !== "ready_to_apply" && r.pipelineStatus !== "needs_owner_action");
+  const psCurrent = psRemaining[0];
+  const psNext = psRemaining[1];
+
   const notYetStarted = (r: (typeof ranked)[number]) =>
     r.pipelineStatus === "unresearched" || r.pipelineStatus === "verified" || r.pipelineStatus === "ready_to_apply";
-  const ready = ranked.filter((r) => notYetStarted(r) && r.readyToApply);
+  const partnerStackSlugs = new Set(partnerStackPrograms.map((r) => r.slug));
+  const ready = ranked.filter((r) => notYetStarted(r) && r.readyToApply && !partnerStackSlugs.has(r.slug));
   const waiting = ranked.filter((r) =>
     ["submitted", "pending_review", "application_in_progress", "waiting_on_network"].includes(r.pipelineStatus)
   );
@@ -109,7 +130,109 @@ export default async function AffiliatePipelinePage() {
           ) : null}
         </header>
 
-        <section className="mt-12 grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
+        <section className="mt-12">
+          <SectionHeading
+            eyebrow="PartnerStack Application Sprint"
+            title={`${psDone.length + psOwnerAction.length}/${partnerStackPrograms.length} processed`}
+            description="PartnerStack's Network Profile is approved. Every program below is confirmed, has a verified direct application URL, and needs only a login + click on PartnerStack itself — there's no bulk-apply mechanism on PartnerStack's side (investigated 2026-08-14: bulk actions exist only for program owners approving applicants, not for partners applying). Open the application, apply on PartnerStack, then Mark submitted — the next program surfaces automatically."
+          />
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-4">
+            <Card><p className="text-xs uppercase tracking-wider text-zinc-500">Remaining</p><p className="mt-2 text-2xl font-bold text-white">{psRemaining.length}</p></Card>
+            <Card><p className="text-xs uppercase tracking-wider text-zinc-500">Submitted / pending</p><p className="mt-2 text-2xl font-bold text-white">{psDone.length}</p></Card>
+            <Card><p className="text-xs uppercase tracking-wider text-zinc-500">Needs owner action</p><p className="mt-2 text-2xl font-bold text-white">{psOwnerAction.length}</p></Card>
+            <Card><p className="text-xs uppercase tracking-wider text-zinc-500">Total in sprint</p><p className="mt-2 text-2xl font-bold text-white">{partnerStackPrograms.length}</p></Card>
+          </div>
+
+          {psCurrent ? (
+            (() => {
+              const pack = buildApplicationPack(psCurrent.slug)!;
+              return (
+                <Card className="mt-6 border-white/20 bg-white/[0.05]">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <Badge className="border-white/30 text-white">Current</Badge>
+                      <h3 className="text-xl font-semibold text-white">{psCurrent.name}</h3>
+                      <span className="text-sm text-zinc-500">Priority {psCurrent.totalScore}/100</span>
+                    </div>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-zinc-400">{pack.program?.commissionModel ?? "Commission model not recorded."}</p>
+
+                  <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
+                    <a
+                      href={pack.applicationUrl!}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-zinc-200"
+                    >
+                      Open application ↗
+                    </a>
+                    <CopyButton value={pack.description} label="Copy description" />
+                    <CopyButton value={pack.promotionStrategy} label="Copy promotion strategy" />
+                    <CopyButton value={pack.website} label="Copy website" />
+                    <CopyButton value={pack.businessEmail} label="Copy email" />
+                    {pack.linkedinUrl ? <CopyButton value={pack.linkedinUrl} label="Copy LinkedIn" /> : null}
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
+                    <form action={markSubmittedAction.bind(null, psCurrent.slug)}>
+                      <button type="submit" className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-emerald-400">
+                        Mark submitted → next
+                      </button>
+                    </form>
+                    <details className="text-sm">
+                      <summary className="cursor-pointer text-zinc-400 hover:text-white">Needs owner action instead</summary>
+                      <form action={markNeedsOwnerActionAction.bind(null, psCurrent.slug)} className="mt-3 flex flex-wrap items-center gap-2">
+                        <input
+                          type="text"
+                          name="reason"
+                          placeholder="e.g. CAPTCHA, requires accepting a legal agreement, needs a personal name…"
+                          className="min-w-[280px] flex-1 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-zinc-600"
+                          required
+                        />
+                        <button type="submit" className="rounded-lg border border-amber-500/30 px-3 py-2 text-xs font-semibold text-amber-300 transition hover:bg-amber-500/10">
+                          Record blocker → next
+                        </button>
+                      </form>
+                    </details>
+                  </div>
+                </Card>
+              );
+            })()
+          ) : (
+            <Card className="mt-6">
+              <p className="text-sm text-zinc-300">
+                {partnerStackPrograms.length === 0
+                  ? "No confirmed PartnerStack programs recorded yet."
+                  : "All PartnerStack programs processed — nothing left in this sprint."}
+              </p>
+            </Card>
+          )}
+
+          {psNext ? (
+            <Card className="mt-4">
+              <div className="flex items-center gap-3">
+                <Badge>Next</Badge>
+                <span className="font-medium text-white">{psNext.name}</span>
+                <span className="text-sm text-zinc-500">Priority {psNext.totalScore}/100</span>
+              </div>
+            </Card>
+          ) : null}
+
+          <details className="mt-6">
+            <summary className="cursor-pointer text-sm text-zinc-400 hover:text-white">Full sprint queue ({partnerStackPrograms.length})</summary>
+            <div className="mt-4 grid gap-2">
+              {partnerStackPrograms.map((r) => (
+                <div key={r.slug} className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 text-sm">
+                  <span className="text-white">{r.name}</span>
+                  <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                </div>
+              ))}
+            </div>
+          </details>
+        </section>
+
+        <section className="mt-14 grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
           <Card>
             <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Confirmed programs</p>
             <p className="mt-2 text-3xl font-bold text-white">{ranked.length}</p>
@@ -136,7 +259,7 @@ export default async function AffiliatePipelinePage() {
           <SectionHeading
             eyebrow="Ready now"
             title="Highest-priority applications not yet started"
-            description="Ranked by the priority model — availability, category value, commercial/buying intent, real GSC traffic where recorded, approval friction, and a recurring-commission bonus. Excludes programs with a known blocker (closed to new affiliates, doesn't fit Miloosh's model, or no confirmed application URL) — see the full ranked list at the bottom for those."
+            description="Non-PartnerStack programs — the 12 PartnerStack ones have their own sprint above. Ranked by the priority model — availability, category value, commercial/buying intent, real GSC traffic where recorded, approval friction, and a recurring-commission bonus. Excludes programs with a known blocker (closed to new affiliates, doesn't fit Miloosh's model, or no confirmed application URL) — see the full ranked list at the bottom for those."
           />
           <div className="mt-8 grid gap-4">
             {ready.length === 0 ? (
