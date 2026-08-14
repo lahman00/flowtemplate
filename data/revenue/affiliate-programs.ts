@@ -16,6 +16,8 @@
 export type AffiliateProgramStatus = "yes" | "no" | "unknown";
 export type AffiliateProgramType = "direct" | "network" | "unknown";
 export type CommissionRecurrence = "recurring" | "one_time" | "unknown";
+/** How confident this entry's programExists/details are, given what was actually fetchable. "high" = read directly on an official page. "medium" = inferred from a network listing or a page that partially loaded. "low" = third-party mention only, or a fetch that was blocked/incomplete. */
+export type ResearchConfidence = "high" | "medium" | "low";
 
 export type AffiliateProgramInfo = {
   /** Matches a data/software/*.json slug. */
@@ -31,9 +33,39 @@ export type AffiliateProgramInfo = {
   recurrence: CommissionRecurrence;
   notes: string;
   sourceUrls: string[];
+  /**
+   * Operation Affiliate Revenue Engine (2026-08-14) additions — all
+   * optional and default to null so every pre-existing entry above stays
+   * valid without modification. Never fabricated: null/"unknown" means
+   * the official source didn't state it, exactly like the original six
+   * required fields above.
+   */
+  applicationUrl?: string | null;
+  cookieDuration?: string | null;
+  payoutMethod?: string | null;
+  payoutThreshold?: string | null;
+  eligibility?: string | null;
+  confidence?: ResearchConfidence | null;
 };
 
 export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
+  {
+    slug: "1password",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "network",
+    networkName: "Impact",
+    countryRestrictions: null,
+    commissionModel:
+      "$2 per completed signup (including free trial starts) plus 25% of the customer's first year payment on paid conversions (minimum $2); first-year only, no recurring commission on renewals",
+    recurrence: "one_time",
+    notes:
+      "Program confirmed to run through Impact via multiple independent affiliate-directory listings, but no direct fetch of an official 1Password affiliate page succeeded in this pass — commission figures are third-party aggregated, not read verbatim on 1password.com. Re-verify directly before relying on exact dollar amounts.",
+    sourceUrls: ["https://getlasso.co/affiliate/1password/", "https://commissiondex.com/programs/1password/"],
+    cookieDuration: "30 days",
+    payoutThreshold: "$10",
+    confidence: "medium",
+  },
   {
     slug: "airtable",
     lastVerifiedAt: "2026-07-31",
@@ -64,6 +96,20 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     notes:
       "Three-tier program (Solutions/Services/Referral Partners), requires an active paid Asana subscription to apply. Official terms explicitly defer commission specifics to a non-public 'Partner Program Guide' — no network or rate is disclosed publicly.",
     sourceUrls: ["https://asana.com/partners/referral", "https://asana.com/terms/partner-program"],
+  },
+  {
+    slug: "bitwarden",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "unknown",
+    type: "unknown",
+    networkName: null,
+    countryRestrictions: null,
+    commissionModel: null,
+    recurrence: "unknown",
+    notes:
+      "Bitwarden's own site (bitwarden.com/partners/, bitwarden.com/partners/become-a-partner/) advertises a channel/reseller Partner Program for MSPs and businesses, not a classic pay-per-referral affiliate program. Third-party affiliate-directory sites separately claim 20-30% commission figures, but these could not be traced to an official Bitwarden page and directly contradict each other — not confirmed enough to record as a real commission model.",
+    sourceUrls: ["https://bitwarden.com/partners/", "https://bitwarden.com/partners/become-a-partner/"],
+    confidence: "low",
   },
   {
     slug: "cal-com",
@@ -185,6 +231,23 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     sourceUrls: ["https://evernote.partnerstack.com/"],
   },
   {
+    slug: "fathom-analytics",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "direct",
+    networkName: null,
+    countryRestrictions: "Available to Fathom customers with an active subscription.",
+    commissionModel: "25% lifetime recurring commission on every referred customer's monthly bill",
+    recurrence: "recurring",
+    notes:
+      "Sourced from Fathom's own documentation and blog (usefathom.com), not a third-party directory, but this pass only had search-result summaries of those pages, not a direct fetch — re-verify the exact terms on usefathom.com/docs/account/affiliates before quoting to an applicant.",
+    sourceUrls: ["https://usefathom.com/docs/account/affiliates", "https://usefathom.com/blog/affiliate-program"],
+    applicationUrl: "https://usefathom.com/docs/account/affiliates",
+    cookieDuration: "30 days",
+    payoutThreshold: "none stated",
+    confidence: "medium",
+  },
+  {
     slug: "figma",
     lastVerifiedAt: "2026-07-31",
     programExists: "no",
@@ -201,6 +264,26 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     ],
   },
   {
+    slug: "freshdesk",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "direct",
+    networkName: null,
+    countryRestrictions: null,
+    commissionModel:
+      "Sources disagree on exact terms: some cite 15% of monthly deal value for the first 12 months plus $5 per valid lead, others cite a tiered 20-30% of first-year revenue — this is the umbrella Freshworks affiliate program (covers Freshdesk plus other Freshworks products), not a Freshdesk-only program, and no single official page could be directly fetched to resolve the discrepancy in this pass.",
+    recurrence: "one_time",
+    notes:
+      "Official program is run at the Freshworks company level, not per-product. Apply via freshworks.com; existing Freshdesk help-center article confirms the program's existence and that it is Freshworks-wide.",
+    sourceUrls: [
+      "https://support.freshdesk.com/en/support/solutions/articles/50000003483-freshworks-affiliate-program",
+      "https://www.freshworks.com/company/affiliate-partner/affiliate-signup/",
+    ],
+    applicationUrl: "https://www.freshworks.com/company/affiliate-partner/affiliate-signup/",
+    cookieDuration: "90 days",
+    confidence: "medium",
+  },
+  {
     slug: "gitbook",
     lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
@@ -214,6 +297,23 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     sourceUrls: [
       "https://app.gitbook.com/o/-MTqT672WVE7Bdlqzn6d/sites/site_0opqL/referrals-and-affiliate-program/faq-referrals-and-affiliate-program",
     ],
+  },
+  {
+    slug: "grammarly",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "network",
+    networkName: "Impact",
+    countryRestrictions: null,
+    commissionModel:
+      "Official page (grammarly.com/affiliates) describes a two-part earning structure but does not disclose exact percentages in the fetched text. Third-party sources separately cite ~$0.20 per free registration and $20 per premium upgrade (or up to 30% on some plans) — not independently confirmed on the official page itself.",
+    recurrence: "unknown",
+    notes:
+      "Official page directly fetched and confirms: runs on Impact (app.impact.com), 90-day cookie, an activation bonus for new affiliates, a 'pub-friendly keyword bidding policy' implying some PPC restrictions, contact affiliate_mktg@grammarly.com for program questions.",
+    sourceUrls: ["https://www.grammarly.com/affiliates"],
+    applicationUrl: "https://www.grammarly.com/affiliates",
+    cookieDuration: "90 days",
+    confidence: "high",
   },
   {
     slug: "guru",
@@ -424,6 +524,41 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     ],
   },
   {
+    slug: "semrush",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "network",
+    networkName: "Impact",
+    countryRestrictions: null,
+    commissionModel:
+      "Official KB article confirms fixed commissions per sale or free-trial activation but does not disclose exact dollar tiers in the fetched text. Third-party sources separately cite tiered $200/$250/$300/$350 per sale (by quarterly volume) plus $10 per free-trial signup — not independently confirmed on the official page itself.",
+    recurrence: "one_time",
+    notes:
+      "Official KB article (semrush.com/kb/97-affiliate-program) directly fetched and confirms: 120-day cookie, runs on Impact, apply via Impact registration with ~2-business-day review, contact affiliates@semrush.com for program-fit questions.",
+    sourceUrls: ["https://www.semrush.com/kb/97-affiliate-program"],
+    cookieDuration: "120 days",
+    confidence: "high",
+  },
+  {
+    slug: "shopify",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "network",
+    networkName: null,
+    countryRestrictions: null,
+    commissionModel:
+      "Up to $150 USD per qualified referral, no cap on total commissions (per the official page). Higher amounts for Shopify Plus referrals are claimed by third-party sources (up to $2,000) but not confirmed in the fetched official text.",
+    recurrence: "one_time",
+    notes:
+      "Official page (shopify.com/affiliates) directly fetched and confirms: 30-day cookie extended to 400 days if a free trial starts within that window, requires an active website/audience/commerce-related content, $10 minimum payout balance, paid via direct deposit or PayPal monthly on the 22nd, applications typically processed within ~24 hours. Dashboard references suggest the program is Impact-managed, but 'Impact' is not explicitly named in the fetched text, so networkName is left null pending direct confirmation.",
+    sourceUrls: ["https://www.shopify.com/affiliates"],
+    applicationUrl: "https://www.shopify.com/affiliates",
+    cookieDuration: "30 days (400 days if a free trial starts within the initial window)",
+    payoutThreshold: "$10",
+    payoutMethod: "Direct deposit or PayPal, monthly on the 22nd",
+    confidence: "high",
+  },
+  {
     slug: "sketch",
     lastVerifiedAt: "2026-07-31",
     programExists: "no",
@@ -486,6 +621,43 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     ],
   },
   {
+    slug: "webflow",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "network",
+    networkName: null,
+    countryRestrictions: null,
+    commissionModel:
+      "50% commission on the first 12 months of a new customer's site/workspace plan payments, per third-party aggregation of Webflow's own Help Center article — two independent direct-fetch attempts (webflow.com/solutions/affiliates and the Help Center article itself) both failed at the tool level (header overflow, then HTTP 403), so this was not independently re-read on the official page in this pass.",
+    recurrence: "one_time",
+    notes:
+      "Program's official URL (webflow.com/solutions/affiliates) and Help Center article (help.webflow.com) are both genuine Webflow domains, and the commission/cookie figures converge across independent sources, but neither could be directly fetched to confirm firsthand — treat as real-but-unverified until a direct read succeeds.",
+    sourceUrls: [
+      "https://webflow.com/solutions/affiliates",
+      "https://help.webflow.com/hc/en-us/articles/33961372613011-Webflow-s-affiliate-program-overview",
+    ],
+    applicationUrl: "https://webflow.com/solutions/affiliates",
+    cookieDuration: "90 days",
+    confidence: "medium",
+  },
+  {
+    slug: "wix",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "network",
+    networkName: "impact.com",
+    countryRestrictions: null,
+    commissionModel: "Flat $100 commission per Premium plan purchase (per third-party aggregation; official page identified but not directly fetched in this pass)",
+    recurrence: "one_time",
+    notes:
+      "Official program URL identified via search as wix.com/about/affiliates (a genuine Wix domain), and commission/cookie/payout details converge across multiple independent affiliate-directory sources, but the official page itself was not directly fetched to confirm firsthand.",
+    sourceUrls: ["https://www.wix.com/about/affiliates"],
+    applicationUrl: "https://www.wix.com/about/affiliates",
+    cookieDuration: "30 days",
+    payoutThreshold: "$300/month minimum",
+    confidence: "medium",
+  },
+  {
     slug: "zapier",
     lastVerifiedAt: "2026-07-31",
     programExists: "unknown",
@@ -501,6 +673,26 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "https://zapier.com/blog/solution-partner-program/",
       "https://docs.zapier.com/integrations/publish/partner-program",
     ],
+  },
+  {
+    slug: "zendesk",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "yes",
+    type: "network",
+    networkName: "PartnerStack",
+    countryRestrictions: null,
+    commissionModel:
+      "15% starting commission per sale, rising to 25% of the first year's subscription at higher referral volume (Tier 2: 16-30 qualified referrals/month) — per search-result summary of Zendesk's own official page, not independently re-fetched in this pass",
+    recurrence: "recurring",
+    notes:
+      "Official page identified as zendesk.com/programs/affiliate-program/, with a separate official terms page at zendesk.com/company/affiliate-partner/terms-and-conditions/ — both genuine Zendesk domains. Affiliate links/dashboard are accessed via PartnerStack once approved. Recurring because commissions apply to renewals/upgrades per the SaaS subscription model described.",
+    sourceUrls: [
+      "https://www.zendesk.com/programs/affiliate-program/",
+      "https://www.zendesk.com/company/affiliate-partner/terms-and-conditions/",
+    ],
+    applicationUrl: "https://www.zendesk.com/programs/affiliate-program/",
+    cookieDuration: "30 days",
+    confidence: "medium",
   },
   {
     slug: "zoom",

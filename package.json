@@ -19,6 +19,10 @@
     "agents:daily": "tsx scripts/agents/run.ts --mode=daily",
     "agents:weekly": "tsx scripts/agents/run.ts --mode=weekly",
     "agents:full": "tsx scripts/agents/run.ts --mode=full",
+    "affiliate:discover": "tsx scripts/affiliate/discover.ts",
+    "affiliate:rank": "tsx scripts/affiliate/rank.ts",
+    "affiliate:prepare": "tsx scripts/affiliate/prepare.ts",
+    "affiliate:status": "tsx scripts/affiliate/status.ts",
     "test": "vitest run"
   },
   "dependencies": {
