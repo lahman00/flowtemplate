@@ -84,8 +84,9 @@ export default async function AffiliatePipelinePage() {
    * this page is force-dynamic and re-reads real Blob state every time).
    */
   const partnerStackPrograms = ranked.filter((r) => {
+    if (r.slug === "pipedrive") return false; // separate, already-submitted application — preserved on its own, never re-added here
     const pack = buildApplicationPack(r.slug);
-    return pack?.program?.networkName === "PartnerStack";
+    return pack?.program?.networkName === "PartnerStack" && r.readyToApply; // readyToApply also excludes blocked programs (e.g. Notion, closed to new affiliates) even though their networkName is PartnerStack
   });
   const psRemaining = partnerStackPrograms.filter((r) => r.pipelineStatus === "ready_to_apply");
   const psOwnerAction = partnerStackPrograms.filter((r) => r.pipelineStatus === "needs_owner_action");
