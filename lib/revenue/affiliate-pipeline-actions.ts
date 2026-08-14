@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { fastTrackToSubmitted, setPipelineStatus } from "@/lib/revenue/affiliate-pipeline";
+import { fastTrackToSubmitted, fastTrackToApproved, setPipelineStatus } from "@/lib/revenue/affiliate-pipeline";
 
 /**
  * Affiliate Revenue Engine, Completion Pass (2026-08-14) — the actual
@@ -41,6 +41,30 @@ export async function markNeedsOwnerActionAction(slug: string, formData: FormDat
   await setPipelineStatus(slug, "needs_owner_action", {
     ownerActionRequired: typeof reason === "string" && reason.trim() ? reason.trim() : "See notes.",
     note: typeof reason === "string" && reason.trim() ? reason.trim() : undefined,
+  });
+  revalidatePath("/internal/affiliate-pipeline");
+}
+
+/**
+ * The real "Mark approved" path (2026-08-14) — requires the actual
+ * affiliate/referral URL the program issued on approval, since an
+ * "approved" status with no recorded link leaves nothing for
+ * lib/affiliate.ts's CTA resolver to activate. `slug` is bound via
+ * .bind(null, slug); `affiliateUrl` and optional `notes` come from the
+ * dashboard's own approval form. Chains through any skipped intermediate
+ * states via fastTrackToApproved so the audit trail stays honest even
+ * when (as with Airtable) the real-world approval happened before this
+ * pipeline ever tracked the application.
+ */
+export async function markApprovedWithUrlAction(slug: string, formData: FormData): Promise<void> {
+  const affiliateUrl = formData.get("affiliateUrl");
+  const notes = formData.get("notes");
+  if (typeof affiliateUrl !== "string" || !affiliateUrl.trim()) {
+    throw new Error("An affiliate URL is required to mark a program approved.");
+  }
+  await fastTrackToApproved(slug, {
+    affiliateUrl: affiliateUrl.trim(),
+    note: typeof notes === "string" && notes.trim() ? notes.trim() : undefined,
   });
   revalidatePath("/internal/affiliate-pipeline");
 }

@@ -39,6 +39,10 @@ export type AffiliatePriorityBreakdown = {
   /** False when there's a concrete, evidenced reason this shouldn't go in a ready-to-apply batch yet (see KNOWN_APPLICATION_BLOCKERS / applicationUrl missing / low confidence) — even if programExists is "yes". */
   readyToApply: boolean;
   blockReason: string | null;
+  /** The real affiliate/referral URL once approved — null until an owner-confirmed approval records one. Never the research applicationUrl (that's the page to apply on, not the tracking link you get after acceptance). */
+  affiliateUrl: string | null;
+  approvedAt: string | null;
+  pipelineNotes: string | null;
 };
 
 /**
@@ -146,6 +150,9 @@ export async function getAffiliatePriority(software: Software): Promise<Affiliat
     blockReason:
       KNOWN_APPLICATION_BLOCKERS[software.slug] ??
       (!program?.applicationUrl ? "No confirmed application URL yet." : program.confidence === "low" ? "Research confidence is low — key facts (network, current status) unconfirmed." : null),
+    affiliateUrl: pipelineEntry?.affiliateUrl ?? null,
+    approvedAt: pipelineEntry?.approvedAt ?? null,
+    pipelineNotes: pipelineEntry?.notes ?? null,
   };
 }
 

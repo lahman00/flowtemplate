@@ -8,7 +8,12 @@ import { CopyButton } from "@/components/CopyButton";
 import { getRankedApplicationCandidates } from "@/lib/revenue/affiliate-priority";
 import { buildApplicationPack, APPLICANT_LINKEDIN_URL } from "@/lib/revenue/application-pack";
 import { countByPipelineStatus } from "@/lib/revenue/affiliate-pipeline";
-import { markSubmittedAction, markApprovedAction, markRejectedAction, markNeedsOwnerActionAction } from "@/lib/revenue/affiliate-pipeline-actions";
+import {
+  markSubmittedAction,
+  markRejectedAction,
+  markNeedsOwnerActionAction,
+  markApprovedWithUrlAction,
+} from "@/lib/revenue/affiliate-pipeline-actions";
 import { readNetworkStatuses } from "@/lib/revenue/affiliate-network-status";
 
 /**
@@ -104,6 +109,7 @@ export default async function AffiliatePipelinePage() {
   const blocked = ranked.filter(
     (r) => ["needs_owner_action", "rejected", "program_closed"].includes(r.pipelineStatus) || (notYetStarted(r) && !r.readyToApply)
   );
+  const approvedPrograms = ranked.filter((r) => ["approved", "affiliate_link_received", "activated", "earning"].includes(r.pipelineStatus));
 
   return (
     <main className="flex-1 py-16 sm:py-20">
@@ -181,6 +187,27 @@ export default async function AffiliatePipelinePage() {
                         Mark submitted → next
                       </button>
                     </form>
+                    <details className="text-sm">
+                      <summary className="cursor-pointer text-emerald-300 hover:text-emerald-200">Mark approved instead</summary>
+                      <form action={markApprovedWithUrlAction.bind(null, psCurrent.slug)} className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+                        <input
+                          type="url"
+                          name="affiliateUrl"
+                          placeholder="Real affiliate/referral URL — e.g. https://…partnerlinks.io/…"
+                          className="min-w-[280px] flex-1 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-zinc-600"
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="notes"
+                          placeholder="Optional notes"
+                          className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-zinc-600 sm:w-48"
+                        />
+                        <button type="submit" className="rounded-lg bg-emerald-500 px-3 py-2 text-xs font-semibold text-zinc-950 transition hover:bg-emerald-400">
+                          Save & mark approved → next
+                        </button>
+                      </form>
+                    </details>
                     <details className="text-sm">
                       <summary className="cursor-pointer text-zinc-400 hover:text-white">Needs owner action instead</summary>
                       <form action={markNeedsOwnerActionAction.bind(null, psCurrent.slug)} className="mt-3 flex flex-wrap items-center gap-2">
@@ -309,6 +336,21 @@ export default async function AffiliatePipelinePage() {
                           Mark submitted
                         </button>
                       </form>
+                      <details className="text-xs">
+                        <summary className="cursor-pointer text-emerald-300 hover:text-emerald-200">Already approved?</summary>
+                        <form action={markApprovedWithUrlAction.bind(null, r.slug)} className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
+                          <input
+                            type="url"
+                            name="affiliateUrl"
+                            placeholder="Real affiliate/referral URL"
+                            className="min-w-[240px] flex-1 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-zinc-600"
+                            required
+                          />
+                          <button type="submit" className="rounded-lg bg-emerald-500 px-3 py-2 text-xs font-semibold text-zinc-950 transition hover:bg-emerald-400">
+                            Save & mark approved
+                          </button>
+                        </form>
+                      </details>
                     </div>
 
                     {pack && pack.missingOwnerInputs.length > 0 ? (
@@ -344,15 +386,24 @@ export default async function AffiliatePipelinePage() {
                   {r.pipelineStatus === "waiting_on_network" ? (
                     <span className="text-sm text-zinc-500">Will move to Ready once the network approves.</span>
                   ) : (
-                    <div className="flex gap-2">
-                      <form action={markApprovedAction.bind(null, r.slug)}>
-                        <button
-                          type="submit"
-                          className="rounded-lg border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-500/10"
-                        >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <details className="text-xs">
+                        <summary className="cursor-pointer rounded-lg border border-emerald-500/30 px-3 py-1.5 font-semibold text-emerald-300 transition hover:bg-emerald-500/10">
                           Mark approved
-                        </button>
-                      </form>
+                        </summary>
+                        <form action={markApprovedWithUrlAction.bind(null, r.slug)} className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
+                          <input
+                            type="url"
+                            name="affiliateUrl"
+                            placeholder="Real affiliate/referral URL"
+                            className="min-w-[240px] flex-1 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-zinc-600"
+                            required
+                          />
+                          <button type="submit" className="rounded-lg bg-emerald-500 px-3 py-2 text-xs font-semibold text-zinc-950 transition hover:bg-emerald-400">
+                            Save
+                          </button>
+                        </form>
+                      </details>
                       <form action={markRejectedAction.bind(null, r.slug)}>
                         <button
                           type="submit"
@@ -363,6 +414,50 @@ export default async function AffiliatePipelinePage() {
                       </form>
                     </div>
                   )}
+                </Card>
+              ))
+            )}
+          </div>
+        </section>
+
+        <section className="mt-14">
+          <SectionHeading
+            eyebrow="Approved / Active"
+            title="Successful partnerships"
+            description="Every program with a real, recorded affiliate URL — this is the live source of truth for what's actually earning or ready to earn."
+          />
+          <div className="mt-8 grid gap-4">
+            {approvedPrograms.length === 0 ? (
+              <Card><p className="text-sm text-zinc-500">No approved programs yet.</p></Card>
+            ) : (
+              approvedPrograms.map((r) => (
+                <Card key={r.slug} className="border-emerald-500/20 bg-emerald-500/[0.03]">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-lg font-semibold text-white">{r.name}</h3>
+                      <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                    </div>
+                    {r.approvedAt ? <span className="text-sm text-zinc-500">Approved {r.approvedAt.slice(0, 10)}</span> : null}
+                  </div>
+
+                  {r.affiliateUrl ? (
+                    <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+                      <code className="max-w-full truncate rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-zinc-300">{r.affiliateUrl}</code>
+                      <CopyButton value={r.affiliateUrl} label="Copy affiliate link" />
+                      <a
+                        href={r.affiliateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-lg border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-500/10"
+                      >
+                        Open affiliate link ↗
+                      </a>
+                    </div>
+                  ) : (
+                    <p className="mt-3 text-sm text-amber-300">Approved, but no affiliate URL recorded yet — this program&apos;s CTA won&apos;t activate on the site until one is added.</p>
+                  )}
+
+                  {r.pipelineNotes ? <p className="mt-3 text-xs text-zinc-500">{r.pipelineNotes}</p> : null}
                 </Card>
               ))
             )}

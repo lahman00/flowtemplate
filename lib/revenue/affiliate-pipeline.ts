@@ -241,6 +241,51 @@ export async function fastTrackToSubmitted(slug: string, note?: string): Promise
   return result!;
 }
 
+/**
+ * Chains a program straight through to `approved` in one call, recording
+ * every intermediate state in the real audit trail — same discipline as
+ * fastTrackToSubmitted, extended two steps further. Exists for the real
+ * case where a program was approved outside this pipeline's own tracked
+ * flow (e.g. the owner applied and got approved before this dashboard's
+ * "Mark submitted" button was ever clicked for it): the network-level
+ * blocker being resolved and the owner's own click-through on PartnerStack
+ * are both real, already-true facts, so this just lets the pipeline catch
+ * up to reality in one action instead of forcing four redundant clicks
+ * for states that already happened. `affiliateUrl` is required — approving
+ * a program without recording the real link it was approved for would
+ * leave nothing for the site's affiliate-activation resolver to use.
+ */
+export async function fastTrackToApproved(
+  slug: string,
+  options: { affiliateUrl: string; note?: string }
+): Promise<AffiliatePipelineEntry> {
+  const current = await getPipelineEntry(slug);
+  const status = current?.status ?? "unresearched";
+  const chain: AffiliatePipelineStatus[] = [
+    "program_found",
+    "verified",
+    "ready_to_apply",
+    "application_in_progress",
+    "submitted",
+    "pending_review",
+    "approved",
+  ];
+  const startIndex = chain.indexOf(status);
+  const remaining = startIndex === -1 ? chain : chain.slice(startIndex + 1);
+  let result: AffiliatePipelineEntry | undefined = current;
+  for (const next of remaining) {
+    const isLast = next === "approved";
+    result = await setPipelineStatus(
+      slug,
+      next,
+      isLast
+        ? { affiliateUrl: options.affiliateUrl, note: options.note ?? "Marked approved from the affiliate pipeline dashboard; affiliate URL recorded, intermediate states fast-tracked to reflect real-world progress." }
+        : { note: "Fast-tracked: real-world approval already happened outside this pipeline's tracked flow." }
+    );
+  }
+  return result!;
+}
+
 export async function countByPipelineStatus(): Promise<Record<AffiliatePipelineStatus, number>> {
   const counts = {} as Record<AffiliatePipelineStatus, number>;
   for (const status of Object.keys(VALID_TRANSITIONS) as AffiliatePipelineStatus[]) counts[status] = 0;

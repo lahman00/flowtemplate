@@ -8,6 +8,7 @@ import {
   isValidTransition,
   countByPipelineStatus,
   fastTrackToSubmitted,
+  fastTrackToApproved,
 } from "@/lib/revenue/affiliate-pipeline";
 
 const PIPELINE_PATH = path.join(process.cwd(), "var", "agents", "affiliate-pipeline.json");
@@ -148,6 +149,46 @@ describe("affiliate pipeline state transitions", () => {
       "application_in_progress",
       "submitted",
     ]);
+  });
+
+  it("fastTrackToApproved chains a fresh slug all the way to approved with the affiliate URL recorded", async () => {
+    const result = await fastTrackToApproved("segment", { affiliateUrl: "https://example.com/ref/segment-abc" });
+    expect(result.status).toBe("approved");
+    expect(result.affiliateUrl).toBe("https://example.com/ref/segment-abc");
+    expect(result.approvedAt).not.toBeNull();
+    const entry = (await getPipelineEntry("segment"))!;
+    expect(entry.history.map((h) => h.status)).toEqual([
+      "program_found",
+      "verified",
+      "ready_to_apply",
+      "application_in_progress",
+      "submitted",
+      "pending_review",
+      "approved",
+    ]);
+  });
+
+  it("fastTrackToApproved resumes from wherever the slug already is (e.g. ready_to_apply), without redoing earlier states", async () => {
+    await setPipelineStatus("amplitude", "program_found");
+    await setPipelineStatus("amplitude", "verified");
+    await setPipelineStatus("amplitude", "ready_to_apply");
+    const result = await fastTrackToApproved("amplitude", {
+      affiliateUrl: "https://example.com/ref/amplitude-xyz",
+      note: "Owner-confirmed approval that happened outside the tracked flow.",
+    });
+    expect(result.status).toBe("approved");
+    expect(result.affiliateUrl).toBe("https://example.com/ref/amplitude-xyz");
+    const entry = (await getPipelineEntry("amplitude"))!;
+    expect(entry.history.map((h) => h.status)).toEqual([
+      "program_found",
+      "verified",
+      "ready_to_apply",
+      "application_in_progress",
+      "submitted",
+      "pending_review",
+      "approved",
+    ]);
+    expect(entry.notes).toBe("Owner-confirmed approval that happened outside the tracked flow.");
   });
 
   it("a program stuck behind a network approval can move to waiting_on_network from needs_owner_action or verified", async () => {
