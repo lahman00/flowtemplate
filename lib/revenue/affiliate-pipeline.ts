@@ -7,17 +7,17 @@ import { AGENTS_DIR } from "@/lib/agents/paths";
  * state, separate from data/revenue/affiliate-programs.ts on purpose:
  * that file is static RESEARCH (what we know about a program, rarely
  * changes, lives in git) while this is RUNTIME PIPELINE STATE (where we
- * are in applying, changes constantly, gitignored) — the same split this
- * codebase already uses for var/agents/gsc-snapshots.json (research
- * snapshot) vs var/agents/experiment-candidates.json (live tracking).
+ * are in applying, changes constantly).
  *
- * Lifecycle (owner directive, 2026-08-14):
- *   unresearched -> program_found -> verified -> ready_to_apply ->
- *   application_in_progress -> submitted -> pending_review -> approved
- *   -> affiliate_link_received -> activated -> earning
- *   (rejected, no_program, program_closed, needs_owner_action,
- *   needs_more_research are terminal/side states reachable from several
- *   points, not strictly linear.)
+ * Storage backend (Completion Pass, 2026-08-14): a private Vercel Blob
+ * store (`miloosh-affiliate`, linked to this project) when
+ * BLOB_READ_WRITE_TOKEN is present — this is what actually survives
+ * deployments and is readable from the deployed /internal/affiliate-pipeline
+ * dashboard, unlike the gitignored var/agents/*.json files every other
+ * agent report in this codebase uses. Falls back to that same local-file
+ * pattern only when the token isn't set (local dev without `vercel env
+ * pull`, or the test suite) — tests never need real network access to a
+ * blob store to verify state-machine logic.
  */
 
 export type AffiliatePipelineStatus =
@@ -53,7 +53,12 @@ export type AffiliatePipelineEntry = {
   history: Array<{ status: AffiliatePipelineStatus; at: string; note: string | null }>;
 };
 
-const PIPELINE_PATH = path.join(AGENTS_DIR, "affiliate-pipeline.json");
+const BLOB_PATHNAME = "affiliate-pipeline/state.json";
+const LOCAL_FALLBACK_PATH = path.join(AGENTS_DIR, "affiliate-pipeline.json");
+
+function hasBlobToken(): boolean {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}
 
 const VALID_TRANSITIONS: Record<AffiliatePipelineStatus, AffiliatePipelineStatus[]> = {
   unresearched: ["program_found", "no_program", "needs_more_research"],
@@ -87,21 +92,49 @@ export function isValidTransition(from: AffiliatePipelineStatus, to: AffiliatePi
   return VALID_TRANSITIONS[from].includes(to);
 }
 
-export function readAffiliatePipeline(): AffiliatePipelineEntry[] {
+function readLocalFallback(): AffiliatePipelineEntry[] {
   try {
-    return JSON.parse(fs.readFileSync(PIPELINE_PATH, "utf-8")) as AffiliatePipelineEntry[];
+    return JSON.parse(fs.readFileSync(LOCAL_FALLBACK_PATH, "utf-8")) as AffiliatePipelineEntry[];
   } catch {
     return [];
   }
 }
 
-function writeAffiliatePipeline(entries: AffiliatePipelineEntry[]): void {
+function writeLocalFallback(entries: AffiliatePipelineEntry[]): void {
   fs.mkdirSync(AGENTS_DIR, { recursive: true });
-  fs.writeFileSync(PIPELINE_PATH, JSON.stringify(entries, null, 2));
+  fs.writeFileSync(LOCAL_FALLBACK_PATH, JSON.stringify(entries, null, 2));
 }
 
-export function getPipelineEntry(slug: string): AffiliatePipelineEntry | undefined {
-  return readAffiliatePipeline().find((e) => e.slug === slug);
+export async function readAffiliatePipeline(): Promise<AffiliatePipelineEntry[]> {
+  if (!hasBlobToken()) return readLocalFallback();
+  try {
+    const { get } = await import("@vercel/blob");
+    const result = await get(BLOB_PATHNAME, { access: "private" });
+    if (!result || result.statusCode !== 200) return [];
+    const text = await new Response(result.stream).text();
+    return JSON.parse(text) as AffiliatePipelineEntry[];
+  } catch {
+    // Store not yet initialized (first write hasn't happened) or a transient error — never crash a read.
+    return [];
+  }
+}
+
+async function writeAffiliatePipeline(entries: AffiliatePipelineEntry[]): Promise<void> {
+  if (!hasBlobToken()) {
+    writeLocalFallback(entries);
+    return;
+  }
+  const { put } = await import("@vercel/blob");
+  await put(BLOB_PATHNAME, JSON.stringify(entries, null, 2), {
+    access: "private",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "application/json",
+  });
+}
+
+export async function getPipelineEntry(slug: string): Promise<AffiliatePipelineEntry | undefined> {
+  return (await readAffiliatePipeline()).find((e) => e.slug === slug);
 }
 
 function blankEntry(slug: string): AffiliatePipelineEntry {
@@ -125,13 +158,13 @@ function blankEntry(slug: string): AffiliatePipelineEntry {
  * pipeline to skip states in a way that would misrepresent real progress.
  * `now` is injectable for tests.
  */
-export function setPipelineStatus(
+export async function setPipelineStatus(
   slug: string,
   status: AffiliatePipelineStatus,
   options: { note?: string; affiliateUrl?: string; trackingId?: string; ownerActionRequired?: string } = {},
   now: string = new Date().toISOString()
-): AffiliatePipelineEntry {
-  const entries = readAffiliatePipeline();
+): Promise<AffiliatePipelineEntry> {
+  const entries = await readAffiliatePipeline();
   const existingIndex = entries.findIndex((e) => e.slug === slug);
   const entry = existingIndex >= 0 ? entries[existingIndex]! : blankEntry(slug);
 
@@ -157,13 +190,50 @@ export function setPipelineStatus(
   } else {
     entries.push(updated);
   }
-  writeAffiliatePipeline(entries);
+  await writeAffiliatePipeline(entries);
   return updated;
 }
 
-export function countByPipelineStatus(): Record<AffiliatePipelineStatus, number> {
+/**
+ * Chains a confirmed program straight through to `submitted` in one call,
+ * recording every intermediate state in the real audit trail rather than
+ * lying about an instant multi-step transition. Used by the dashboard's
+ * "Mark submitted" button: for anything already in data/revenue/affiliate-
+ * programs.ts with `programExists: "yes"`, program_found/verified are
+ * already true in substance (that's what the static research established)
+ * — this just records the pipeline catching up to that reality instead of
+ * making the owner click through four redundant states for data that's
+ * already known.
+ */
+export async function fastTrackToSubmitted(slug: string, note?: string): Promise<AffiliatePipelineEntry> {
+  const current = await getPipelineEntry(slug);
+  const status = current?.status ?? "unresearched";
+  const chain: AffiliatePipelineStatus[] = [
+    "program_found",
+    "verified",
+    "ready_to_apply",
+    "application_in_progress",
+    "submitted",
+  ];
+  const startIndex = chain.indexOf(status);
+  const remaining = startIndex === -1 ? chain : chain.slice(startIndex + 1);
+  let result: AffiliatePipelineEntry | undefined = current;
+  for (const next of remaining) {
+    const isLast = next === "submitted";
+    result = await setPipelineStatus(
+      slug,
+      next,
+      isLast
+        ? { note: note ?? "Marked submitted from the affiliate pipeline dashboard; program already confirmed in data/revenue/affiliate-programs.ts, intermediate states fast-tracked." }
+        : { note: "Fast-tracked: program already confirmed in data/revenue/affiliate-programs.ts." }
+    );
+  }
+  return result!;
+}
+
+export async function countByPipelineStatus(): Promise<Record<AffiliatePipelineStatus, number>> {
   const counts = {} as Record<AffiliatePipelineStatus, number>;
   for (const status of Object.keys(VALID_TRANSITIONS) as AffiliatePipelineStatus[]) counts[status] = 0;
-  for (const entry of readAffiliatePipeline()) counts[entry.status] += 1;
+  for (const entry of await readAffiliatePipeline()) counts[entry.status] += 1;
   return counts;
 }

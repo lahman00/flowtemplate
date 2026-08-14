@@ -22,12 +22,11 @@ describe("application pack generator", () => {
     expect(trello.readyToApply).toBe(false);
   });
 
-  it("never fabricates a LinkedIn URL — flags it as missing when unset", () => {
+  it("uses the real, owner-provided LinkedIn URL — never a fabricated one", () => {
     const pack = buildApplicationPack("clickup")!;
     expect(pack.linkedinUrl).toBe(APPLICANT_LINKEDIN_URL);
-    if (!APPLICANT_LINKEDIN_URL) {
-      expect(pack.missingOwnerInputs.some((m) => m.includes("LinkedIn"))).toBe(true);
-    }
+    expect(pack.linkedinUrl).toBe("https://www.linkedin.com/company/141163964/");
+    expect(pack.missingOwnerInputs.some((m) => m.includes("LinkedIn"))).toBe(false);
   });
 
   it("uses the real business identity fields, not invented ones", () => {

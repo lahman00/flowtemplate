@@ -36,6 +36,24 @@ export type AffiliatePriorityBreakdown = {
   approvalFrictionScore: number;
   recurringBonus: number;
   totalScore: number;
+  /** False when there's a concrete, evidenced reason this shouldn't go in a ready-to-apply batch yet (see KNOWN_APPLICATION_BLOCKERS / applicationUrl missing / low confidence) — even if programExists is "yes". */
+  readyToApply: boolean;
+  blockReason: string | null;
+};
+
+/**
+ * Concrete, evidenced reasons a confirmed ("yes") program still isn't safe
+ * to hand the owner as a one-click application — found during the
+ * Completion Pass re-verification (2026-08-14) by actually re-reading each
+ * official page rather than trusting the "yes" flag alone. Hand-maintained
+ * rather than string-matched against `notes`, so it stays exact and
+ * auditable; add an entry here (with the real source) whenever a
+ * confirmed program turns out to have a real blocker.
+ */
+export const KNOWN_APPLICATION_BLOCKERS: Record<string, string> = {
+  notion: "Official page currently shows 'Program is currently not accepting new affiliates' (re-checked 2026-08-14).",
+  asana: "Application requires being an existing paying Asana customer and runs through a Salesforce sales portal — not a fit for Miloosh's comparison-publisher model.",
+  canva: "Official Help Center pages return 403 on every direct fetch attempt; network and current open/closed status could not be independently confirmed.",
 };
 
 const WEIGHTS = {
@@ -90,11 +108,11 @@ function scoreApprovalFriction(program: AffiliateProgramInfo | undefined): numbe
   return 3;
 }
 
-export function getAffiliatePriority(software: Software): AffiliatePriorityBreakdown {
+export async function getAffiliatePriority(software: Software): Promise<AffiliatePriorityBreakdown> {
   const program = AFFILIATE_PROGRAMS.find((p) => p.slug === software.slug);
   const revenueScore = getRevenueScore(software);
   const traffic = scoreTrafficOpportunity(software.slug);
-  const pipelineEntry = getPipelineEntry(software.slug);
+  const pipelineEntry = await getPipelineEntry(software.slug);
   const approvalFrictionScore = scoreApprovalFriction(program);
   const recurringBonus = program?.recurrence === "recurring" ? RECURRING_BONUS : 0;
 
@@ -123,21 +141,22 @@ export function getAffiliatePriority(software: Software): AffiliatePriorityBreak
     approvalFrictionScore,
     recurringBonus,
     totalScore: Math.round((raw / MAX_RAW) * 100),
+    readyToApply: Boolean(program?.applicationUrl) && program?.confidence !== "low" && !KNOWN_APPLICATION_BLOCKERS[software.slug],
+    blockReason:
+      KNOWN_APPLICATION_BLOCKERS[software.slug] ??
+      (!program?.applicationUrl ? "No confirmed application URL yet." : program.confidence === "low" ? "Research confidence is low — key facts (network, current status) unconfirmed." : null),
   };
 }
 
 /** Every software with a confirmed ("yes") program, ranked highest-priority first — the only pool it's safe to build a real application batch from. */
-export function getRankedApplicationCandidates(): AffiliatePriorityBreakdown[] {
+export async function getRankedApplicationCandidates(): Promise<AffiliatePriorityBreakdown[]> {
   const software = getAllSoftware();
-  return software
-    .map((s) => getAffiliatePriority(s))
-    .filter((b) => b.programExists === "yes")
-    .sort((a, b) => b.totalScore - a.totalScore);
+  const breakdowns = await Promise.all(software.map((s) => getAffiliatePriority(s)));
+  return breakdowns.filter((b) => b.programExists === "yes").sort((a, b) => b.totalScore - a.totalScore);
 }
 
 /** Every product this priority model has an opinion on, ranked — includes unresolved/no-program entries so the dashboard can show the full picture, not just the actionable slice. */
-export function getAllPriorities(): AffiliatePriorityBreakdown[] {
-  return getAllSoftware()
-    .map((s) => getAffiliatePriority(s))
-    .sort((a, b) => b.totalScore - a.totalScore);
+export async function getAllPriorities(): Promise<AffiliatePriorityBreakdown[]> {
+  const breakdowns = await Promise.all(getAllSoftware().map((s) => getAffiliatePriority(s)));
+  return breakdowns.sort((a, b) => b.totalScore - a.totalScore);
 }

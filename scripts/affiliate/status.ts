@@ -1,3 +1,4 @@
+import "./_load-env";
 import { setPipelineStatus, getPipelineEntry, type AffiliatePipelineStatus } from "@/lib/revenue/affiliate-pipeline";
 import { getSoftware } from "@/data/software";
 
@@ -17,7 +18,7 @@ function parseFlag(args: string[], name: string): string | undefined {
   return arg ? arg.slice(name.length + 3) : undefined;
 }
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
   const positional = args.filter((a) => !a.startsWith("--"));
   const [slug, status] = positional;
@@ -34,7 +35,7 @@ function main() {
   }
 
   if (!status) {
-    const entry = getPipelineEntry(slug);
+    const entry = await getPipelineEntry(slug);
     if (!entry) {
       console.log(`${slug}: unresearched (no pipeline entry yet)`);
       return;
@@ -53,7 +54,7 @@ function main() {
   }
 
   try {
-    const updated = setPipelineStatus(slug, status as AffiliatePipelineStatus, {
+    const updated = await setPipelineStatus(slug, status as AffiliatePipelineStatus, {
       note: parseFlag(args, "note"),
       affiliateUrl: parseFlag(args, "affiliateUrl"),
       trackingId: parseFlag(args, "trackingId"),

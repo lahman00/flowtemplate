@@ -1,3 +1,4 @@
+import "./_load-env";
 import { buildApplicationPack } from "@/lib/revenue/application-pack";
 import { getRankedApplicationCandidates } from "@/lib/revenue/affiliate-priority";
 
@@ -35,16 +36,14 @@ function printPack(slug: string) {
   }
 }
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
   const topFlag = args.includes("--top");
   const limitArg = args.find((a) => a.startsWith("--limit="));
   const limit = limitArg ? Number(limitArg.split("=")[1]) : 10;
 
   if (topFlag) {
-    const slugs = getRankedApplicationCandidates()
-      .slice(0, limit)
-      .map((c) => c.slug);
+    const slugs = (await getRankedApplicationCandidates()).slice(0, limit).map((c) => c.slug);
     console.log(`Preparing packs for the top ${slugs.length} ranked confirmed programs...`);
     for (const slug of slugs) printPack(slug);
     return;

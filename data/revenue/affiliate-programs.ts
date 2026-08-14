@@ -54,21 +54,22 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
-    networkName: "Impact",
+    networkName: "Commission Junction",
     countryRestrictions: null,
     commissionModel:
       "$2 per completed signup (including free trial starts) plus 25% of the customer's first year payment on paid conversions (minimum $2); first-year only, no recurring commission on renewals",
     recurrence: "one_time",
     notes:
-      "Program confirmed to run through Impact via multiple independent affiliate-directory listings, but no direct fetch of an official 1Password affiliate page succeeded in this pass — commission figures are third-party aggregated, not read verbatim on 1password.com. Re-verify directly before relying on exact dollar amounts.",
-    sourceUrls: ["https://getlasso.co/affiliate/1password/", "https://commissiondex.com/programs/1password/"],
+      "Corrected 2026-08-14: the official page (1password.com/affiliate) was fetched directly this pass and names Commission Junction (CJ.com) as the network, not Impact — the earlier 'Impact' value came from third-party aggregators and was wrong. Apply by creating a CJ account and applying to the 1Password program there.",
+    sourceUrls: ["https://1password.com/affiliate", "https://getlasso.co/affiliate/1password/"],
+    applicationUrl: "https://1password.com/affiliate",
     cookieDuration: "30 days",
     payoutThreshold: "$10",
-    confidence: "medium",
+    confidence: "high",
   },
   {
     slug: "airtable",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -82,10 +83,12 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "https://airtable.partnerstack.com/",
       "https://www.airtable.com/partners",
     ],
+    applicationUrl: "https://airtable.partnerstack.com/",
+    confidence: "high",
   },
   {
     slug: "asana",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "unknown",
     networkName: null,
@@ -94,8 +97,10 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: null,
     recurrence: "unknown",
     notes:
-      "Three-tier program (Solutions/Services/Referral Partners), requires an active paid Asana subscription to apply. Official terms explicitly defer commission specifics to a non-public 'Partner Program Guide' — no network or rate is disclosed publicly.",
+      "Three-tier program (Solutions/Services/Referral Partners), requires an active paid Asana subscription to apply. Official terms explicitly defer commission specifics to a non-public 'Partner Program Guide' — no network or rate is disclosed publicly. NOT A FIT for Miloosh's model (2026-08-14 re-check): the application runs through a Salesforce portal (asana.my.salesforce-sites.com) and requires the applicant to already be a paying Asana customer referring other businesses — Miloosh is a comparison publisher, not an Asana customer, so it likely does not qualify to apply as-is. Exclude from the ready-to-apply batch until this is resolved.",
     sourceUrls: ["https://asana.com/partners/referral", "https://asana.com/terms/partner-program"],
+    applicationUrl: "https://asana.com/partners/referral",
+    confidence: "high",
   },
   {
     slug: "bitwarden",
@@ -113,7 +118,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "cal-com",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "direct",
     networkName: null,
@@ -123,6 +128,8 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     notes:
       "Run through Cal.com's own referral system (app.cal.com/refer), not a third-party network. The separate legal terms page describes payouts only as generic 'Rewards... as determined by Cal.com,' and participation requires approval.",
     sourceUrls: ["https://cal.com/affiliate-program", "https://cal.com/affiliate-terms"],
+    applicationUrl: "https://cal.com/affiliate-program",
+    confidence: "high",
   },
   {
     slug: "calendly",
@@ -139,7 +146,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "canva",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "Impact (unconfirmed)",
@@ -147,12 +154,14 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: null,
     recurrence: "unknown",
     notes:
-      "Low confidence: Canva's official Help Center affiliate pages returned 403 Forbidden on every fetch attempt, so the network name and any commission figures come from third-party sources, not a directly-verified Canva page. Multiple sources agree access now runs through applying to Canva's 'Canvassador' program first.",
-    sourceUrls: [],
+      "Low confidence: Canva's official Help Center affiliate pages returned 403 Forbidden on every direct fetch attempt (including 2026-08-14), so the network name and any commission figures still come from third-party sources, not a directly-verified Canva page. Multiple independent sources agree the only path is applying to Canva's 'Canvassador' program first, and at least one source described that program as currently closed to new applicants — unconfirmed directly, but real enough to exclude Canva from a ready-to-apply batch until the official page can actually be read.",
+    sourceUrls: ["https://www.canva.com/help/canva-affiliate-marketing-program/"],
+    applicationUrl: "https://www.canva.com/help/canva-affiliate-marketing-program/",
+    confidence: "low",
   },
   {
     slug: "clickup",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -164,6 +173,9 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     notes:
       "30-day cookie window. Tiered 'Advanced'/'Premier' partner status (based on signup volume) unlocks extra discounts/support. Page doesn't state whether the 20% paid-plan commission recurs beyond the first payment.",
     sourceUrls: ["https://clickup.com/partners/affiliates"],
+    applicationUrl: "https://clickup.com/partners/affiliates",
+    cookieDuration: "30 days",
+    confidence: "high",
   },
   {
     slug: "coda",
@@ -206,16 +218,17 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "doodle",
-    lastVerifiedAt: "2026-07-31",
-    programExists: "yes",
+    lastVerifiedAt: "2026-08-14",
+    programExists: "no",
     type: "direct",
     networkName: null,
     countryRestrictions: null,
     commissionModel: null,
     recurrence: "one_time",
     notes:
-      "Official page states affiliates 'earn commission for every new user you bring to Doodle' and that Doodle 'can work with you on custom arrangements,' but discloses no specific rate. The program itself is confirmed closing on April 30, 2026. No network platform is named; bidding on Doodle's brand terms in PPC is explicitly disallowed.",
+      "Changed 2026-08-14: re-checked because it ranked highly. Doodle's own page states the affiliate program 'will be coming to a close on April 30, 2026' — today (2026-08-14) is past that date, so this is treated as closed rather than 'yes'. If Doodle relaunches a program, this needs a fresh check, not just flipping the flag back.",
     sourceUrls: ["https://doodle.com/en/partners/"],
+    confidence: "high",
   },
   {
     slug: "evernote",
@@ -330,7 +343,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "hubspot",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "Impact",
@@ -344,6 +357,9 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "https://www.hubspot.com/partners/affiliates",
       "https://www.hubspot.com/partners/affiliates/program-policies",
     ],
+    applicationUrl: "https://www.hubspot.com/partners/affiliates",
+    cookieDuration: "180 days",
+    confidence: "high",
   },
   {
     slug: "jira",
@@ -373,7 +389,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "lucidchart",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "Awin",
@@ -381,12 +397,14 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "5% sale commission, plus an unspecified bonus payout program (per the Awin merchant page)",
     recurrence: "one_time",
     notes:
-      "Lucid's own /partners page only lists Technology and Solutions Partners (B2B/reseller); the affiliate program itself runs through the Awin network, separate from lucid.co. Other third-party aggregator sites cite different, higher figures that conflict with Awin's own page — the Awin figure is treated as authoritative here.",
+      "Lucid's own /partners page only lists Technology and Solutions Partners (B2B/reseller); the affiliate program itself runs through the Awin network, separate from lucid.co. Other third-party aggregator sites cite different, higher figures that conflict with Awin's own page — the Awin figure is treated as authoritative here. Applying requires a Miloosh Awin publisher account first, then joining this merchant's program from inside Awin — the merchant-profile link isn't a direct signup form.",
     sourceUrls: ["https://lucid.co/partners", "https://ui.awin.com/merchant-profile/52579"],
+    applicationUrl: "https://ui.awin.com/merchant-profile/52579",
+    confidence: "high",
   },
   {
     slug: "make",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "unknown",
     networkName: null,
@@ -396,6 +414,10 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     notes:
       "30-day cookie window; $100 minimum payout plus 3 unique paying referrals, paid via Wise. Separate B2B 'Solution Partner' and 'Technology Partner' programs also exist but are distinct from this consumer affiliate program.",
     sourceUrls: ["https://www.make.com/en/affiliate"],
+    applicationUrl: "https://www.make.com/en/affiliate",
+    cookieDuration: "30 days",
+    payoutThreshold: "$100 and 3 unique paying referrals",
+    confidence: "high",
   },
   {
     slug: "mattermost",
@@ -425,7 +447,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "miro",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -439,10 +461,13 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "https://miro.com/affiliates/join-our-program/",
       "https://help.miro.com/hc/en-us/articles/22025722876562-Miro-s-Referral-Program",
     ],
+    applicationUrl: "https://miro.com/affiliates/join-our-program/",
+    cookieDuration: "30 days",
+    confidence: "high",
   },
   {
     slug: "monday",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -451,10 +476,12 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "one_time",
     notes: "Monthly payouts via PayPal or Stripe; free to join, no earnings cap mentioned.",
     sourceUrls: ["https://monday.com/affiliate-program/"],
+    applicationUrl: "https://monday.com/affiliate-program/",
+    confidence: "high",
   },
   {
     slug: "n8n",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -463,10 +490,13 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "recurring",
     notes: "Monthly PayPal payouts, EUR 100 minimum payout; paid ad campaigns are explicitly prohibited for affiliates.",
     sourceUrls: ["https://n8n.io/affiliates/", "https://support.n8n.io/article/do-you-have-an-affiliates-program"],
+    applicationUrl: "https://n8n.io/affiliates/",
+    payoutThreshold: "€100",
+    confidence: "high",
   },
   {
     slug: "notion",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -474,8 +504,9 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "Up to $50 per activated sign-up, plus 20% of year-one revenue per referral (applies to upgrades within 180 days of link click)",
     recurrence: "recurring",
     notes:
-      "The official page currently shows a banner: 'Program is currently not accepting new affiliates.' Self-referrals are prohibited; FTC disclosure is required.",
+      "Re-checked 2026-08-14 (it ranked #4 in priority): the official page still shows the banner 'Program is currently not accepting new affiliates,' with no application URL for new affiliates — only existing affiliates can log in, at dash.partnerstack.com/notion. Exclude from any ready-to-apply batch until this banner is gone; re-check before assuming it's reopened. Self-referrals are prohibited; FTC disclosure is required.",
     sourceUrls: ["https://www.notion.com/affiliates"],
+    confidence: "high",
   },
   {
     slug: "obsidian",
@@ -492,7 +523,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "pipedrive",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -501,11 +532,14 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel:
       "Three tiers: Rising Affiliate 20% revenue share (first 12 months), Growth Affiliate 30% revenue share (first 12 months), Power Affiliate custom rate",
     recurrence: "recurring",
-    notes: "$5 minimum withdrawal; commissions locked by the 7th day of the month, two months after the transaction, paid on the 13th.",
+    notes: "$5 minimum withdrawal; commissions locked by the 7th day of the month, two months after the transaction, paid on the 13th. Application already submitted (2026-08-14) — see var/agents/affiliate-pipeline.json / the affiliate pipeline dashboard for live status. Do not reapply.",
     sourceUrls: [
       "https://www.pipedrive.com/en/affiliate-partnership",
       "https://support.pipedrive.com/en/article/how-can-i-become-a-pipedrive-affiliate-or-partner",
     ],
+    applicationUrl: "https://www.pipedrive.com/en/affiliate-partnership",
+    payoutThreshold: "$5",
+    confidence: "high",
   },
   {
     slug: "salesforce",
@@ -536,6 +570,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     notes:
       "Official KB article (semrush.com/kb/97-affiliate-program) directly fetched and confirms: 120-day cookie, runs on Impact, apply via Impact registration with ~2-business-day review, contact affiliates@semrush.com for program-fit questions.",
     sourceUrls: ["https://www.semrush.com/kb/97-affiliate-program"],
+    applicationUrl: "https://www.semrush.com/kb/97-affiliate-program",
     cookieDuration: "120 days",
     confidence: "high",
   },
@@ -586,7 +621,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "todoist",
-    lastVerifiedAt: "2026-07-31",
+    lastVerifiedAt: "2026-08-14",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -603,6 +638,10 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "https://www.todoist.com/channelpartners/terms",
       "https://market.partnerstack.com/program/doist",
     ],
+    applicationUrl: "https://market.partnerstack.com/program/doist",
+    cookieDuration: "90 days",
+    payoutThreshold: "$25",
+    confidence: "high",
   },
   {
     slug: "trello",

@@ -27,8 +27,8 @@ export const APPLICANT_WEBSITE = "https://miloosh.com";
  * confirm which address should be used going forward.
  */
 export const APPLICANT_BUSINESS_EMAIL = "hello@miloosh.com";
-/** Not found anywhere in the codebase or prior session records — a genuine missing input, never invented. Set this once the owner provides the real company-page URL. */
-export const APPLICANT_LINKEDIN_URL: string | null = null;
+/** Recorded 2026-08-14 from the owner directly — the real Miloosh LinkedIn company page. Reused for every application pack; do not ask the owner for this again. */
+export const APPLICANT_LINKEDIN_URL: string | null = "https://www.linkedin.com/company/141163964/";
 
 export const BUSINESS_DESCRIPTION =
   "Miloosh is an independent software research and comparison platform focused on helping users make better-informed software decisions using clear product information, comparisons and alternatives.";

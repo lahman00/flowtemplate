@@ -8,24 +8,30 @@ import { CopyButton } from "@/components/CopyButton";
 import { getRankedApplicationCandidates } from "@/lib/revenue/affiliate-priority";
 import { buildApplicationPack, APPLICANT_LINKEDIN_URL } from "@/lib/revenue/application-pack";
 import { countByPipelineStatus } from "@/lib/revenue/affiliate-pipeline";
+import { markSubmittedAction, markApprovedAction, markRejectedAction } from "@/lib/revenue/affiliate-pipeline-actions";
 
 /**
- * Affiliate Revenue Engine, Phase 7 — owner application queue. Read-only by
- * design: status changes go through `npm run affiliate:status -- <slug>
- * <status>` (see scripts/affiliate/status.ts), not a button here, because
- * var/agents/affiliate-pipeline.json is gitignored local state — the same
- * pattern every other /internal/* dashboard already uses (maintenance,
- * growth, outbound-clicks). On Vercel's production filesystem that file
- * won't exist between requests, so this page's pipeline-status column will
- * correctly read "unresearched" for everything until the owner's local
- * machine (or a future real datastore) is the one serving the page. The
- * ranking/program data below it comes from the git-tracked research file
- * and is always real in production.
+ * Affiliate Revenue Engine, Phase 7 / Completion Pass — owner application
+ * queue. Backed by a private Vercel Blob store (lib/revenue/affiliate-
+ * pipeline.ts), not a gitignored local file — status changes made here
+ * (or via `npm run affiliate:status`) persist across deployments and are
+ * visible from this same protected page in production, unlike every
+ * other /internal/* dashboard's var/agents/*.json reports.
  */
 export const metadata: Metadata = {
   title: "Affiliate Pipeline",
   robots: { index: false, follow: false },
 };
+
+/**
+ * Forces per-request rendering — without this, `next build` would
+ * statically prerender this page once and freeze whatever the Blob store
+ * held at build time, so a "Mark submitted" click (or a real approval)
+ * would never show up without a full redeploy. Matches the same real
+ * fix already applied to /internal/growth and /internal/maintenance for
+ * the same reason.
+ */
+export const dynamic = "force-dynamic";
 
 const STATUS_LABEL: Record<string, string> = {
   unresearched: "Unresearched",
@@ -53,13 +59,17 @@ function statusTone(status: string): string {
   return "border-white/10 text-zinc-400";
 }
 
-export default function AffiliatePipelinePage() {
-  const ranked = getRankedApplicationCandidates();
-  const statusCounts = countByPipelineStatus();
+export default async function AffiliatePipelinePage() {
+  const ranked = await getRankedApplicationCandidates();
+  const statusCounts = await countByPipelineStatus();
 
-  const ready = ranked.filter((r) => r.pipelineStatus === "unresearched" || r.pipelineStatus === "verified" || r.pipelineStatus === "ready_to_apply");
+  const notYetStarted = (r: (typeof ranked)[number]) =>
+    r.pipelineStatus === "unresearched" || r.pipelineStatus === "verified" || r.pipelineStatus === "ready_to_apply";
+  const ready = ranked.filter((r) => notYetStarted(r) && r.readyToApply);
   const waiting = ranked.filter((r) => ["submitted", "pending_review", "application_in_progress"].includes(r.pipelineStatus));
-  const blocked = ranked.filter((r) => ["needs_owner_action", "rejected", "program_closed"].includes(r.pipelineStatus));
+  const blocked = ranked.filter(
+    (r) => ["needs_owner_action", "rejected", "program_closed"].includes(r.pipelineStatus) || (notYetStarted(r) && !r.readyToApply)
+  );
 
   return (
     <main className="flex-1 py-16 sm:py-20">
@@ -75,8 +85,9 @@ export default function AffiliatePipelinePage() {
             Internal only — not indexed, not linked from the site. {ranked.length} products have a
             confirmed official affiliate program, ranked by real signals (see{" "}
             <code className="rounded bg-white/10 px-1.5 py-0.5 text-sm">lib/revenue/affiliate-priority.ts</code>).
-            Change an application&apos;s status with{" "}
-            <code className="rounded bg-white/10 px-1.5 py-0.5 text-sm">npm run affiliate:status -- &lt;slug&gt; &lt;status&gt;</code>.
+            Use the buttons below, or{" "}
+            <code className="rounded bg-white/10 px-1.5 py-0.5 text-sm">npm run affiliate:status -- &lt;slug&gt; &lt;status&gt;</code>{" "}
+            for any other transition.
           </p>
           {!APPLICANT_LINKEDIN_URL ? (
             <p className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm text-amber-200">
@@ -109,7 +120,7 @@ export default function AffiliatePipelinePage() {
           <SectionHeading
             eyebrow="Ready now"
             title="Highest-priority applications not yet started"
-            description="Ranked by the priority model — availability, category value, commercial/buying intent, real GSC traffic where recorded, approval friction, and a recurring-commission bonus."
+            description="Ranked by the priority model — availability, category value, commercial/buying intent, real GSC traffic where recorded, approval friction, and a recurring-commission bonus. Excludes programs with a known blocker (closed to new affiliates, doesn't fit Miloosh's model, or no confirmed application URL) — see the full ranked list at the bottom for those."
           />
           <div className="mt-8 grid gap-4">
             {ready.length === 0 ? (
@@ -150,6 +161,14 @@ export default function AffiliatePipelinePage() {
                       {pack ? <CopyButton value={pack.website} label="Copy website" /> : null}
                       {pack ? <CopyButton value={pack.businessEmail} label="Copy email" /> : null}
                       {pack?.linkedinUrl ? <CopyButton value={pack.linkedinUrl} label="Copy LinkedIn" /> : null}
+                      <form action={markSubmittedAction.bind(null, r.slug)}>
+                        <button
+                          type="submit"
+                          className="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200"
+                        >
+                          Mark submitted
+                        </button>
+                      </form>
                     </div>
 
                     {pack && pack.missingOwnerInputs.length > 0 ? (
@@ -173,9 +192,29 @@ export default function AffiliatePipelinePage() {
               <Card><p className="text-sm text-zinc-500">Nothing waiting right now.</p></Card>
             ) : (
               waiting.map((r) => (
-                <Card key={r.slug} className="flex items-center justify-between gap-4">
-                  <span className="font-medium text-white">{r.name}</span>
-                  <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                <Card key={r.slug} className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="font-medium text-white">{r.name}</span>
+                    <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                  </div>
+                  <div className="flex gap-2">
+                    <form action={markApprovedAction.bind(null, r.slug)}>
+                      <button
+                        type="submit"
+                        className="rounded-lg border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-500/10"
+                      >
+                        Mark approved
+                      </button>
+                    </form>
+                    <form action={markRejectedAction.bind(null, r.slug)}>
+                      <button
+                        type="submit"
+                        className="rounded-lg border border-red-500/30 px-3 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-500/10"
+                      >
+                        Mark rejected
+                      </button>
+                    </form>
+                  </div>
                 </Card>
               ))
             )}
@@ -189,9 +228,12 @@ export default function AffiliatePipelinePage() {
               <Card><p className="text-sm text-zinc-500">Nothing blocked right now.</p></Card>
             ) : (
               blocked.map((r) => (
-                <Card key={r.slug} className="flex items-center justify-between gap-4">
-                  <span className="font-medium text-white">{r.name}</span>
-                  <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                <Card key={r.slug}>
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-medium text-white">{r.name}</span>
+                    <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                  </div>
+                  {r.blockReason ? <p className="mt-2 text-sm text-zinc-400">{r.blockReason}</p> : null}
                 </Card>
               ))
             )}

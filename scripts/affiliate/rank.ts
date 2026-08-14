@@ -1,3 +1,4 @@
+import "./_load-env";
 import { getRankedApplicationCandidates, getAllPriorities } from "@/lib/revenue/affiliate-priority";
 
 /**
@@ -7,9 +8,9 @@ import { getRankedApplicationCandidates, getAllPriorities } from "@/lib/revenue/
  * the ranking is auditable, not a black box. Pass --all to also see
  * unresolved/no-program products (useful for spotting research gaps).
  */
-function main() {
+async function main() {
   const showAll = process.argv.includes("--all");
-  const rows = showAll ? getAllPriorities() : getRankedApplicationCandidates();
+  const rows = showAll ? await getAllPriorities() : await getRankedApplicationCandidates();
 
   console.log(
     showAll
