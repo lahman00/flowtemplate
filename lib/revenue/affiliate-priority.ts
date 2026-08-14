@@ -54,6 +54,7 @@ export const KNOWN_APPLICATION_BLOCKERS: Record<string, string> = {
   notion: "Official page currently shows 'Program is currently not accepting new affiliates' (re-checked 2026-08-14).",
   asana: "Application requires being an existing paying Asana customer and runs through a Salesforce sales portal — not a fit for Miloosh's comparison-publisher model.",
   canva: "Official Help Center pages return 403 on every direct fetch attempt; network and current open/closed status could not be independently confirmed.",
+  "fathom-analytics": "Program is restricted to existing Fathom Analytics customers with an active paid subscription (confirmed directly on Fathom's own docs, 2026-08-14) — Miloosh is not a Fathom customer, so applying would require a real spend decision first, not just an account signup.",
 };
 
 const WEIGHTS = {

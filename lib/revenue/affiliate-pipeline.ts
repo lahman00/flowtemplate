@@ -109,7 +109,13 @@ export async function readAffiliatePipeline(): Promise<AffiliatePipelineEntry[]>
   if (!hasBlobToken()) return readLocalFallback();
   try {
     const { get } = await import("@vercel/blob");
-    const result = await get(BLOB_PATHNAME, { access: "private" });
+    // useCache: false is required here — the CDN cache otherwise serves a
+    // stale copy on a read immediately following a write (discovered when
+    // setPipelineStatus() chained two transitions back-to-back and the
+    // second one saw the pre-write status, throwing a false "invalid
+    // transition" error). Every read in this module needs the real
+    // current state, never a cached one.
+    const result = await get(BLOB_PATHNAME, { access: "private", useCache: false });
     if (!result || result.statusCode !== 200) return [];
     const text = await new Response(result.stream).text();
     return JSON.parse(text) as AffiliatePipelineEntry[];
