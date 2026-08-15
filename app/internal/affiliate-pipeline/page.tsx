@@ -139,6 +139,33 @@ const NETWORK_GROUP_ORDER = [
   "Broken / needs re-verification",
 ];
 
+/**
+ * Eligibility text ended up in different fields depending on when it was
+ * recorded — some programs have it in the static research file's
+ * countryRestrictions, but Semrush's (recorded during the 2026-08-15
+ * Impact.com batch re-verification) landed in the pipeline entry's
+ * ownerActionRequired/notes instead. Checking all three, rather than
+ * only countryRestrictions, so a real eligibility warning like Semrush's
+ * ("requires 1,000+ monthly visitors OR 1,000+ social followers") can't
+ * silently fail to surface just because of which field it's stored in.
+ *
+ * Requires a digit in the matched sentence, not just the word
+ * "eligib(ility)" — Wix's note also contains that word ("Broadly
+ * permissive eligibility ('made for all types of creators'), no geo
+ * restriction"), which is a reassurance, not a warning. A quantified
+ * threshold (a number) is what actually distinguishes a real
+ * requirement from a mention of the word.
+ */
+function findEligibilityWarning(countryRestrictions: string | null | undefined, ...notes: (string | null)[]): string | null {
+  if (countryRestrictions) return countryRestrictions;
+  for (const note of notes) {
+    if (!note) continue;
+    const sentence = note.split(/(?<=[.!?])\s+/).find((s) => /eligib/i.test(s) && /\d/.test(s));
+    if (sentence) return sentence.trim();
+  }
+  return null;
+}
+
 function CopySet({ pack }: { pack: NonNullable<ReturnType<typeof buildApplicationPack>> }) {
   return (
     <>
@@ -258,7 +285,11 @@ export default async function AffiliatePipelinePage() {
           {current ? (
             (() => {
               const pack = buildApplicationPack(current.slug)!;
-              const eligibilityWarning = pack.program?.countryRestrictions;
+              const eligibilityWarning = findEligibilityWarning(
+                pack.program?.countryRestrictions,
+                current.ownerActionRequired,
+                current.pipelineNotes
+              );
               return (
                 <Card className="mt-6 border-white/20 bg-white/[0.05]">
                   <div className="flex flex-wrap items-center justify-between gap-3">
@@ -359,7 +390,7 @@ export default async function AffiliatePipelinePage() {
             <div className="mt-4 grid gap-2">
               {upcoming.map((r, i) => {
                 const pack = buildApplicationPack(r.slug);
-                const eligibilityFlag = pack?.program?.countryRestrictions;
+                const eligibilityFlag = findEligibilityWarning(pack?.program?.countryRestrictions, r.ownerActionRequired, r.pipelineNotes);
                 return (
                   <Card key={r.slug} className="flex flex-wrap items-center justify-between gap-3 py-3">
                     <div className="flex items-center gap-3">
