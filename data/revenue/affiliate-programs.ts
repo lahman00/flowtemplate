@@ -1069,6 +1069,21 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     confidence: "medium",
   },
   {
+    slug: "whatconverts",
+    lastVerifiedAt: "2026-08-15",
+    programExists: "yes",
+    type: "network",
+    networkName: "PartnerStack",
+    countryRestrictions: null,
+    commissionModel: "20% recurring commission for the first two years on every referred customer, per the PartnerStack invitation.",
+    recurrence: "recurring",
+    notes:
+      "WhatConverts invited Miloosh directly to its affiliate program via PartnerStack; the invitation was accepted 2026-08-15 and the affiliate link was issued at that time. Not a self-service application — recorded from the real, owner-accepted PartnerStack invitation, not from WhatConverts' own public marketing pages (which don't publish an affiliate program page).",
+    sourceUrls: ["https://partners.whatconverts.com/bmckzlf0vnl8"],
+    applicationUrl: null,
+    confidence: "high",
+  },
+  {
     slug: "zoom",
     lastVerifiedAt: "2026-07-31",
     programExists: "unknown",

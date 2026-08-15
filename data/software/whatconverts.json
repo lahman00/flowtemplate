@@ -1,0 +1,63 @@
+{
+  "name": "WhatConverts",
+  "slug": "whatconverts",
+  "category": "marketing",
+  "description": "WhatConverts is a lead tracking and reporting platform that attributes calls, form submissions, chats, and e-commerce transactions back to the specific marketing campaign, keyword, or channel that generated them.",
+  "website": "https://whatconverts.com",
+  "best_for": "Marketing agencies, PPC/SEO professionals, and business owners across industries like real estate, legal, healthcare, and home services who need to trace every call, form, and chat lead back to its exact marketing source.",
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$30/mo",
+    "has_free_tier": false
+  },
+  "platforms": ["Web"],
+  "features": [
+    "Call tracking with dynamic number insertion and automatic spam blocking",
+    "Form tracking for existing website forms",
+    "Chat tracking tied back to marketing campaigns",
+    "E-commerce and transaction tracking",
+    "Lead search and filtering by name, number, or email",
+    "AI-powered lead qualification",
+    "Lead valuation for ROI comparison across channels",
+    "CRM export and automated lead sync",
+    "Pre-built marketing reports plus a custom report builder",
+    "AI-powered marketing intelligence insights",
+    "Real-time reporting dashboards",
+    "Multi-click/multi-touch attribution across the customer journey",
+    "White label reporting for agencies",
+    "1000+ integrations, including Google Ads, Facebook Ads, and Pipedrive"
+  ],
+  "pros": [
+    "Over 1000 integrations with ad platforms and CRMs",
+    "AI-powered lead qualification to filter out junk leads",
+    "White label option built specifically for agencies"
+  ],
+  "cons": [
+    "Individual-business plans are limited to a single account — multiple accounts require an Agency plan starting at $500/mo",
+    "Usage credits are capped per plan tier, with per-item overage charges for extra tracked numbers, minutes, and form/chat submissions"
+  ],
+  "alternatives": [
+    {
+      "name": "Google Analytics",
+      "slug": "google-analytics",
+      "description": "A free analytics tool from Google that measures customer behavior across websites and apps.",
+      "best_for": "Teams that want free, general-purpose web analytics rather than dedicated call/form/chat lead-source attribution",
+      "strengths": ["Free", "Website/app behavior tracking", "Google Ads integration"]
+    },
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "A CRM platform where businesses track contacts, deals, and marketing activity in one place.",
+      "best_for": "Teams that want lead tracking bundled into a broader CRM and marketing suite rather than a standalone attribution tool",
+      "strengths": ["All-in-one CRM", "Marketing + sales pipeline", "AI assistance built in"]
+    }
+  ],
+  "tags": ["call tracking", "lead attribution", "conversion tracking", "marketing analytics", "form tracking"],
+  "sources": [
+    "https://whatconverts.com/",
+    "https://whatconverts.com/features/",
+    "https://whatconverts.com/pricing/",
+    "https://whatconverts.com/about/"
+  ],
+  "accessed_at": "2026-08-15"
+}
