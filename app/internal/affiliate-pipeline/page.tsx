@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { CopyButton } from "@/components/CopyButton";
 import { getRankedApplicationCandidates } from "@/lib/revenue/affiliate-priority";
 import { buildApplicationPack, APPLICANT_LINKEDIN_URL } from "@/lib/revenue/application-pack";
-import { countByPipelineStatus } from "@/lib/revenue/affiliate-pipeline";
+import { countByPipelineStatus, readAffiliatePipeline } from "@/lib/revenue/affiliate-pipeline";
 import {
   markSubmittedAction,
   markRejectedAction,
@@ -74,8 +74,19 @@ function statusTone(status: string): string {
 }
 
 export default async function AffiliatePipelinePage() {
-  const ranked = await getRankedApplicationCandidates();
-  const statusCounts = await countByPipelineStatus();
+  /**
+   * Blob-operations incident (2026-08-15): this used to be 2 separate
+   * calls, each internally re-fetching the pipeline — and worse,
+   * getRankedApplicationCandidates() used to call getPipelineEntry() (its
+   * own full Blob read) once per software product, ~217 reads for one
+   * page load. Fetching once here and passing the same array into both
+   * functions below brings this page down to ~2 total Blob reads
+   * (pipeline + network statuses), matching what a single dashboard load
+   * should actually cost.
+   */
+  const pipelineEntries = await readAffiliatePipeline();
+  const ranked = await getRankedApplicationCandidates(pipelineEntries);
+  const statusCounts = await countByPipelineStatus(pipelineEntries);
   const networkStatuses = await readNetworkStatuses();
 
   /**

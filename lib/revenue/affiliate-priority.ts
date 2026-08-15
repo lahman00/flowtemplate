@@ -3,7 +3,13 @@ import { getAllSoftware } from "@/data/software";
 import { AFFILIATE_PROGRAMS, type AffiliateProgramInfo } from "@/data/revenue/affiliate-programs";
 import { readFirstClickCandidates } from "@/lib/agents/first-click-experiment";
 import { readFirstClickStrikeCandidates } from "@/lib/agents/first-click-strike";
-import { getPipelineEntry, type AffiliatePipelineStatus } from "@/lib/revenue/affiliate-pipeline";
+import {
+  getPipelineEntry,
+  readAffiliatePipeline,
+  buildPipelineMap,
+  type AffiliatePipelineEntry,
+  type AffiliatePipelineStatus,
+} from "@/lib/revenue/affiliate-pipeline";
 import { getRevenueScore } from "@/lib/revenue/scoring";
 
 /**
@@ -113,11 +119,18 @@ function scoreApprovalFriction(program: AffiliateProgramInfo | undefined): numbe
   return 3;
 }
 
-export async function getAffiliatePriority(software: Software): Promise<AffiliatePriorityBreakdown> {
+/**
+ * Pure — no I/O. Takes the pipeline entry (or undefined) as a plain
+ * argument instead of fetching it, so a caller iterating many products
+ * can fetch the whole pipeline once and pass each product's own entry in,
+ * rather than every product independently triggering its own Blob read.
+ * getAffiliatePriority(), getRankedApplicationCandidates(), and
+ * getAllPriorities() below are all thin wrappers around this.
+ */
+function computeAffiliatePriority(software: Software, pipelineEntry: AffiliatePipelineEntry | undefined): AffiliatePriorityBreakdown {
   const program = AFFILIATE_PROGRAMS.find((p) => p.slug === software.slug);
   const revenueScore = getRevenueScore(software);
   const traffic = scoreTrafficOpportunity(software.slug);
-  const pipelineEntry = await getPipelineEntry(software.slug);
   const approvalFrictionScore = scoreApprovalFriction(program);
   const recurringBonus = program?.recurrence === "recurring" ? RECURRING_BONUS : 0;
 
@@ -156,15 +169,37 @@ export async function getAffiliatePriority(software: Software): Promise<Affiliat
   };
 }
 
-/** Every software with a confirmed ("yes") program, ranked highest-priority first — the only pool it's safe to build a real application batch from. */
-export async function getRankedApplicationCandidates(): Promise<AffiliatePriorityBreakdown[]> {
-  const software = getAllSoftware();
-  const breakdowns = await Promise.all(software.map((s) => getAffiliatePriority(s)));
+/** Single-product convenience wrapper — one Blob read for one product, which is correct (not the N+1 bug; that was N products each independently re-reading the same full pipeline). Used by CLI scripts and tests that want just one slug's breakdown. */
+export async function getAffiliatePriority(software: Software): Promise<AffiliatePriorityBreakdown> {
+  const pipelineEntry = await getPipelineEntry(software.slug);
+  return computeAffiliatePriority(software, pipelineEntry);
+}
+
+/**
+ * Every software with a confirmed ("yes") program, ranked highest-priority
+ * first — the only pool it's safe to build a real application batch from.
+ *
+ * Reads the pipeline exactly once (or reuses `entries` if the caller
+ * already fetched it this request) regardless of catalog size — pass the
+ * same array you already have (e.g. the dashboard page also uses it for
+ * countByPipelineStatus) to avoid a second Blob read entirely.
+ */
+export async function getRankedApplicationCandidates(entries?: AffiliatePipelineEntry[]): Promise<AffiliatePriorityBreakdown[]> {
+  const list = entries ?? (await readAffiliatePipeline());
+  const pipelineMap = buildPipelineMap(list);
+  const breakdowns = getAllSoftware().map((s) => computeAffiliatePriority(s, pipelineMap.get(s.slug)));
   return breakdowns.filter((b) => b.programExists === "yes").sort((a, b) => b.totalScore - a.totalScore);
 }
 
-/** Every product this priority model has an opinion on, ranked — includes unresolved/no-program entries so the dashboard can show the full picture, not just the actionable slice. */
-export async function getAllPriorities(): Promise<AffiliatePriorityBreakdown[]> {
-  const breakdowns = await Promise.all(getAllSoftware().map((s) => getAffiliatePriority(s)));
+/**
+ * Every product this priority model has an opinion on, ranked — includes
+ * unresolved/no-program entries so the dashboard can show the full
+ * picture, not just the actionable slice. Same single-read discipline as
+ * getRankedApplicationCandidates() above.
+ */
+export async function getAllPriorities(entries?: AffiliatePipelineEntry[]): Promise<AffiliatePriorityBreakdown[]> {
+  const list = entries ?? (await readAffiliatePipeline());
+  const pipelineMap = buildPipelineMap(list);
+  const breakdowns = getAllSoftware().map((s) => computeAffiliatePriority(s, pipelineMap.get(s.slug)));
   return breakdowns.sort((a, b) => b.totalScore - a.totalScore);
 }

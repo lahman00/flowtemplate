@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, vi, beforeEach, beforeAll, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -9,6 +9,7 @@ import {
   countByPipelineStatus,
   fastTrackToSubmitted,
   fastTrackToApproved,
+  buildPipelineMap,
 } from "@/lib/revenue/affiliate-pipeline";
 
 const PIPELINE_PATH = path.join(process.cwd(), "var", "agents", "affiliate-pipeline.json");
@@ -214,5 +215,36 @@ describe("affiliate pipeline state transitions", () => {
     await setPipelineStatus("zendesk", "verified");
     await setPipelineStatus("zendesk", "waiting_on_network");
     await expect(setPipelineStatus("zendesk", "submitted")).rejects.toThrow(/Invalid affiliate pipeline transition/);
+  });
+
+  it("buildPipelineMap indexes entries by slug for O(1) lookup", async () => {
+    await setPipelineStatus("clickup", "program_found");
+    const entries = await readAffiliatePipeline();
+    const map = buildPipelineMap(entries);
+    expect(map.get("clickup")?.status).toBe("program_found");
+    expect(map.get("nonexistent-slug")).toBeUndefined();
+  });
+
+  /**
+   * Regression coverage for the 2026-08-15 Blob operations incident: the
+   * dashboard used to call countByPipelineStatus() with no arguments even
+   * though it had already fetched the pipeline moments earlier for
+   * getRankedApplicationCandidates() — a second full read for data it
+   * already had. Passing the same array through should cost nothing.
+   */
+  it("countByPipelineStatus makes zero pipeline reads when passed a pre-fetched entries array", async () => {
+    await setPipelineStatus("clickup", "program_found");
+    const entries = await readAffiliatePipeline();
+    const readSpy = vi.spyOn(fs, "readFileSync");
+    await countByPipelineStatus(entries);
+    const pipelineReads = readSpy.mock.calls.filter(([p]) => String(p).includes("affiliate-pipeline.json")).length;
+    readSpy.mockRestore();
+    expect(pipelineReads).toBe(0);
+  });
+
+  it("countByPipelineStatus still works standalone (no entries passed) for CLI/other callers", async () => {
+    await setPipelineStatus("clickup", "program_found");
+    const counts = await countByPipelineStatus();
+    expect(counts.program_found).toBeGreaterThanOrEqual(1);
   });
 });

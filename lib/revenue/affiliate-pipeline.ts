@@ -147,6 +147,20 @@ export async function getPipelineEntry(slug: string): Promise<AffiliatePipelineE
   return (await readAffiliatePipeline()).find((e) => e.slug === slug);
 }
 
+/**
+ * Turns a pipeline read into an O(1)-lookup map keyed by slug — the
+ * building block for reading the Blob store once per request instead of
+ * once per product. See lib/revenue/affiliate-priority.ts, whose ranking
+ * functions used to call getPipelineEntry() (a full readAffiliatePipeline()
+ * Blob read) separately for each of the ~217 software products — ~219
+ * Blob reads for a single dashboard page load, enough to exhaust the
+ * Hobby plan's 10K/period simple-operations limit in well under a day.
+ * Fetch once, build this map, look up from it.
+ */
+export function buildPipelineMap(entries: AffiliatePipelineEntry[]): Map<string, AffiliatePipelineEntry> {
+  return new Map(entries.map((e) => [e.slug, e]));
+}
+
 function blankEntry(slug: string): AffiliatePipelineEntry {
   return {
     slug,
@@ -286,9 +300,16 @@ export async function fastTrackToApproved(
   return result!;
 }
 
-export async function countByPipelineStatus(): Promise<Record<AffiliatePipelineStatus, number>> {
+/**
+ * Accepts an already-fetched `entries` array to avoid a second Blob read
+ * when the caller (e.g. the dashboard page) already has one from the same
+ * request — falls back to its own readAffiliatePipeline() call only when
+ * used standalone (CLI scripts, tests).
+ */
+export async function countByPipelineStatus(entries?: AffiliatePipelineEntry[]): Promise<Record<AffiliatePipelineStatus, number>> {
   const counts = {} as Record<AffiliatePipelineStatus, number>;
   for (const status of Object.keys(VALID_TRANSITIONS) as AffiliatePipelineStatus[]) counts[status] = 0;
-  for (const entry of await readAffiliatePipeline()) counts[entry.status] += 1;
+  const list = entries ?? (await readAffiliatePipeline());
+  for (const entry of list) counts[entry.status] += 1;
   return counts;
 }
