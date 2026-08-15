@@ -48,7 +48,10 @@ export type AffiliatePriorityBreakdown = {
   /** The real affiliate/referral URL once approved — null until an owner-confirmed approval records one. Never the research applicationUrl (that's the page to apply on, not the tracking link you get after acceptance). */
   affiliateUrl: string | null;
   approvedAt: string | null;
+  submittedAt: string | null;
+  rejectedAt: string | null;
   pipelineNotes: string | null;
+  ownerActionRequired: string | null;
 };
 
 /**
@@ -165,7 +168,10 @@ function computeAffiliatePriority(software: Software, pipelineEntry: AffiliatePi
       (!program?.applicationUrl ? "No confirmed application URL yet." : program.confidence === "low" ? "Research confidence is low — key facts (network, current status) unconfirmed." : null),
     affiliateUrl: pipelineEntry?.affiliateUrl ?? null,
     approvedAt: pipelineEntry?.approvedAt ?? null,
+    submittedAt: pipelineEntry?.submittedAt ?? null,
+    rejectedAt: pipelineEntry?.rejectedAt ?? null,
     pipelineNotes: pipelineEntry?.notes ?? null,
+    ownerActionRequired: pipelineEntry?.ownerActionRequired ?? null,
   };
 }
 
