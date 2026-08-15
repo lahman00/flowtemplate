@@ -1,5 +1,6 @@
 import type { Software } from "@/data/software";
-import { getSoftware } from "@/data/software";
+import { getSoftware, getAllSoftware } from "@/data/software";
+import { getAllCategories } from "@/data/categories";
 import { getAffiliateProgram } from "@/lib/revenue/affiliate-manager";
 import type { AffiliateProgramInfo } from "@/data/revenue/affiliate-programs";
 
@@ -38,6 +39,38 @@ export const PROMOTION_STRATEGY =
 
 export const PUBLISHER_CLASSIFICATION = "Publisher of product reviews, buying guides or comparison articles.";
 
+/**
+ * Resume, 2026-08-15 — three fields several application forms ask for
+ * that the pack didn't have text for yet: an audience description, a
+ * summary of the software Miloosh covers, and answers to the handful of
+ * free-text questions that recur across most affiliate applications.
+ * Computed from real catalog counts (getAllSoftware/getAllCategories),
+ * never a fabricated traffic or audience-size number — same discipline
+ * as BUSINESS_DESCRIPTION/PROMOTION_STRATEGY above and the trafficOpportunityScore
+ * comment in lib/revenue/affiliate-priority.ts ("0 means no data, never no traffic").
+ */
+export function getAudienceDescription(): string {
+  const productCount = getAllSoftware().length;
+  const categoryCount = getAllCategories().length;
+  return `Miloosh's audience is people actively researching and comparing business software — reaching us primarily through organic search while evaluating a specific tool or category, not general readers. The site currently covers ${productCount} software products across ${categoryCount} categories (project management, CRM, communication, and others), each with dedicated comparison and alternatives content aimed at buying-intent search queries.`;
+}
+
+export function getPromotedSoftwareSummary(): string {
+  const productCount = getAllSoftware().length;
+  const categoryCount = getAllCategories().length;
+  return `${productCount} SaaS/business-software products across ${categoryCount} categories are covered on Miloosh today, each with its own product page and relevant head-to-head comparison pages against direct competitors.`;
+}
+
+/** Answers to the free-text questions that recur across most affiliate application forms — kept separate from the fixed description/strategy fields since forms phrase the same underlying question differently. */
+export function getCommonAnswers(): Record<string, string> {
+  return {
+    "How will you promote us?": PROMOTION_STRATEGY,
+    "What is your main source of traffic?": "Organic search (Google) — visitors arrive via software comparison and buying-guide queries, not paid acquisition or social.",
+    "Do you have an existing audience or email list?": "No email list or social following is used for promotion; all traffic is organic search landing directly on relevant product/comparison pages.",
+    "Do you currently promote any competing or similar products?": "Miloosh is a neutral, multi-vendor comparison site — it lists and compares many competing products in the same category, including this one's direct competitors, as part of its normal editorial content, not as a conflict of interest.",
+  };
+}
+
 export type ApplicationPack = {
   slug: string;
   productName: string;
@@ -48,6 +81,9 @@ export type ApplicationPack = {
   description: string;
   promotionStrategy: string;
   classification: string;
+  audienceDescription: string;
+  promotedSoftwareSummary: string;
+  commonAnswers: Record<string, string>;
   program: AffiliateProgramInfo | null;
   applicationUrl: string | null;
   /** True only when the software's own program data is confirmed ("yes") — a pack for anything else is evidence to review, not something ready to submit. */
@@ -78,6 +114,9 @@ export function buildApplicationPack(slug: string): ApplicationPack | null {
     description: BUSINESS_DESCRIPTION,
     promotionStrategy: PROMOTION_STRATEGY,
     classification: PUBLISHER_CLASSIFICATION,
+    audienceDescription: getAudienceDescription(),
+    promotedSoftwareSummary: getPromotedSoftwareSummary(),
+    commonAnswers: getCommonAnswers(),
     program,
     applicationUrl: program?.applicationUrl ?? null,
     readyToApply: program?.programExists === "yes",

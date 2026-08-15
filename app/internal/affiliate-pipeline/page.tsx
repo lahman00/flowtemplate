@@ -187,6 +187,12 @@ export default async function AffiliatePipelinePage() {
                     </a>
                     <CopyButton value={pack.description} label="Copy description" />
                     <CopyButton value={pack.promotionStrategy} label="Copy promotion strategy" />
+                    <CopyButton value={pack.audienceDescription} label="Copy audience description" />
+                    <CopyButton value={pack.promotedSoftwareSummary} label="Copy software summary" />
+                    <CopyButton
+                      value={Object.entries(pack.commonAnswers).map(([q, a]) => `${q}\n${a}`).join("\n\n")}
+                      label="Copy common answers"
+                    />
                     <CopyButton value={pack.website} label="Copy website" />
                     <CopyButton value={pack.businessEmail} label="Copy email" />
                     {pack.linkedinUrl ? <CopyButton value={pack.linkedinUrl} label="Copy LinkedIn" /> : null}
@@ -336,6 +342,14 @@ export default async function AffiliatePipelinePage() {
                       )}
                       {pack ? <CopyButton value={pack.description} label="Copy description" /> : null}
                       {pack ? <CopyButton value={pack.promotionStrategy} label="Copy promotion strategy" /> : null}
+                      {pack ? <CopyButton value={pack.audienceDescription} label="Copy audience description" /> : null}
+                      {pack ? <CopyButton value={pack.promotedSoftwareSummary} label="Copy software summary" /> : null}
+                      {pack ? (
+                        <CopyButton
+                          value={Object.entries(pack.commonAnswers).map(([q, a]) => `${q}\n${a}`).join("\n\n")}
+                          label="Copy common answers"
+                        />
+                      ) : null}
                       {pack ? <CopyButton value={pack.website} label="Copy website" /> : null}
                       {pack ? <CopyButton value={pack.businessEmail} label="Copy email" /> : null}
                       {pack?.linkedinUrl ? <CopyButton value={pack.linkedinUrl} label="Copy LinkedIn" /> : null}
