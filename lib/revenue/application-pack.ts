@@ -61,6 +61,11 @@ export function getPromotedSoftwareSummary(): string {
   return `${productCount} SaaS/business-software products across ${categoryCount} categories are covered on Miloosh today, each with its own product page and relevant head-to-head comparison pages against direct competitors.`;
 }
 
+/** Real category names from data/categories — the actual list a "what niches do you cover?" field expects, not just a count. */
+export function getCategoriesNichesList(): string {
+  return getAllCategories().map((c) => c.name).join(", ");
+}
+
 /** Answers to the free-text questions that recur across most affiliate application forms — kept separate from the fixed description/strategy fields since forms phrase the same underlying question differently. */
 export function getCommonAnswers(): Record<string, string> {
   return {
@@ -83,6 +88,7 @@ export type ApplicationPack = {
   classification: string;
   audienceDescription: string;
   promotedSoftwareSummary: string;
+  categoriesNiches: string;
   commonAnswers: Record<string, string>;
   program: AffiliateProgramInfo | null;
   applicationUrl: string | null;
@@ -116,6 +122,7 @@ export function buildApplicationPack(slug: string): ApplicationPack | null {
     classification: PUBLISHER_CLASSIFICATION,
     audienceDescription: getAudienceDescription(),
     promotedSoftwareSummary: getPromotedSoftwareSummary(),
+    categoriesNiches: getCategoriesNichesList(),
     commonAnswers: getCommonAnswers(),
     program,
     applicationUrl: program?.applicationUrl ?? null,

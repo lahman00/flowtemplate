@@ -520,19 +520,19 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "jasper",
-    lastVerifiedAt: "2026-08-14",
+    lastVerifiedAt: "2026-08-15",
     programExists: "yes",
     type: "network",
-    networkName: "Impact",
+    networkName: "FirstPromoter",
     countryRestrictions: null,
-    commissionModel: "25% recurring commission for the first 12 months of each referred subscription; a 30% tier unlocks after converting 100 customers within a rolling 12 months",
+    commissionModel: "25% of the subscription price (Creator/Teams plans) for the first 12 months of each referred subscription; rises to 30% after converting 100 leads to customers within a rolling 12-month period. Jasper Business plans are explicitly not eligible for commissions. $25 minimum earnings threshold before payment.",
     recurrence: "recurring",
     notes:
-      "Not directly fetched in this pass — consistent WebSearch results describe the official affiliate agreement/landing page at jasper.ai/partners (distinct from Jasper's separate agency-focused Solution Partner Program). 45-day cookie window per third-party aggregation.",
-    sourceUrls: ["https://www.jasper.ai/partners"],
-    applicationUrl: "https://www.jasper.ai/partners",
-    cookieDuration: "45 days",
-    confidence: "medium",
+      "Corrected 2026-08-15: jasper.ai/partners (the previously-recorded URL) was directly fetched this pass and is Jasper's Solution Partner Program for agencies/consultancies/SIs — it explicitly states 'Independent affiliates and individual promoters are not eligible,' and makes no mention of Impact.com. The real individual-affiliate program is a separate page, jasper.ai/affiliates, managed through FirstPromoter (not Impact.com) — confirmed by directly fetching that page. Not part of the Impact.com batch as a result.",
+    sourceUrls: ["https://www.jasper.ai/affiliates"],
+    applicationUrl: "https://www.jasper.ai/affiliates",
+    cookieDuration: "Not stated on the affiliate page in this pass.",
+    confidence: "high",
   },
   {
     slug: "jira",
@@ -741,8 +741,8 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "otter-ai",
-    lastVerifiedAt: "2026-08-14",
-    programExists: "yes",
+    lastVerifiedAt: "2026-08-15",
+    programExists: "unknown",
     type: "network",
     networkName: "Impact",
     countryRestrictions:
@@ -750,11 +750,11 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "Reported as 15-20% commission on the first year of a referred user's paid subscription (sources also mention a 20% recurring / 60-day-cookie variant that conflicts with a separately-cited 30-day cookie) — not independently confirmed on an official page in this pass.",
     recurrence: "one_time",
     notes:
-      "Not directly fetched from otter.ai in this pass — WebSearch aggregation agrees the program runs on Impact with Net-30 payouts and a $10 minimum threshold, but cookie duration and exact recurrence type are inconsistently reported across sources.",
+      "Downgraded 2026-08-15: otter.ai/affiliate and otter.ai/refer were both directly fetched this pass and show no affiliate program content at all (plain marketing pages) — a guessed Impact.com campaign URL (app.impact.com/campaign-promo-signup/Otter.ai.brand) also 404s. Could not independently confirm this program still exists in its previously-reported form; treat as unconfirmed rather than ready-to-apply until a real, live program page is found. Not included in the Impact.com batch as a result.",
     sourceUrls: ["https://otter.ai/affiliate"],
-    applicationUrl: "https://otter.ai/affiliate",
+    applicationUrl: null,
     payoutThreshold: "$10",
-    confidence: "medium",
+    confidence: "low",
   },
   {
     slug: "perplexity",

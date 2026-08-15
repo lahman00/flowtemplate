@@ -110,10 +110,28 @@ export default async function AffiliatePipelinePage() {
   const psCurrent = psRemaining[0];
   const psNext = psRemaining[1];
 
+  /**
+   * Impact.com batch (resumed 2026-08-15 while PartnerStack is frozen on
+   * Support Ticket #120795) — every confirmed program that actually runs
+   * on Impact.com, re-verified directly against each vendor's own page
+   * this pass. Two programs originally believed to be in this batch were
+   * corrected out of it in data/revenue/affiliate-programs.ts: Jasper's
+   * real affiliate program turned out to run on FirstPromoter, not
+   * Impact.com (its old URL was a different, agency-only program that
+   * explicitly excludes individual affiliates); Otter.ai's program
+   * couldn't be found live anywhere and was downgraded to unconfirmed.
+   * Unlike the PartnerStack sprint, there's no "Mark submitted" flow here
+   * — every one of these needs an Impact.com account created first, which
+   * only the owner can do (real identity, legal agreement, no shared
+   * account across programs the way PartnerStack's Network model works).
+   */
+  const impactPrograms = ranked.filter((r) => buildApplicationPack(r.slug)?.program?.networkName === "Impact");
+
   const notYetStarted = (r: (typeof ranked)[number]) =>
     r.pipelineStatus === "unresearched" || r.pipelineStatus === "verified" || r.pipelineStatus === "ready_to_apply";
   const partnerStackSlugs = new Set(partnerStackPrograms.map((r) => r.slug));
-  const ready = ranked.filter((r) => notYetStarted(r) && r.readyToApply && !partnerStackSlugs.has(r.slug));
+  const impactSlugs = new Set(impactPrograms.map((r) => r.slug));
+  const ready = ranked.filter((r) => notYetStarted(r) && r.readyToApply && !partnerStackSlugs.has(r.slug) && !impactSlugs.has(r.slug));
   const waiting = ranked.filter((r) =>
     ["submitted", "pending_review", "application_in_progress", "waiting_on_network"].includes(r.pipelineStatus)
   );
@@ -275,6 +293,98 @@ export default async function AffiliatePipelinePage() {
               ))}
             </div>
           </details>
+        </section>
+
+        <section className="mt-14">
+          <SectionHeading
+            eyebrow="Impact.com Batch"
+            title={`${impactPrograms.length} programs verified — one account, all ${impactPrograms.length}`}
+            description="Re-verified directly against each vendor's own official page on 2026-08-15. All confirmed to run on Impact.com, so one Impact.com publisher account (created by the owner — requires real identity and accepting Impact's own terms) unlocks every program below. No PartnerStack involvement; not affected by Ticket #120795."
+          />
+
+          <Card className="mt-6 border-white/20 bg-white/[0.05]">
+            <div className="flex items-center gap-3">
+              <Badge className="border-white/30 text-white">Impact.com profile</Badge>
+              <h3 className="text-lg font-semibold text-white">One-time account-creation info</h3>
+            </div>
+            <p className="mt-3 text-sm leading-6 text-zinc-400">
+              Everything needed to create the single Impact.com account — same info regardless of which program is applied to first. Real, data-derived, never fabricated (see lib/revenue/application-pack.ts).
+            </p>
+            {(() => {
+              const anyPack = impactPrograms[0] ? buildApplicationPack(impactPrograms[0].slug) : null;
+              if (!anyPack) return null;
+              return (
+                <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
+                  <CopyButton value={anyPack.businessName} label="Copy business name" />
+                  <CopyButton value={anyPack.website} label="Copy website" />
+                  <CopyButton value={anyPack.businessEmail} label="Copy email" />
+                  {anyPack.linkedinUrl ? <CopyButton value={anyPack.linkedinUrl} label="Copy LinkedIn" /> : null}
+                  <CopyButton value={anyPack.description} label="Copy business description" />
+                  <CopyButton value={anyPack.audienceDescription} label="Copy audience description" />
+                  <CopyButton value={anyPack.promotionStrategy} label="Copy promotional methods" />
+                  <CopyButton value={anyPack.categoriesNiches} label="Copy categories/niches" />
+                  <CopyButton
+                    value={Object.entries(anyPack.commonAnswers).map(([q, a]) => `${q}\n${a}`).join("\n\n")}
+                    label="Copy common answers"
+                  />
+                </div>
+              );
+            })()}
+          </Card>
+
+          <div className="mt-6 grid gap-4">
+            {impactPrograms.length === 0 ? (
+              <Card><p className="text-sm text-zinc-500">No confirmed Impact.com programs recorded yet.</p></Card>
+            ) : (
+              impactPrograms.map((r) => {
+                const pack = buildApplicationPack(r.slug)!;
+                return (
+                  <Card key={r.slug}>
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-semibold text-white">{r.name}</h3>
+                        <Badge>Impact.com</Badge>
+                        <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                      </div>
+                      <span className="text-sm text-zinc-400">Priority {r.totalScore}/100</span>
+                    </div>
+
+                    <p className="mt-3 text-sm leading-6 text-zinc-400">{pack.program?.commissionModel ?? "Commission model not recorded."}</p>
+                    {pack.program?.cookieDuration ? (
+                      <p className="mt-1 text-xs text-zinc-500">Cookie/attribution: {pack.program.cookieDuration}</p>
+                    ) : null}
+                    {pack.program?.countryRestrictions ? (
+                      <p className="mt-1 text-xs text-amber-300">Eligibility: {pack.program.countryRestrictions}</p>
+                    ) : null}
+
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
+                      {pack.applicationUrl ? (
+                        <a
+                          href={pack.applicationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium text-white underline decoration-white/30 underline-offset-4 hover:decoration-white"
+                        >
+                          Open application ↗
+                        </a>
+                      ) : (
+                        <span className="text-zinc-500">No confirmed application URL.</span>
+                      )}
+                      <CopyButton value={pack.description} label="Copy description" />
+                      <CopyButton value={pack.promotionStrategy} label="Copy promotion strategy" />
+                      <CopyButton value={pack.audienceDescription} label="Copy audience description" />
+                      <CopyButton
+                        value={Object.entries(pack.commonAnswers).map(([q, a]) => `${q}\n${a}`).join("\n\n")}
+                        label="Copy common answers"
+                      />
+                    </div>
+
+                    {r.pipelineNotes ? <p className="mt-3 text-xs text-zinc-500">{r.pipelineNotes}</p> : null}
+                  </Card>
+                );
+              })
+            )}
+          </div>
         </section>
 
         <section className="mt-14 grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
