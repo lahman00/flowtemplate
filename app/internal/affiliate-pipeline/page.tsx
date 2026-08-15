@@ -105,15 +105,25 @@ const KNOWN_CLOSED_SLUGS: Record<string, string> = {
   bigcommerce: "BigCommerce's affiliate program was discontinued May 17, 2025, per the vendor's own official page (bigcommerce.com/affiliates/).",
 };
 
+/**
+ * Matches loosely (case-insensitive substring), not by exact string —
+ * data/revenue/affiliate-programs.ts has real inconsistency in how this
+ * field is spelled across entries (e.g. wix's networkName is literally
+ * "impact.com" while grammarly's is "Impact"). Correcting that file is
+ * out of scope for this ordering-only pass, so the grouping logic is
+ * made robust to it instead of silently misfiling a program under
+ * "Direct vendor account required" because of a casing mismatch.
+ */
 function networkGroupLabel(networkName: string | null | undefined, slug: string): string {
   if (slug === "constant-contact") return "Broken / needs re-verification";
-  if (networkName === "PartnerStack") return "PartnerStack — waiting for Support Ticket #120795";
-  if (networkName === "Impact") return "Impact.com account required";
-  if (networkName === "Commission Junction") return "Commission Junction (CJ) account required";
-  if (networkName === "Awin") return "Awin account required";
-  if (networkName === "Rewardful") return "Rewardful account required";
-  if (networkName === "Dub") return "Dub account required";
-  if (networkName === "FirstPromoter") return "FirstPromoter account required";
+  const name = (networkName ?? "").toLowerCase();
+  if (name.includes("partnerstack")) return "PartnerStack — waiting for Support Ticket #120795";
+  if (name.includes("impact")) return "Impact.com account required";
+  if (name.includes("commission junction") || name === "cj") return "Commission Junction (CJ) account required";
+  if (name.includes("awin")) return "Awin account required";
+  if (name.includes("rewardful")) return "Rewardful account required";
+  if (name.includes("dub")) return "Dub account required";
+  if (name.includes("firstpromoter")) return "FirstPromoter account required";
   return "Direct vendor account required";
 }
 
