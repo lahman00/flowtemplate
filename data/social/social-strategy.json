@@ -42,7 +42,10 @@
     "commercial": 1
   },
   "blockedTopics": [],
-  "campaignPriorities": [],
+  "campaignPriorities": [
+    "Wix is now an approved, active monetization partner (Impact.com, 4 funnels: Website Builder, Domain, Headless, eCommerce) — prioritize genuinely relevant Wix content where editorially justified: Wix vs Squarespace, Wix vs Shopify, website builder buying advice, Wix Headless for AI-assisted development, domain-selection guides. Never insert the affiliate link directly into a social post — link to the relevant Miloosh page; the page itself resolves the correct funnel.",
+    "ElevenLabs is an approved, active monetization partner (PartnerStack) — eligible commercial-content candidate: ElevenLabs alternatives, AI voice/text-to-speech/voice-cloning comparisons, pricing research, use-case guides, ElevenLabs vs competitors. If tagging @elevenlabsio on a platform where that handle is valid, only do so for a genuinely relevant post — never gratuitously, and never implying ElevenLabs endorses Miloosh."
+  ],
   "ctaPolicy": {
     "defaultCta": "Read the full comparison",
     "affiliateCtaSuffix": "See current pricing"

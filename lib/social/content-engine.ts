@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { getAllSoftware } from "@/data/software";
 import { getAllCategories } from "@/data/categories";
 import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
-import { shouldShowAffiliateDisclosure, preferredUrl } from "@/lib/affiliate";
+import { shouldShowAffiliateDisclosure } from "@/lib/affiliate";
 import { formatIsoDate } from "@/lib/date";
 import { SITE_URL } from "@/lib/site";
 import { getSocialStrategy } from "@/lib/social/strategy";
@@ -160,6 +160,16 @@ function ideasFromCategories(): RawIdea[] {
 }
 
 // ---- Pillar I: Commercial (only products with a REAL, currently-active affiliate link) --
+/**
+ * 2026-08-17 — fixed to link to the Miloosh page, not the raw affiliate
+ * URL. It used to send social clicks straight to the vendor
+ * (preferredUrl(...)), skipping Miloosh entirely — that loses analytics,
+ * SEO value, and editorial context, and reads as affiliate spam rather
+ * than a real recommendation. The correct flow, per this project's own
+ * social policy: Miloosh page -> contextual affiliate CTA -> the right
+ * vendor funnel. The page itself (already wired for Wix's four funnels
+ * via lib/wix-funnels.ts) is what resolves the actual commercial link.
+ */
 function ideasFromCommercial(): RawIdea[] {
   const strategy = getSocialStrategy();
   return getAllSoftware()
@@ -170,7 +180,7 @@ function ideasFromCommercial(): RawIdea[] {
       sourceSlugs: [s.slug],
       headline: `${s.name}: ${s.bestFor}`,
       body: `${s.description} ${strategy.ctaPolicy.affiliateCtaSuffix}. ${strategy.affiliateDisclosurePolicy.shortText}`,
-      link: preferredUrl({ officialUrl: s.website, affiliateUrl: s.affiliateUrl }),
+      link: url(`/software/${s.slug}`),
     }));
 }
 

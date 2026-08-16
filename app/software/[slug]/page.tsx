@@ -172,6 +172,7 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
               target="_blank"
               variant="secondary"
               className="mt-6 w-full"
+              ctaLocation="software-page-cta"
             >
               Visit official site
               <ExternalLink className="h-4 w-4" />

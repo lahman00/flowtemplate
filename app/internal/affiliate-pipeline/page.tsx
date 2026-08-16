@@ -15,6 +15,7 @@ import {
   markApprovedWithUrlAction,
 } from "@/lib/revenue/affiliate-pipeline-actions";
 import { readNetworkStatuses } from "@/lib/revenue/affiliate-network-status";
+import { WIX_FUNNELS } from "@/lib/wix-funnels";
 
 /**
  * Affiliate Revenue Engine — owner application queue. Backed by a private
@@ -190,6 +191,43 @@ function CopySet({ pack }: { pack: NonNullable<ReturnType<typeof buildApplicatio
       <CopyButton value={pack.businessEmail} label="Copy email" />
       {pack.linkedinUrl ? <CopyButton value={pack.linkedinUrl} label="Copy LinkedIn" /> : null}
     </>
+  );
+}
+
+/**
+ * Wix-specific: it's the only program with more than one real tracking
+ * link (four Impact.com funnels, one per product line — see
+ * lib/wix-funnels.ts, the single source of truth these render from).
+ * Shown instead of the generic single-URL block for exactly this one
+ * program; every other approved program keeps the plain single-link
+ * display above/below it.
+ */
+function WixFunnelsCard() {
+  return (
+    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      {Object.values(WIX_FUNNELS).map((funnel) => (
+        <div key={funnel.context} className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-sm font-semibold text-white">{funnel.label}</span>
+            <span className="rounded-full border border-white/10 px-2 py-0.5 text-xs text-zinc-500">Campaign {funnel.campaignId}</span>
+          </div>
+          <code className="mt-2 block truncate rounded border border-white/10 bg-white/5 px-2 py-1 text-xs text-zinc-300">{funnel.url}</code>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <CopyButton value={funnel.url} label="Copy link" />
+            <a
+              href={funnel.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-500/10"
+            >
+              Open ↗
+            </a>
+          </div>
+          <p className="mt-2 text-xs leading-5 text-zinc-500">{funnel.audience}</p>
+          <p className="mt-1 text-xs text-zinc-600">Last verified {funnel.lastVerifiedAt}</p>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -511,11 +549,14 @@ export default async function AffiliatePipelinePage() {
                       <div className="flex items-center gap-3">
                         <h3 className="text-lg font-semibold text-white">{r.name}</h3>
                         <Badge className={statusTone(r.pipelineStatus)}>{STATUS_LABEL[r.pipelineStatus]}</Badge>
+                        {r.slug === "wix" ? <Badge className="border-emerald-500/30 bg-emerald-500/10 text-emerald-300">Impact.com · 4 funnels</Badge> : null}
                       </div>
                       {r.approvedAt ? <span className="text-sm text-zinc-500">Approved {formatDate(r.approvedAt)}</span> : null}
                     </div>
 
-                    {duplicate ? (
+                    {r.slug === "wix" ? (
+                      <WixFunnelsCard />
+                    ) : duplicate ? (
                       <p className="mt-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
                         ⚠ Data error: this affiliate URL is also recorded for another approved program — the two can&apos;t both be
                         real. <span className="font-mono text-xs">{r.affiliateUrl}</span> is not being shown as a usable link

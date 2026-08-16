@@ -88,3 +88,30 @@ describe("generateAllRawIdeas", () => {
     expect(ideas.length).toBeGreaterThanOrEqual(80);
   });
 });
+
+/**
+ * Regression coverage for a real bug found during the Wix multi-funnel
+ * integration (2026-08-17): the "commercial" pillar used to link social
+ * posts straight to the raw affiliate URL (preferredUrl(...)), skipping
+ * Miloosh entirely — losing analytics/SEO value and reading as affiliate
+ * spam. Fixed to link to the Miloosh software page instead, matching
+ * every other pillar and the project's own "Miloosh page -> contextual
+ * affiliate CTA -> correct funnel" policy.
+ */
+describe("commercial pillar — links to Miloosh, never straight to a vendor", () => {
+  it("every commercial-pillar idea links to a Miloosh /software/ page, not an external URL", () => {
+    const commercialIdeas = generateAllRawIdeas().filter((i) => i.pillar === "commercial");
+    expect(commercialIdeas.length).toBeGreaterThan(0); // Wix and ElevenLabs are both real, active affiliate programs right now
+    for (const idea of commercialIdeas) {
+      expect(idea.link).toMatch(/\/software\/[a-z0-9-]+$/);
+      expect(idea.link).not.toContain("pxf.io");
+      expect(idea.link).not.toContain("try.elevenlabs.io");
+    }
+  });
+
+  it("includes a commercial idea for Wix, linking to /software/wix (funnel routing happens on that page, not in the social link)", () => {
+    const commercialIdeas = generateAllRawIdeas().filter((i) => i.pillar === "commercial");
+    const wixIdea = commercialIdeas.find((i) => i.sourceSlugs.includes("wix"));
+    expect(wixIdea?.link).toMatch(/\/software\/wix$/);
+  });
+});

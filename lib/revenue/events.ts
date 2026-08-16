@@ -29,6 +29,22 @@ export type OutboundEvent = {
   /** Where the click actually points. */
   destination: "official" | "affiliate";
   url: string;
+  /**
+   * 2026-08-17 — multi-funnel affiliate attribution (Wix's four Impact.com
+   * funnels were the first real case needing this). All optional and
+   * non-personal: which affiliate network's program this is
+   * (e.g. "impact"), which specific funnel/campaign within that program
+   * (e.g. "headless" for Wix), the network's own campaign identifier, and
+   * where on the page the click originated (e.g. "software-page-cta",
+   * "compare-page-choose-card"). Every value here is resolved server-side
+   * from real config (lib/wix-funnels.ts, the request's own route), never
+   * taken as-is from the client — same trust boundary as the fields above.
+   */
+  affiliateProgram?: string;
+  affiliateFunnel?: string;
+  campaignId?: string;
+  network?: string;
+  ctaLocation?: string;
 };
 
 export type StoredOutboundEvent = OutboundEvent & {
