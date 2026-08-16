@@ -1,0 +1,63 @@
+{
+  "_comment": "Miloosh Social Media Operating System — the deterministic execution config that ChatGPT-as-strategist (or the owner) edits to steer the system without touching channel code. lib/social/strategy.ts loads and validates this. Every field here is read by the content engine, the QA gates, or the publish orchestrator — nothing here is decorative.",
+  "paused": false,
+  "language": "en",
+  "timezone": "UTC",
+  "tagline": "Software research you can verify.",
+  "enabledChannels": {
+    "linkedin": true,
+    "facebook": true,
+    "x": false,
+    "bluesky": true,
+    "mastodon": true,
+    "threads": false,
+    "reddit": false,
+    "pinterest": false,
+    "youtube": false,
+    "instagram": false
+  },
+  "cadence": {
+    "_comment": "Posts per 7-day week, per channel. Conservative on purpose — Phase 7 explicitly says start conservative to avoid spam signals. A channel with cadence 0 is prepared but not scheduled.",
+    "linkedin": 3,
+    "facebook": 3,
+    "x": 0,
+    "bluesky": 4,
+    "mastodon": 3,
+    "threads": 0,
+    "reddit": 0,
+    "pinterest": 0,
+    "youtube": 0,
+    "instagram": 0
+  },
+  "pillarWeights": {
+    "_comment": "Relative weight, not a percentage — the content engine normalizes. Higher = picked more often when generating the queue.",
+    "software_decisions": 3,
+    "pricing_intelligence": 2,
+    "alternatives": 2,
+    "migration": 1,
+    "buyer_education": 2,
+    "miloosh_research": 2,
+    "category_discovery": 1,
+    "trust_methodology": 1,
+    "commercial": 1
+  },
+  "blockedTopics": [],
+  "campaignPriorities": [],
+  "ctaPolicy": {
+    "defaultCta": "Read the full comparison",
+    "affiliateCtaSuffix": "See current pricing"
+  },
+  "affiliateDisclosurePolicy": {
+    "required": true,
+    "text": "Some links are affiliate links — we may earn a commission at no extra cost to you. This never affects our rankings or comparisons.",
+    "shortText": "(affiliate link)"
+  },
+  "quietPeriods": [],
+  "imageRequirements": {
+    "requireAltText": true,
+    "squareMinDimension": 1080,
+    "landscapeWidth": 1200,
+    "landscapeHeight": 630
+  },
+  "topicRepeatCooldownDays": 21
+}

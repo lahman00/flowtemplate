@@ -24,6 +24,12 @@
     "affiliate:prepare": "tsx scripts/affiliate/prepare.ts",
     "affiliate:status": "tsx scripts/affiliate/status.ts",
     "affiliate:audit": "tsx scripts/affiliate/audit.ts",
+    "social:generate": "tsx scripts/social/generate.ts",
+    "social:qa": "tsx scripts/social/qa.ts",
+    "social:schedule": "tsx scripts/social/schedule.ts",
+    "social:publish": "tsx scripts/social/publish.ts",
+    "social:status": "tsx scripts/social/status.ts",
+    "social:report": "tsx scripts/social/report.ts",
     "test": "vitest run"
   },
   "dependencies": {
