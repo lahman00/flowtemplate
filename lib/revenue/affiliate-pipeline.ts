@@ -219,6 +219,35 @@ export async function setPipelineStatus(
 }
 
 /**
+ * Corrects the free-text `ownerActionRequired` reason on an entry that is
+ * already `needs_owner_action`, without a status transition — for cases
+ * where re-verified research (e.g. a network correction) makes the
+ * previously-recorded reason factually wrong, but the entry still
+ * genuinely needs owner action, just for a different concrete reason.
+ * `setPipelineStatus` can't do this alone: `needs_owner_action ->
+ * needs_owner_action` isn't a listed transition, since normally the status
+ * itself would change. Records the correction in history for audit.
+ */
+export async function correctOwnerActionReason(slug: string, newReason: string, historyNote: string): Promise<AffiliatePipelineEntry> {
+  const entries = await readAffiliatePipeline();
+  const existingIndex = entries.findIndex((e) => e.slug === slug);
+  if (existingIndex < 0) throw new Error(`No pipeline entry for ${slug}`);
+  const entry = entries[existingIndex]!;
+  if (entry.status !== "needs_owner_action") {
+    throw new Error(`correctOwnerActionReason is only for needs_owner_action entries; ${slug} is ${entry.status}`);
+  }
+  const now = new Date().toISOString();
+  const updated: AffiliatePipelineEntry = {
+    ...entry,
+    ownerActionRequired: newReason,
+    history: [...entry.history, { status: entry.status, at: now, note: historyNote }],
+  };
+  entries[existingIndex] = updated;
+  await writeAffiliatePipeline(entries);
+  return updated;
+}
+
+/**
  * Chains a confirmed program straight through to `submitted` in one call,
  * recording every intermediate state in the real audit trail rather than
  * lying about an instant multi-step transition. Used by the dashboard's
