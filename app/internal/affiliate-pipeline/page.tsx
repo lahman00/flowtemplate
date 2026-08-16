@@ -77,17 +77,26 @@ function formatDate(iso: string | null): string | null {
 type Breakdown = AffiliatePriorityBreakdown;
 
 /**
- * Owner-directed application sequence (2026-08-15) — deliberately NOT
- * re-derived from the priority score every render. PartnerStack is frozen
- * on Support Ticket #120795, so every PartnerStack-network program is
- * excluded here regardless of score; programs needing a brand-new account
- * on a different network (CJ, Awin, Rewardful, Dub, FirstPromoter, direct)
- * are left for the Blocked section rather than queued, since the real
+ * Owner-directed application sequence — deliberately NOT re-derived from
+ * the priority score every render. PartnerStack is frozen on Support
+ * Ticket #120795, so every PartnerStack-network program is excluded here
+ * regardless of score; programs needing a brand-new account on a
+ * different network (CJ, Awin, Rewardful, Dub, FirstPromoter, direct) are
+ * left for the Blocked section rather than queued, since the real
  * bottleneck is "which account do I need to create next," not raw score.
- * HubSpot is deliberately absent — its application was already submitted
- * via Impact.com on 2026-08-15, so it lives in the Submitted section.
+ *
+ * Updated 2026-08-16 — Wix, Shopify, and Squarespace were removed after
+ * real-world reconciliation: Shopify is now approved with a real
+ * affiliate link, Squarespace's application was actually submitted
+ * 2026-08-16, and Wix has an active human conversation with its
+ * affiliate manager (not a fresh/unstarted application) — all three now
+ * live in Submitted or Approved instead. Grammarly promoted in: it's the
+ * one remaining confirmed Impact.com program with no known blocker, and
+ * the owner already has (or is finishing setting up) an Impact.com
+ * account from the other three. HubSpot remains deliberately absent —
+ * already submitted via Impact.com on 2026-08-15.
  */
-const APPLY_NEXT_SEQUENCE = ["wix", "shopify", "squarespace", "semrush"];
+const APPLY_NEXT_SEQUENCE = ["grammarly", "semrush"];
 
 /** Statuses meaning "hasn't actually been applied to yet" — used both to build Apply Next and to auto-drop an entry from it the moment its real status moves on, so this list self-corrects without a code change. */
 const NOT_YET_APPLIED_STATUSES = new Set(["unresearched", "program_found", "verified", "ready_to_apply", "needs_owner_action"]);

@@ -23,6 +23,7 @@
     "affiliate:rank": "tsx scripts/affiliate/rank.ts",
     "affiliate:prepare": "tsx scripts/affiliate/prepare.ts",
     "affiliate:status": "tsx scripts/affiliate/status.ts",
+    "affiliate:audit": "tsx scripts/affiliate/audit.ts",
     "test": "vitest run"
   },
   "dependencies": {
