@@ -30,6 +30,13 @@
       "description": "Privacy-first analytics with full data ownership via self-hosted or cloud deployment.",
       "best_for": "Organizations wanting privacy-compliant analytics without vendor lock-in.",
       "strengths": ["Unsampled data", "Cookieless tracking", "Self-hosted or cloud"]
+    },
+    {
+      "name": "WhatConverts",
+      "slug": "whatconverts",
+      "description": "A lead tracking and reporting platform that attributes calls, form submissions, chats, and e-commerce transactions back to the specific marketing campaign, keyword, or channel that generated them.",
+      "best_for": "Marketing agencies and businesses that need call/form/chat lead-source attribution rather than general website analytics.",
+      "strengths": ["Call tracking", "Form/chat tracking", "Lead-to-source attribution"]
     }
   ]
 }

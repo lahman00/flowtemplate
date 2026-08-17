@@ -9,6 +9,7 @@
     "lint": "eslint",
     "validate:data": "tsx scripts/validate-data.ts",
     "report:pricing": "tsx scripts/report-pricing-freshness.ts",
+    "report:links": "tsx scripts/report-internal-links.ts",
     "maintenance": "tsx scripts/maintenance/run-all.ts",
     "maintenance:links": "tsx scripts/maintenance/links.ts",
     "maintenance:freshness": "tsx scripts/maintenance/freshness.ts",
