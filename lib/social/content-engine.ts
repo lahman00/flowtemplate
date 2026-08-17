@@ -302,10 +302,47 @@ function fitToBudget(text: string, maxLength: number): string {
 // defaultFormat() appends at publish time (see channels/types.ts).
 const LINK_RESERVE = 40;
 
+/**
+ * Which pillars get a generated card image, and which /api/social/card
+ * "kind" badge applies. 2026-08-17: the card route existed but nothing
+ * ever called it — every queue entry had imageUrl: null. Scoped to the
+ * four card types the growth-sprint brief explicitly named; evergreen
+ * non-product pillars (buyer_education, trust_methodology,
+ * category_discovery) stay text-only for now rather than forcing an
+ * image where the brief didn't ask for one.
+ */
+const IMAGE_KIND_BY_PILLAR: Partial<Record<ContentPillar, string>> = {
+  pricing_intelligence: "pricing",
+  migration: "comparison",
+  software_decisions: "comparison",
+  commercial: "comparison",
+  alternatives: "alternatives",
+  miloosh_research: "research",
+};
+
+const IMAGE_SIZE_BY_CHANNEL: Partial<Record<Channel, string>> = {
+  linkedin: "linkedin",
+  facebook: "facebook",
+  x: "x",
+  bluesky: "square",
+  mastodon: "square",
+  threads: "square",
+};
+
+function buildCardImageUrl(idea: RawIdea, channel: Channel): string | null {
+  const kind = IMAGE_KIND_BY_PILLAR[idea.pillar];
+  const size = IMAGE_SIZE_BY_CHANNEL[channel];
+  if (!kind || !size) return null;
+  const params = new URLSearchParams({ size, kind, headline: idea.headline.slice(0, 140), sub: idea.body.slice(0, 220) });
+  return `${SITE_URL}/api/social/card?${params.toString()}`;
+}
+
 function renderForChannel(idea: RawIdea, channel: Channel): ChannelVariant {
   const link = idea.link;
   const hashtags = HASHTAGS_BY_PILLAR[idea.pillar] ?? [];
   const budget = ADAPTERS[channel].charLimit - (link ? LINK_RESERVE : 0);
+  const imageUrl = buildCardImageUrl(idea, channel);
+  const altText = imageUrl ? `Miloosh card: ${idea.headline}` : null;
 
   let text: string;
   switch (channel) {
@@ -326,8 +363,10 @@ function renderForChannel(idea: RawIdea, channel: Channel): ChannelVariant {
       text = fitToBudget(`${idea.headline.replace(/\.$/, "")} — ${idea.body}`, budget);
       break;
     case "mastodon":
-      // Informational, community-aware, avoid engagement bait.
-      text = fitToBudget(`${idea.headline}\n\n${idea.body}`, budget);
+      // Informational, community-aware, avoid engagement bait — a single
+      // line break (not LinkedIn's double) reads denser and less like a
+      // performed "hook", matching Mastodon's own posting norms.
+      text = fitToBudget(`${idea.headline}\n${idea.body}`, budget);
       break;
     case "threads":
       // Casual expert voice.
@@ -337,7 +376,7 @@ function renderForChannel(idea: RawIdea, channel: Channel): ChannelVariant {
       text = fitToBudget(`${idea.headline}\n\n${idea.body}`, budget);
   }
 
-  return { text, link, imageUrl: null, altText: null, hashtags, publishResult: null };
+  return { text, link, imageUrl, altText, hashtags, publishResult: null };
 }
 
 export function draftQueueEntry(idea: RawIdea, channels: Channel[]): SocialQueueEntry {

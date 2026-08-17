@@ -1135,6 +1135,12 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["weebly", "woocommerce"],
   ["whimsical", "zeplin"],
   ["workato", "zoho-flow"],
+  // 2026-08-17 growth sprint — explicit priority gap: both sides already
+  // have real, sourced data and active affiliate programs (Wix's eCommerce
+  // Impact.com funnel, Shopify's own program), but no wix-vs-shopify page
+  // existed despite it being one of the most common real buying decisions
+  // in this space.
+  ["wix", "shopify"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {

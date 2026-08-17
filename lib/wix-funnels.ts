@@ -88,10 +88,12 @@ export function getWixFunnel(context?: WixFunnelContext | null): WixFunnel {
  * architecture, so those route to the Headless funnel. Every other
  * current Wix comparison (Squarespace, WordPress, Webflow, Ghost,
  * Joomla, Craft CMS, Umbraco) is a "which website builder/CMS for my
- * site" decision for a general audience — Website Builder. No current
- * Wix comparison is about domains or ecommerce specifically (see the
- * final report's honest gap note); nothing here forces those two funnels
- * onto an unrelated page.
+ * site" decision for a general audience — Website Builder. Shopify
+ * (added 2026-08-17, PUBLISHED_COMPARISONS) is a direct ecommerce-
+ * platform decision — routes to the eCommerce funnel, the exact intent
+ * that funnel exists for. No current Wix comparison is about domains
+ * specifically (still an honest gap — no domain-registrar product is in
+ * the catalog yet).
  */
 export const WIX_COMPARISON_CONTEXT: Record<string, WixFunnelContext> = {
   contentful: "headless",
@@ -105,6 +107,7 @@ export const WIX_COMPARISON_CONTEXT: Record<string, WixFunnelContext> = {
   joomla: "website-builder",
   "craft-cms": "website-builder",
   umbraco: "website-builder",
+  shopify: "ecommerce",
 };
 
 /** Resolves the right funnel for a Wix comparison page from the OTHER product's slug — falls back to the safe Website Builder default for any pairing not explicitly classified above (e.g. a future comparison added later). */

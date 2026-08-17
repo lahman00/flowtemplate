@@ -13,10 +13,54 @@ export const alternativeRawSchema = z.object({
   strengths: z.array(z.string().min(1)).min(1),
 });
 
+export const pricingTierRawSchema = z.object({
+  name: z.string().min(1),
+  amount: z.string().min(1).optional(),
+  currency: z.string().min(1).optional(),
+  billing_period: z.enum(["monthly", "annual", "one_time", "unknown"]).optional(),
+  unit: z.string().min(1).optional(),
+  notes: z.string().min(1).optional(),
+});
+
+/**
+ * 2026-08-17 growth sprint, Phase 3 — extended, source-backed pricing
+ * schema. The original three fields (model/starting_price/has_free_tier,
+ * Sprint 6) stay as-is for backward compatibility — nothing here is a
+ * breaking change. The new fields below are additive and all optional:
+ * status/last_verified/official_source exist specifically so a pricing
+ * claim can be dated and sourced the same way every other factual claim
+ * on this site already is (see accessed_at at the top level), rather
+ * than a bare number with no provenance. Never populate entry_paid or
+ * tiers by inference/guessing — only from an official vendor pricing
+ * page, recorded with its real billing basis (monthly vs annual)
+ * explicit, never silently converted.
+ */
 export const pricingRawSchema = z.object({
   model: z.enum(["free", "freemium", "paid", "open_source", "unknown"]).optional(),
   starting_price: z.string().min(1).optional(),
   has_free_tier: z.boolean().optional(),
+  status: z.enum(["verified", "unavailable", "contact_sales", "free_only", "unknown"]).optional(),
+  free_plan: z.boolean().optional(),
+  free_trial: z
+    .object({
+      available: z.boolean(),
+      days: z.number().int().positive().optional(),
+    })
+    .optional(),
+  entry_paid: z
+    .object({
+      amount: z.string().min(1),
+      currency: z.string().min(1),
+      billing_period: z.enum(["monthly", "annual", "one_time", "unknown"]),
+      per_seat: z.boolean().optional(),
+      annual_billing_required: z.boolean().optional(),
+    })
+    .optional(),
+  tiers: z.array(pricingTierRawSchema).optional(),
+  enterprise_contact_sales: z.boolean().optional(),
+  /** YYYY-MM-DD this specific pricing data was checked — distinct from the top-level accessed_at, since pricing changes far more often than the rest of a product's profile. */
+  last_verified: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  official_source: z.string().url().optional(),
 });
 
 export const faqItemRawSchema = z.object({

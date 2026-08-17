@@ -5,6 +5,25 @@
   "description": "Shopify is an all-in-one commerce platform that lets businesses build an online store, process payments, and sell across web, mobile, social, and in-person channels.",
   "website": "https://www.shopify.com",
   "platforms": ["Web", "iOS", "Android"],
+  "pricing": {
+    "status": "verified",
+    "free_plan": false,
+    "free_trial": { "available": true, "days": 3 },
+    "entry_paid": {
+      "amount": "29",
+      "currency": "USD",
+      "billing_period": "annual",
+      "annual_billing_required": true
+    },
+    "tiers": [
+      { "name": "Basic", "amount": "29", "currency": "USD", "billing_period": "annual", "notes": "$39/mo if billed monthly instead. 2% fee on 3rd-party payment providers." },
+      { "name": "Grow", "amount": "79", "currency": "USD", "billing_period": "monthly", "notes": "Up to 5 staff accounts, 1% 3rd-party payment fee." },
+      { "name": "Advanced", "amount": "299", "currency": "USD", "billing_period": "monthly", "notes": "Up to 15 staff accounts, 0.6% 3rd-party payment fee." },
+      { "name": "Plus", "amount": "2300", "currency": "USD", "billing_period": "monthly", "notes": "Starting price ('from'), for complex/high-volume businesses — likely negotiated above this for most merchants." }
+    ],
+    "last_verified": "2026-08-17",
+    "official_source": "https://www.shopify.com/pricing"
+  },
   "best_for": "Positioned for businesses of all sizes — from solo entrepreneurs launching their first store to large enterprises.",
   "features": [
     "Website builder with themes and AI-assisted design",
@@ -16,6 +35,7 @@
   ],
   "sources": ["https://www.shopify.com"],
   "accessed_at": "2026-08-01",
+  "affiliate_url": "https://shopify.pxf.io/L0EG9O",
   "alternatives": [
     {
       "name": "BigCommerce",

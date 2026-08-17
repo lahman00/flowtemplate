@@ -5,6 +5,27 @@
   "description": "ElevenLabs is an AI audio platform providing an AI voice generator and voice-agents platform for creating lifelike speech.",
   "website": "https://elevenlabs.io/",
   "platforms": ["Web"],
+  "pricing": {
+    "status": "verified",
+    "free_plan": true,
+    "entry_paid": {
+      "amount": "6",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "per_seat": false
+    },
+    "tiers": [
+      { "name": "Free", "amount": "0", "currency": "USD", "notes": "10k credits/month, 3 Studio projects." },
+      { "name": "Starter", "amount": "6", "currency": "USD", "billing_period": "monthly", "notes": "30k credits/month; adds commercial license, instant voice cloning." },
+      { "name": "Creator", "amount": "11", "currency": "USD", "billing_period": "monthly", "notes": "121k credits/month. Page showed a first-month 50%-off promo ($22 -> $11); $11/mo is the standard ongoing rate." },
+      { "name": "Pro", "amount": "99", "currency": "USD", "billing_period": "monthly", "notes": "600k credits/month; 44.1kHz PCM API audio." },
+      { "name": "Scale", "amount": "299", "currency": "USD", "billing_period": "monthly", "unit": "3 seats", "notes": "1.8M credits/month." },
+      { "name": "Business", "amount": "990", "currency": "USD", "billing_period": "monthly", "unit": "10 seats", "notes": "6M credits/month." }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-17",
+    "official_source": "https://elevenlabs.io/pricing"
+  },
   "best_for": "ElevenLabs positions itself for enterprises needing customer-service voice solutions, creators/content producers (audiobooks, podcasts, video), developers building via API/SDK, and government agencies.",
   "features": [
     "Text-to-speech (5,000+ voices, 70+ languages)",

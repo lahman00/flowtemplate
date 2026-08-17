@@ -5,6 +5,26 @@
   "description": "Wix is a website-builder platform that lets users create professional websites quickly without coding skills, with hosting included.",
   "website": "https://www.wix.com",
   "platforms": ["Web", "iOS", "Android"],
+  "pricing": {
+    "status": "verified",
+    "free_plan": true,
+    "entry_paid": {
+      "amount": "17.77",
+      "currency": "USD",
+      "billing_period": "annual",
+      "annual_billing_required": true
+    },
+    "tiers": [
+      { "name": "Free", "amount": "0", "currency": "USD", "notes": "No credit card required." },
+      { "name": "Light", "amount": "17.77", "billing_period": "annual", "notes": "GEO CAVEAT: Wix's pricing page explicitly states prices/currency vary by visitor location; this fetch displayed GST-inclusive pricing (a non-US indicator), so the '$' figures here are NOT confirmed as the standard US rate — reference only. Displayed price is for a yearly subscription paid in full; monthly billing also available at a higher rate." },
+      { "name": "Core", "amount": "29.77", "billing_period": "annual" },
+      { "name": "Business", "amount": "39.77", "billing_period": "annual", "notes": "Includes free domain for 1 year, 100GB storage, standard eCommerce." },
+      { "name": "Business Elite", "amount": "159.77", "billing_period": "annual" }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-17",
+    "official_source": "https://www.wix.com/pricing"
+  },
   "best_for": "Wix positions itself for small business owners, entrepreneurs, creatives, and individuals seeking an accessible way to establish an online presence, including a free plan.",
   "features": [
     "Drag-and-drop editor",

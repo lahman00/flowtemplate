@@ -25,6 +25,13 @@ async function main() {
   for (const r of summary.results) {
     console.log(`  [${r.entryId.slice(0, 8)}] ${r.channel}: ${r.status}`);
   }
+
+  const { requeued, abandoned, staleRemaining } = summary.staleHandling;
+  if (requeued.length || abandoned.length || staleRemaining) {
+    console.log(`\nStale backlog: ${requeued.length} requeued, ${abandoned.length} abandoned (needs manual review), ${staleRemaining} still pending next run`);
+    for (const r of requeued) console.log(`  [${r.entryId.slice(0, 8)}] requeued -> ${r.newScheduledFor} (attempt ${r.attempt})`);
+    for (const a of abandoned) console.log(`  [${a.entryId.slice(0, 8)}] ABANDONED: ${a.reason}`);
+  }
 }
 
 main().catch((err) => {

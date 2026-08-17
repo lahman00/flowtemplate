@@ -7,6 +7,8 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { readQueue, countByQueueState } from "@/lib/social/queue";
 import { getAllChannelHealth } from "@/lib/social/channels/registry";
 import { getSocialStrategy } from "@/lib/social/strategy";
+import { getInboundSocialEvents, summarizeInboundByChannel } from "@/lib/social/attribution";
+import { isOutboundTrackingEnabled } from "@/lib/revenue/events";
 import { PILLAR_LABELS, type Channel, type ChannelHealthStatus } from "@/lib/social/types";
 
 export const metadata: Metadata = {
@@ -28,8 +30,9 @@ const HEALTH_COLOR: Record<ChannelHealthStatus, string> = {
 const SETUP_PACK: Partial<Record<Channel, { steps: string[] }>> = {
   x: {
     steps: [
-      "Create a developer account at console.x.com (pay-per-use — no fixed subscription).",
-      "Attach a billing method. Budget roughly $0.20 per post that contains a link (verified from docs.x.com, 2026-08-16).",
+      "Create a developer account at console.x.com. The old Free/Basic ($200/mo)/Pro tier structure is gone — X moved to unified pay-per-use pricing in early 2026, no free tier exists anymore (re-verified 2026-08-17).",
+      "Attach a billing method. A post containing a link costs $0.20/request vs $0.015 for plain text — a 13x premium, and nearly every Miloosh post links back to the site. Estimated cost at ~15 posts/day: roughly $90-120/month. GO recommendation stands at this volume, but it's a real recurring spend the owner must approve — not something to enable without that approval.",
+      "Confirm media/image-upload billing in the console before attaching images — the public pricing page doesn't itemize raw image-upload cost separately (unverified as of 2026-08-17).",
       "Create an app in the console; generate API Key, API Secret, Access Token, and Access Token Secret (OAuth 1.0a — a bearer-only app-level token is not sufficient for posting).",
       "Set SOCIAL_X_API_KEY, SOCIAL_X_API_SECRET, SOCIAL_X_ACCESS_TOKEN, SOCIAL_X_ACCESS_TOKEN_SECRET as environment variables.",
       "Flip enabledChannels.x to true in data/social/social-strategy.json once ready.",
@@ -45,9 +48,15 @@ const SETUP_PACK: Partial<Record<Channel, { steps: string[] }>> = {
   },
   facebook: {
     steps: [
-      "Confirm the existing Miloosh Facebook Page's Page ID.",
-      "Generate a Page Access Token (never expires) with pages_manage_posts permission.",
-      "Set SOCIAL_FACEBOOK_PAGE_ID and SOCIAL_FACEBOOK_PAGE_ACCESS_TOKEN as environment variables.",
+      "Ignore \"Facebook Login for Business\" and its \"not associated with a business portfolio\" error — that config is only for system-user tokens, not needed here (verified against current Meta docs, 2026-08-17). Business Portfolio association is NOT required to post to a Page you already administer.",
+      "In the Miloosh app dashboard, confirm you have an Admin role on the app (App Dashboard -> App Roles -> Roles).",
+      "Go to Graph API Explorer (developers.facebook.com/tools/explorer), select the Miloosh app.",
+      "Click \"Generate Access Token,\" check pages_show_list, pages_read_engagement, pages_manage_posts. Log in as yourself.",
+      "Switch the token dropdown from \"User Token\" to the Miloosh Facebook Page — returns a short-lived Page access token directly, no portfolio involved. (If this step is inconsistent, re-confirm your account is still an Admin on the Page itself: Page Settings -> Page access.)",
+      "Exchange for a long-lived token (App ID/Secret from Settings -> Basic): GET /oauth/access_token?grant_type=fb_exchange_token&client_id=...&client_secret=...&fb_exchange_token=<short-lived token> -> long-lived user token (~60 days), then GET /{user-id}/accounts?access_token=<long-lived token> -> a Page token that doesn't expire under normal conditions.",
+      "Set SOCIAL_FACEBOOK_PAGE_ID and SOCIAL_FACEBOOK_PAGE_ACCESS_TOKEN (the never-expiring Page token from the previous step) as environment variables.",
+      "No Meta App Review is required for this — you're the only Page admin and app role holder, which qualifies for Standard Access.",
+      "Safe to keep Miloosh's Page in the same Business Portfolio as Need Go Home if that's ever needed later — Meta scopes assets/roles per-asset, not shared across the whole portfolio.",
     ],
   },
   bluesky: {
@@ -80,7 +89,14 @@ const SETUP_PACK: Partial<Record<Channel, { steps: string[] }>> = {
 };
 
 export default async function SocialDashboardPage() {
-  const [queue, strategy, health] = await Promise.all([readQueue(), Promise.resolve(getSocialStrategy()), Promise.resolve(getAllChannelHealth())]);
+  const [queue, strategy, health, inboundEvents] = await Promise.all([
+    readQueue(),
+    Promise.resolve(getSocialStrategy()),
+    Promise.resolve(getAllChannelHealth()),
+    getInboundSocialEvents(),
+  ]);
+  const trackingEnabled = isOutboundTrackingEnabled();
+  const inboundByChannel = summarizeInboundByChannel(inboundEvents);
 
   const counts = countByQueueState(queue);
   const today = new Date().toISOString().slice(0, 10);
@@ -241,15 +257,44 @@ export default async function SocialDashboardPage() {
           </div>
         </section>
 
-        {/* TOP PERFORMERS / ANALYTICS */}
+        {/* SOCIAL ANALYTICS */}
         <section className="mt-16">
-          <SectionHeading eyebrow="Top performers · Analytics" title="Not yet available" />
+          <SectionHeading eyebrow="Analytics" title="Inbound click-through, by channel" />
           <Card className="mt-6">
-            <p className="text-sm leading-6 text-zinc-400">
-              Click-through, impressions, and follower growth aren&apos;t wired up yet — that needs either the Google Analytics Data API (reading back the GA4 property already referenced in{" "}
-              <code className="rounded bg-white/10 px-1 py-0.5">.env.example</code>) or extending{" "}
-              <code className="rounded bg-white/10 px-1 py-0.5">lib/revenue/events.ts</code> to capture inbound UTM-tagged social traffic, not just outbound clicks. Real, buildable next step — not built in this pass to avoid fabricating numbers.
-              Run <code className="rounded bg-white/10 px-1 py-0.5">npm run social:report</code> for what IS measurable today: publish outcomes by channel and pillar.
+            {!trackingEnabled ? (
+              <div>
+                <Badge className="border-white/10 bg-white/5 text-zinc-400">NOT CONNECTED</Badge>
+                <p className="mt-3 text-sm leading-6 text-zinc-400">
+                  Capture code exists (<code className="rounded bg-white/10 px-1 py-0.5">components/SocialLandingCapture.tsx</code> reads UTM params on landing, posts to{" "}
+                  <code className="rounded bg-white/10 px-1 py-0.5">/api/social/landing</code>) but <code className="rounded bg-white/10 px-1 py-0.5">NEXT_PUBLIC_REVENUE_TRACKING_ENABLED</code> is unset, so it&apos;s a no-op — same gate as outbound
+                  affiliate-click tracking. Set it to <code className="rounded bg-white/10 px-1 py-0.5">true</code> (see docs/revenue.md for the privacy-policy prerequisite) to turn this on.
+                </p>
+              </div>
+            ) : inboundByChannel.length === 0 ? (
+              <div>
+                <Badge className="border-emerald-500/30 bg-emerald-500/[0.06] text-emerald-300">REAL — 0 so far</Badge>
+                <p className="mt-3 text-sm leading-6 text-zinc-400">Tracking is on and measuring for real; no UTM-tagged social landing has been recorded yet. Not fabricated, not estimated — genuinely zero to date.</p>
+              </div>
+            ) : (
+              <div>
+                <Badge className="border-emerald-500/30 bg-emerald-500/[0.06] text-emerald-300">REAL</Badge>
+                <ul className="mt-4 divide-y divide-white/5">
+                  {inboundByChannel.map((row) => (
+                    <li key={row.channel} className="flex items-center justify-between gap-4 py-3 text-sm">
+                      <span className="capitalize text-zinc-300">{row.channel}</span>
+                      <span className="text-xs text-zinc-500">
+                        {row.distinctContent} post{row.distinctContent === 1 ? "" : "s"} drove traffic
+                      </span>
+                      <span className="font-semibold text-white">{row.landings} landing{row.landings === 1 ? "" : "s"}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <p className="mt-4 border-t border-white/5 pt-4 text-xs leading-5 text-zinc-500">
+              <Badge className="border-white/10 bg-white/5 text-zinc-400">NOT AVAILABLE</Badge>{" "}
+              Impressions and follower-growth counts require each platform&apos;s own API (Bluesky/Mastodon expose these; Facebook/LinkedIn/X need additional scopes not yet requested) — no per-channel adapter for this exists yet, so nothing is shown rather than estimated. Run{" "}
+              <code className="rounded bg-white/10 px-1 py-0.5">npm run social:report</code> for publish outcomes by channel and pillar.
             </p>
           </Card>
         </section>

@@ -86,7 +86,7 @@ export const VALID_QUEUE_TRANSITIONS: Record<QueueState, QueueState[]> = {
   IDEA: ["DRAFTED", "SKIPPED"],
   DRAFTED: ["QA_READY", "SKIPPED", "IDEA"],
   QA_READY: ["APPROVED_FOR_AUTO", "SCHEDULED", "SKIPPED", "DRAFTED"],
-  APPROVED_FOR_AUTO: ["SCHEDULED", "SKIPPED"],
+  APPROVED_FOR_AUTO: ["SCHEDULED", "SKIPPED", "DRAFTED"], // DRAFTED: quality-audit quarantine sends a flagged entry back for redraft instead of deleting it (see scripts/social/quality-audit.ts)
   SCHEDULED: ["PUBLISHED", "FAILED", "SKIPPED"],
   PUBLISHED: [],
   FAILED: ["SCHEDULED", "SKIPPED"], // allow a manual retry

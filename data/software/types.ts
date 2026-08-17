@@ -6,10 +6,29 @@ export type Alternative = {
   strengths: string[];
 };
 
+export type PricingTier = {
+  name: string;
+  amount?: string;
+  currency?: string;
+  billingPeriod?: "monthly" | "annual" | "one_time" | "unknown";
+  unit?: string;
+  notes?: string;
+};
+
 export type Pricing = {
   model?: "free" | "freemium" | "paid" | "open_source" | "unknown";
   startingPrice?: string;
   hasFreeTier?: boolean;
+  /** 2026-08-17 growth sprint — source-backed pricing fields, all additive to the original three above. */
+  status?: "verified" | "unavailable" | "contact_sales" | "free_only" | "unknown";
+  freePlan?: boolean;
+  freeTrial?: { available: boolean; days?: number };
+  entryPaid?: { amount: string; currency: string; billingPeriod: "monthly" | "annual" | "one_time" | "unknown"; perSeat?: boolean; annualBillingRequired?: boolean };
+  tiers?: PricingTier[];
+  enterpriseContactSales?: boolean;
+  /** YYYY-MM-DD — distinct from the product's top-level accessedAt; pricing goes stale faster than the rest of the profile. */
+  lastVerified?: string;
+  officialSource?: string;
 };
 
 export type FaqItem = {

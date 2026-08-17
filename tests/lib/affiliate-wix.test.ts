@@ -99,10 +99,14 @@ describe("resolveComparisonCtaUrl — Wix multi-funnel routing", () => {
     expect(resolveComparisonCtaUrl(wix, "some-future-product-not-yet-classified")).toBe(WIX_FUNNELS["website-builder"].url);
   });
 
-  it("never routes ecommerce-intent products to the Website Builder funnel when a comparison exists — none currently do (honest gap, not forced)", () => {
-    // No current Wix comparison is ecommerce- or domain-specific — this asserts the map doesn't fabricate one just to exercise all four funnels.
-    const ecommerceOrDomainContexts = Object.values(WIX_COMPARISON_CONTEXT).filter((c) => c === "domain" || c === "ecommerce");
-    expect(ecommerceOrDomainContexts).toHaveLength(0);
+  it("routes the Wix vs Shopify comparison (2026-08-17) to the eCommerce funnel, not the generic default", () => {
+    const wix = getSoftware("wix")!;
+    expect(resolveComparisonCtaUrl(wix, "shopify")).toBe(WIX_FUNNELS.ecommerce.url);
+  });
+
+  it("no current Wix comparison is domain-registrar-specific — honest gap, not forced (no domain-registrar product exists in the catalog yet)", () => {
+    const domainContexts = Object.values(WIX_COMPARISON_CONTEXT).filter((c) => c === "domain");
+    expect(domainContexts).toHaveLength(0);
   });
 
   it("every product other than Wix still resolves through the plain single-URL path", () => {

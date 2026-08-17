@@ -32,9 +32,62 @@ export type PublishRunSummary = {
   paused: boolean;
   entriesAttempted: number;
   results: Array<{ entryId: string; channel: Channel; status: PublishResult["status"] }>;
+  staleHandling: {
+    graceWindowMs: number;
+    maxCatchupPerRun: number;
+    maxRequeueAttempts: number;
+    /** Overdue entries pushed forward to a fresh slot this run instead of being auto-published as-is. */
+    requeued: Array<{ entryId: string; previousScheduledFor: string; newScheduledFor: string; attempt: number }>;
+    /** Overdue entries that had already been requeued maxRequeueAttempts times — moved to FAILED for a human to look at, rather than requeued forever. */
+    abandoned: Array<{ entryId: string; reason: string }>;
+    /** Stale entries that exist but weren't touched this run because maxCatchupPerRun was already spent — still pending, picked up by a future run. */
+    staleRemaining: number;
+  };
 };
 
 const DAILY_ENTRY_CAP = 20; // hard ceiling a scheduler bug can't cross, mirrors NeeGoHome's MAX_PER_DAY concept at the entry level.
+
+/**
+ * Overdue-backlog policy (2026-08-17). Without this, any entry with
+ * scheduledFor <= now — including one scheduled weeks ago and never run
+ * (e.g. after an extended pause) — would publish in full the moment the
+ * kill switch is lifted, with content that may reference stale pricing or
+ * dates. Instead:
+ *   - within GRACE_WINDOW_MS of due: publish normally (today's behavior).
+ *   - overdue beyond that: never auto-published as-is. Pushed forward to
+ *     a fresh slot (REQUEUE_OFFSET_MS out) so schedule.ts's normal
+ *     cadence re-sorts it in, bounded to MAX_CATCHUP_PER_RUN entries per
+ *     cron invocation so a large backlog can't be dumped/rescheduled in
+ *     one shot.
+ *   - an entry requeued MAX_REQUEUE_ATTEMPTS times without ever landing
+ *     inside the grace window (i.e. it keeps missing its own rescheduled
+ *     slot) stops being auto-requeued and moves to FAILED with a note —
+ *     surfaced for manual review instead of looping forever.
+ */
+export const GRACE_WINDOW_MS = 24 * 60 * 60 * 1000;
+export const MAX_CATCHUP_PER_RUN = 5;
+export const MAX_REQUEUE_ATTEMPTS = 3;
+export const REQUEUE_OFFSET_MS = 24 * 60 * 60 * 1000;
+
+function countPriorRequeues(entry: SocialQueueEntry): number {
+  return entry.history.filter((h) => h.note?.startsWith("stale-requeue:")).length;
+}
+
+/** Pure — no I/O, easy to unit test. Splits due SCHEDULED entries into on-time (publish normally) vs stale (never auto-published as-is). Stale entries are sorted oldest-first so the longest-waiting ones claim the bounded per-run catch-up slots first. */
+export function classifyScheduledEntries(queue: SocialQueueEntry[], now: Date): { onTime: SocialQueueEntry[]; stale: SocialQueueEntry[] } {
+  const onTime: SocialQueueEntry[] = [];
+  const stale: SocialQueueEntry[] = [];
+  for (const e of queue) {
+    if (e.state !== "SCHEDULED" || !e.scheduledFor) continue;
+    const scheduledMs = new Date(e.scheduledFor).getTime();
+    if (scheduledMs > now.getTime()) continue; // not due yet
+    const overdueMs = now.getTime() - scheduledMs;
+    if (overdueMs <= GRACE_WINDOW_MS) onTime.push(e);
+    else stale.push(e);
+  }
+  stale.sort((a, b) => new Date(a.scheduledFor!).getTime() - new Date(b.scheduledFor!).getTime());
+  return { onTime, stale };
+}
 
 /** Adapters are injectable (default: the real registry) so tests can exercise failure isolation with a fake adapter that throws, without needing real channel credentials or network access. */
 export async function publishOneEntry(
@@ -78,14 +131,51 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
   const now = options.now ?? new Date();
   const strategy = options.strategy ?? getSocialStrategy();
 
+  const emptyStaleHandling = { graceWindowMs: GRACE_WINDOW_MS, maxCatchupPerRun: MAX_CATCHUP_PER_RUN, maxRequeueAttempts: MAX_REQUEUE_ATTEMPTS, requeued: [], abandoned: [], staleRemaining: 0 };
+
   if (strategy.paused) {
-    return { ranAt: now.toISOString(), dryRun: options.dryRun, paused: true, entriesAttempted: 0, results: [] };
+    return { ranAt: now.toISOString(), dryRun: options.dryRun, paused: true, entriesAttempted: 0, results: [], staleHandling: emptyStaleHandling };
   }
 
   const queue = await readQueue();
-  const due = queue
-    .filter((e) => e.state === "SCHEDULED" && e.scheduledFor && new Date(e.scheduledFor).getTime() <= now.getTime())
-    .slice(0, DAILY_ENTRY_CAP);
+  const { onTime, stale } = classifyScheduledEntries(queue, now);
+  const due = onTime.slice(0, DAILY_ENTRY_CAP);
+  const staleToHandle = stale.slice(0, MAX_CATCHUP_PER_RUN);
+
+  const requeued: PublishRunSummary["staleHandling"]["requeued"] = [];
+  const abandoned: PublishRunSummary["staleHandling"]["abandoned"] = [];
+
+  for (const entry of staleToHandle) {
+    const priorAttempts = countPriorRequeues(entry);
+    if (priorAttempts >= MAX_REQUEUE_ATTEMPTS) {
+      const reason = `exceeded max requeue attempts (${MAX_REQUEUE_ATTEMPTS}) — needs manual review`;
+      abandoned.push({ entryId: entry.id, reason });
+      if (!options.dryRun) {
+        await setQueueState(entry.id, "FAILED", `Stale backlog: overdue and requeued ${priorAttempts} times without becoming current. Needs manual review/reschedule, not auto-published. ${reason}`);
+      }
+      continue;
+    }
+    const newScheduledFor = new Date(now.getTime() + REQUEUE_OFFSET_MS).toISOString();
+    requeued.push({ entryId: entry.id, previousScheduledFor: entry.scheduledFor!, newScheduledFor, attempt: priorAttempts + 1 });
+    if (!options.dryRun) {
+      await updateQueueEntry(entry.id, {
+        scheduledFor: newScheduledFor,
+        history: [
+          ...entry.history,
+          { state: "SCHEDULED", at: now.toISOString(), note: `stale-requeue: was overdue (originally ${entry.scheduledFor}), rescheduled to ${newScheduledFor} (attempt ${priorAttempts + 1}/${MAX_REQUEUE_ATTEMPTS})` },
+        ],
+      });
+    }
+  }
+
+  const staleHandling: PublishRunSummary["staleHandling"] = {
+    graceWindowMs: GRACE_WINDOW_MS,
+    maxCatchupPerRun: MAX_CATCHUP_PER_RUN,
+    maxRequeueAttempts: MAX_REQUEUE_ATTEMPTS,
+    requeued,
+    abandoned,
+    staleRemaining: stale.length - staleToHandle.length,
+  };
 
   const results: PublishRunSummary["results"] = [];
 
@@ -113,5 +203,5 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     await setQueueState(entry.id, anySucceeded ? "PUBLISHED" : "FAILED", anySucceeded ? undefined : "All channel attempts failed — see per-channel publishResult for detail.");
   }
 
-  return { ranAt: now.toISOString(), dryRun: options.dryRun, paused: false, entriesAttempted: due.length, results };
+  return { ranAt: now.toISOString(), dryRun: options.dryRun, paused: false, entriesAttempted: due.length, results, staleHandling };
 }

@@ -26,6 +26,29 @@ export function mapSoftware(raw: SoftwareRaw): Software {
           model: raw.pricing.model,
           startingPrice: raw.pricing.starting_price,
           hasFreeTier: raw.pricing.has_free_tier,
+          status: raw.pricing.status,
+          freePlan: raw.pricing.free_plan,
+          freeTrial: raw.pricing.free_trial,
+          entryPaid: raw.pricing.entry_paid
+            ? {
+                amount: raw.pricing.entry_paid.amount,
+                currency: raw.pricing.entry_paid.currency,
+                billingPeriod: raw.pricing.entry_paid.billing_period,
+                perSeat: raw.pricing.entry_paid.per_seat,
+                annualBillingRequired: raw.pricing.entry_paid.annual_billing_required,
+              }
+            : undefined,
+          tiers: raw.pricing.tiers?.map((t) => ({
+            name: t.name,
+            amount: t.amount,
+            currency: t.currency,
+            billingPeriod: t.billing_period,
+            unit: t.unit,
+            notes: t.notes,
+          })),
+          enterpriseContactSales: raw.pricing.enterprise_contact_sales,
+          lastVerified: raw.pricing.last_verified,
+          officialSource: raw.pricing.official_source,
         }
       : undefined,
     platforms: raw.platforms,

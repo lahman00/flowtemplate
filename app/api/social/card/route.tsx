@@ -20,6 +20,13 @@ export const runtime = "edge";
  *   &headline=...&sub=...&badge=...
  * All text comes from the caller (the content engine, drafting from real
  * Miloosh data) — this route never fabricates copy itself.
+ *
+ * `kind` (2026-08-17): pricing|comparison|alternatives|research|default —
+ * previously documented here but not actually read by the route (dead
+ * param). Now sets the accent-badge label shown when the caller doesn't
+ * pass an explicit `badge`, so the four card types the growth-sprint
+ * brief named (pricing update / comparison / alternatives / research)
+ * are visually distinguishable at a glance even with the same layout.
  */
 
 const SIZES: Record<string, { width: number; height: number }> = {
@@ -29,15 +36,23 @@ const SIZES: Record<string, { width: number; height: number }> = {
   x: { width: 1200, height: 675 },
 };
 
+const KIND_LABELS: Record<string, string> = {
+  pricing: "PRICING UPDATE",
+  comparison: "COMPARISON",
+  alternatives: "ALTERNATIVES",
+  research: "VERIFIED RESEARCH",
+};
+
 const ACCENT = "#3b82f6"; // Minimal blue accent, per the brief's visual language — used sparingly (badge only).
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const sizeKey = searchParams.get("size") ?? "square";
+  const kind = searchParams.get("kind") ?? "";
   const { width, height } = SIZES[sizeKey] ?? SIZES.square!;
   const headline = (searchParams.get("headline") ?? SITE_NAME).slice(0, 140);
   const sub = (searchParams.get("sub") ?? "").slice(0, 220);
-  const badge = (searchParams.get("badge") ?? "").slice(0, 40);
+  const badge = (searchParams.get("badge") ?? KIND_LABELS[kind] ?? "").slice(0, 40);
 
   return new ImageResponse(
     (

@@ -15,6 +15,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { TrackedCtaLink } from "@/components/TrackedCtaLink";
 import { ListingBadges } from "@/components/ListingBadges";
 import { VendorLinksBlock } from "@/components/VendorLinksBlock";
+import { PricingSection } from "@/components/PricingSection";
 import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
 import { getRelatedSoftware } from "@/lib/related";
@@ -210,6 +211,8 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
             ))}
           </div>
         </section>
+
+        <PricingSection software={software} />
 
         <Card className="mt-14">
           <div className="flex items-center gap-3">

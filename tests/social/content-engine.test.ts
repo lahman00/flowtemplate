@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { interleaveByPillarWeight, generateAllRawIdeas } from "@/lib/social/content-engine";
+import { interleaveByPillarWeight, generateAllRawIdeas, draftQueueEntry } from "@/lib/social/content-engine";
 import type { ContentPillar } from "@/lib/social/types";
 
 /**
@@ -113,5 +113,40 @@ describe("commercial pillar — links to Miloosh, never straight to a vendor", (
     const commercialIdeas = generateAllRawIdeas().filter((i) => i.pillar === "commercial");
     const wixIdea = commercialIdeas.find((i) => i.sourceSlugs.includes("wix"));
     expect(wixIdea?.link).toMatch(/\/software\/wix$/);
+  });
+});
+
+/**
+ * Phase 1C (2026-08-17 growth sprint) — platform-native variant
+ * differentiation. Before this, LinkedIn and Mastodon rendered
+ * byte-identical text for the same idea (both `headline\n\nbody`), which
+ * fails the "genuinely native variants" requirement even though every
+ * other channel already differed. Regression coverage so a future edit
+ * can't silently collapse channels back into one generic template.
+ */
+describe("renderForChannel (via draftQueueEntry) — platform-native differentiation", () => {
+  const idea = generateAllRawIdeas().find((i) => i.pillar === "migration") ?? generateAllRawIdeas()[0]!;
+
+  it("LinkedIn and Mastodon render distinct text for the same idea", () => {
+    const entry = draftQueueEntry(idea, ["linkedin", "mastodon"]);
+    expect(entry.channels.linkedin!.text).not.toBe(entry.channels.mastodon!.text);
+  });
+
+  it("X is headline-only (tight, information-dense, no forced threads)", () => {
+    const entry = draftQueueEntry(idea, ["x"]);
+    expect(entry.channels.x!.text.startsWith(idea.headline.slice(0, 20))).toBe(true);
+    expect(entry.channels.x!.text).not.toContain(idea.body.slice(0, 40));
+  });
+
+  it("Facebook adds a conversational CTA the other channels don't have", () => {
+    const entry = draftQueueEntry(idea, ["facebook", "linkedin"]);
+    expect(entry.channels.facebook!.text).toContain("What's been your experience?");
+    expect(entry.channels.linkedin!.text).not.toContain("What's been your experience?");
+  });
+
+  it("Bluesky joins headline and body compactly with an em-dash, not LinkedIn's paragraph break", () => {
+    const entry = draftQueueEntry(idea, ["bluesky", "linkedin"]);
+    expect(entry.channels.bluesky!.text).not.toContain("\n\n");
+    expect(entry.channels.linkedin!.text).toContain("\n\n");
   });
 });
