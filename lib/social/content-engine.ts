@@ -228,17 +228,19 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 /**
- * Reorders raw ideas so consecutive entries never repeat a pillar and
+ * Reorders any pillar-tagged list (RawIdea at generation time, or
+ * SocialQueueEntry at scheduling time — see scripts/social/schedule.ts,
+ * 2026-08-17) so consecutive entries never repeat a pillar and
  * high-weight pillars (social-strategy.json's pillarWeights) appear
  * proportionally more often — otherwise, since ideasFromComparisons()
  * alone produces 1107 entries (one per published comparison), any
- * naive "take the first N" selection (e.g. schedule.ts choosing the
- * next 14 days) would be almost entirely one pillar, directly
- * contradicting Phase 7's "Mix... avoid repeating topics too
- * frequently." Weighted round-robin across shuffled per-pillar queues.
+ * naive "take the first N" selection would be almost entirely one
+ * pillar, directly contradicting Phase 7's "Mix... avoid repeating
+ * topics too frequently." Weighted round-robin across shuffled
+ * per-pillar queues.
  */
-export function interleaveByPillarWeight(ideas: RawIdea[], weights: Record<ContentPillar, number>): RawIdea[] {
-  const byPillar = new Map<ContentPillar, RawIdea[]>();
+export function interleaveByPillarWeight<T extends { pillar: ContentPillar }>(ideas: T[], weights: Record<ContentPillar, number>): T[] {
+  const byPillar = new Map<ContentPillar, T[]>();
   for (const idea of ideas) {
     if (!byPillar.has(idea.pillar)) byPillar.set(idea.pillar, []);
     byPillar.get(idea.pillar)!.push(idea);
@@ -260,7 +262,7 @@ export function interleaveByPillarWeight(ideas: RawIdea[], weights: Record<Conte
   for (const p of pillars) ticketsPerRound[p] = Math.max(1, Math.round(((weights[p] ?? 1) / maxWeight) * 3));
   const maxTickets = Math.max(...Object.values(ticketsPerRound));
 
-  const result: RawIdea[] = [];
+  const result: T[] = [];
   let remaining = ideas.length;
   while (remaining > 0) {
     for (let slot = 0; slot < maxTickets; slot++) {

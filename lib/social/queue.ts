@@ -105,7 +105,7 @@ export async function updateQueueEntry(id: string, patch: Partial<SocialQueueEnt
 }
 
 export function countByQueueState(entries: SocialQueueEntry[]): Record<QueueState, number> {
-  const counts = { IDEA: 0, DRAFTED: 0, QA_READY: 0, APPROVED_FOR_AUTO: 0, SCHEDULED: 0, PUBLISHED: 0, FAILED: 0, SKIPPED: 0 };
+  const counts = { IDEA: 0, DRAFTED: 0, QA_READY: 0, APPROVED_FOR_AUTO: 0, SCHEDULED: 0, READY_FOR_MANUAL: 0, PUBLISHED: 0, FAILED: 0, SKIPPED: 0 };
   for (const e of entries) counts[e.state] += 1;
   return counts;
 }

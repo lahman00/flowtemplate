@@ -3,7 +3,8 @@ import { readQueue, updateQueueEntry, setQueueState } from "@/lib/social/queue";
 import { ADAPTERS } from "@/lib/social/channels/registry";
 import type { SocialAdapter } from "@/lib/social/channels/types";
 import { publishWithRetry } from "@/lib/social/retry";
-import type { Channel, PublishResult, SocialQueueEntry } from "@/lib/social/types";
+import { buildUtmUrl } from "@/lib/social/utm";
+import type { Channel, ChannelVariant, PublishResult, SocialQueueEntry } from "@/lib/social/types";
 
 /**
  * Publish orchestrator — the TypeScript equivalent of Need Go Home's
@@ -73,6 +74,31 @@ function countPriorRequeues(entry: SocialQueueEntry): number {
   return entry.history.filter((h) => h.note?.startsWith("stale-requeue:")).length;
 }
 
+function isSameUtcDay(a: Date, b: Date): boolean {
+  return a.toISOString().slice(0, 10) === b.toISOString().slice(0, 10);
+}
+
+/**
+ * Real, load-bearing safety cap for the Facebook production launch
+ * (2026-08-17) — "maximum one automated Facebook publication per day."
+ * Deliberately not scheduling-side alone (a scheduling target can drift
+ * from reality); this checks the actual recorded PublishResult on every
+ * entry, so it holds even if the scheduler over-produces or the cron
+ * runs more than once in a day. A channel's own daily count only ever
+ * counts a REAL external PUBLISHED status — READY_FOR_MANUAL/FAILED/
+ * SETUP_REQUIRED don't count, matching the same real-vs-manual
+ * distinction as the PUBLISHED state fix above.
+ */
+export function hasChannelPublishedToday(queue: SocialQueueEntry[], channel: Channel, now: Date): boolean {
+  return queue.some((e) => {
+    const result = e.channels[channel]?.publishResult;
+    if (result?.status !== "PUBLISHED") return false;
+    const publishedAt = e.history.filter((h) => h.state === "PUBLISHED").map((h) => h.at).at(-1);
+    if (!publishedAt) return false;
+    return isSameUtcDay(new Date(publishedAt), now);
+  });
+}
+
 /** Pure — no I/O, easy to unit test. Splits due SCHEDULED entries into on-time (publish normally) vs stale (never auto-published as-is). Stale entries are sorted oldest-first so the longest-waiting ones claim the bounded per-run catch-up slots first. */
 export function classifyScheduledEntries(queue: SocialQueueEntry[], now: Date): { onTime: SocialQueueEntry[]; stale: SocialQueueEntry[] } {
   const onTime: SocialQueueEntry[] = [];
@@ -89,22 +115,44 @@ export function classifyScheduledEntries(queue: SocialQueueEntry[], now: Date): 
   return { onTime, stale };
 }
 
-/** Adapters are injectable (default: the real registry) so tests can exercise failure isolation with a fake adapter that throws, without needing real channel credentials or network access. */
+/**
+ * Adapters are injectable (default: the real registry) so tests can
+ * exercise failure isolation with a fake adapter that throws, without
+ * needing real channel credentials or network access. `skipChannels`
+ * (2026-08-17) lets the caller withhold specific channels for THIS call
+ * without touching the entry's stored channels — used for the Facebook
+ * per-day cap and pillar exclusion below. A skipped channel is simply
+ * never attempted this cycle (not a FAILED result) — it's reconsidered
+ * next time this entry is processed.
+ */
 export async function publishOneEntry(
   entry: SocialQueueEntry,
   dryRun: boolean,
-  adapters: Record<Channel, SocialAdapter> = ADAPTERS
+  adapters: Record<Channel, SocialAdapter> = ADAPTERS,
+  skipChannels: Channel[] = []
 ): Promise<{ channel: Channel; result: PublishResult }[]> {
   const attempts: { channel: Channel; result: PublishResult }[] = [];
   const channelKeys = Object.keys(entry.channels) as Channel[];
 
   for (const channel of channelKeys) {
+    if (skipChannels.includes(channel)) continue;
     const variant = entry.channels[channel];
     if (!variant) continue;
     const adapter = adapters[channel];
+    // UTM tagging happens here, at publish time, never baked into the
+    // stored draft — this is the one choke point every channel's real
+    // publish() call goes through (dry-run included, so a dry-run proves
+    // the tagged URL that would actually be sent). Reuses buildUtmUrl()
+    // as-is: it already preserves any existing query params and
+    // overwrites (never duplicates) the four utm_* keys via
+    // URLSearchParams.set(). utm_content is the queue entry's own id —
+    // stable, and already the resolved Miloosh destination (never the
+    // raw affiliate URL — content-engine.ts resolves commercial-pillar
+    // links to the Miloosh page, not the vendor, before this ever runs).
+    const taggedVariant: ChannelVariant = variant.link ? { ...variant, link: buildUtmUrl(variant.link, channel, entry.campaign, entry.id) } : variant;
     let result: PublishResult;
     try {
-      result = await publishWithRetry(() => adapter.publish(variant, { dryRun }));
+      result = await publishWithRetry(() => adapter.publish(taggedVariant, { dryRun }));
     } catch (err) {
       // Failure-safe fallback in case an adapter implementation itself
       // throws instead of catching its own error (contract violation,
@@ -112,8 +160,8 @@ export async function publishOneEntry(
       result = {
         channel,
         status: "FAILED",
-        text: variant.text,
-        link: variant.link ?? "",
+        text: taggedVariant.text,
+        link: taggedVariant.link ?? "",
         postUrl: null,
         postId: null,
         verified: false,
@@ -127,9 +175,10 @@ export async function publishOneEntry(
   return attempts;
 }
 
-export async function runPublishCycle(options: { dryRun: boolean; now?: Date; strategy?: ReturnType<typeof getSocialStrategy> }): Promise<PublishRunSummary> {
+export async function runPublishCycle(options: { dryRun: boolean; now?: Date; strategy?: ReturnType<typeof getSocialStrategy>; adapters?: Record<Channel, SocialAdapter> }): Promise<PublishRunSummary> {
   const now = options.now ?? new Date();
   const strategy = options.strategy ?? getSocialStrategy();
+  const adapters = options.adapters ?? ADAPTERS;
 
   const emptyStaleHandling = { graceWindowMs: GRACE_WINDOW_MS, maxCatchupPerRun: MAX_CATCHUP_PER_RUN, maxRequeueAttempts: MAX_REQUEUE_ATTEMPTS, requeued: [], abandoned: [], staleRemaining: 0 };
 
@@ -178,12 +227,48 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
   };
 
   const results: PublishRunSummary["results"] = [];
+  // Tracked across this whole run (not just the initial queue snapshot) —
+  // if an earlier entry in this same cycle achieves a real Facebook
+  // PUBLISHED, every later entry in the same run must also see the cap
+  // as reached, not just entries processed by a future invocation.
+  const publishedTodayByChannel = new Map<Channel, boolean>();
+  const channelHasPublishedToday = (channel: Channel) => publishedTodayByChannel.get(channel) ?? hasChannelPublishedToday(queue, channel, now);
 
   for (const entry of due) {
-    const attempts = await publishOneEntry(entry, options.dryRun);
+    // Two independent, permanent-until-config-changes reasons a channel
+    // gets withheld for this entry: (1) that channel already published
+    // for real today (the launch-period safety cap), or (2) this
+    // entry's pillar is excluded for that channel (e.g. "commercial"
+    // posts blocked from Facebook pending a content-quality fix).
+    // KNOWN GAP (2026-08-17, same family as schedule.ts's documented
+    // per-channel-cadence simplification): if an entry has multiple
+    // channels and ONLY Facebook gets skipped here while another channel
+    // still succeeds, the entry still leaves SCHEDULED — so Facebook
+    // permanently misses that entry's content rather than being retried
+    // later. Only reachable if more than one entry is due in the same
+    // cycle (rare at a ~1/day pace); not fixed here, since a real fix
+    // needs per-channel state, not per-entry — flagged, not silently
+    // accepted.
+    const skipChannels = (Object.keys(entry.channels) as Channel[]).filter((channel) => {
+      if (channelHasPublishedToday(channel)) return true;
+      const excludedPillars = strategy.excludedPillarsByChannel[channel];
+      return Boolean(excludedPillars?.includes(entry.pillar));
+    });
+
+    const attempts = await publishOneEntry(entry, options.dryRun, adapters, skipChannels);
     for (const { channel, result } of attempts) {
       results.push({ entryId: entry.id, channel, status: result.status });
+      if (result.status === "PUBLISHED") publishedTodayByChannel.set(channel, true);
     }
+
+    // Every channel was withheld (daily cap already hit, or every
+    // present channel is pillar-excluded) — nothing was actually
+    // attempted, so this entry must NOT be touched at all: no FAILED, no
+    // publishResult write, no state change. It stays SCHEDULED and is
+    // reconsidered on a future cycle (the cap resets the next calendar
+    // day). Skipping this here is what prevents "Facebook already
+    // published today" from wrongly failing the entry outright.
+    if (attempts.length === 0) continue;
 
     // A dry run is a preview: it must never mutate the queue, or running
     // one (e.g. to sanity-check what's about to fire) would permanently
@@ -199,8 +284,20 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     }
     await updateQueueEntry(entry.id, { channels: updatedChannels });
 
-    const anySucceeded = attempts.some((a) => a.result.status === "PUBLISHED" || a.result.status === "MANUAL_ONLY");
-    await setQueueState(entry.id, anySucceeded ? "PUBLISHED" : "FAILED", anySucceeded ? undefined : "All channel attempts failed — see per-channel publishResult for detail.");
+    // PUBLISHED must mean something was actually, externally published —
+    // MANUAL_ONLY (LinkedIn, Reddit: content drafted for a human to paste,
+    // no API call made at all) is not that, and must never be counted as
+    // if it were. A real bug, found before the first live Facebook post:
+    // an entry whose only "successful" channels were MANUAL_ONLY was
+    // landing in PUBLISHED, which falsely implied something had gone
+    // live. Three real outcomes now: a genuine external success anywhere
+    // -> PUBLISHED; no external success but at least one channel has
+    // manual content ready -> READY_FOR_MANUAL; neither -> FAILED.
+    const realPublish = attempts.some((a) => a.result.status === "PUBLISHED");
+    const manualReady = attempts.some((a) => a.result.status === "MANUAL_ONLY");
+    const nextState = realPublish ? "PUBLISHED" : manualReady ? "READY_FOR_MANUAL" : "FAILED";
+    const note = nextState === "FAILED" ? "All channel attempts failed — see per-channel publishResult for detail." : nextState === "READY_FOR_MANUAL" ? "No channel published automatically — manual-only content is drafted and ready for a human to post (see per-channel publishResult)." : undefined;
+    await setQueueState(entry.id, nextState, note);
   }
 
   return { ranAt: now.toISOString(), dryRun: options.dryRun, paused: false, entriesAttempted: due.length, results, staleHandling };

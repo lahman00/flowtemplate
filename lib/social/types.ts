@@ -46,6 +46,8 @@ export type PublishResult = {
   verified: boolean;
   error: string;
   contentHash: string;
+  /** Which real API mechanism was (or, in a dry run, would be) used — e.g. Facebook's IMAGE_POST (`/photos`) vs LINK_POST (`/feed`). null for adapters that only have one publish mechanism. Set even in a dry run, so the mode is visible without a real network call. */
+  mode?: "IMAGE_POST" | "LINK_POST" | null;
 };
 
 /** Phase 14 dashboard vocabulary — one status per channel, independent of any single post's PublishStatus. */
@@ -77,17 +79,32 @@ export const PILLAR_LABELS: Record<ContentPillar, string> = {
   commercial: "Commercial",
 };
 
-export const QUEUE_STATES = ["IDEA", "DRAFTED", "QA_READY", "APPROVED_FOR_AUTO", "SCHEDULED", "PUBLISHED", "FAILED", "SKIPPED"] as const;
+export const QUEUE_STATES = ["IDEA", "DRAFTED", "QA_READY", "APPROVED_FOR_AUTO", "SCHEDULED", "READY_FOR_MANUAL", "PUBLISHED", "FAILED", "SKIPPED"] as const;
 
 export type QueueState = (typeof QUEUE_STATES)[number];
 
-/** Same shape as VALID_TRANSITIONS in affiliate-pipeline.ts — an explicit state machine so an invalid jump throws instead of silently corrupting the queue. */
+/**
+ * Same shape as VALID_TRANSITIONS in affiliate-pipeline.ts — an explicit
+ * state machine so an invalid jump throws instead of silently corrupting
+ * the queue.
+ *
+ * READY_FOR_MANUAL (2026-08-17 pre-production hardening): a real bug found
+ * before the first live Facebook post — an entry whose only "successful"
+ * channels were MANUAL_ONLY (LinkedIn, Reddit — content drafted for a
+ * human to paste, no API call made) was being marked PUBLISHED, which is
+ * false: nothing was actually published anywhere. PUBLISHED must now mean
+ * at least one channel's adapter reported a real, externally-verified
+ * PUBLISHED status. An entry whose best outcome is "manual content ready,
+ * nothing published automatically" lands in READY_FOR_MANUAL instead — see
+ * runPublishCycle() in lib/social/publish.ts for the corrected logic.
+ */
 export const VALID_QUEUE_TRANSITIONS: Record<QueueState, QueueState[]> = {
   IDEA: ["DRAFTED", "SKIPPED"],
   DRAFTED: ["QA_READY", "SKIPPED", "IDEA"],
   QA_READY: ["APPROVED_FOR_AUTO", "SCHEDULED", "SKIPPED", "DRAFTED"],
   APPROVED_FOR_AUTO: ["SCHEDULED", "SKIPPED", "DRAFTED"], // DRAFTED: quality-audit quarantine sends a flagged entry back for redraft instead of deleting it (see scripts/social/quality-audit.ts)
-  SCHEDULED: ["PUBLISHED", "FAILED", "SKIPPED"],
+  SCHEDULED: ["PUBLISHED", "READY_FOR_MANUAL", "FAILED", "SKIPPED"],
+  READY_FOR_MANUAL: ["PUBLISHED", "SKIPPED"], // a human posted it manually and we're told (PUBLISHED), or it was abandoned (SKIPPED)
   PUBLISHED: [],
   FAILED: ["SCHEDULED", "SKIPPED"], // allow a manual retry
   SKIPPED: [],

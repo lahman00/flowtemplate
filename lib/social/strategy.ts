@@ -6,6 +6,21 @@ const channelBooleanMapSchema = z.object(Object.fromEntries(CHANNELS.map((c) => 
 const channelNumberMapSchema = z.object(Object.fromEntries(CHANNELS.map((c) => [c, z.number().int().min(0)])) as Record<(typeof CHANNELS)[number], z.ZodNumber>);
 const pillarWeightMapSchema = z.object(Object.fromEntries(CONTENT_PILLARS.map((p) => [p, z.number().min(0)])) as Record<(typeof CONTENT_PILLARS)[number], z.ZodNumber>);
 
+/**
+ * 2026-08-17 Facebook production launch — a deterministic, dated cadence
+ * ramp (never "random execution timing"): phase1 covers the first
+ * phase1Days from launchStartDate at phase1PostsPerWeek, then phase2
+ * applies indefinitely at phase2PostsPerWeek. Optional per channel —
+ * absent for a channel means no ramp, just the flat `cadence` number.
+ */
+const launchPlanSchema = z.object({
+  launchStartDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "must be YYYY-MM-DD"),
+  phase1Days: z.number().int().positive(),
+  phase1PostsPerWeek: z.number().int().min(0),
+  phase2PostsPerWeek: z.number().int().min(0),
+});
+export type LaunchPlan = z.infer<typeof launchPlanSchema>;
+
 const socialStrategySchema = z.object({
   paused: z.boolean(),
   language: z.string().min(2),
@@ -33,6 +48,10 @@ const socialStrategySchema = z.object({
     landscapeHeight: z.number().int().positive(),
   }),
   topicRepeatCooldownDays: z.number().int().positive(),
+  /** Keyed by channel name. See launchPlanSchema. Default {} — most channels have no ramp. */
+  launchPlans: z.record(z.string(), launchPlanSchema).default({}),
+  /** Keyed by channel name — pillars excluded from that channel's automation until separately approved (e.g. "commercial" posts blocked from Facebook pending a content-quality fix). Default {}. */
+  excludedPillarsByChannel: z.record(z.string(), z.array(z.enum(CONTENT_PILLARS))).default({}),
 });
 
 export type SocialStrategy = z.infer<typeof socialStrategySchema>;
@@ -58,4 +77,19 @@ let cached: SocialStrategy | null = null;
 export function getSocialStrategy(): SocialStrategy {
   if (!cached) cached = loadStrategy();
   return cached;
+}
+
+/**
+ * Resolves a channel's current target cadence: if it has a launchPlan,
+ * returns phase1 or phase2's postsPerWeek depending on how many days
+ * have elapsed since launchStartDate (deterministic — driven by the
+ * calendar date, never by execution timing); otherwise falls back to the
+ * flat `cadence` number.
+ */
+export function getEffectiveCadence(strategy: SocialStrategy, channel: (typeof CHANNELS)[number], now: Date = new Date()): number {
+  const plan = strategy.launchPlans[channel];
+  if (!plan) return strategy.cadence[channel];
+  const daysSinceLaunch = Math.floor((now.getTime() - new Date(plan.launchStartDate + "T00:00:00.000Z").getTime()) / (24 * 60 * 60 * 1000));
+  if (daysSinceLaunch < 0) return 0; // launch date is in the future — nothing yet
+  return daysSinceLaunch < plan.phase1Days ? plan.phase1PostsPerWeek : plan.phase2PostsPerWeek;
 }

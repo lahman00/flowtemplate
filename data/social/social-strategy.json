@@ -19,7 +19,7 @@
   "cadence": {
     "_comment": "Posts per 7-day week, per channel. Conservative on purpose — Phase 7 explicitly says start conservative to avoid spam signals. A channel with cadence 0 is prepared but not scheduled.",
     "linkedin": 3,
-    "facebook": 3,
+    "facebook": 7,
     "x": 0,
     "bluesky": 4,
     "mastodon": 3,
@@ -62,5 +62,16 @@
     "landscapeWidth": 1200,
     "landscapeHeight": 630
   },
-  "topicRepeatCooldownDays": 21
+  "topicRepeatCooldownDays": 21,
+  "launchPlans": {
+    "facebook": {
+      "launchStartDate": "2026-08-17",
+      "phase1Days": 14,
+      "phase1PostsPerWeek": 7,
+      "phase2PostsPerWeek": 5
+    }
+  },
+  "excludedPillarsByChannel": {
+    "facebook": ["commercial"]
+  }
 }

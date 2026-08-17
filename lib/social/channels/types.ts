@@ -52,10 +52,23 @@ export function missingEnvNames(names: string[]): string[] {
  * Shared default text formatter: fits text + a trailing link under the
  * platform's char limit, truncating with an ellipsis if needed. No em
  * dashes (matches this project's own house style, and Need Go Home's
- * "no em dashes ever" rule for platform copy).
+ * "no em dashes ever" rule for platform copy) — but the original
+ * blind `replace(/—/g, ",")` broke grammar whenever the dash had
+ * surrounding whitespace (its normal parenthetical use — like right
+ * here), producing a floating pre-comma space: `alternative" , the`.
+ * Fixed 2026-08-17: consume the surrounding whitespace along with the
+ * dash so the replacement comma lands correctly (`alternative", the`).
+ * A bare em/en dash with no surrounding whitespace (rare, but possible
+ * mid-word) still gets a plain substitution as a fallback. En dashes
+ * used unspaced for a range (e.g. "10–15") are left as a plain hyphen,
+ * not a comma — a comma there would be wrong. Smart quotes, apostrophes,
+ * commas, and parentheses are never touched; only em/en dashes are.
  */
 export function defaultFormat(text: string, link: string | null, charLimit: number): string {
-  const cleaned = text.replace(/—/g, ",").replace(/–/g, "-");
+  const cleaned = text
+    .replace(/\s*[—–]\s+/g, ", ") // dash with any leading + real trailing whitespace: parenthetical-style break -> ", "
+    .replace(/—/g, ",") // any remaining (unspaced) em dash -> plain comma, no space to get wrong
+    .replace(/–/g, "-"); // any remaining (unspaced) en dash, e.g. a "10–15" range -> plain hyphen
   const tail = link ? `\n${link}` : "";
   const room = charLimit - tail.length;
   if (cleaned.length <= room) return cleaned + tail;
@@ -72,6 +85,7 @@ export function buildPublishResult(partial: {
   postId?: string | null;
   verified?: boolean;
   error?: string;
+  mode?: PublishResult["mode"];
 }): PublishResult {
   return {
     channel: partial.channel,
@@ -83,5 +97,6 @@ export function buildPublishResult(partial: {
     verified: partial.verified ?? false,
     error: partial.error ?? "",
     contentHash: contentHash(partial.channel, partial.text),
+    mode: partial.mode ?? null,
   };
 }

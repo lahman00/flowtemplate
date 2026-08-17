@@ -1,7 +1,9 @@
 import "./_load-env";
 import { readQueue, writeQueue, applyQueueTransition } from "@/lib/social/queue";
-import { getSocialStrategy } from "@/lib/social/strategy";
+import { getSocialStrategy, getEffectiveCadence } from "@/lib/social/strategy";
 import { CHANNELS } from "@/lib/social/types";
+import { interleaveByPillarWeight } from "@/lib/social/content-engine";
+import type { SocialQueueEntry } from "@/lib/social/types";
 
 /**
  * Spreads APPROVED_FOR_AUTO entries across the next 14 days. Batches
@@ -23,21 +25,50 @@ import { CHANNELS } from "@/lib/social/types";
  * their configured number. Flagged in the final report as a known
  * scheduling limitation, not silently glossed over.
  *
+ * CONTENT MIX (2026-08-17 Facebook launch): entries are no longer taken
+ * in raw queue order (effectively oldest-first, since that's insertion
+ * order) — reused interleaveByPillarWeight() (same tested function that
+ * already prevents pillar monotony at generation time) so the pillar mix
+ * scheduled here matches social-strategy.json's pillarWeights, then a
+ * lightweight pass nudges apart any two ADJACENT scheduled entries that
+ * share a sourceSlug (same vendor two days in a row), swapping in the
+ * nearest non-colliding candidate from later in the pool where one
+ * exists. Not a full constraint solver — a best-effort local fix, honest
+ * about that scope.
+ *
  * Usage: npx tsx --env-file=.env.local scripts/social/schedule.ts
  */
 const DAYS_AHEAD = 14;
-const POST_HOUR_UTC = 15; // early-afternoon UTC — reasonable overlap across US/EU working hours.
+const POST_HOUR_UTC = 15; // early-afternoon UTC — reasonable overlap across US/EU working hours; deterministic, never randomized.
+
+function sharesVendor(a: SocialQueueEntry, b: SocialQueueEntry): boolean {
+  return a.sourceSlugs.some((slug) => b.sourceSlugs.includes(slug));
+}
+
+/** Best-effort local de-collision: for each position, if it shares a vendor with the previous pick, swap in the nearest later candidate that doesn't. */
+function avoidAdjacentSameVendor(ordered: SocialQueueEntry[]): SocialQueueEntry[] {
+  const result = [...ordered];
+  for (let i = 1; i < result.length; i++) {
+    if (!sharesVendor(result[i]!, result[i - 1]!)) continue;
+    const swapIndex = result.findIndex((e, j) => j > i && !sharesVendor(e, result[i - 1]!) && !sharesVendor(e, result[i + 1] ?? e));
+    if (swapIndex !== -1) {
+      [result[i], result[swapIndex]] = [result[swapIndex]!, result[i]!];
+    }
+  }
+  return result;
+}
 
 async function main() {
   const strategy = getSocialStrategy();
-  const enabledCadences = CHANNELS.filter((c) => strategy.enabledChannels[c]).map((c) => strategy.cadence[c]);
+  const now = new Date();
+  const enabledCadences = CHANNELS.filter((c) => strategy.enabledChannels[c]).map((c) => getEffectiveCadence(strategy, c, now));
   const minCadence = enabledCadences.length ? Math.min(...enabledCadences.filter((c) => c > 0)) : 0;
   const perDay = Math.max(1, Math.round(minCadence / 7));
 
   const queue = await readQueue();
-  const approvedIds = queue.filter((e) => e.state === "APPROVED_FOR_AUTO").map((e) => e.id);
+  const approved = queue.filter((e) => e.state === "APPROVED_FOR_AUTO");
 
-  if (approvedIds.length === 0) {
+  if (approved.length === 0) {
     console.log("No APPROVED_FOR_AUTO entries to schedule. Run generate.ts then qa.ts first.");
     return;
   }
@@ -46,7 +77,9 @@ async function main() {
     return;
   }
 
-  const now = new Date();
+  const ordered = avoidAdjacentSameVendor(interleaveByPillarWeight(approved, strategy.pillarWeights));
+  const approvedIds = ordered.map((e) => e.id);
+
   const scheduledForById = new Map<string, string>();
   let cursor = 0;
   for (let day = 0; day < DAYS_AHEAD && cursor < approvedIds.length; day++) {
@@ -62,13 +95,13 @@ async function main() {
   const updated = queue.map((entry) => {
     const when = scheduledForById.get(entry.id);
     if (!when) return entry;
-    const transitioned = applyQueueTransition(entry, "SCHEDULED", `Scheduled for ${when} by schedule.ts (pace: ${perDay}/day, min channel cadence ${minCadence}/week).`);
+    const transitioned = applyQueueTransition(entry, "SCHEDULED", `Scheduled for ${when} by schedule.ts (pace: ${perDay}/day, min channel cadence ${minCadence}/week, pillar-interleaved + vendor-adjacency-checked order).`);
     return { ...transitioned, scheduledFor: when };
   });
 
   await writeQueue(updated);
 
-  console.log(`Scheduled ${scheduledForById.size} of ${approvedIds.length} approved entries across the next ${DAYS_AHEAD} days (${perDay}/day pace).`);
+  console.log(`Scheduled ${scheduledForById.size} of ${approvedIds.length} approved entries across the next ${DAYS_AHEAD} days (${perDay}/day pace, pillar-mixed order).`);
   if (scheduledForById.size < approvedIds.length) {
     console.log(`${approvedIds.length - scheduledForById.size} entries remain APPROVED_FOR_AUTO — re-run after these publish, or widen DAYS_AHEAD.`);
   }

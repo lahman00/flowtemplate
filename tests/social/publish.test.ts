@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
-import { publishOneEntry, runPublishCycle, classifyScheduledEntries, GRACE_WINDOW_MS, MAX_CATCHUP_PER_RUN, MAX_REQUEUE_ATTEMPTS, REQUEUE_OFFSET_MS } from "@/lib/social/publish";
+import { publishOneEntry, runPublishCycle, classifyScheduledEntries, hasChannelPublishedToday, GRACE_WINDOW_MS, MAX_CATCHUP_PER_RUN, MAX_REQUEUE_ATTEMPTS, REQUEUE_OFFSET_MS } from "@/lib/social/publish";
 import { readQueue, addQueueEntries } from "@/lib/social/queue";
 import { getSocialStrategy } from "@/lib/social/strategy";
 import type { SocialAdapter } from "@/lib/social/channels/types";
@@ -32,7 +32,7 @@ afterAll(() => {
   if (realBlobToken !== undefined) process.env.BLOB_READ_WRITE_TOKEN = realBlobToken;
 });
 
-function fakeAdapter(channel: Channel, behavior: "publish" | "throw" | "fail"): SocialAdapter {
+function fakeAdapter(channel: Channel, behavior: "publish" | "throw" | "fail" | "manual"): SocialAdapter {
   return {
     channel,
     requiredEnv: [],
@@ -42,8 +42,40 @@ function fakeAdapter(channel: Channel, behavior: "publish" | "throw" | "fail"): 
     format: (t) => t,
     async publish(variant: ChannelVariant): Promise<PublishResult> {
       if (behavior === "throw") throw new Error(`${channel} adapter exploded`);
-      if (behavior === "fail") return { channel, status: "FAILED", text: variant.text, link: "", postUrl: null, postId: null, verified: false, error: "simulated failure", contentHash: "x" };
-      return { channel, status: "PUBLISHED", text: variant.text, link: "", postUrl: "https://example.com/post/1", postId: "1", verified: true, error: "", contentHash: "x" };
+      if (behavior === "fail") return { channel, status: "FAILED", text: variant.text, link: variant.link ?? "", postUrl: null, postId: null, verified: false, error: "simulated failure", contentHash: "x" };
+      if (behavior === "manual") return { channel, status: "MANUAL_ONLY", text: variant.text, link: variant.link ?? "", postUrl: null, postId: null, verified: false, error: "", contentHash: "x" };
+      return { channel, status: "PUBLISHED", text: variant.text, link: variant.link ?? "", postUrl: "https://example.com/post/1", postId: "1", verified: true, error: "", contentHash: "x" };
+    },
+  };
+}
+
+/** Adapter that never actually publishes (SETUP_REQUIRED, like Facebook with no credentials) — used to reproduce the real observed cron behavior in the MANUAL_ONLY-bookkeeping tests below. */
+function setupRequiredAdapter(channel: Channel): SocialAdapter {
+  return {
+    channel,
+    requiredEnv: ["SOME_ENV"],
+    charLimit: 1000,
+    isConfigured: () => false,
+    missingEnv: () => ["SOME_ENV"],
+    format: (t) => t,
+    async publish(variant: ChannelVariant): Promise<PublishResult> {
+      return { channel, status: "SETUP_REQUIRED", text: variant.text, link: variant.link ?? "", postUrl: null, postId: null, verified: false, error: "missing env", contentHash: "x" };
+    },
+  };
+}
+
+/** Captures exactly what variant each adapter actually received — used to prove UTM tagging happens before the adapter is called. */
+function capturingAdapter(channel: Channel, received: ChannelVariant[]): SocialAdapter {
+  return {
+    channel,
+    requiredEnv: [],
+    charLimit: 1000,
+    isConfigured: () => true,
+    missingEnv: () => [],
+    format: (t) => t,
+    async publish(variant: ChannelVariant): Promise<PublishResult> {
+      received.push(variant);
+      return { channel, status: "DRY_RUN", text: variant.text, link: variant.link ?? "", postUrl: null, postId: null, verified: false, error: "", contentHash: "x" };
     },
   };
 }
@@ -220,5 +252,235 @@ describe("runPublishCycle — overdue backlog is never dumped", () => {
     const summary = await runPublishCycle({ dryRun: false, now });
     const newScheduledFor = new Date(summary.staleHandling.requeued[0]!.newScheduledFor).getTime();
     expect(newScheduledFor).toBe(now.getTime() + REQUEUE_OFFSET_MS);
+  });
+});
+
+/**
+ * 2026-08-17 pre-production Facebook hardening — UTM tagging is now wired
+ * into publishOneEntry(), the one real choke point every channel's
+ * publish() call goes through. Proven here by capturing the exact variant
+ * each fake adapter receives, rather than trusting buildUtmUrl()'s own
+ * (already-covered) unit tests — this is the integration proof that it's
+ * actually called, which is what was missing before this fix (the
+ * function existed with zero call sites).
+ */
+describe("publishOneEntry — UTM tagging is wired into the real publish path", () => {
+  it("the adapter receives a UTM-tagged link, not the raw stored link", async () => {
+    const received: ChannelVariant[] = [];
+    const entry = { ...fixtureEntry({ facebook: { ...blankVariant, link: "https://miloosh.com/software/contentful" } }), id: "utm-entry-1", campaign: "spring-launch" };
+    const adapters = { facebook: capturingAdapter("facebook", received) } as Record<Channel, SocialAdapter>;
+
+    await publishOneEntry(entry, true, adapters);
+
+    expect(received).toHaveLength(1);
+    const url = new URL(received[0]!.link!);
+    expect(url.origin + url.pathname).toBe("https://miloosh.com/software/contentful");
+    expect(url.searchParams.get("utm_source")).toBe("facebook");
+    expect(url.searchParams.get("utm_medium")).toBe("social");
+    expect(url.searchParams.get("utm_campaign")).toBe("spring-launch");
+    expect(url.searchParams.get("utm_content")).toBe("utm-entry-1"); // stable identifier — the queue entry's own id
+  });
+
+  it("defaults utm_campaign to organic when the entry has no campaign set", async () => {
+    const received: ChannelVariant[] = [];
+    const entry = { ...fixtureEntry({ facebook: { ...blankVariant, link: "https://miloosh.com/software/notion" } }), campaign: null };
+    await publishOneEntry(entry, true, { facebook: capturingAdapter("facebook", received) } as Record<Channel, SocialAdapter>);
+    expect(new URL(received[0]!.link!).searchParams.get("utm_campaign")).toBe("organic");
+  });
+
+  it("a variant with no link is passed through unchanged — no crash, no fabricated link", async () => {
+    const received: ChannelVariant[] = [];
+    const entry = fixtureEntry({ facebook: { ...blankVariant, link: null } });
+    await publishOneEntry(entry, true, { facebook: capturingAdapter("facebook", received) } as Record<Channel, SocialAdapter>);
+    expect(received[0]!.link).toBeNull();
+  });
+
+  it("the stored queue entry's link is never mutated — tagging happens only at publish time, on a copy", async () => {
+    const entry = fixtureEntry({ facebook: { ...blankVariant, link: "https://miloosh.com/software/contentful" } });
+    const originalLink = entry.channels.facebook!.link;
+    await publishOneEntry(entry, true, { facebook: capturingAdapter("facebook", []) } as Record<Channel, SocialAdapter>);
+    expect(entry.channels.facebook!.link).toBe(originalLink); // unchanged — the tagged copy never writes back
+  });
+
+  it("this is exactly what a real dry-run against a real entry would show — proof, not assertion, of the Contentful case", async () => {
+    const received: ChannelVariant[] = [];
+    const entry = { ...fixtureEntry({ facebook: { ...blankVariant, text: "2 alternatives to Contentful...", link: "https://miloosh.com/software/contentful" } }), id: "contentful-entry" };
+    await publishOneEntry(entry, true, { facebook: capturingAdapter("facebook", received) } as Record<Channel, SocialAdapter>);
+    expect(received[0]!.link).toBe("https://miloosh.com/software/contentful?utm_source=facebook&utm_medium=social&utm_campaign=organic&utm_content=contentful-entry");
+  });
+});
+
+/**
+ * 2026-08-17 pre-production Facebook hardening — reproduces the exact
+ * real production-cron behavior discovered before the first live
+ * Facebook post: an entry with Facebook SETUP_REQUIRED (no credentials
+ * yet) but LinkedIn/Reddit MANUAL_ONLY (content drafted, no API call at
+ * all) was landing in PUBLISHED — falsely implying something had gone
+ * live externally when nothing had. PUBLISHED must now mean a real
+ * external success on at least one channel.
+ */
+describe("runPublishCycle — MANUAL_ONLY must never masquerade as PUBLISHED", () => {
+  it("reproduces the exact observed cron case: facebook SETUP_REQUIRED + linkedin/reddit MANUAL_ONLY -> READY_FOR_MANUAL, not PUBLISHED", async () => {
+    await addQueueEntries([fixtureEntry({ linkedin: blankVariant, facebook: blankVariant, reddit: blankVariant })]);
+    const adapters = {
+      linkedin: fakeAdapter("linkedin", "manual"),
+      facebook: setupRequiredAdapter("facebook"),
+      reddit: fakeAdapter("reddit", "manual"),
+    } as Record<Channel, SocialAdapter>;
+
+    await runPublishCycle({ dryRun: false, now: new Date(), adapters });
+    const after = await readQueue();
+
+    expect(after[0]!.state).toBe("READY_FOR_MANUAL"); // this used to be the exact bug: it would land in PUBLISHED here
+  });
+
+  it("with real adapters (all NEEDS_OWNER_AUTH in a test environment with no channel credentials), the same entry does NOT become PUBLISHED", async () => {
+    await addQueueEntries([fixtureEntry({ linkedin: blankVariant, facebook: blankVariant, reddit: blankVariant })]);
+    await runPublishCycle({ dryRun: false, now: new Date() }); // real ADAPTERS registry, default
+    const after = await readQueue();
+    expect(after[0]!.state).not.toBe("PUBLISHED");
+  });
+
+  it("an entry with at least one real external success is PUBLISHED even if other channels are manual-only", async () => {
+    await addQueueEntries([fixtureEntry({ bluesky: blankVariant, linkedin: blankVariant })]);
+    const adapters = { bluesky: fakeAdapter("bluesky", "publish"), linkedin: fakeAdapter("linkedin", "manual") } as Record<Channel, SocialAdapter>;
+    const queue = await readQueue();
+    const attempts = await publishOneEntry(queue[0]!, false, adapters);
+    const realPublish = attempts.some((a) => a.result.status === "PUBLISHED");
+    expect(realPublish).toBe(true);
+  });
+
+  it("an entry where every channel fails outright (no manual-only, no success) has neither realPublish nor manualReady true", async () => {
+    await addQueueEntries([fixtureEntry({ facebook: blankVariant })]);
+    const adapters = { facebook: fakeAdapter("facebook", "fail") } as Record<Channel, SocialAdapter>;
+    const queue = await readQueue();
+    const attempts = await publishOneEntry(queue[0]!, false, adapters);
+    const realPublish = attempts.some((a) => a.result.status === "PUBLISHED");
+    const manualReady = attempts.some((a) => a.result.status === "MANUAL_ONLY");
+    expect(realPublish).toBe(false);
+    expect(manualReady).toBe(false);
+  });
+});
+
+/**
+ * 2026-08-17 Facebook production launch — the real, load-bearing safety
+ * cap: "maximum one automated Facebook publication per day." Checks the
+ * actual recorded PublishResult + history timestamp, not a scheduling
+ * target, so it holds even if the scheduler over-produces.
+ */
+describe("hasChannelPublishedToday", () => {
+  const today = new Date("2026-08-17T20:00:00.000Z");
+
+  function publishedEntry(channel: Channel, publishedAt: string): SocialQueueEntry {
+    return {
+      ...fixtureEntry({ [channel]: { ...blankVariant, publishResult: { channel, status: "PUBLISHED", text: "x", link: "", postUrl: null, postId: "1", verified: true, error: "", contentHash: "x" } } }),
+      state: "PUBLISHED",
+      history: [{ state: "PUBLISHED", at: publishedAt, note: null }],
+    };
+  }
+
+  it("true when the channel has a real PUBLISHED result recorded earlier today", () => {
+    const queue = [publishedEntry("facebook", "2026-08-17T09:00:00.000Z")];
+    expect(hasChannelPublishedToday(queue, "facebook", today)).toBe(true);
+  });
+
+  it("false when the channel's PUBLISHED result was on a different UTC day", () => {
+    const queue = [publishedEntry("facebook", "2026-08-16T09:00:00.000Z")];
+    expect(hasChannelPublishedToday(queue, "facebook", today)).toBe(false);
+  });
+
+  it("false when no entry has a PUBLISHED result for that channel at all", () => {
+    const queue = [fixtureEntry({ facebook: blankVariant })];
+    expect(hasChannelPublishedToday(queue, "facebook", today)).toBe(false);
+  });
+
+  it("a different channel's PUBLISHED result today does not count for facebook", () => {
+    const queue = [publishedEntry("bluesky", "2026-08-17T09:00:00.000Z")];
+    expect(hasChannelPublishedToday(queue, "facebook", today)).toBe(false);
+  });
+
+  it("MANUAL_ONLY does not count as PUBLISHED for cap purposes", () => {
+    const entry = {
+      ...fixtureEntry({ linkedin: { ...blankVariant, publishResult: { channel: "linkedin", status: "MANUAL_ONLY", text: "x", link: "", postUrl: null, postId: null, verified: false, error: "", contentHash: "x" } } }),
+      state: "READY_FOR_MANUAL" as const,
+      history: [{ state: "READY_FOR_MANUAL" as const, at: "2026-08-17T09:00:00.000Z", note: null }],
+    };
+    expect(hasChannelPublishedToday([entry], "linkedin", today)).toBe(false);
+  });
+});
+
+describe("runPublishCycle — Facebook per-day cap enforcement", () => {
+  it("a second entry due the same day does not attempt Facebook again once it already published today", async () => {
+    const alreadyPublishedToday: SocialQueueEntry = {
+      ...fixtureEntry({ facebook: { ...blankVariant, publishResult: { channel: "facebook", status: "PUBLISHED", text: "x", link: "", postUrl: null, postId: "1", verified: true, error: "", contentHash: "x" } } }),
+      id: "already-published",
+      state: "PUBLISHED",
+      history: [{ state: "PUBLISHED", at: new Date().toISOString(), note: null }],
+    };
+    const secondCandidate: SocialQueueEntry = { ...fixtureEntry({ facebook: blankVariant, bluesky: blankVariant }), id: "second-candidate" };
+    await addQueueEntries([alreadyPublishedToday, secondCandidate]);
+
+    const adapters = { facebook: fakeAdapter("facebook", "publish"), bluesky: fakeAdapter("bluesky", "publish") } as Record<Channel, SocialAdapter>;
+    await runPublishCycle({ dryRun: false, now: new Date(), adapters });
+
+    const after = await readQueue();
+    const second = after.find((e) => e.id === "second-candidate")!;
+    expect(second.channels.facebook?.publishResult).toBeNull(); // never attempted — the cap withheld it
+    expect(second.channels.bluesky?.publishResult?.status).toBe("PUBLISHED"); // other channels still proceed normally
+    expect(second.state).toBe("PUBLISHED"); // bluesky's real success still resolves the entry
+  });
+
+  it("an entry whose ONLY channel is Facebook, already capped, is left untouched (still SCHEDULED) rather than marked FAILED", async () => {
+    const alreadyPublishedToday: SocialQueueEntry = {
+      ...fixtureEntry({ facebook: { ...blankVariant, publishResult: { channel: "facebook", status: "PUBLISHED", text: "x", link: "", postUrl: null, postId: "1", verified: true, error: "", contentHash: "x" } } }),
+      id: "already-published",
+      state: "PUBLISHED",
+      history: [{ state: "PUBLISHED", at: new Date().toISOString(), note: null }],
+    };
+    const facebookOnly: SocialQueueEntry = { ...fixtureEntry({ facebook: blankVariant }), id: "facebook-only" };
+    await addQueueEntries([alreadyPublishedToday, facebookOnly]);
+
+    const adapters = { facebook: fakeAdapter("facebook", "publish") } as Record<Channel, SocialAdapter>;
+    await runPublishCycle({ dryRun: false, now: new Date(), adapters });
+
+    const after = await readQueue();
+    const entry = after.find((e) => e.id === "facebook-only")!;
+    expect(entry.state).toBe("SCHEDULED"); // NOT FAILED — nothing was actually attempted, so nothing should be recorded as a failure
+    expect(entry.channels.facebook?.publishResult).toBeNull();
+  });
+
+  it("without a prior publish today, Facebook proceeds normally", async () => {
+    await addQueueEntries([fixtureEntry({ facebook: blankVariant })]);
+    const adapters = { facebook: fakeAdapter("facebook", "publish") } as Record<Channel, SocialAdapter>;
+    await runPublishCycle({ dryRun: false, now: new Date(), adapters });
+    const after = await readQueue();
+    expect(after[0]!.channels.facebook?.publishResult?.status).toBe("PUBLISHED");
+  });
+});
+
+describe("runPublishCycle — pillar exclusion per channel", () => {
+  it("an excluded pillar's entry never attempts the excluded channel, even though it's fully configured", async () => {
+    const commercialEntry: SocialQueueEntry = { ...fixtureEntry({ facebook: blankVariant }), pillar: "commercial" };
+    await addQueueEntries([commercialEntry]);
+    const strategy = { ...getSocialStrategy(), excludedPillarsByChannel: { facebook: ["commercial" as const] } };
+    const adapters = { facebook: fakeAdapter("facebook", "publish") } as Record<Channel, SocialAdapter>;
+
+    await runPublishCycle({ dryRun: false, now: new Date(), strategy, adapters });
+
+    const after = await readQueue();
+    expect(after[0]!.channels.facebook?.publishResult).toBeNull(); // never attempted
+    expect(after[0]!.state).toBe("SCHEDULED"); // untouched, not FAILED
+  });
+
+  it("a non-excluded pillar on the same channel still publishes normally", async () => {
+    const alternativesEntry: SocialQueueEntry = { ...fixtureEntry({ facebook: blankVariant }), pillar: "alternatives" };
+    await addQueueEntries([alternativesEntry]);
+    const strategy = { ...getSocialStrategy(), excludedPillarsByChannel: { facebook: ["commercial" as const] } };
+    const adapters = { facebook: fakeAdapter("facebook", "publish") } as Record<Channel, SocialAdapter>;
+
+    await runPublishCycle({ dryRun: false, now: new Date(), strategy, adapters });
+
+    const after = await readQueue();
+    expect(after[0]!.channels.facebook?.publishResult?.status).toBe("PUBLISHED");
   });
 });
