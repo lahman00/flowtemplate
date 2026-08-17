@@ -12,8 +12,25 @@ import path from "node:path";
 
 export const GROUP_CLUSTERS = ["ai_automation", "saas_founders_buyers", "software_buyers_tech", "productivity_workflow", "small_business"] as const;
 export const VERIFICATION_LEVELS = ["VERIFIED", "PARTIALLY_VERIFIED", "UNKNOWN"] as const;
-export const GROUP_TIERS = ["S", "A", "B", "REJECT", "UNSCORED"] as const;
-export const LINK_POLICIES = ["LINK_FRIENDLY", "CONTEXTUAL_LINKS_ONLY", "PROMO_THREAD_ONLY", "VALUE_ONLY", "UNKNOWN_RULES", "DO_NOT_POST"] as const;
+export const GROUP_TIERS = ["S", "A", "B", "REJECT", "UNSCORED", "WATCHLIST"] as const;
+/**
+ * Two naming generations coexist here (both real, both used by persisted
+ * data): LINK_FRIENDLY/CONTEXTUAL_LINKS_ONLY/PROMO_THREAD_ONLY/DO_NOT_POST
+ * from the first deep-audit pass, and OPEN_LINKS/CONTEXTUAL_LINKS_ALLOWED/
+ * PROMO_DAY_ONLY/ADMIN_APPROVAL_REQUIRED/NO_PROMOTION from the 2026-08-18
+ * Universe Discovery pass's requested vocabulary. Kept as synonyms rather
+ * than migrated, to avoid rewriting already-verified evidence on existing
+ * entries.
+ */
+export const LINK_POLICIES = [
+  "LINK_FRIENDLY", "OPEN_LINKS",
+  "CONTEXTUAL_LINKS_ONLY", "CONTEXTUAL_LINKS_ALLOWED",
+  "PROMO_THREAD_ONLY", "PROMO_DAY_ONLY",
+  "VALUE_ONLY",
+  "ADMIN_APPROVAL_REQUIRED",
+  "UNKNOWN_RULES", "UNKNOWN",
+  "DO_NOT_POST", "NO_PROMOTION",
+] as const;
 export const MEMBERSHIP_STATES = ["NOT_JOINED", "REQUESTED", "MEMBER", "NEEDS_EYAL_INPUT", "REJECTED_BY_GROUP", "DO_NOT_JOIN"] as const;
 export const TRI_STATE = ["YES", "NO", "UNKNOWN"] as const;
 export const POLICY_STATE = ["YES", "NO", "RESTRICTED", "UNKNOWN"] as const;
