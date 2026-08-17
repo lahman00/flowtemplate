@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-08-17T20:47:08.053Z",
+  "lastUpdated": "2026-08-17T21:21:22.926Z",
   "groups": [
     {
       "id": "ai-ads-automation-for-business-owners",
@@ -259,7 +259,7 @@
         "buyer_education content"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE (ChatGPT-approved 2026-08-17). JOINED — membership automatic. Posting-permission questions ('What is the name and location of your business?' + 'biggest challenge growing your business') declined. NEEDS_EYAL_INPUT for posting permission.",
+      "notes": "PORTFOLIO: OBSERVE_ONLY (ChatGPT decision 2026-08-18). Reason: Miloosh targets US buyers, but Eyal/Miloosh are not US-based — will not answer a location question misleadingly. Remains a MEMBER (already joined, no data disclosed for membership itself). Posting rights intentionally NOT unlocked — the pending posting-permission questions ask for business name/location, which would require a location claim. Held at observe-only indefinitely.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -730,7 +730,7 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "MIXED",
       "aiSpamOverrun": "NO",
-      "postsInspected": 0,
+      "postsInspected": 8,
       "score": {
         "audienceFit": 16,
         "buyingIntent": 14,
@@ -746,7 +746,7 @@
       "tier": "A",
       "verification": "PARTIALLY_VERIFIED",
       "dateChecked": "2026-08-17",
-      "membershipState": "NOT_JOINED",
+      "membershipState": "MEMBER",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [
@@ -755,7 +755,7 @@
         "buyer_education content on tool selection for AI-building"
       ],
       "contentOpportunity": null,
-      "notes": "UPGRADE_CANDIDATE — rare, unusually explicit rule structure that genuinely ALLOWS earned self-promotion ('one promo post per week max, context before links, help before you pitch') — a real structural advantage over every other CORE candidate's blanket no-promotion rule. 34.2K members, fast growth (+69/week), 4 posts/day. Framing skews 'make money / side-hustle' rather than pure enterprise software-buying, so audience fit is moderate, not top-tier — flagged for ChatGPT's decision, not silently substituted for #4 or #5.",
+      "notes": "PORTFOLIO: CORE (promoted 2026-08-18, replacing IT & MSP). Deep-sampled ~8 legible posts before joining (About+rules re-verified, live feed sampled twice): rule #4 'One promo post per week max' CONFIRMED verbatim, plus 'no drive-by promos / context before links' and 'help before you pitch'. Sample breakdown: 2 admin educational posts (Claude coordinator-agents feature, Claude webhooks feature), 3 routine 'welcome new members' posts, 1 member-shared industry news item (Lovable funding round) — 0 of 8 were self-promotional/course-selling. Real two-way admin engagement observed (Ronald Craig replying personally to members). Could NOT directly observe an external link surviving moderation — no post in the sample contained one — flagged as an open unknown, not assumed either way. JOINED (rules-acknowledgment only, no personal info required). Not posted in yet.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -796,6 +796,50 @@
       "notes": "No exact-name match found. Search results were dominated by Hebrew/Israeli 'Claude Code' groups (geo/language mismatch for Miloosh's English content — same pattern seen with 'Micro-SaaS'). Closest English match, 'Claude For Business' (803 members), is a plausible but not confirmed identity match — left UNKNOWN rather than guessed.",
       "rejectionReason": null,
       "sourceSeed": true
+    },
+    {
+      "id": "crm-systems",
+      "name": "CRM systems",
+      "url": "https://www.facebook.com/groups/895248807950018/",
+      "cluster": "software_buyers_tech",
+      "privacy": "PUBLIC",
+      "memberCount": 6100,
+      "postsPerDayApprox": 19,
+      "description": "All about private and personal CRM systems and their benefits for contact management. Open discussions.",
+      "rules": [],
+      "ruleEvidence": "No 'Group rules from the admins' section shown on the About page as of 2026-08-18 — none posted.",
+      "adminGuidance": "Single admin 'Matthias'. Legal/impressum notice links to efficies.com (a CRM vendor) — real, unconfirmed signal the admin may be tied to that vendor; flagged, not proven.",
+      "linkPolicy": "UNKNOWN_RULES",
+      "spamRatio": "UNKNOWN",
+      "postsInspected": 0,
+      "score": {
+        "audienceFit": 16,
+        "buyingIntent": 15,
+        "engagementQuality": 8,
+        "distributionOpportunity": 10,
+        "contentFit": 6,
+        "promotionViability": 4,
+        "geoLanguageFit": 3,
+        "penalties": -5,
+        "penaltyReasons": [
+          "Possible vendor tie (efficies.com in the legal notice) — same conflict-of-interest risk pattern as the earlier-flagged 'SaaS Power Users' group, unconfirmed."
+        ],
+        "total": 57
+      },
+      "tier": "B",
+      "verification": "PARTIALLY_VERIFIED",
+      "dateChecked": "2026-08-17",
+      "membershipState": "NOT_JOINED",
+      "lastPost": null,
+      "nextEligiblePost": null,
+      "bestMilooshContentMatches": [
+        "/category/crm",
+        "CRM comparison/alternatives content"
+      ],
+      "contentOpportunity": null,
+      "notes": "REPLACEMENT CANDIDATE. Real CRM-buyer community, no location/role gate, English. Strong activity-to-size ratio (19 posts/day at only 6.1K members). No posted rules is a real gap to resolve before posting.",
+      "rejectionReason": null,
+      "sourceSeed": false
     },
     {
       "id": "free-ai-tools-productivity-tools-lifetime-deals",
@@ -973,7 +1017,7 @@
         "buyer_education + software_decisions pillar posts on vendor/tool-stack decisions"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE (ChatGPT-approved 2026-08-17). Join request was auto-created the instant 'Join group' was clicked (Facebook's real UX for this private group — no way to preview questions first), then WITHDRAWN via 'Cancel request' because both screening questions required Eyal-specific answers I cannot fabricate: 'What best describes your MSP role?' and 'What's your biggest current challenge in your MSP business?'. No answers were given, no personal info disclosed. Eyal is NOT a member and has no pending request. He is not literally an MSP owner (Miloosh is a software-comparison site) — needs to decide how to honestly answer these before a real request can go in.",
+      "notes": "PORTFOLIO: REMOVED FROM CORE (ChatGPT decision 2026-08-18). Reason: Eyal is not an MSP owner; will not fabricate role/business fit to enter a high-scoring group (score 88, still the highest-quality group found in the whole audit — kept in the dataset for reference, not deleted). Stays NEEDS_EYAL_INPUT / NOT_JOINED.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -1840,6 +1884,50 @@
       "sourceSeed": true
     },
     {
+      "id": "small-business-owners-56k",
+      "name": "Small Business Owners",
+      "url": "https://www.facebook.com/groups/316511528060000/",
+      "cluster": "small_business",
+      "privacy": "PUBLIC",
+      "memberCount": 56200,
+      "postsPerDayApprox": 0,
+      "description": "For people who want to start and grow their small businesses and other entrepreneurial ventures.",
+      "rules": [
+        "Auto-approval scheme: follow the admin's personal Page AND personal profile, comment proof on a pinned post, THEN posts get auto-approved — otherwise every post needs manual admin approval."
+      ],
+      "ruleEvidence": "Facebook group About tab > Group rules from the admins, verified 2026-08-18.",
+      "adminGuidance": "'JOWEL' + 2 other admins.",
+      "linkPolicy": "DO_NOT_POST",
+      "spamRatio": "HIGH",
+      "postsInspected": 0,
+      "tier": "REJECT",
+      "rejectionReason": "56.2K members but 0 posts today and only 6 in the last month despite +509 members/week — a large, essentially dead group. Its 'rule' is a follow-the-admin-for-auto-approval engagement-farming scheme, a real spam-pattern red flag, not a normal moderation policy.",
+      "score": {
+        "audienceFit": 10,
+        "buyingIntent": 6,
+        "engagementQuality": 0,
+        "distributionOpportunity": 0,
+        "contentFit": 3,
+        "promotionViability": 0,
+        "geoLanguageFit": 3,
+        "penalties": -20,
+        "penaltyReasons": [
+          "Follow-the-admin auto-approval scheme is a classic spam/engagement-farming pattern.",
+          "Essentially dead (0 posts today, 6/month) despite a huge and still-growing member count — confirms member count alone is not a usable signal, consistent with the BizAI Hub finding earlier in this audit."
+        ],
+        "total": 2
+      },
+      "verification": "PARTIALLY_VERIFIED",
+      "dateChecked": "2026-08-17",
+      "membershipState": "NOT_JOINED",
+      "lastPost": null,
+      "nextEligiblePost": null,
+      "bestMilooshContentMatches": [],
+      "contentOpportunity": null,
+      "notes": "Rejected replacement candidate — documented as a real example of the 'large member count, real spam pattern, dead activity' failure mode this audit is designed to catch.",
+      "sourceSeed": false
+    },
+    {
       "id": "software-as-a-service-saas-power-users",
       "name": "Software as a Service (SaaS) Power Users",
       "url": "https://www.facebook.com/groups/265813824138514/",
@@ -2063,6 +2151,49 @@
       "notes": "1K members, 3 posts/day. On-topic name but small.",
       "rejectionReason": null,
       "sourceSeed": true
+    },
+    {
+      "id": "startup-founders-usa",
+      "name": "Startup Founders USA",
+      "url": "https://www.facebook.com/groups/1248313253326186/",
+      "cluster": "small_business",
+      "privacy": "PUBLIC",
+      "memberCount": 38600,
+      "postsPerDayApprox": 242,
+      "description": "USA Startup Hub — dedicated to empowering entrepreneurs, small business owners, and aspiring founders across the United States.",
+      "rules": [],
+      "ruleEvidence": "No 'Group rules from the admins' section captured on the About page as of 2026-08-18.",
+      "adminGuidance": "Single admin 'Jahnav'. Created ~1 year ago (June 2025).",
+      "linkPolicy": "UNKNOWN_RULES",
+      "spamRatio": "UNKNOWN",
+      "postsInspected": 0,
+      "score": {
+        "audienceFit": 17,
+        "buyingIntent": 11,
+        "engagementQuality": 4,
+        "distributionOpportunity": 8,
+        "contentFit": 6,
+        "promotionViability": 3,
+        "geoLanguageFit": 5,
+        "penalties": -15,
+        "penaltyReasons": [
+          "No posted rules + extremely high volume (242 posts/day, 6,974/month) on a 1-year-old group with a single admin — the same 'no-rules + high-volume + single-admin' pattern already found to correlate with low engagement quality and seller-heavy feeds in this audit (SaaS Startups and Founders Network, Saas Founder Group - Free Speech). Needs a real post-sample check before trusting, not assumed safe from size/geo fit alone."
+        ],
+        "total": 39
+      },
+      "tier": "B",
+      "verification": "PARTIALLY_VERIFIED",
+      "dateChecked": "2026-08-17",
+      "membershipState": "NOT_JOINED",
+      "lastPost": null,
+      "nextEligiblePost": null,
+      "bestMilooshContentMatches": [
+        "buyer_education content for US small-business founders"
+      ],
+      "contentOpportunity": null,
+      "notes": "REPLACEMENT CANDIDATE — explicit US framing is a strong geo-fit signal, but flagged for the same risk pattern as other no-rules/high-volume/single-admin groups in this audit. Recommend a post-sample check (like Claude AI Builds got) before promoting to CORE.",
+      "rejectionReason": null,
+      "sourceSeed": false
     },
     {
       "id": "startup-group-saas-online-software-services",
