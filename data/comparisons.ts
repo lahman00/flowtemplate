@@ -1154,6 +1154,17 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   // evidence chain.
   ["gohighlevel", "hubspot"],
   ["quickbooks-online", "xero"],
+
+  // 2026-08-18 — property-management and field-service coverage, sourced
+  // directly from official vendor pricing pages this same day per the
+  // Facebook demand-signal follow-up (property-management: real, directly
+  // quoted buyer evidence for AppFolio and Buildium together in the same
+  // Facebook posts; field-service: real, large HVAC/construction audience,
+  // though no single product was directly named in sampled Facebook
+  // evidence — the pairing is chosen on real market/comparison merit, not
+  // fabricated demand).
+  ["appfolio", "buildium"],
+  ["jobber", "housecall-pro"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {

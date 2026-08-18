@@ -1,0 +1,104 @@
+{
+  "name": "Housecall Pro",
+  "slug": "housecall-pro",
+  "category": "field-service-management",
+  "description": "Housecall Pro is an all-in-one field-service management platform for home-service professionals across 50+ trades — HVAC, plumbing, electrical, landscaping, cleaning, pest control, and more — covering scheduling, dispatching, invoicing, payment processing, and customer communication.",
+  "website": "https://www.housecallpro.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Home-service professionals across a wide range of trades, from solo operators to large teams, who want one platform covering booking through payment plus optional AI and payroll add-ons.",
+  "features": [
+    "Online booking and payments",
+    "Scheduling and dispatching",
+    "Quotes, proposals, and invoicing",
+    "GPS tracking",
+    "Review management",
+    "Job costing and reporting",
+    "QuickBooks and Zapier integration, plus API access",
+    "Optional add-ons: AI customer-service rep, payroll, accounting, business coaching"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$59/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "entry_paid": {
+      "amount": "59",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Basic",
+        "amount": "59",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "$79/month if billed monthly instead of annually. Additional users +$100/month."
+      },
+      {
+        "name": "Essentials",
+        "amount": "149",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "$189/month billed monthly. Additional users +$100/month."
+      },
+      {
+        "name": "MAX",
+        "amount": "299",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "$329/month billed monthly. Additional users +$75/month."
+      }
+    ],
+    "last_verified": "2026-08-18",
+    "official_source": "https://www.housecallpro.com/pricing/"
+  },
+  "pros": [
+    "Serves the widest range of trades (50+) of any field-service platform compared here",
+    "Published, transparent pricing across all three tiers, both annual and monthly",
+    "Strong PartnerStack-based affiliate program — up to $320 per qualified lead or $1,000 per signup"
+  ],
+  "cons": [
+    "Additional-user pricing adds up quickly on larger teams",
+    "AI customer-service rep, payroll, and accounting are separate paid add-ons, not included",
+    "Monthly (non-annual) billing carries a real premium over the annual rate at every tier"
+  ],
+  "faq": [
+    {
+      "question": "How much does Housecall Pro cost?",
+      "answer": "Annual billing starts at $59/month for Basic, $149/month for Essentials, and $299/month for MAX; each tier costs more if billed monthly instead."
+    },
+    {
+      "question": "Does Housecall Pro have an affiliate program?",
+      "answer": "Yes — via PartnerStack, affiliates can earn up to $320 per qualified lead or up to $1,000 per referral that signs up, with commission paid the month after a referred lead has been on the platform for over 30 days."
+    }
+  ],
+  "tags": [
+    "field-service",
+    "home-services",
+    "contractor-software"
+  ],
+  "sources": [
+    "https://www.housecallpro.com/pricing/",
+    "https://www.housecallpro.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "Jobber",
+      "slug": "jobber",
+      "description": "Field-service management software with direct QuickBooks and Xero integration.",
+      "best_for": "Contractors already using QuickBooks or Xero who want native integration",
+      "strengths": [
+        "Native QuickBooks/Xero integration",
+        "Published pricing",
+        "High-commission affiliate program"
+      ]
+    }
+  ],
+  "order": 229
+}

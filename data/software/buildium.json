@@ -1,0 +1,108 @@
+{
+  "name": "Buildium",
+  "slug": "buildium",
+  "category": "property-management",
+  "description": "Buildium is cloud-based property management software offering accounting, online rent collection, maintenance and work-order management, tenant screening, e-signature leasing, and a resident portal, aimed at residential, multifamily, community-association, and mixed-use property managers.",
+  "website": "https://www.buildium.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Property managers who want published, predictable tiered pricing rather than a custom quote, and a lower entry cost than AppFolio.",
+  "features": [
+    "Accounting and financial reporting",
+    "Online rent collection and payment processing",
+    "Maintenance request and work-order management",
+    "Tenant screening and applicant management",
+    "Electronic lease signing",
+    "Resident portal and communication tools",
+    "Property inspections",
+    "AI-powered assistant and automation workflows",
+    "Open API access (Premium tier)"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$62/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "62",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Essential",
+        "amount": "62",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starting price; core accounting, leasing, and maintenance features."
+      },
+      {
+        "name": "Growth",
+        "amount": "192",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Marked \"Most Popular\" on the official pricing page."
+      },
+      {
+        "name": "Premium",
+        "amount": "400",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds open API access and the fullest feature set."
+      }
+    ],
+    "last_verified": "2026-08-18",
+    "official_source": "https://www.buildium.com/pricing/"
+  },
+  "pros": [
+    "Published, predictable tiered pricing — rare in property-management software",
+    "Real, directly observed usage among property managers, including at scale (1,150+ units on one plan disclosed directly)",
+    "Real, active consumer affiliate program (25% commission via Impact Radius, 30-day cookie)"
+  ],
+  "cons": [
+    "Fewer enterprise-scale customization options than AppFolio at the top tier",
+    "Premium tier's $400/month starting price is a large jump from Growth",
+    "AI-integration interest observed among its own user base suggests some feature gaps buyers are actively looking to fill"
+  ],
+  "faq": [
+    {
+      "question": "How much does Buildium cost?",
+      "answer": "Buildium publishes three tiers: Essential from $62/month, Growth from $192/month, and Premium from $400/month, each with a 14-day free trial and no credit card required to start."
+    },
+    {
+      "question": "Does Buildium have an affiliate program?",
+      "answer": "Yes — Buildium runs a consumer affiliate program on the Impact Radius network paying 25% commission with a 30-day cookie window, separate from its customer-referral program (up to $400 in account credit per referral)."
+    }
+  ],
+  "tags": [
+    "property-management",
+    "real-estate",
+    "landlord-software"
+  ],
+  "sources": [
+    "https://www.buildium.com/pricing/",
+    "https://www.buildium.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "AppFolio",
+      "slug": "appfolio",
+      "description": "Established, feature-rich property management platform with custom-quoted pricing.",
+      "best_for": "Larger portfolios and operators who want a deeply established platform and don't need public pricing",
+      "strengths": [
+        "Established brand",
+        "Deep feature set",
+        "Scales to large portfolios"
+      ]
+    }
+  ],
+  "order": 227
+}

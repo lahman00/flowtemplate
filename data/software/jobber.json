@@ -1,0 +1,110 @@
+{
+  "name": "Jobber",
+  "slug": "jobber",
+  "category": "field-service-management",
+  "description": "Jobber is field-service management software for home-service businesses — landscaping, plumbing, HVAC, cleaning, and similar trades — covering quoting, job scheduling and dispatching, invoicing, payments, and client communication, from solo contractors up to multi-location teams.",
+  "website": "https://www.getjobber.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Solo contractors and small-to-mid field-service teams (up to roughly 15+ employees) who want transparent published pricing and direct QuickBooks/Xero integration.",
+  "features": [
+    "Online booking and scheduling",
+    "Quoting and invoicing",
+    "Payment collection (card, ACH, mobile tap-to-pay)",
+    "Client communication (SMS, automated reminders)",
+    "Time tracking and job costing",
+    "Field documentation (photos, checklists, notes)",
+    "Reporting and analytics",
+    "Integrations with QuickBooks Online, Xero, and Zapier",
+    "Mobile app with Spanish-language support"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$21/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "entry_paid": {
+      "amount": "21",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Core",
+        "amount": "21-29",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Annual billing; range reflects plan variations."
+      },
+      {
+        "name": "Connect",
+        "amount": "70-149",
+        "currency": "USD",
+        "billing_period": "monthly"
+      },
+      {
+        "name": "Grow",
+        "amount": "105-229",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Marked \"Most Popular\" on the official pricing page."
+      },
+      {
+        "name": "Plus",
+        "amount": "280-399",
+        "currency": "USD",
+        "billing_period": "monthly"
+      }
+    ],
+    "last_verified": "2026-08-18",
+    "official_source": "https://www.getjobber.com/pricing/"
+  },
+  "pros": [
+    "Direct, native integration with QuickBooks Online and Xero — a real advantage for buyers already using either",
+    "Published, transparent pricing across all four tiers",
+    "Strong, well-documented consumer affiliate program (60% commission per qualified sale, no minimum)"
+  ],
+  "cons": [
+    "Add-ons (Marketing Suite, Receptionist, Pipeline) are billed separately from the core subscription",
+    "Higher tiers (Connect and above) get expensive quickly relative to Core",
+    "Less enterprise-scale dispatch/reporting depth than ServiceTitan for very large operations"
+  ],
+  "faq": [
+    {
+      "question": "Does Jobber integrate with QuickBooks or Xero?",
+      "answer": "Yes — Jobber has direct, native integrations with both QuickBooks Online and Xero, alongside Zapier for broader automation."
+    },
+    {
+      "question": "How much does Jobber cost?",
+      "answer": "Jobber's published annual-billing tiers start at $21-29/month for Core and range up to $280-399/month for Plus, with add-ons like a Marketing Suite ($99/mo) billed separately."
+    }
+  ],
+  "tags": [
+    "field-service",
+    "home-services",
+    "contractor-software"
+  ],
+  "sources": [
+    "https://www.getjobber.com/pricing/",
+    "https://www.getjobber.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "Housecall Pro",
+      "slug": "housecall-pro",
+      "description": "All-in-one field-service management platform serving 50+ home-service trades.",
+      "best_for": "Home-service businesses wanting a broader trade coverage and AI customer-service add-ons",
+      "strengths": [
+        "Wide trade coverage",
+        "Published pricing",
+        "Strong affiliate/referral program"
+      ]
+    }
+  ],
+  "order": 228
+}

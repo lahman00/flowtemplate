@@ -1,0 +1,88 @@
+{
+  "name": "AppFolio",
+  "slug": "appfolio",
+  "category": "property-management",
+  "description": "AppFolio Property Manager is a cloud-based platform for managing residential real estate portfolios — multifamily, single-family, and affordable housing — covering accounting, marketing/leasing, maintenance, resident communication, and inspections, with an AI assistant (Realm-X) built in.",
+  "website": "https://www.appfolio.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Property managers and real estate operators, from small portfolios to large enterprises, who want an established, full-featured platform and are comfortable with a custom-quoted price rather than public list pricing.",
+  "features": [
+    "Property accounting and financial reporting",
+    "Marketing and leasing automation",
+    "Work order and maintenance management",
+    "Resident communication and online portal",
+    "Property inspections and unit turnover tracking",
+    "API access (read-only on Plus, read/write on Max)",
+    "Realm-X AI assistant and messaging",
+    "Workflow automation and reporting"
+  ],
+  "pricing": {
+    "model": "paid",
+    "status": "contact_sales",
+    "has_free_tier": false,
+    "tiers": [
+      {
+        "name": "Core",
+        "notes": "Entry tier; exact pricing requires contacting AppFolio directly — the official page states plans carry minimum spend and unit-minimum requirements."
+      },
+      {
+        "name": "Plus",
+        "notes": "Adds read-only API access; custom quote."
+      },
+      {
+        "name": "Max",
+        "notes": "Adds read/write API access; custom quote."
+      }
+    ],
+    "last_verified": "2026-08-18",
+    "official_source": "https://www.appfolio.com/pricing"
+  },
+  "pros": [
+    "One of the two most-established, most-recognized names in property-management software",
+    "Deep accounting and leasing feature set proven at scale",
+    "Genuine, directly observed real-world usage disclosure among small-to-mid property managers"
+  ],
+  "cons": [
+    "No public pricing — every quote requires contacting sales, unlike Buildium's published tiers",
+    "Minimum spend and unit-minimum requirements can price out very small portfolios",
+    "No public consumer affiliate/referral program — only a B2B partner program for vendors and consultants"
+  ],
+  "faq": [
+    {
+      "question": "How much does AppFolio cost?",
+      "answer": "AppFolio does not publish exact pricing. It offers three tiers (Core, Plus, Max) with minimum-spend and per-unit-minimum requirements, and a specific quote requires contacting AppFolio directly."
+    },
+    {
+      "question": "Does AppFolio have an affiliate program?",
+      "answer": "AppFolio runs a Partner Program for software/hardware vendors and consulting companies, not a public consumer affiliate program of the kind Buildium or DoorLoop offer."
+    }
+  ],
+  "tags": [
+    "property-management",
+    "real-estate",
+    "landlord-software"
+  ],
+  "sources": [
+    "https://www.appfolio.com/pricing",
+    "https://www.appfolio.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "Buildium",
+      "slug": "buildium",
+      "description": "Cloud-based property management software with published, tiered pricing and a real consumer affiliate program.",
+      "best_for": "Property managers who want transparent published pricing and a lower entry cost",
+      "strengths": [
+        "Public pricing",
+        "Lower entry price",
+        "Active affiliate program"
+      ]
+    }
+  ],
+  "order": 226
+}

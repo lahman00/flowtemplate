@@ -1,0 +1,99 @@
+{
+  "name": "ServiceTitan",
+  "slug": "servicetitan",
+  "category": "field-service-management",
+  "description": "ServiceTitan is a cloud-based field-service management platform for contractors — HVAC, plumbing, electrical, roofing, pest control, and landscaping — offering dispatching, scheduling, invoicing, and reporting, priced per technician and positioned toward larger and enterprise-scale operations.",
+  "website": "https://www.servicetitan.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Larger and enterprise-scale contractor businesses that want the deepest reporting and dispatch tooling in the field-service category and are comfortable with a quote-only, per-technician pricing model.",
+  "features": [
+    "Drag-and-drop dispatching",
+    "Call recording and booking",
+    "Mobile field app with automated checklists",
+    "Advanced reporting on closing rates and team metrics",
+    "Customer experience tools including instant estimates and GPS tracking",
+    "Marketing integration showing campaign ROI",
+    "Commission tracking and customizable membership programs (The Works tier)"
+  ],
+  "pricing": {
+    "model": "paid",
+    "status": "contact_sales",
+    "has_free_tier": false,
+    "tiers": [
+      {
+        "name": "Starter",
+        "notes": "Dispatching, scheduling, call booking, invoicing, and pricebook. No public price — per-technician quote required."
+      },
+      {
+        "name": "Essentials",
+        "notes": "Adds mobile estimates and payroll management. No public price."
+      },
+      {
+        "name": "The Works",
+        "notes": "Full suite: advanced reporting, commission tracking, customizable memberships. No public price."
+      }
+    ],
+    "last_verified": "2026-08-18",
+    "official_source": "https://www.servicetitan.com/pricing"
+  },
+  "pros": [
+    "The most-recognized enterprise brand in field-service software, with the deepest reporting/dispatch feature set of the three compared here",
+    "Genuinely built for scale — customizable commission tracking and membership programs at the top tier",
+    "Strong marketing-ROI and call-booking tooling not matched by the smaller SMB-focused competitors"
+  ],
+  "cons": [
+    "No public pricing at all — every plan requires \"Request Pricing,\" unlike Jobber and Housecall Pro's published tiers",
+    "Per-technician pricing model makes total cost hard to estimate without a sales call",
+    "No public consumer affiliate/referral program was found — a real gap for a comparison-driven publisher, consistent with its enterprise-sales positioning"
+  ],
+  "faq": [
+    {
+      "question": "How much does ServiceTitan cost?",
+      "answer": "ServiceTitan does not publish pricing. It uses a per-technician pricing model across three tiers (Starter, Essentials, The Works), and every quote requires contacting ServiceTitan directly."
+    },
+    {
+      "question": "Is ServiceTitan a good fit for a small contractor business?",
+      "answer": "ServiceTitan is generally positioned toward larger and enterprise-scale field-service operations; smaller teams often find Jobber or Housecall Pro's published, lower-cost tiers a more direct fit."
+    }
+  ],
+  "tags": [
+    "field-service",
+    "home-services",
+    "contractor-software",
+    "enterprise"
+  ],
+  "sources": [
+    "https://www.servicetitan.com/pricing",
+    "https://www.servicetitan.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "Jobber",
+      "slug": "jobber",
+      "description": "Field-service management software with published pricing, aimed at solo contractors through mid-sized teams.",
+      "best_for": "Smaller field-service businesses that want transparent, lower-cost published pricing",
+      "strengths": [
+        "Published pricing",
+        "Lower cost of entry",
+        "Native QuickBooks/Xero integration"
+      ]
+    },
+    {
+      "name": "Housecall Pro",
+      "slug": "housecall-pro",
+      "description": "All-in-one field-service platform serving 50+ home-service trades with published pricing.",
+      "best_for": "Small-to-mid teams wanting broad trade coverage without enterprise-level cost",
+      "strengths": [
+        "Published pricing",
+        "Wide trade coverage",
+        "Strong affiliate program"
+      ]
+    }
+  ],
+  "order": 230
+}

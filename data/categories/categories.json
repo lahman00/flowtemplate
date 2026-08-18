@@ -93,5 +93,15 @@
     "slug": "accounting",
     "name": "Accounting",
     "description": "Bookkeeping, invoicing, and financial reporting for small businesses."
+  },
+  {
+    "slug": "property-management",
+    "name": "Property Management",
+    "description": "Accounting, leasing, and maintenance software for property managers and landlords."
+  },
+  {
+    "slug": "field-service-management",
+    "name": "Field Service Management",
+    "description": "Scheduling, dispatch, and invoicing software for HVAC, plumbing, and other trade businesses."
   }
 ]

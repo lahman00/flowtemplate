@@ -1626,6 +1626,73 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     applicationUrl: "https://woocommerce.com/affiliates",
     confidence: "low",
   },
+  // 2026-08-18 — researched specifically to close the UNKNOWN affiliate
+  // status left open in the Facebook-demand content build (gohighlevel,
+  // quickbooks-online, xero were all added to data/software/ this same
+  // day). Research only — no application submitted, no account created.
+  {
+    slug: "gohighlevel",
+    lastVerifiedAt: "2026-08-18",
+    programExists: "yes",
+    type: "direct",
+    networkName: null,
+    countryRestrictions:
+      "No explicit country restriction stated, but affiliates must not be 'Sanctioned Persons' under U.S. Treasury OFAC rules or operate in a comprehensively U.S.-sanctioned country.",
+    commissionModel:
+      "40% recurring commission for the life of any active referred account, plus a 5%/month recurring Tier 2 override on accounts signed up by agencies you referred. A referral only becomes a 'Qualified Purchase' after the referred account stays in good standing for at least 45 days.",
+    recurrence: "recurring",
+    notes:
+      "Directly fetched both gohighlevel.com/affiliates and gohighlevel.com/affiliate-policy — high-confidence, official-source data. Own affiliate portal at affiliate.gohighlevel.com (not obviously a third-party network like PartnerStack/Impact — appears to be an in-house/white-labeled system). Excludes immediate family of HighLevel employees; requires FTC Endorsement Guide, TCPA, CAN-SPAM, and state telemarketing-law compliance. Not yet applied — absent from var/agents/affiliate-pipeline.json.",
+    sourceUrls: ["https://www.gohighlevel.com/affiliates", "https://www.gohighlevel.com/affiliate-policy"],
+    applicationUrl: "https://affiliate.gohighlevel.com/",
+    cookieDuration: "90 days (last-click attribution)",
+    payoutThreshold: "$50 USD (forfeited if not reached within 120 days)",
+    payoutMethod: null,
+    eligibility:
+      "Creators/influencers, marketing agencies, SaaS entrepreneurs, coaches/consultants, educators/community leaders — official page states 'all you need is an audience and the drive to grow.'",
+    confidence: "high",
+  },
+  {
+    slug: "quickbooks-online",
+    lastVerifiedAt: "2026-08-18",
+    programExists: "yes",
+    type: "network",
+    networkName: "PartnerStack",
+    countryRestrictions:
+      "Explicitly US-only: 'QuickBooks Business Affiliates are US-based organizations with customers that align with the core QuickBooks small business user.'",
+    commissionModel: "Up to $250 per successful new QuickBooks Online subscription referred.",
+    recurrence: "one_time",
+    notes:
+      "Direct WebFetch of quickbooks.intuit.com/partners/affiliates/ and quickbooks.intuit.com/partners/qbbusinessaffiliates/ both failed (ETIMEDOUT / repeated timeouts) — same Intuit bot-blocking pattern seen elsewhere in this project's research. Commission/network/eligibility corroborated via a domain-restricted search of quickbooks.intuit.com only, not a direct page fetch — confidence set to medium, not high, for that reason. Application is via a PartnerStack account; QuickBooks reportedly responds in 7-10 business days. Not yet applied — absent from var/agents/affiliate-pipeline.json. The US-only eligibility restriction is a real, material constraint given Miloosh is not US-based.",
+    sourceUrls: ["https://quickbooks.intuit.com/partners/qbbusinessaffiliates/"],
+    applicationUrl: "https://quickbooks.intuit.com/partners/qbbusinessaffiliates/",
+    cookieDuration: null,
+    payoutThreshold: null,
+    payoutMethod: null,
+    eligibility: "US-based organizations only, per the official program description.",
+    confidence: "medium",
+  },
+  {
+    slug: "xero",
+    lastVerifiedAt: "2026-08-18",
+    programExists: "yes",
+    type: "network",
+    networkName: "PartnerStack",
+    countryRestrictions:
+      "Not explicitly restricted by country in what was found, but the official page states the exact commission rate depends on 'your target audience and geographical location' — negotiated per-affiliate rather than a single published rate.",
+    commissionModel:
+      "30% commission on each new paid Xero plan signup is the headline rate quoted on the official campaign page, though the main affiliate-program page states the exact rate is discussed individually per affiliate based on audience/geography.",
+    recurrence: "unknown",
+    notes:
+      "Direct WebFetch of xero.com/us/affiliate-program/ and a related partner-programs page both returned HTTP 503 on every attempt this session — a consistent, repeated block, not a one-off. Commission/network/process corroborated via a domain-restricted search of xero.com only, not a direct fetch — confidence set to medium for that reason, matching the same honesty pattern already used elsewhere in this file (see wix). Requires creating a PartnerStack account and accepting the Xero Referral Program Agreement + PartnerStack Terms of Service. Free to join. Not yet applied — absent from var/agents/affiliate-pipeline.json.",
+    sourceUrls: ["https://www.xero.com/us/affiliate-program/"],
+    applicationUrl: "https://www.xero.com/us/affiliate-program/",
+    cookieDuration: null,
+    payoutThreshold: null,
+    payoutMethod: null,
+    eligibility: "Publishers, influencers, and content creators with a relevant audience; requires a PartnerStack account.",
+    confidence: "medium",
+  },
 ];
 
 export function getAffiliateProgram(slug: string): AffiliateProgramInfo | undefined {
