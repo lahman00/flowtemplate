@@ -32,6 +32,8 @@
     "social:publish": "tsx scripts/social/publish.ts",
     "social:status": "tsx scripts/social/status.ts",
     "social:report": "tsx scripts/social/report.ts",
+    "social:morning-review": "tsx scripts/social/morning-review.ts",
+    "social:post-publish-review": "tsx scripts/social/post-publish-review.ts",
     "test": "vitest run"
   },
   "dependencies": {

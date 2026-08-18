@@ -140,6 +140,33 @@ function checkImageRequirements(entry: SocialQueueEntry, channel: Channel, findi
   }
 }
 
+/**
+ * CHANNEL GATE — catches identical cross-posting between channels on the
+ * SAME entry (e.g. the LinkedIn and Facebook variant of one post being
+ * byte-for-byte the same text). Distinct from checkDuplicate below, which
+ * compares against OTHER entries in the queue. A single entry legitimately
+ * having distinct per-channel copy is enforced upstream by
+ * content-engine.ts's per-channel renderForChannel switch — this is the
+ * QA-time check that upstream design actually held.
+ */
+function checkCrossChannelDuplication(entry: SocialQueueEntry, findings: QaFinding[]): void {
+  const texts = (Object.keys(entry.channels) as Channel[])
+    .map((channel) => ({ channel, text: entry.channels[channel]?.text?.trim() }))
+    .filter((v): v is { channel: Channel; text: string } => Boolean(v.text));
+
+  for (let i = 0; i < texts.length; i++) {
+    for (let j = i + 1; j < texts.length; j++) {
+      if (texts[i]!.text === texts[j]!.text) {
+        findings.push({
+          severity: "warning",
+          channel: texts[j]!.channel,
+          message: `${texts[i]!.channel} and ${texts[j]!.channel} have byte-identical text — each channel should get platform-native copy, not a cross-post.`,
+        });
+      }
+    }
+  }
+}
+
 /** Duplicate-content check against everything already SCHEDULED or PUBLISHED — same contentHash algorithm the publish adapters themselves use, so a QA pass and a live publish attempt agree on what counts as a duplicate. */
 function checkDuplicate(text: string, channel: Channel, existingQueue: SocialQueueEntry[], findings: QaFinding[]): void {
   const hash = contentHash(channel, text);
@@ -155,6 +182,8 @@ function checkDuplicate(text: string, channel: Channel, existingQueue: SocialQue
 /** Runs every gate for every channel variant on an entry. Returns all findings; the caller decides the resulting queue state (errors block APPROVED_FOR_AUTO, warnings don't). */
 export function runQaGates(entry: SocialQueueEntry, existingQueue: SocialQueueEntry[]): QaFinding[] {
   const findings: QaFinding[] = [];
+
+  checkCrossChannelDuplication(entry, findings);
 
   for (const channelKey of Object.keys(entry.channels) as Channel[]) {
     const variant = entry.channels[channelKey];

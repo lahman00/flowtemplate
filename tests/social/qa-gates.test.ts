@@ -129,4 +129,18 @@ describe("QA gates", () => {
     const findings = runQaGates(b, [a, b]);
     expect(findings.some((f) => f.message.includes("already scheduled or published"))).toBe(false);
   });
+
+  it("warns when two channels on the same entry have byte-identical text (cross-post spam)", () => {
+    const same = "Identical text sent to every channel.";
+    const findings = runQaGates(entry({ channels: { linkedin: variant({ text: same }), facebook: variant({ text: same }) } }), []);
+    expect(findings.some((f) => f.message.includes("byte-identical text"))).toBe(true);
+  });
+
+  it("does not warn when channels on the same entry have genuinely different text", () => {
+    const findings = runQaGates(
+      entry({ channels: { linkedin: variant({ text: "LinkedIn-native copy." }), facebook: variant({ text: "Facebook-native copy." }) } }),
+      []
+    );
+    expect(findings.some((f) => f.message.includes("byte-identical text"))).toBe(false);
+  });
 });

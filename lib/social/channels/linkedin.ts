@@ -5,17 +5,28 @@ import { type SocialAdapter, buildPublishResult, defaultFormat } from "@/lib/soc
  * LinkedIn adapter — MANUAL_ONLY by design, not a missing feature.
  *
  * Real research (2026-08-16, directly fetched from learn.microsoft.com/
- * linkedin): posting to a LinkedIn COMPANY PAGE requires the Community
- * Management API (w_organization_social scope), which is gated behind
- * LinkedIn's formal partner-application process — legal-entity
- * verification, a Page-admin app-association check, a Development Tier
- * review, then a Standard Tier review requiring a narrated screencast of
- * the working OAuth flow. LinkedIn explicitly reserves the right to
- * decline qualified applicants, publishes no guaranteed review timeline,
- * and publishes no self-serve fee. The only self-serve, no-approval
- * LinkedIn product ("Share on LinkedIn", w_member_social) posts to a
- * PERSONAL profile, not a company page — not a fit for Miloosh's brand
- * page.
+ * linkedin, re-verified 2026-08-19): posting to a LinkedIn COMPANY PAGE
+ * requires the Community Management API (w_organization_social scope,
+ * /rest/posts, organization URN as author, Linkedin-Version header) —
+ * gated behind LinkedIn's formal partner-application process: legal-
+ * entity verification, a Page-admin app-association check, a Development
+ * Tier review, then a Standard Tier review requiring a narrated
+ * screencast of the working OAuth flow. LinkedIn explicitly reserves the
+ * right to decline qualified applicants and publishes no guaranteed
+ * review timeline or self-serve fee.
+ *
+ * 2026-08-19 update: current third-party integrator guides report the
+ * partner program may now be closed to NEW applicants entirely ("if you
+ * weren't already a partner when applications closed, you can't apply")
+ * — not independently confirmed against LinkedIn's own docs, which don't
+ * state this directly, but it's consistent with the access-request-form
+ * + review language LinkedIn's own docs do show. Treat as: this may be
+ * harder than "apply and wait," not easier — verify current status
+ * directly with LinkedIn before assuming the partner path is even open.
+ *
+ * The only self-serve, no-approval LinkedIn product ("Share on
+ * LinkedIn", w_member_social) posts to a PERSONAL profile, not a company
+ * page — not a fit for Miloosh's brand page.
  *
  * Given that, this adapter always returns MANUAL_ONLY: the content
  * engine and QA gates still produce a fully platform-native, ready-to-
