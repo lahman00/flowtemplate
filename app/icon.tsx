@@ -2,15 +2,18 @@ import { ImageResponse } from "next/og";
 import { SITE_THEME_COLOR } from "@/lib/site";
 import { loadInterFonts } from "@/lib/social/fonts";
 
-export const size = { width: 180, height: 180 };
+export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
 /**
- * Typography-first app icon: the wordmark's own first letter, not a
- * separate icon or symbol — consistent with the wordmark-only logo used
- * everywhere else in the brand.
+ * 2026-08-18 brand forensics — replaces the static app/icon.png, which
+ * was a different logomark (a two-tone angular "M" graphic) than every
+ * other real brand surface: apple-icon.tsx's plain typographic "M" and
+ * the actual live LinkedIn Company Page logo both use the plain mark.
+ * Two independent real surfaces agreeing made icon.png the stale outlier,
+ * not the other way round — see MILOOSH_SOCIAL_BRAND_STANDARD.md.
  */
-export default async function AppleIcon() {
+export default async function Icon() {
   return new ImageResponse(
     (
       <div
@@ -21,15 +24,15 @@ export default async function AppleIcon() {
           alignItems: "center",
           justifyContent: "center",
           background: SITE_THEME_COLOR,
-          borderRadius: 40,
+          borderRadius: 7,
         }}
       >
         <span
           style={{
-            fontSize: 108,
+            fontSize: 20,
             fontWeight: 800,
             color: "white",
-            letterSpacing: -2,
+            letterSpacing: -1,
           }}
         >
           M

@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
 import { SITE_NAME, SITE_THEME_COLOR } from "@/lib/site";
+import { loadInterFonts } from "@/lib/social/fonts";
 
 /**
  * 2026-08-18 — see app/compare/[comparison]/opengraph-image.tsx's header
@@ -22,7 +23,8 @@ export function generateStaticParams() {
   return getAllSoftware().map((software) => ({ slug: software.slug }));
 }
 
-const ACCENT = "#3b82f6";
+// Matches app/globals.css's --color-accent — the site's real accent token, not an arbitrary blue.
+const ACCENT = "#3458a8";
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -94,6 +96,6 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         <div style={{ display: "flex", fontSize: 22, color: "#71717a" }}>Software research you can verify.</div>
       </div>
     ),
-    { ...size }
+    { ...size, fonts: await loadInterFonts() }
   );
 }

@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { getComparisonBySlug } from "@/lib/comparison";
 import { getPublishedComparisonSlugs } from "@/data/comparisons";
 import { SITE_NAME, SITE_THEME_COLOR } from "@/lib/site";
+import { loadInterFonts } from "@/lib/social/fonts";
 
 /**
  * 2026-08-18 — LinkedIn Company Page visual audit found every Miloosh
@@ -23,7 +24,8 @@ export function generateStaticParams() {
   return getPublishedComparisonSlugs().map((comparison) => ({ comparison }));
 }
 
-const ACCENT = "#3b82f6";
+// Matches app/globals.css's --color-accent — the site's real accent token, not an arbitrary blue.
+const ACCENT = "#3458a8";
 
 export default async function Image({ params }: { params: Promise<{ comparison: string }> }) {
   const { comparison } = await params;
@@ -95,6 +97,6 @@ export default async function Image({ params }: { params: Promise<{ comparison: 
         </div>
       </div>
     ),
-    { ...size }
+    { ...size, fonts: await loadInterFonts() }
   );
 }

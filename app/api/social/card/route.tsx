@@ -1,8 +1,11 @@
 import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
 import { SITE_NAME, SITE_THEME_COLOR } from "@/lib/site";
+import { loadInterFonts } from "@/lib/social/fonts";
 
-export const runtime = "edge";
+// 2026-08-18 brand forensics: moved off edge runtime (fonts.ts needs Node's
+// fs to load the real Inter TTFs — see that file's header). Node/Fluid
+// Compute is also current Vercel guidance over edge for routes like this.
 
 /**
  * Phase 6 visual engine — one reusable, parameterized card generator
@@ -50,7 +53,8 @@ const KIND_LABELS: Record<string, string> = {
   switching: "SWITCHING GUIDE",
 };
 
-const ACCENT = "#3b82f6"; // Minimal blue accent, per the brief's visual language — used sparingly (badge only).
+// Matches app/globals.css's --color-accent — the site's real accent token, not an arbitrary blue.
+const ACCENT = "#3458a8";
 
 function Header({ badge }: { badge: string }) {
   return (
@@ -268,6 +272,6 @@ export async function GET(request: NextRequest) {
         <Footer />
       </div>
     ),
-    { width, height }
+    { width, height, fonts: await loadInterFonts() }
   );
 }
