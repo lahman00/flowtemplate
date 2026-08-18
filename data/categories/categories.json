@@ -88,5 +88,10 @@
     "slug": "security",
     "name": "Security",
     "description": "Password management, identity, and access-security tools."
+  },
+  {
+    "slug": "accounting",
+    "name": "Accounting",
+    "description": "Bookkeeping, invoicing, and financial reporting for small businesses."
   }
 ]

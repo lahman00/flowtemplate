@@ -1,0 +1,138 @@
+{
+  "name": "HighLevel (GoHighLevel)",
+  "slug": "gohighlevel",
+  "category": "crm",
+  "description": "HighLevel (commonly called GoHighLevel or GHL) is an all-in-one business platform that combines a CRM, funnel and website builder, email/SMS marketing, booking calendars, and workflow automation into a single subscription, aimed at replacing several separate tools with one system that agencies can white-label and resell to their own clients.",
+  "website": "https://www.gohighlevel.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Marketing agencies and SaaS-minded solo operators who want to run and resell client CRM, funnels, and automation from one white-labelable platform instead of stitching together separate tools.",
+  "features": [
+    "CRM and sales pipelines",
+    "Website and funnel builder",
+    "Email and SMS marketing",
+    "Workflow automation",
+    "Booking and appointment calendars",
+    "Unified conversations inbox (calls, SMS, email, social DMs)",
+    "Payments and invoicing",
+    "Reputation/review management",
+    "Agency \"SaaS mode\" for white-labeling and reselling to clients"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$97/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "97",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "per_seat": false
+    },
+    "tiers": [
+      {
+        "name": "Starter",
+        "amount": "97",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "3 sub-accounts, unlimited contacts and users, core CRM/marketing features, 24/7 support."
+      },
+      {
+        "name": "Unlimited",
+        "amount": "297",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited sub-accounts, ability to rebill phone/email usage to clients, basic API access."
+      },
+      {
+        "name": "Agency Pro (SaaS Mode)",
+        "amount": "497",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "SaaS mode for automated sub-account creation and reselling with markup, advanced API access."
+      },
+      {
+        "name": "Enterprise",
+        "notes": "Custom pricing via sales; dedicated support, custom development, white-label mobile app, HIPAA-compliant option."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-18",
+    "official_source": "https://www.gohighlevel.com/pricing"
+  },
+  "pros": [
+    "Genuinely consolidates CRM, funnels, email/SMS, and scheduling into one subscription",
+    "Agency-focused white-label/reselling (\"SaaS mode\") is a real differentiator most CRM competitors don't offer",
+    "Large, very active user community across Facebook and elsewhere for support and templates"
+  ],
+  "cons": [
+    "Steeper learning curve than a single-purpose CRM given how many tools it replaces",
+    "Community discussion shows a meaningful freelancer/agency self-promotion layer around the ecosystem, which can make impartial troubleshooting harder to find",
+    "Add-on usage (phone minutes, SMS, email sends) is billed separately from the subscription and can be confusing to estimate upfront"
+  ],
+  "faq": [
+    {
+      "question": "Is GoHighLevel the same as HighLevel?",
+      "answer": "Yes — \"HighLevel\" is the company's current brand name; \"GoHighLevel\" (and \"GHL\") are the names most commonly used by its user community and in search, both referring to the same product."
+    },
+    {
+      "question": "Does GoHighLevel replace a CRM like HubSpot or Pipedrive?",
+      "answer": "It can — GoHighLevel includes CRM pipelines alongside funnel building, email/SMS, and scheduling. Buyers choosing between GoHighLevel and a standalone CRM are usually trading a single-purpose, easier-to-learn tool for a wider all-in-one platform with a bigger learning curve."
+    }
+  ],
+  "tags": [
+    "agency",
+    "all-in-one",
+    "white-label",
+    "funnel-builder",
+    "marketing-automation"
+  ],
+  "sources": [
+    "https://www.gohighlevel.com/pricing",
+    "https://www.gohighlevel.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "A CRM platform that centralizes contact, deal, and marketing data, with a genuinely usable free tier.",
+      "best_for": "Businesses that want a single-purpose CRM with strong free-tier onboarding rather than an all-in-one agency platform",
+      "strengths": [
+        "Free CRM tier",
+        "Easier learning curve",
+        "Large native app marketplace"
+      ]
+    },
+    {
+      "name": "Zoho CRM",
+      "slug": "zoho-crm",
+      "description": "A configurable CRM that is part of Zoho's wider suite of connected business apps.",
+      "best_for": "Budget-conscious teams who want CRM plus optional access to Zoho's broader app suite",
+      "strengths": [
+        "Lower entry price",
+        "Deep customization",
+        "Wider Zoho app ecosystem"
+      ]
+    },
+    {
+      "name": "Pipedrive",
+      "slug": "pipedrive",
+      "description": "A sales-focused CRM built around a visual deal pipeline.",
+      "best_for": "Sales teams who want a simple, pipeline-first CRM without funnel-builder or SaaS-reselling features",
+      "strengths": [
+        "Visual pipeline",
+        "Simplicity",
+        "Sales-first workflow"
+      ]
+    }
+  ],
+  "order": 223
+}

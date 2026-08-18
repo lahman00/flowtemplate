@@ -1,0 +1,107 @@
+{
+  "name": "Xero",
+  "slug": "xero",
+  "category": "accounting",
+  "description": "Xero is cloud-based accounting software for small businesses, covering invoicing, bank reconciliation, expense claims, and financial reporting, built with unlimited users on every plan and designed for close, real-time collaboration between a business and its accountant or bookkeeper.",
+  "website": "https://www.xero.com",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Small businesses that want lower-cost accounting software with unlimited user seats and work closely with an accountant or bookkeeper who already uses Xero.",
+  "features": [
+    "Invoicing and online payment collection",
+    "Bank feed reconciliation",
+    "Expense claims",
+    "Multi-currency accounting",
+    "Inventory tracking",
+    "Project time and cost tracking",
+    "Unlimited users on every plan",
+    "Large third-party app marketplace"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$25/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true
+    },
+    "entry_paid": {
+      "amount": "25",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Early",
+        "amount": "25",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Send 20 invoices and enter 5 bills per month; reconcile bank transactions."
+      },
+      {
+        "name": "Growing",
+        "amount": "55",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited invoices and bills; bulk transaction reconciliation."
+      },
+      {
+        "name": "Established",
+        "amount": "90",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds multi-currency, expense claims, and project tracking."
+      }
+    ],
+    "last_verified": "2026-08-18",
+    "official_source": "https://www.xero.com/us/pricing-plans/"
+  },
+  "pros": [
+    "Unlimited users on every plan, unlike per-seat competitors",
+    "Lower list price than QuickBooks Online at each comparable tier",
+    "Real-time bank reconciliation UX that accountants frequently cite as a strength"
+  ],
+  "cons": [
+    "Smaller US bookkeeper/accountant familiarity than QuickBooks, which can matter when hiring outside help",
+    "Entry-level Early plan caps monthly invoice and bill volume, unlike QuickBooks' uncapped Simple Start",
+    "US-specific payroll support is more limited than QuickBooks' native payroll add-on"
+  ],
+  "faq": [
+    {
+      "question": "Does Xero charge per user?",
+      "answer": "No — every Xero plan includes unlimited users at no extra cost, which is a real structural difference from QuickBooks Online, where higher tiers cap the number of users."
+    },
+    {
+      "question": "Is Xero cheaper than QuickBooks Online?",
+      "answer": "At official list prices, yes — Xero's three tiers ($25/$55/$90 per month) each undercut QuickBooks Online's comparable tiers, though QuickBooks' Simple Start plan has no invoice/bill volume cap, which Xero's entry-level Early plan does."
+    }
+  ],
+  "tags": [
+    "accounting",
+    "bookkeeping",
+    "invoicing",
+    "small-business"
+  ],
+  "sources": [
+    "https://www.xero.com/us/pricing-plans/",
+    "https://www.xero.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "QuickBooks Online",
+      "slug": "quickbooks-online",
+      "description": "Intuit's cloud accounting software with the widest US bookkeeper and accountant ecosystem.",
+      "best_for": "Small businesses that want the accounting software most US bookkeepers already know how to use",
+      "strengths": [
+        "Largest accountant ecosystem",
+        "Native payroll add-on",
+        "Uncapped invoicing on entry tier"
+      ]
+    }
+  ],
+  "order": 225
+}

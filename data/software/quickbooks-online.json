@@ -1,0 +1,115 @@
+{
+  "name": "QuickBooks Online",
+  "slug": "quickbooks-online",
+  "category": "accounting",
+  "description": "QuickBooks Online is Intuit's cloud-based accounting and bookkeeping software for small businesses, covering invoicing, expense tracking, bank reconciliation, financial reporting, and optional payroll, with the largest bookkeeper and accountant ecosystem of any small-business accounting product.",
+  "website": "https://quickbooks.intuit.com",
+  "company": "Intuit",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Small businesses that want the accounting software most bookkeepers and CPAs already know how to use, and don't mind a higher list price for that ecosystem support.",
+  "features": [
+    "Invoicing and payment collection",
+    "Expense and receipt tracking",
+    "Bank feed reconciliation",
+    "Profit & loss, balance sheet, and cash-flow reporting",
+    "Optional payroll add-on",
+    "Multi-user access with role permissions (Plus and above)",
+    "Mobile app for invoicing and mileage tracking",
+    "Large accountant/bookkeeper partner ecosystem"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$38/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true
+    },
+    "entry_paid": {
+      "amount": "38",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Simple Start",
+        "amount": "38",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Single user; invoicing, expense tracking, basic reporting."
+      },
+      {
+        "name": "Essentials",
+        "amount": "85",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 3 users; adds bill management and time tracking."
+      },
+      {
+        "name": "Plus",
+        "amount": "140",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 5 users; adds inventory tracking and project profitability."
+      },
+      {
+        "name": "Advanced",
+        "amount": "340",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 25 users; adds custom reporting, batch invoicing, and dedicated support."
+      }
+    ],
+    "last_verified": "2026-08-18",
+    "official_source": "https://quickbooks.intuit.com/pricing/"
+  },
+  "pros": [
+    "Widest accountant/bookkeeper familiarity of any small-business accounting tool, which matters when hiring or working with outside help",
+    "Deep, mature feature set covering invoicing through payroll in one product family",
+    "Strong bank and payment-processor integration coverage"
+  ],
+  "cons": [
+    "List prices are meaningfully higher than direct competitors like Xero at the same tier",
+    "Frequent promotional discounting on the pricing page makes the real ongoing cost easy to underestimate at signup",
+    "Add-on pricing (payroll, payments) is billed separately from the core subscription"
+  ],
+  "faq": [
+    {
+      "question": "Is QuickBooks Online the same as QuickBooks Desktop?",
+      "answer": "No — QuickBooks Online is a separate, browser-based product with its own pricing and feature set. QuickBooks Desktop is a locally installed application Intuit sells and supports on a different track."
+    },
+    {
+      "question": "Do I need a bookkeeper to use QuickBooks Online?",
+      "answer": "No, but its large ecosystem of bookkeepers and accountants who already know the product is one of its main practical advantages if you plan to hire outside help later."
+    }
+  ],
+  "tags": [
+    "accounting",
+    "bookkeeping",
+    "invoicing",
+    "small-business"
+  ],
+  "sources": [
+    "https://quickbooks.intuit.com/pricing/",
+    "https://quickbooks.intuit.com"
+  ],
+  "accessed_at": "2026-08-18",
+  "alternatives": [
+    {
+      "name": "Xero",
+      "slug": "xero",
+      "description": "Cloud accounting software built around real-time collaboration between a business and its accountant or bookkeeper.",
+      "best_for": "Small businesses that want lower list pricing and work closely with an accountant who already uses Xero",
+      "strengths": [
+        "Lower starting price",
+        "Unlimited users on every plan",
+        "Strong bank-reconciliation UX"
+      ]
+    }
+  ],
+  "order": 224
+}

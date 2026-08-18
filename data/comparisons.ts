@@ -1141,6 +1141,19 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   // existed despite it being one of the most common real buying decisions
   // in this space.
   ["wix", "shopify"],
+
+  // 2026-08-18 — added from the Facebook demand-signal audit
+  // (data/social/facebook-groups.json): GoHighLevel is the single largest
+  // product-specific community cluster found across the whole audit
+  // (7 communities, 350K+ combined members) with real, observed
+  // switching/comparison chatter but no prior Miloosh coverage at all.
+  // QuickBooks vs Xero directly matches real accounting-buyer communities
+  // sampled in the same audit (CPA & Accountant Business Owners, Xero
+  // Users Support Community). See
+  // data/social/facebook-groups-content-gap-report.md for the full
+  // evidence chain.
+  ["gohighlevel", "hubspot"],
+  ["quickbooks-online", "xero"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
