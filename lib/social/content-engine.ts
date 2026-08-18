@@ -306,20 +306,27 @@ const LINK_RESERVE = 40;
 
 /**
  * Which pillars get a generated card image, and which /api/social/card
- * "kind" badge applies. 2026-08-17: the card route existed but nothing
- * ever called it — every queue entry had imageUrl: null. Scoped to the
- * four card types the growth-sprint brief explicitly named; evergreen
- * non-product pillars (buyer_education, trust_methodology,
- * category_discovery) stay text-only for now rather than forcing an
- * image where the brief didn't ask for one.
+ * "kind" applies. 2026-08-17: the card route existed but nothing ever
+ * called it — every queue entry had imageUrl: null. Scoped to the four
+ * card types the growth-sprint brief explicitly named; buyer_education
+ * and trust_methodology stay text-only, since those are general
+ * statements with no per-product headline pattern for a card to render.
+ *
+ * 2026-08-18 — LinkedIn visual-system audit: migration now gets its own
+ * "switching" kind (was reusing "comparison", which made every migration
+ * post look identical to a plain vs-comparison post) and category_discovery
+ * now gets "category" (previously text-only) — both card layouts already
+ * exist in the route and parse these pillars' real headline text, so this
+ * is just turning the mapping on, not inventing a new card type.
  */
 const IMAGE_KIND_BY_PILLAR: Partial<Record<ContentPillar, string>> = {
   pricing_intelligence: "pricing",
-  migration: "comparison",
+  migration: "switching",
   software_decisions: "comparison",
   commercial: "comparison",
   alternatives: "alternatives",
   miloosh_research: "research",
+  category_discovery: "category",
 };
 
 const IMAGE_SIZE_BY_CHANNEL: Partial<Record<Channel, string>> = {
