@@ -2,7 +2,7 @@
   "_comment": "Miloosh Social Media Operating System — the deterministic execution config that ChatGPT-as-strategist (or the owner) edits to steer the system without touching channel code. lib/social/strategy.ts loads and validates this. Every field here is read by the content engine, the QA gates, or the publish orchestrator — nothing here is decorative.",
   "paused": false,
   "language": "en",
-  "timezone": "UTC",
+  "timezone": "America/New_York",
   "tagline": "Software research you can verify.",
   "enabledChannels": {
     "linkedin": true,

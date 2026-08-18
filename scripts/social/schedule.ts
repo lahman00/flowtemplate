@@ -3,6 +3,7 @@ import { readQueue, writeQueue, applyQueueTransition } from "@/lib/social/queue"
 import { getSocialStrategy, getEffectiveCadence } from "@/lib/social/strategy";
 import { CHANNELS } from "@/lib/social/types";
 import { interleaveByPillarWeight } from "@/lib/social/content-engine";
+import { localTimeToUtc } from "@/lib/social/timezone";
 import type { SocialQueueEntry } from "@/lib/social/types";
 
 /**
@@ -39,7 +40,20 @@ import type { SocialQueueEntry } from "@/lib/social/types";
  * Usage: npx tsx --env-file=.env.local scripts/social/schedule.ts
  */
 const DAYS_AHEAD = 14;
-const POST_HOUR_UTC = 15; // early-afternoon UTC — reasonable overlap across US/EU working hours; deterministic, never randomized.
+/**
+ * 2026-08-18 — Facebook's daily post must land at 13:00 in
+ * social-strategy.json's `timezone` (America/New_York), DST-handled via
+ * lib/social/timezone.ts rather than a fixed UTC hour (the previous
+ * POST_HOUR_UTC=15 constant never actually tracked DST and drifted
+ * relative to any local-time target across the March/November
+ * transitions). Since every enabled channel currently shares one
+ * scheduledFor per entry (see KNOWN SIMPLIFICATION above), this anchors
+ * all of them to Facebook's required time, not just Facebook — a real,
+ * intentional consequence of the existing single-scheduledFor design,
+ * not something this change could avoid without splitting entries per
+ * channel (out of scope here).
+ */
+const POST_HOUR_LOCAL = 13;
 
 function sharesVendor(a: SocialQueueEntry, b: SocialQueueEntry): boolean {
   return a.sourceSlugs.some((slug) => b.sourceSlugs.includes(slug));
@@ -83,10 +97,14 @@ async function main() {
   const scheduledForById = new Map<string, string>();
   let cursor = 0;
   for (let day = 0; day < DAYS_AHEAD && cursor < approvedIds.length; day++) {
+    const dayAnchor = new Date(now);
+    dayAnchor.setUTCDate(dayAnchor.getUTCDate() + day);
     for (let slot = 0; slot < perDay && cursor < approvedIds.length; slot++) {
-      const when = new Date(now);
-      when.setUTCDate(when.getUTCDate() + day);
-      when.setUTCHours(POST_HOUR_UTC + slot, 0, 0, 0);
+      // Anchor at POST_HOUR_LOCAL in strategy.timezone (DST-correct), then
+      // space any additional same-day slots by whole hours from there —
+      // same spacing behavior as before, just a correct anchor instant.
+      const when = localTimeToUtc(dayAnchor, POST_HOUR_LOCAL, 0, strategy.timezone);
+      when.setTime(when.getTime() + slot * 60 * 60 * 1000);
       scheduledForById.set(approvedIds[cursor]!, when.toISOString());
       cursor += 1;
     }
