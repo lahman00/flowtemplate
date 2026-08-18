@@ -1,4 +1,5 @@
 import type { Software } from "@/data/software";
+import { getActivePartner } from "@/data/affiliate/active-partners";
 import { getAffiliateActivation } from "@/lib/revenue/affiliate-manager";
 
 /**
@@ -63,7 +64,10 @@ export function getConfiguredTrackingParams(): Record<string, string> {
 
 function softwareToAffiliateLink(software: Software): AffiliateLink {
   const activation = getAffiliateActivation(software.slug);
-  const affiliateUrl = activation.isActive ? (activation.affiliateUrl ?? undefined) : software.affiliateUrl;
+  const registeredPartnerUrl = getActivePartner(software.slug)?.affiliateUrl ?? undefined;
+  const affiliateUrl = activation.isActive
+    ? (activation.affiliateUrl ?? registeredPartnerUrl ?? software.affiliateUrl)
+    : (registeredPartnerUrl ?? software.affiliateUrl);
   return { officialUrl: software.website, affiliateUrl };
 }
 

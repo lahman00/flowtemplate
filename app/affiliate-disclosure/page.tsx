@@ -8,7 +8,7 @@ const PATH = "/affiliate-disclosure";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: `How affiliate relationships would work on ${SITE_NAME}, and their current status.`,
+  description: `How affiliate relationships work on ${SITE_NAME}, how affiliate links are labeled, and how editorial independence is protected.`,
   alternates: { canonical: PATH },
 };
 
@@ -22,22 +22,22 @@ export default function AffiliateDisclosurePage() {
           heading: "Current status",
           body: (
             <p>
-              As of the date at the top of this page, <strong className="text-white">no
-              link on {SITE_NAME} is an affiliate link.</strong> Every &quot;Visit official
-              site&quot; button on a software page points directly to that vendor&apos;s own
-              website, with no tracking parameter and no commission attached.
+              Some &quot;Visit official site&quot; links on {SITE_NAME} are affiliate links.
+              If you follow one of those links and sign up for or purchase a product,
+              {" "}{SITE_NAME} may earn a commission <strong className="text-white">at no
+              extra cost to you</strong>. Other outbound links remain ordinary links to a
+              vendor&apos;s official website.
             </p>
           ),
         },
         {
-          heading: "How this may change",
+          heading: "How affiliate links are identified",
           body: (
             <p>
-              {SITE_NAME} may join affiliate programs in the future. If that happens, some
-              outbound links on this site may become affiliate links — meaning {SITE_NAME}
-              {" "}could earn a commission if you sign up for or purchase a product through that
-              link, <strong className="text-white">at no extra cost to you</strong>. The price
-              you pay a vendor is never higher because you came from an affiliate link.
+              We place a visible affiliate disclosure beside a monetized call to action and
+              mark its link with <code className="text-zinc-300">rel=&quot;sponsored noopener noreferrer&quot;</code>.
+              An ordinary vendor link is not described as an affiliate link. Affiliate status
+              can change as partner programs or tracking arrangements change.
             </p>
           ),
         },
@@ -46,10 +46,9 @@ export default function AffiliateDisclosurePage() {
           body: (
             <p>
               We do not label a link as an affiliate link unless it actually is one, and we do
-              not disguise affiliate links as ordinary links. Any link that is genuinely an
-              affiliate link is marked with a <code className="text-zinc-300">rel=&quot;sponsored&quot;</code> attribute,
-              consistent with how search engines expect paid or affiliate links to be
-              identified.
+              not disguise affiliate links as ordinary links. A commercial relationship does
+              not mean that a vendor sponsored the page, reviewed its copy, or paid for its
+              placement.
             </p>
           ),
         },
