@@ -1,0 +1,117 @@
+{
+  "name": "Moosend",
+  "slug": "moosend",
+  "category": "marketing",
+  "description": "Moosend is an email marketing and marketing automation platform providing email newsletter creation, landing page and subscription form builders, and visual workflow automation designed for growing businesses and budget-conscious marketers.",
+  "website": "https://moosend.com",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Positioned for small-to-mid businesses, ecommerce brands, creators, and agencies wanting high-volume email delivery, automation workflows, and landing pages with affordable entry pricing and unlimited sends.",
+  "features": [
+    "Drag-and-drop email newsletter builder with responsive designer templates",
+    "Unlimited email sends on all Pro plan subscription tiers",
+    "Visual marketing automation workflow builder with pre-built event triggers and branching",
+    "Landing page and interactive subscription form creation with exit-intent popups",
+    "Real-time analytics reporting open rates, click heatmaps, and conversion tracking",
+    "AI subject line optimizer and content generation assistant"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$9/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_plan": false,
+    "free_trial": {
+      "available": true,
+      "days": 30
+    },
+    "entry_paid": {
+      "amount": "9",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "annual_billing_required": false
+    },
+    "tiers": [
+      {
+        "name": "Pro",
+        "amount": "9",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starts at $9/mo for up to 500 active subscribers (billed at $7.20/mo on annual prepay). Includes unlimited sends, automation workflows, landing pages, and forms."
+      },
+      {
+        "name": "Enterprise / Moosend+",
+        "notes": "Custom pricing for high-volume senders, dedicated IP address, SSO SAML, priority account management, and custom reporting."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-19",
+    "official_source": "https://moosend.com/pricing/"
+  },
+  "pros": [
+    "Unlimited email sends included across all Pro subscription tiers",
+    "Highly competitive starting price ($9/month) based on active subscribers rather than total list size",
+    "Full-featured 30-day free trial supporting up to 1,000 subscribers without requiring a credit card"
+  ],
+  "cons": [
+    "No permanent free tier after the 30-day trial expires",
+    "Native integration catalog is smaller than Mailchimp or HubSpot"
+  ],
+  "faq": [
+    {
+      "question": "Does Moosend have a free plan?",
+      "answer": "Moosend does not have a permanent free plan, but offers a 30-day free trial supporting up to 1,000 subscribers with no credit card required."
+    },
+    {
+      "question": "How does Moosend pricing scale?",
+      "answer": "Moosend pricing scales by active subscriber count (subscribers who engaged within 6 months), starting at $9/month for 500 contacts, with unlimited email sends on all Pro tiers."
+    },
+    {
+      "question": "Who owns Moosend?",
+      "answer": "Moosend was acquired by Constant Contact in June 2025 and operates as a distinct, cost-effective standalone email marketing product."
+    }
+  ],
+  "sources": [
+    "https://moosend.com",
+    "https://moosend.com/pricing/",
+    "https://moosend.com/features/"
+  ],
+  "accessed_at": "2026-08-19",
+  "alternatives": [
+    {
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
+      "best_for": "Small to mid-sized businesses wanting a wide app ecosystem and extensive template library",
+      "strengths": [
+        "Drag-and-drop email builder",
+        "300+ integrations",
+        "AI content generation"
+      ]
+    },
+    {
+      "name": "Brevo",
+      "slug": "brevo",
+      "description": "An integrated marketing and CRM platform for email, SMS, WhatsApp, and chat campaigns with volume-based pricing.",
+      "best_for": "Businesses with large contact lists who send targeted broadcasts and want built-in CRM and multi-channel messaging",
+      "strengths": [
+        "Pay-per-send model",
+        "SMS and WhatsApp messaging",
+        "Built-in CRM"
+      ]
+    },
+    {
+      "name": "Constant Contact",
+      "slug": "constant-contact",
+      "description": "A digital marketing platform providing email and SMS campaigns, landing pages, and event marketing tools for small businesses.",
+      "best_for": "Small businesses and nonprofits wanting simple campaign tools with strong phone and live support",
+      "strengths": [
+        "Ease of use",
+        "Event marketing",
+        "Phone support"
+      ]
+    }
+  ],
+  "order": 43
+}

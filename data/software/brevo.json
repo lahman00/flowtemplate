@@ -2,58 +2,132 @@
   "name": "Brevo",
   "slug": "brevo",
   "category": "marketing",
-  "description": "Brevo (formerly Sendinblue) is an integrated marketing and customer relationship platform that combines email, SMS, WhatsApp, chat, and a built-in CRM so businesses can run coordinated campaigns across channels from one place.",
+  "description": "Brevo (formerly Sendinblue) is an integrated marketing and CRM platform that combines email, SMS, WhatsApp, live chat, and customer relationship management with volume-based pricing based on emails sent rather than contacts stored.",
   "website": "https://www.brevo.com",
   "platforms": [
     "Web",
     "iOS",
     "Android"
   ],
-  "best_for": "Positioned for businesses of various sizes that want to manage customer interactions and run coordinated marketing campaigns across integrated channels without stitching together separate tools.",
+  "best_for": "Positioned for businesses with large contact lists that want a pay-per-email pricing model, European GDPR compliance, built-in CRM, and multi-channel messaging across WhatsApp and SMS.",
   "features": [
-    "Email marketing campaign creation and sending",
-    "SMS messaging campaigns",
-    "WhatsApp business messaging",
-    "Marketing automation workflows",
-    "Built-in CRM for managing customer relationships",
-    "Live chat for on-site customer engagement"
+    "Email marketing campaign creation with drag-and-drop visual builder and responsive templates",
+    "Volume-based pricing based on monthly email sends with unlimited contact storage",
+    "SMS marketing and WhatsApp business broadcast campaigns",
+    "Visual marketing automation workflows with event tracking and triggers",
+    "Built-in CRM for managing contacts, pipelines, and deal stages",
+    "On-site live chat and conversation inbox for customer support"
   ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$9/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_plan": true,
+    "entry_paid": {
+      "amount": "9",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "annual_billing_required": false
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Includes 300 emails/day, unlimited contact storage, email templates, and transactional email capabilities."
+      },
+      {
+        "name": "Starter",
+        "amount": "9",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starts at $9/month for 5,000 emails/month with no daily sending limit and basic reporting."
+      },
+      {
+        "name": "Business",
+        "amount": "18",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starts at $18/month for 5,000 emails/month. Adds marketing automation workflows, A/B testing, landing page builder, and multi-user access."
+      },
+      {
+        "name": "Professional",
+        "amount": "499",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "High-volume enterprise tier with advanced analytics, dedicated IP, SLA, and sub-account management."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-19",
+    "official_source": "https://www.brevo.com/pricing/"
+  },
+  "pros": [
+    "Charges by email sending volume rather than contact count, making it highly economical for large contact lists",
+    "Permanent free plan offering 300 emails/day with unlimited stored contacts",
+    "Integrated WhatsApp and SMS channels natively supported alongside email and CRM"
+  ],
+  "cons": [
+    "Daily sending cap of 300 emails on the free plan",
+    "Removing Brevo branding from emails requires a paid add-on on lower tiers",
+    "SMS and WhatsApp message credits are billed separately"
+  ],
+  "faq": [
+    {
+      "question": "Is Brevo free?",
+      "answer": "Yes, Brevo has a permanent free plan that allows you to send up to 300 emails per day to an unlimited number of stored contacts."
+    },
+    {
+      "question": "How does Brevo pricing differ from Mailchimp?",
+      "answer": "While Mailchimp charges based on total contact list size regardless of how often you email them, Brevo charges primarily for the number of emails actually sent per month."
+    },
+    {
+      "question": "Can I send WhatsApp and SMS messages with Brevo?",
+      "answer": "Yes, Brevo natively supports transactional and promotional SMS and WhatsApp campaigns, with credits purchased as pay-as-you-go add-ons."
+    }
+  ],
+  "links": {
+    "pricing": "https://www.brevo.com/pricing/"
+  },
   "sources": [
-    "https://www.brevo.com"
+    "https://www.brevo.com",
+    "https://www.brevo.com/pricing/"
   ],
-  "accessed_at": "2026-08-04",
+  "accessed_at": "2026-08-19",
   "alternatives": [
     {
-      "name": "Mailchimp",
-      "slug": "mailchimp",
-      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
-      "best_for": "Businesses wanting a wide template library and app ecosystem",
+      "name": "Moosend",
+      "slug": "moosend",
+      "description": "An email marketing and automation platform offering unlimited email sends on Pro subscription tiers.",
+      "best_for": "Businesses wanting unlimited monthly sends for a fixed subscriber count starting at $9/month",
       "strengths": [
-        "Drag-and-drop email builder",
-        "300+ integrations",
-        "AI content generation"
+        "Unlimited email sends",
+        "Visual automation builder",
+        "Landing page editor"
       ]
     },
     {
       "name": "Constant Contact",
       "slug": "constant-contact",
-      "description": "A digital and email marketing platform for small businesses, with email, SMS, landing pages, and automation.",
-      "best_for": "Small businesses wanting a simple, all-in-one campaign tool",
+      "description": "A digital and email marketing platform for small businesses, with email, SMS, landing pages, and event marketing.",
+      "best_for": "Small businesses and nonprofits wanting event promotion and dedicated phone support",
       "strengths": [
-        "Ease of use",
-        "SMS marketing",
-        "Landing pages"
+        "Event marketing",
+        "Phone support",
+        "Ease of use"
       ]
     },
     {
-      "name": "GetResponse",
-      "slug": "getresponse",
-      "description": "An all-in-one marketing platform combining email, automation, landing pages, and webinars.",
-      "best_for": "Businesses that also need webinars and AI-assisted landing pages",
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
+      "best_for": "Businesses wanting a wide template library and broad third-party application ecosystem",
       "strengths": [
-        "AI send-time optimization",
-        "Webinars",
-        "Landing page builder"
+        "Drag-and-drop email builder",
+        "300+ integrations",
+        "AI content generation"
       ]
     }
   ],

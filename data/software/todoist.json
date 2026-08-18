@@ -2,7 +2,7 @@
   "name": "Todoist",
   "slug": "todoist",
   "category": "productivity",
-  "description": "Todoist is a task and project management app that lets individuals and teams capture, organize, schedule, and track to-do items, with support for recurring tasks, labels, and shared projects.",
+  "description": "Todoist is a task and project management app that lets individuals and teams capture, organize, schedule, and track to-do items, with support for natural-language input, recurring tasks, labels, calendar views, and shared team workspaces.",
   "website": "https://todoist.com",
   "platforms": [
     "Web",
@@ -12,53 +12,124 @@
     "iOS",
     "Android"
   ],
-  "best_for": "Vendor language positions it for both individual task and time management and team collaboration, citing tens of thousands of teams using it to organize work together.",
+  "best_for": "Positioned for individuals, freelancers, and agile teams who want fast, cross-platform task capture with natural language parsing, clean interface views, and minimal project management friction.",
   "features": [
-    "Natural-language quick task entry",
-    "Recurring due dates and reminders",
-    "Multiple views: list, calendar, and board",
-    "Projects, sections, sub-tasks, priorities, and labels",
-    "Shared team projects with assignment and comments",
-    "Built-in AI assistant for turning tasks into action plans"
+    "Natural-language quick task entry with automated date, priority, and label parsing",
+    "Recurring due dates and custom reminder alerts",
+    "Multiple layout views: list, board (Kanban), and interactive calendar",
+    "Projects, sections, sub-tasks, priority flags, and custom filter views",
+    "Shared team workspaces with role-based member assignments and comments",
+    "Built-in AI Task Assist for breaking complex projects into actionable steps"
   ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$5/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_plan": true,
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "5",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Beginner",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Free plan. Includes up to 5 active personal projects, 3 filter views, list/board layouts, and 1-week activity history."
+      },
+      {
+        "name": "Pro",
+        "amount": "5",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Billed at $5/month annually ($60/year) or $7/month monthly. Includes 300 active personal projects, 150 filter views, calendar layout, task reminders, full activity history, and AI Task Assist."
+      },
+      {
+        "name": "Business",
+        "amount": "8",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Billed at $8/user/month annually ($96/user/year) or $10/user/month monthly. Includes shared team workspace, 500 team projects, team activity logs, role permissions, and centralized billing."
+      }
+    ],
+    "last_verified": "2026-08-19",
+    "official_source": "https://todoist.com/pricing"
+  },
+  "pros": [
+    "Industry-leading natural language parsing for instant task creation and scheduling",
+    "Robust cross-platform native apps with instant syncing across desktop, mobile, and browser extensions",
+    "Generous Pro tier capacity (300 projects, 150 filters) with flexible list, Kanban board, and calendar views"
+  ],
+  "cons": [
+    "Free plan is limited to 5 active projects and excludes calendar view and custom reminders",
+    "Lacks built-in time tracking or extensive document/wiki capabilities compared to all-in-one workspaces"
+  ],
+  "faq": [
+    {
+      "question": "Is Todoist free to use?",
+      "answer": "Yes, Todoist offers a permanent free Beginner plan supporting up to 5 active projects, 3 filter views, and basic task management across all supported platforms."
+    },
+    {
+      "question": "How much does Todoist Pro cost?",
+      "answer": "Todoist Pro costs $5 per month billed annually ($60/year) or $7 per month billed monthly, unlocking 300 projects, calendar layout, reminders, and AI Task Assist."
+    },
+    {
+      "question": "Does Todoist offer a team plan?",
+      "answer": "Yes, Todoist Business costs $8 per user/month billed annually ($10/user/month monthly) and includes a shared team workspace, 500 team projects, admin controls, and centralized billing."
+    }
+  ],
+  "links": {
+    "pricing": "https://todoist.com/pricing",
+    "trial": "https://todoist.com/auth/signup"
+  },
   "sources": [
     "https://todoist.com",
     "https://www.todoist.com/downloads",
-    "https://www.todoist.com/features"
+    "https://www.todoist.com/features",
+    "https://todoist.com/pricing"
   ],
-  "accessed_at": "2026-07-31",
+  "accessed_at": "2026-08-19",
   "alternatives": [
+    {
+      "name": "TickTick",
+      "slug": "ticktick",
+      "description": "A cross-platform task manager and to-do list app with built-in calendar view, habit tracker, and Pomodoro timer.",
+      "best_for": "Individuals wanting integrated habit tracking, Pomodoro focus timers, and full calendar view on desktop and mobile",
+      "strengths": [
+        "Built-in habit tracker",
+        "Integrated Pomodoro timer",
+        "Full calendar view"
+      ]
+    },
+    {
+      "name": "Things",
+      "slug": "things",
+      "description": "A task manager for macOS and iOS focused on personal task organization and Getting Things Done (GTD) principles.",
+      "best_for": "Apple-ecosystem users who want a native macOS and iOS design with a one-time purchase model",
+      "strengths": [
+        "Native Apple design",
+        "One-time purchase",
+        "GTD workflow focus"
+      ]
+    },
     {
       "name": "Asana",
       "slug": "asana",
-      "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
-      "best_for": "Teams needing more structured, cross-functional project tracking",
+      "description": "A work-management platform focused on projects, tasks, timelines, and cross-functional team coordination.",
+      "best_for": "Teams needing more structured, cross-functional project tracking and workflow automation",
       "strengths": [
-        "Work Graph",
-        "Multiple views",
-        "Team coordination"
-      ]
-    },
-    {
-      "name": "Trello",
-      "slug": "trello",
-      "description": "A visual task-organization tool built around boards, lists, and cards.",
-      "best_for": "Teams that prefer a visual, board-based workflow",
-      "strengths": [
-        "Kanban boards",
-        "Power-Ups",
-        "Simplicity"
-      ]
-    },
-    {
-      "name": "ClickUp",
-      "slug": "clickup",
-      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
-      "best_for": "Teams wanting a more feature-dense, all-in-one workspace",
-      "strengths": [
-        "Task management",
-        "Dashboards",
-        "Automation"
+        "Work Graph data model",
+        "Timeline and Gantt views",
+        "Cross-team workflows"
       ]
     }
   ],

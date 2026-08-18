@@ -1165,6 +1165,17 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   // fabricated demand).
   ["appfolio", "buildium"],
   ["jobber", "housecall-pro"],
+
+  // 2026-08-19 — Active partner expansion: Moosend and Volza comparisons,
+  // connecting active affiliate programs with direct market competitors.
+  ["constant-contact", "moosend"],
+  ["moosend", "brevo"],
+  ["moosend", "mailchimp"],
+  ["moosend", "getresponse"],
+  ["moosend", "activecampaign"],
+  ["moosend", "klaviyo"],
+  ["volza", "semrush"],
+  ["volza", "ahrefs"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {

@@ -2,60 +2,131 @@
   "name": "Constant Contact",
   "slug": "constant-contact",
   "category": "marketing",
-  "description": "Constant Contact is a digital and email marketing platform that helps small businesses build email and SMS campaigns, landing pages, and automations from a single tool, with integrations that keep contacts and order data in sync.",
+  "description": "Constant Contact is a digital and email marketing platform that helps small businesses build email and SMS campaigns, landing pages, event marketing, and automations from a single tool, with integrations that keep contacts and order data in sync.",
   "website": "https://www.constantcontact.com",
   "platforms": [
     "Web",
     "iOS",
     "Android"
   ],
-  "best_for": "Positioned for small businesses that want an easy-to-use platform for email and SMS marketing, sign-up forms, and landing pages without needing a dedicated marketing team.",
+  "best_for": "Positioned for small businesses, nonprofits, and local service providers that want an easy-to-use platform for email and SMS marketing, event promotion, and sign-up forms with accessible phone support.",
   "features": [
     "Automated email sends for events like welcomes, birthdays, and re-sends to non-openers",
     "SMS marketing with automated VIP alerts, abandoned-cart reminders, and event updates",
     "Custom automation paths with branching and triggered actions",
     "Website sign-up forms, pop-ups, and lead-generation landing pages",
-    "Real-time performance tracking and reporting",
+    "Event registration management, ticketing, and invitation tracking",
     "Integrations with popular CRMs and e-commerce platforms to sync contacts and orders"
   ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$12/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_plan": false,
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "12",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "annual_billing_required": false
+    },
+    "tiers": [
+      {
+        "name": "Lite",
+        "amount": "12",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starts at $12/month for up to 500 contacts. Includes basic email marketing, automated welcome emails, social marketing, and event management."
+      },
+      {
+        "name": "Standard",
+        "amount": "35",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starts at $35/month for up to 500 contacts. Adds A/B testing, segmentation, automated resending to non-openers, and social ads integration."
+      },
+      {
+        "name": "Premium",
+        "amount": "80",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starts at $80/month for up to 500 contacts. Adds dynamic content, custom automation paths, custom segmentation, and advanced SEO tools."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-19",
+    "official_source": "https://www.constantcontact.com/pricing"
+  },
+  "pros": [
+    "Beginner-friendly email builder with built-in event marketing and registration tools",
+    "Live phone and chat customer support across all plan tiers",
+    "Automated resend feature to automatically message non-openers"
+  ],
+  "cons": [
+    "No permanent free plan; free trial is time-limited",
+    "Contact-tiered pricing scales up quickly as subscriber lists grow",
+    "Advanced workflow automation is restricted to higher tiers"
+  ],
+  "faq": [
+    {
+      "question": "Does Constant Contact offer a free plan?",
+      "answer": "No, Constant Contact does not offer a permanent free plan, but provides a free trial (typically 14 to 30 days depending on region) to test campaign features."
+    },
+    {
+      "question": "How does Constant Contact pricing work?",
+      "answer": "Constant Contact prices on a contact-tiered structure starting at $12/month (Lite), $35/month (Standard), and $80/month (Premium) for 500 contacts, with costs increasing as your contact database expands."
+    },
+    {
+      "question": "Does Constant Contact support SMS marketing?",
+      "answer": "Yes, Constant Contact supports integrated SMS marketing campaigns, automated abandoned-cart alerts, and VIP text broadcasts alongside email."
+    }
+  ],
+  "links": {
+    "pricing": "https://www.constantcontact.com/pricing"
+  },
   "sources": [
     "https://www.constantcontact.com/features/view-all-features",
     "https://www.constantcontact.com/features/sms",
-    "https://www.constantcontact.com/features/email-marketing-automation"
+    "https://www.constantcontact.com/features/email-marketing-automation",
+    "https://www.constantcontact.com/pricing"
   ],
-  "accessed_at": "2026-08-04",
+  "accessed_at": "2026-08-19",
   "alternatives": [
     {
-      "name": "Mailchimp",
-      "slug": "mailchimp",
-      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
-      "best_for": "Small to mid-sized businesses wanting AI content generation and a wide app ecosystem",
+      "name": "Moosend",
+      "slug": "moosend",
+      "description": "A budget-friendly email marketing and automation platform offering unlimited sends on Pro tiers.",
+      "best_for": "Small businesses wanting unlimited email sends and affordable automation starting at $9/month",
       "strengths": [
-        "Drag-and-drop email builder",
-        "300+ integrations",
-        "AI content generation"
+        "Affordable entry pricing",
+        "Unlimited email sends",
+        "Visual automation workflows"
       ]
     },
     {
       "name": "Brevo",
       "slug": "brevo",
-      "description": "An integrated marketing and CRM platform for email, SMS, WhatsApp, and chat campaigns.",
-      "best_for": "Businesses wanting multi-channel messaging with a built-in CRM",
+      "description": "An integrated marketing and CRM platform with volume-based pricing for email, SMS, and WhatsApp campaigns.",
+      "best_for": "Businesses wanting a pay-per-send model with a free tier and multi-channel messaging",
       "strengths": [
+        "Free tier available",
         "WhatsApp and SMS channels",
-        "Built-in CRM",
-        "Freemium pricing"
+        "Built-in CRM"
       ]
     },
     {
-      "name": "GetResponse",
-      "slug": "getresponse",
-      "description": "An all-in-one marketing platform combining email, automation, landing pages, and webinars.",
-      "best_for": "Businesses that also need webinars and AI-assisted landing pages",
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "description": "An email and SMS marketing platform combining analytics, automations, and AI tools for integrated customer communications.",
+      "best_for": "Small to mid-sized businesses wanting a vast integration ecosystem and template library",
       "strengths": [
-        "AI send-time optimization",
-        "Webinars",
-        "Landing page builder"
+        "Drag-and-drop email builder",
+        "300+ integrations",
+        "AI content generation"
       ]
     }
   ],
