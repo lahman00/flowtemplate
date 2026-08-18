@@ -3,6 +3,7 @@ import { readAffiliatePipeline } from "@/lib/revenue/affiliate-pipeline";
 import { readNetworkStatuses } from "@/lib/revenue/affiliate-network-status";
 import { AFFILIATE_PROGRAMS } from "@/data/revenue/affiliate-programs";
 import { getAllSoftware } from "@/data/software";
+import { ACTIVE_PARTNERS } from "@/data/affiliate/active-partners";
 
 /**
  * Affiliate Revenue Engine — read-only health audit (2026-08-16). Never
@@ -42,11 +43,15 @@ async function main() {
 
   // 2. Duplicate affiliate URLs across approved/active entries
   const urlToSlugs = new Map<string, string[]>();
-  for (const e of pipeline) {
-    if (!e.affiliateUrl) continue;
-    if (!["approved", "affiliate_link_received", "activated", "earning"].includes(e.status)) continue;
-    if (!urlToSlugs.has(e.affiliateUrl)) urlToSlugs.set(e.affiliateUrl, []);
-    urlToSlugs.get(e.affiliateUrl)!.push(e.slug);
+  const activeUrls = [
+    ...pipeline
+      .filter((entry) => entry.affiliateUrl && ["approved", "affiliate_link_received", "activated", "earning"].includes(entry.status))
+      .map((entry) => ({ slug: entry.slug, url: entry.affiliateUrl! })),
+    ...ACTIVE_PARTNERS.filter((partner) => partner.affiliateUrl).map((partner) => ({ slug: partner.slug, url: partner.affiliateUrl! })),
+  ];
+  for (const { slug, url } of activeUrls) {
+    if (!urlToSlugs.has(url)) urlToSlugs.set(url, []);
+    if (!urlToSlugs.get(url)!.includes(slug)) urlToSlugs.get(url)!.push(slug);
   }
   for (const [url, slugs] of urlToSlugs) {
     if (slugs.length > 1) {
@@ -58,6 +63,11 @@ async function main() {
   for (const e of pipeline) {
     if (["approved", "affiliate_link_received", "activated", "earning"].includes(e.status) && !e.affiliateUrl) {
       problems.push({ category: "approved-missing-link", slug: e.slug, message: `Status is "${e.status}" but no affiliateUrl is recorded.` });
+    }
+  }
+  for (const partner of ACTIVE_PARTNERS) {
+    if (!partner.affiliateUrl) {
+      problems.push({ category: "approved-missing-link", slug: partner.slug, message: "Verified active partner has no legitimate affiliate URL; official vendor navigation remains in use." });
     }
   }
 
@@ -102,7 +112,7 @@ async function main() {
 
   // ---- Report ----
   console.log(`Affiliate audit — ${new Date().toISOString().slice(0, 10)}`);
-  console.log(`${software.length} catalog products · ${AFFILIATE_PROGRAMS.length} research entries · ${pipeline.length} pipeline entries · ${problems.length} findings\n`);
+  console.log(`${software.length} catalog products · ${AFFILIATE_PROGRAMS.length} research entries · ${pipeline.length} pipeline entries · ${ACTIVE_PARTNERS.length} active partners · ${problems.length} findings\n`);
 
   const byCategory = new Map<string, typeof problems>();
   for (const p of problems) {

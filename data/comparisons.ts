@@ -1176,6 +1176,14 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["moosend", "klaviyo"],
   ["volza", "semrush"],
   ["volza", "ahrefs"],
+
+  // WhatConverts commercial-intent coverage: dedicated lead-source
+  // attribution versus general analytics and an all-in-one CRM suite.
+  // Both alternatives are already supported by WhatConverts' sourced
+  // product record; publishing only makes those existing comparisons
+  // indexable and reachable through the standard comparison template.
+  ["whatconverts", "google-analytics"],
+  ["whatconverts", "hubspot"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
