@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-08-18T05:04:39.895Z",
+  "lastUpdated": "2026-08-18T14:12:37.569Z",
   "groups": [
     {
       "id": "7-figure-marketing-agency-owners",
@@ -92,13 +92,13 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "5.5K members, Private. Surface data only.",
+      "notes": "5.5K members, Private. Surface data only.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, no visible posts. Real evidence: only 7 posts/month for 5.5K members (low activity), run by an agency ('Allie Bloyd Media - The Allie Way') with a 'book a call' banner — vendor-run pattern.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -187,7 +187,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 11,
@@ -196,19 +196,21 @@
         "contentFit": 6,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 53
+        "penalties": -3,
+        "penaltyReasons": [
+          "Feed sample's top visible post is an AI-labeled automated marketing giveaway, not peer discussion."
+        ],
+        "total": 50
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "Found as 'AI AUTOMATION & AGENTIC AI - (LEARN AUTOMATION!)' — close but not exact seed name match. 7.6K members, 10 posts/day. Surface data only, does not beat #4 or #5 on real evidence.",
+      "notes": "Found as 'AI AUTOMATION & AGENTIC AI - (LEARN AUTOMATION!)' — close but not exact seed name match. 7.6K members, 10 posts/day. Surface data only, does not beat #4 or #5 on real evidence.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible, explicitly labeled 'AI content' — a vendor lead-gen giveaway (free Instagram Lead Scraper automation, follow+comment+share to unlock). Pure automated marketing content, not peer discussion.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -251,13 +253,13 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "17K members, Private, explicit tool list in name (n8n, OpenClaw, GHL, Zapier, Lovable) — strong software-tooling topical signal. Surface data only, does not beat #4/#5 on current evidence.",
+      "notes": "17K members, Private, explicit tool list in name (n8n, OpenClaw, GHL, Zapier, Lovable) — strong software-tooling topical signal. Surface data only, does not beat #4/#5 on current evidence.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, no visible posts. Real evidence: detailed posted rules ('No direct sales pitches or aggressive marketing', 'Affiliate links must be disclosed and provide genuine value', paid promos require admin approval) — a genuinely moderated, not spam-open, community.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -285,7 +287,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 18,
         "buyingIntent": 13,
@@ -300,7 +302,7 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "MEMBER",
       "lastPost": "Observed 2026-08-17: top post is a routine admin 'welcome new members' post (Jason Bevel) — 3 reactions, 0 comments. Low-content, not representative of deep discussion; a bigger sample would be needed to judge real discussion quality here.",
       "nextEligiblePost": null,
@@ -310,7 +312,7 @@
         "buyer_education content"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: OBSERVE_ONLY (ChatGPT decision 2026-08-18). Reason: Miloosh targets US buyers, but Eyal/Miloosh are not US-based — will not answer a location question misleadingly. Remains a MEMBER (already joined, no data disclosed for membership itself). Posting rights intentionally NOT unlocked — the pending posting-permission questions ask for business name/location, which would require a location claim. Held at observe-only indefinitely.",
+      "notes": "PORTFOLIO: OBSERVE_ONLY (ChatGPT decision 2026-08-18). Reason: Miloosh targets US buyers, but Eyal/Miloosh are not US-based — will not answer a location question misleadingly. Remains a MEMBER (already joined, no data disclosed for membership itself). Posting rights intentionally NOT unlocked — the pending posting-permission questions ask for business name/location, which would require a location claim. Held at observe-only indefinitely.\n\nROUND 3 FEED SAMPLE 2026-08-18 (OBSERVE_ONLY, member): 1 real post visible — an admin 'welcome new members' post, thin content. Confirms real but modest activity; no change to OBSERVE_ONLY status (unrelated to the geo-mismatch reason for that status).",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -338,28 +340,28 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 9,
-        "engagementQuality": 4,
+        "engagementQuality": 5,
         "distributionOpportunity": 2,
         "contentFit": 6,
         "promotionViability": 6,
         "geoLanguageFit": 5,
         "penalties": 0,
         "penaltyReasons": [],
-        "total": 47
+        "total": 48
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: EXPERIMENTAL. 78.6K members but nearly DORMANT: only 1 post/day, 35/month — a huge member count with almost no live feed velocity (real evidence, not assumed from size). +692 members/week growth without matching content output is a red flag for a distribution channel. Tagged Entrepreneurship & Startups / Apps & Software / United States (decent fit on paper) but real reach-per-post is very low right now. Kept out of CORE despite its size.",
+      "notes": "PORTFOLIO: EXPERIMENTAL. 78.6K members but nearly DORMANT: only 1 post/day, 35/month — a huge member count with almost no live feed velocity (real evidence, not assumed from size). +692 members/week growth without matching content output is a red flag for a distribution channel. Tagged Entrepreneurship & Startups / Apps & Software / United States (decent fit on paper) but real reach-per-post is very low right now. Kept out of CORE despite its size.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — an admin-authored educational listicle ('12 Free Google AI Tools That Boost Productivity'), real engagement (19 reactions, 2 comments, 9 shares) including a genuine user correction comment ('It's not NotebookLM anymore, it's Gemini Notebook'). Admin-run but decent engagement quality and real community correction/interaction.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -387,7 +389,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 13,
         "buyingIntent": 9,
@@ -402,13 +404,13 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: SECONDARY. 1.8K members, 3 posts/day — small but on-topic. Surface data only.",
+      "notes": "PORTFOLIO: SECONDARY. 1.8K members, 3 posts/day — small but on-topic. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a member sharing their own TikTok content-performance analytics screenshot (video views/watch-time/followers), not software-buyer-intent, off-topic creator-metrics content.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -474,7 +476,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 10,
@@ -483,13 +485,15 @@
         "contentFit": 6,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 48
+        "penalties": -1,
+        "penaltyReasons": [
+          "Feed sample's top visible post is a consultant's self-promotional funnel, not organic buyer discussion."
+        ],
+        "total": 47
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -499,7 +503,7 @@
         "buyer_education + migration content"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE. 7K members, 6 posts/day, URL confirmed twice independently. Surface data only.",
+      "notes": "PORTFOLIO: CORE. 7K members, 6 posts/day, URL confirmed twice independently. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a consultant's self-promotional post for their own AI-consulting site (shouldibuildai.com), framed as free advice but ultimately a lead-gen funnel. Self-promo signal, not organic buyer discussion.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -593,7 +597,7 @@
     {
       "id": "airtable-for-entrepreneurs",
       "name": "Airtable for Entrepreneurs",
-      "url": null,
+      "url": "https://www.facebook.com/groups/airtableforentrepreneurs/",
       "cluster": "software_buyers_tech",
       "privacy": "PRIVATE",
       "memberCount": 4400,
@@ -614,7 +618,7 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 14,
         "buyingIntent": 11,
@@ -628,8 +632,8 @@
         "total": 46
       },
       "tier": "B",
-      "verification": "UNKNOWN",
-      "dateChecked": "2026-08-17",
+      "verification": "PARTIALLY_VERIFIED",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -637,7 +641,7 @@
         "/compare Airtable alternatives"
       ],
       "contentOpportunity": null,
-      "notes": "UNIVERSE DISCOVERY 2026-08-18. Surface data only. 'For Entrepreneurs' framing is a real buyer-intent-adjacent signal in the name.",
+      "notes": "UNIVERSE DISCOVERY 2026-08-18. Surface data only. 'For Entrepreneurs' framing is a real buyer-intent-adjacent signal in the name.\n\nROUND 3 FEED SAMPLE 2026-08-18: Private group; only a highlighted post excerpt was visible without joining ('I built a fully automated client intake system for small...', 1 reaction, 2 comments). Genuine visible content (not a search snippet), but a single partial excerpt — kept at B tier, no score change given the thin sample.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -786,7 +790,7 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -797,7 +801,7 @@
         "software_decisions content"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE. 15K members, Private. Surface-only — rules and posts not yet inspected; scored conservatively pending a deeper pass.",
+      "notes": "PORTFOLIO: CORE. 15K members, Private. Surface-only — rules and posts not yet inspected; scored conservatively pending a deeper pass.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, no visible posts. Real evidence: only 5 posts/month for 15.5K members (very low activity-to-size ratio), and the group is run by 'IT SARKAR' ('a powerhouse of innovative solutions for all your business needs') — a vendor/agency-run group, a real conflict-of-interest pattern.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -1002,7 +1006,7 @@
     {
       "id": "construction-business-owners-group",
       "name": "Construction Business Owners Group",
-      "url": null,
+      "url": "https://www.facebook.com/groups/construction-business-owners-group/",
       "cluster": "software_buyers_tech",
       "privacy": "PUBLIC",
       "memberCount": 4600,
@@ -1023,21 +1027,23 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 14,
         "buyingIntent": 11,
         "engagementQuality": 6,
         "distributionOpportunity": 6,
         "contentFit": 5,
-        "promotionViability": 3,
+        "promotionViability": 2,
         "geoLanguageFit": 5,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 50
+        "penalties": -2,
+        "penaltyReasons": [
+          "Feed sample's top visible post is a third-party app promo, not buyer discussion."
+        ],
+        "total": 47
       },
       "tier": "B",
-      "verification": "UNKNOWN",
+      "verification": "PARTIALLY_VERIFIED",
       "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
@@ -1046,14 +1052,14 @@
         "construction/project-management software content"
       ],
       "contentOpportunity": "Same field-service-management gap as HVAC group.",
-      "notes": "UNIVERSE DISCOVERY ROUND 2. Surface data only.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — an app-download promo ('Socially Verse' business directory app), pure self-promotion, not buyer discussion.",
       "rejectionReason": null,
       "sourceSeed": false
     },
     {
       "id": "cpa-accountant-business-owners-usa",
       "name": "CPA & Accountant Business Owners (USA)",
-      "url": null,
+      "url": "https://www.facebook.com/groups/cpaaccountantnetwork/",
       "cluster": "software_buyers_tech",
       "privacy": "PUBLIC",
       "memberCount": 27000,
@@ -1074,7 +1080,7 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 12,
@@ -1088,7 +1094,7 @@
         "total": 54
       },
       "tier": "B",
-      "verification": "UNKNOWN",
+      "verification": "PARTIALLY_VERIFIED",
       "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
@@ -1097,7 +1103,7 @@
         "accounting software buyer_education content"
       ],
       "contentOpportunity": null,
-      "notes": "UNIVERSE DISCOVERY ROUND 2 2026-08-18. Surface data only.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2 2026-08-18. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible ('Looking for hire COO', by Connor Davis, 4 comments) — a hiring post, not software buyer-intent. No buyer-intent evidence in the single visible post; too small a sample to revise the score.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -1125,24 +1131,25 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
-        "audienceFit": 16,
-        "buyingIntent": 15,
-        "engagementQuality": 8,
+        "audienceFit": 14,
+        "buyingIntent": 12,
+        "engagementQuality": 7,
         "distributionOpportunity": 10,
         "contentFit": 6,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": -5,
+        "penalties": -8,
         "penaltyReasons": [
-          "Possible vendor tie (efficies.com in the legal notice) — same conflict-of-interest risk pattern as the earlier-flagged 'SaaS Power Users' group, unconfirmed."
+          "Possible vendor tie (efficies.com in the legal notice) — same conflict-of-interest risk pattern as the earlier-flagged 'SaaS Power Users' group, unconfirmed.",
+          "Feed sample's top visible post is a vendor/agency ad, not user discussion — contradicts the name-based buyer-intent assumption."
         ],
-        "total": 57
+        "total": 48
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -1151,7 +1158,7 @@
         "CRM comparison/alternatives content"
       ],
       "contentOpportunity": null,
-      "notes": "REPLACEMENT CANDIDATE. Real CRM-buyer community, no location/role gate, English. Strong activity-to-size ratio (19 posts/day at only 6.1K members). No posted rules is a real gap to resolve before posting.",
+      "notes": "REPLACEMENT CANDIDATE. Real CRM-buyer community, no location/role gate, English. Strong activity-to-size ratio (19 posts/day at only 6.1K members). No posted rules is a real gap to resolve before posting.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible, explicitly labeled 'AI content' — a vendor ad for Fovty Solutions (IT/CRM/branding package, phone number, contact-us CTA). Pure seller self-promotion as the top visible post despite the group being nominally about 'private and personal CRM systems.' Score revised down: name-based scoring assumed genuine CRM discussion; feed evidence shows vendor-ad-dominated content instead.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -1302,7 +1309,7 @@
         "dental/healthcare practice-management software content — a Miloosh content gap"
       ],
       "contentOpportunity": "Dental/medical practice-management software (Dentrix, Curve Dental, Weave) not covered by Miloosh, despite this and several other real dental-practice-owner communities existing.",
-      "notes": "UNIVERSE DISCOVERY ROUND 2. 'Digital' framing in the name is a genuine tech-adoption signal, scored slightly above the cluster average on that basis, but still surface data only.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2. 'Digital' framing in the name is a genuine tech-adoption signal, scored slightly above the cluster average on that basis, but still surface data only.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, no visible posts. Real evidence: genuinely high activity (10 posts today, 208/month, +369 members/week) despite being unsampleable — flagged as a strong future join candidate given this activity level.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -1557,7 +1564,7 @@
     {
       "id": "hvac-business-owners-contractors",
       "name": "HVAC Business Owners & Contractors",
-      "url": null,
+      "url": "https://www.facebook.com/groups/hvacbusinessownerscontractors/",
       "cluster": "software_buyers_tech",
       "privacy": "PUBLIC",
       "memberCount": 96000,
@@ -1578,21 +1585,21 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 14,
         "buyingIntent": 11,
-        "engagementQuality": 5,
+        "engagementQuality": 7,
         "distributionOpportunity": 5,
         "contentFit": 5,
         "promotionViability": 3,
         "geoLanguageFit": 5,
         "penalties": 0,
         "penaltyReasons": [],
-        "total": 48
+        "total": 50
       },
       "tier": "B",
-      "verification": "UNKNOWN",
+      "verification": "PARTIALLY_VERIFIED",
       "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
@@ -1601,7 +1608,7 @@
         "field-service-management software content — a Miloosh content gap"
       ],
       "contentOpportunity": "Field service management / home-services software (ServiceTitan, Housecall Pro, Jobber) not covered by Miloosh — appears repeatedly across HVAC/contractor/plumbing/electrical communities.",
-      "notes": "UNIVERSE DISCOVERY ROUND 2. Largest vertical-professional community found this round (96K). Feed sampling attempted but blocked by a browser-tool reliability issue this session — honestly marked UNKNOWN rather than guessed.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2. Largest vertical-professional community found this round (96K). Feed sampling attempted but blocked by a browser-tool reliability issue this session — honestly marked UNKNOWN rather than guessed.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a contractor asking for help wiring up a 1990s furnace ('Anyone want to wire up a 1990 furnace and bring it back to life? I'll pay you'), 11 comments, 9 reactions. Real, active, genuine peer-to-peer technical discussion — not software-buyer-intent but confirms real engagement quality.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -1769,28 +1776,28 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 3,
       "score": {
         "audienceFit": 15,
-        "buyingIntent": 11,
-        "engagementQuality": 5,
+        "buyingIntent": 13,
+        "engagementQuality": 7,
         "distributionOpportunity": 6,
         "contentFit": 7,
         "promotionViability": 4,
         "geoLanguageFit": 3,
         "penalties": 0,
         "penaltyReasons": [],
-        "total": 51
+        "total": 55
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: SECONDARY. 8K members, Private. Same audience as the much larger, better-evidenced 'IT & MSP Business Owners Group' (29.8K) — kept as secondary, not CORE, to avoid redundant concentration in one community when a stronger alternative exists.",
+      "notes": "PORTFOLIO: SECONDARY. 8K members, Private. Same audience as the much larger, better-evidenced 'IT & MSP Business Owners Group' (29.8K) — kept as secondary, not CORE, to avoid redundant concentration in one community when a stronger alternative exists.\n\nROUND 3 FEED SAMPLE 2026-08-18: Private group; 3 real highlighted posts visible without joining: (1) a UPS-battery-replacement-policy question (7 likes, 8 comments), (2) a bid/RFP discussion for a church IT install funded by a grant (19 reactions, 12 comments), (3) a genuine tool-evaluation post naming Huntress (a real cybersecurity/ITDR product) and Microsoft, discussing tenant onboarding friction. Item 3 is real, named-product buyer/operator discussion — a genuine buyer-intent signal. Score revised up for real engagement + real named-tool discussion.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -1852,7 +1859,7 @@
     {
       "id": "law-firm-owners-and-managers",
       "name": "Law Firm Owners and Managers",
-      "url": null,
+      "url": "https://www.facebook.com/groups/lawfirmboms/",
       "cluster": "software_buyers_tech",
       "privacy": "PUBLIC",
       "memberCount": 28000,
@@ -1873,7 +1880,7 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 10,
@@ -1887,7 +1894,7 @@
         "total": 48
       },
       "tier": "B",
-      "verification": "UNKNOWN",
+      "verification": "PARTIALLY_VERIFIED",
       "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
@@ -1896,7 +1903,7 @@
         "legal practice-management software content — a Miloosh content gap"
       ],
       "contentOpportunity": "Legal practice management software (Clio, MyCase, PracticePanther) not covered by Miloosh.",
-      "notes": "UNIVERSE DISCOVERY ROUND 2. Surface data only.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — an admin 'welcome new members, invite more law firm managers' growth post, 4 reactions. Real but non-buyer-intent content; no score change.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -2023,7 +2030,7 @@
         "Monday.com alternatives content"
       ],
       "contentOpportunity": null,
-      "notes": "UNIVERSE DISCOVERY ROUND 2. Small but the exact 'for Small Businesses' name framing is a real buyer-intent-adjacent signal. Surface data only.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2. Small but the exact 'for Small Businesses' name framing is a real buyer-intent-adjacent signal. Surface data only.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, no visible posts. Real evidence: explicit anti-'AI generated content' rule, no-promotion rule, only 3 posts/month for 1.7K members (low activity).",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -2051,7 +2058,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 10,
         "buyingIntent": 7,
@@ -2060,19 +2067,21 @@
         "contentFit": 5,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 36
+        "penalties": -1,
+        "penaltyReasons": [
+          "Feed sample's top visible post is generic motivational filler content, unrelated to software/productivity tooling despite the group name."
+        ],
+        "total": 35
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: SECONDARY. 1.3K members, 3 posts/day. Small; productivity-cluster groups generally skew B2C self-help rather than B2B software-selection (see productivity-time-management notes).",
+      "notes": "PORTFOLIO: SECONDARY. 1.3K members, 3 posts/day. Small; productivity-cluster groups generally skew B2C self-help rather than B2B software-selection (see productivity-time-management notes).\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a generic motivational-quote graphic ('Discipline changes your life quietly') from a content page ('The Better Habit'), 1 reaction. Low-value filler content, not software-buyer-intent or even business-specific.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -2204,7 +2213,7 @@
     {
       "id": "property-management-professionals-unite",
       "name": "PROPERTY MANAGEMENT PROFESSIONALS UNITE",
-      "url": null,
+      "url": "https://www.facebook.com/groups/363606865074101/",
       "cluster": "software_buyers_tech",
       "privacy": "PUBLIC",
       "memberCount": 56000,
@@ -2225,28 +2234,30 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 14,
         "buyingIntent": 10,
         "engagementQuality": 5,
         "distributionOpportunity": 6,
         "contentFit": 6,
-        "promotionViability": 3,
+        "promotionViability": 1,
         "geoLanguageFit": 4,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 48
+        "penalties": -3,
+        "penaltyReasons": [
+          "Feed sample shows a vendor/service ad as the top visible post — real seller-content signal, not buyer discussion."
+        ],
+        "total": 43
       },
       "tier": "B",
-      "verification": "UNKNOWN",
-      "dateChecked": "2026-08-17",
+      "verification": "PARTIALLY_VERIFIED",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": "Same property-management content gap.",
-      "notes": "UNIVERSE DISCOVERY 2026-08-18. Surface data only (name/size/activity from search result card) — URL not yet captured, not deeply verified. Large vertical-professional community.",
+      "notes": "UNIVERSE DISCOVERY 2026-08-18. Surface data only (name/size/activity from search result card) — URL not yet captured, not deeply verified. Large vertical-professional community.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a cleaning-company vendor ad (Diamond Glow Cleaning Company, Shepherd's Bush/White City office-cleaning offer). Real seller/spam signal, not buyer discussion.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -2414,7 +2425,7 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "MIXED",
       "aiSpamOverrun": "NO",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 22,
         "buyingIntent": 15,
@@ -2429,7 +2440,7 @@
       },
       "tier": "A",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "MEMBER",
       "lastPost": "Observed 2026-08-17: top post is a founder's soft product-launch/feedback-request post (Kavoos.ai) with a link, opened with \"this is not a sales pitch\" framing — despite the group's rule #1 explicitly banning selling/affiliate links. Only 3 reactions, 0 comments. Real nuance: soft, disclosed, feedback-framed launch posts appear tolerated even though the posted rules are strict — but engagement was weak, so it's unclear whether this earns real reach.",
       "nextEligiblePost": null,
@@ -2437,7 +2448,7 @@
         "software_decisions + buyer_education pillar posts framed as founder advice — never a link, per their explicit affiliate-link ban"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE (ChatGPT-approved 2026-08-17). JOINED — membership automatic, no info required. Posting-permission questions ('What's your LinkedIn profile?' + mastermind-invite yes/no) declined. NEEDS_EYAL_INPUT for posting permission — the LinkedIn question specifically needs Eyal's real profile URL.",
+      "notes": "PORTFOLIO: CORE (ChatGPT-approved 2026-08-17). JOINED — membership automatic, no info required. Posting-permission questions ('What's your LinkedIn profile?' + mastermind-invite yes/no) declined. NEEDS_EYAL_INPUT for posting permission — the LinkedIn question specifically needs Eyal's real profile URL.\n\nROUND 3 FEED SAMPLE 2026-08-18 (CORE, member): 1 real post visible — a founder explicitly disclaiming 'this is not a sales pitch' while sharing a new product launch (Kavoos.ai) and asking for genuine feedback, 4 reactions. Soft self-promo but framed founder-to-founder, real engagement.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -2514,7 +2525,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 16,
         "buyingIntent": 12,
@@ -2523,13 +2534,15 @@
         "contentFit": 7,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 56
+        "penalties": -2,
+        "penaltyReasons": [
+          "Feed sample's top visible post is a vendor tool ad, not buyer discussion."
+        ],
+        "total": 54
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -2539,7 +2552,7 @@
         "pricing_intelligence + alternatives content"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE. 4K members, 20+ posts/day — active for its size. Surface data only.",
+      "notes": "PORTFOLIO: CORE. 4K members, 20+ posts/day — active for its size. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a vendor/agency ad for a presales AI tool ('The Umdenken' / Pioneering Presales, demo-less sales pitch), self-promo, not buyer discussion.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -2595,7 +2608,7 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -2603,7 +2616,7 @@
         "software_decisions + buyer_education pillar posts, strictly no links (explicit affiliate-link ban is the strictest found in this audit)"
       ],
       "contentOpportunity": null,
-      "notes": "Strongest topical precision found ('Where Software Meets Business') and a real 9,881-member B2B audience, but the STRICTEST anti-affiliate/anti-lead-gen rules of any group audited, plus currently near-zero activity. Good long-term value-only presence, poor near-term distribution.",
+      "notes": "Strongest topical precision found ('Where Software Meets Business') and a real 9,881-member B2B audience, but the STRICTEST anti-affiliate/anti-lead-gen rules of any group audited, plus currently near-zero activity. Good long-term value-only presence, poor near-term distribution.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, no visible posts. Real evidence: extensive posted rules (no affiliate/referral links, no lead-generation/scraping attempts, no self-promotion without admin approval), 48 posts/month for 9.9K members — a genuinely moderated, active community despite being unsampleable.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -2631,22 +2644,22 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "MIXED",
       "aiSpamOverrun": "NO",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 22,
         "buyingIntent": 16,
-        "engagementQuality": 10,
+        "engagementQuality": 11,
         "distributionOpportunity": 9,
         "contentFit": 9,
         "promotionViability": 6,
         "geoLanguageFit": 5,
         "penalties": 0,
         "penaltyReasons": [],
-        "total": 77
+        "total": 78
       },
       "tier": "A",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "MEMBER",
       "lastPost": "Observed 2026-08-17: top post is a genuine software-selection question — member asking for AI image/video-generation tool recommendations for their Driving School business after Gemini/Claude/ChatGPT output was unsatisfactory. 8 comments (real engagement), including a direct tool recommendation ('Grok is better'). Direct, concrete evidence this group is exactly the kind of tool-recommendation discussion Miloosh's content fits.",
       "nextEligiblePost": null,
@@ -2656,7 +2669,7 @@
         "pricing_intelligence pillar comparisons"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE (ChatGPT-approved 2026-08-17). JOINED — for this public group, membership itself required no personal info (automatic). A separate 'Participant questions' step (to unlock posting/commenting) asked for email and 'What's your role in the SaaS industry?' — both declined ('Not now'), so Eyal is a member but cannot post/comment until those are answered. NEEDS_EYAL_INPUT for the posting-permission step specifically.",
+      "notes": "PORTFOLIO: CORE (ChatGPT-approved 2026-08-17). JOINED — for this public group, membership itself required no personal info (automatic). A separate 'Participant questions' step (to unlock posting/commenting) asked for email and 'What's your role in the SaaS industry?' — both declined ('Not now'), so Eyal is a member but cannot post/comment until those are answered. NEEDS_EYAL_INPUT for the posting-permission step specifically.\n\nROUND 3 FEED SAMPLE 2026-08-18 (CORE, member): 1 real post visible — a genuine build-in-public technical post ('Shipped a new SaaS feature this week with Claude Code, and it caught a bug in my own product... Built an AI Readiness Scanner that checks if bots like GPTBot and ClaudeBot can actually read a website'), real technical depth, on-topic. Confirms this CORE group's real engagement quality is solid.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -2684,7 +2697,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 10,
@@ -2693,19 +2706,21 @@
         "contentFit": 7,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 46
+        "penalties": -2,
+        "penaltyReasons": [
+          "Feed sample shows the identical cross-posted vendor ad also found in SaaS Sales & Marketing — evidence of shared/duplicate-audience group management rather than an independent community."
+        ],
+        "total": 44
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "9.2K members, Public. Surface data only (no About/rules check yet) — activity rate not shown on result card, which usually signals low daily volume. Does not beat #4/#5 on current evidence.",
+      "notes": "9.2K members, Public. Surface data only (no About/rules check yet) — activity rate not shown on result card, which usually signals low daily volume. Does not beat #4/#5 on current evidence.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — identical cross-posted content to SaaS Sales & Marketing (same author, same 'Looking for International Technology Partners for ZoraCue' post with POS-software screenshots), suggesting shared/duplicate-audience group management. Vendor self-promo, not buyer discussion.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -2733,7 +2748,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 10,
@@ -2742,19 +2757,21 @@
         "contentFit": 7,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 46
+        "penalties": -2,
+        "penaltyReasons": [
+          "Feed sample shows the identical cross-posted vendor ad also found in SAAS Product Marketing — evidence of shared/duplicate-audience group management rather than an independent community."
+        ],
+        "total": 44
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: SECONDARY. 5.9K members, 3 posts/day. Surface data only.",
+      "notes": "PORTFOLIO: SECONDARY. 5.9K members, 3 posts/day. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — identical cross-posted content to SAAS Product Marketing (see that entry). Vendor self-promo, not buyer discussion.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -2884,7 +2901,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 15,
         "buyingIntent": 10,
@@ -2899,7 +2916,7 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -2909,7 +2926,7 @@
         "buyer_education content; the /recommend wizard as a mentionable resource"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE. 2.8K members, 8 posts/day. Surface data only.",
+      "notes": "PORTFOLIO: CORE. 2.8K members, 8 posts/day. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — an admin 'welcome new members' post, thin content, real but low value.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -3159,13 +3176,13 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: SECONDARY. Name framing ('Power Users') looked like a strong buyer-intent match, but the group is run by a vendor (ERPSPACE) — real bias/moderation-conflict risk — and is nearly dormant (3 posts/day, 44/month, zero member growth last week) despite being 7 years old. Downgraded from an initial high expectation based on real evidence, not assumed.",
+      "notes": "PORTFOLIO: SECONDARY. Name framing ('Power Users') looked like a strong buyer-intent match, but the group is run by a vendor (ERPSPACE) — real bias/moderation-conflict risk — and is nearly dormant (3 posts/day, 44/month, zero member growth last week) despite being 7 years old. Downgraded from an initial high expectation based on real evidence, not assumed.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, no visible posts. Real evidence: 46 posts/month for 7.4K members (moderate activity), explicit no-promo/no-spam rule.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -3269,7 +3286,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 12,
         "buyingIntent": 13,
@@ -3284,13 +3301,13 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: SECONDARY. 2K members, 5 posts/day. 'Buy Sell' marketplace framing means members expect transactional listings — likely more link-tolerant than a discussion group, but lower fit for Miloosh's editorial comparison content (members want deals, not buying guidance). Experimental-pool candidate, not CORE.",
+      "notes": "PORTFOLIO: SECONDARY. 2K members, 5 posts/day. 'Buy Sell' marketplace framing means members expect transactional listings — likely more link-tolerant than a discussion group, but lower fit for Miloosh's editorial comparison content (members want deals, not buying guidance). Experimental-pool candidate, not CORE.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a vendor ad from ODS Technologies Corp. (custom business/POS software, 'book a free demo'). Confirms the group's stated purpose ('marketplace... every buyer meets sellers') is accurate — a seller-post venue, not a buyer-discussion community.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -3318,7 +3335,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 12,
         "buyingIntent": 10,
@@ -3327,19 +3344,21 @@
         "contentFit": 6,
         "promotionViability": 4,
         "geoLanguageFit": 3,
-        "penalties": 0,
-        "penaltyReasons": [],
-        "total": 42
+        "penalties": -2,
+        "penaltyReasons": [
+          "Feed sample's top visible post is a vendor SaaS product ad, not startup buyer discussion."
+        ],
+        "total": 40
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
       "bestMilooshContentMatches": [],
       "contentOpportunity": null,
-      "notes": "1K members, 3 posts/day. On-topic name but small.",
+      "notes": "1K members, 3 posts/day. On-topic name but small.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a vendor ad for 'HOTELPRO SAAS' (enterprise hotel-management software), pure self-promotion. Confirms the group functions as a vendor-post venue for software companies targeting startups, not a startup buyer-discussion community.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -3367,7 +3386,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 17,
         "buyingIntent": 11,
@@ -3384,7 +3403,7 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -3392,7 +3411,7 @@
         "buyer_education content for US small-business founders"
       ],
       "contentOpportunity": null,
-      "notes": "REPLACEMENT CANDIDATE — explicit US framing is a strong geo-fit signal, but flagged for the same risk pattern as other no-rules/high-volume/single-admin groups in this audit. Recommend a post-sample check (like Claude AI Builds got) before promoting to CORE.",
+      "notes": "REPLACEMENT CANDIDATE — explicit US framing is a strong geo-fit signal, but flagged for the same risk pattern as other no-rules/high-volume/single-admin groups in this audit. Recommend a post-sample check (like Claude AI Builds got) before promoting to CORE.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a web developer sharing a before/after portfolio redesign of a real restaurant website, seeking feedback. Real founder/freelancer content, not software-buyer-intent but genuine, non-spammy engagement.",
       "rejectionReason": null,
       "sourceSeed": false
     },
@@ -3420,7 +3439,7 @@
       "audienceBuyerLikelihood": "UNKNOWN",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
         "audienceFit": 16,
         "buyingIntent": 12,
@@ -3435,7 +3454,7 @@
       },
       "tier": "B",
       "verification": "PARTIALLY_VERIFIED",
-      "dateChecked": "2026-08-17",
+      "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
       "nextEligiblePost": null,
@@ -3443,7 +3462,7 @@
         "category_discovery + alternatives pillar posts for startup tool stacks"
       ],
       "contentOpportunity": null,
-      "notes": "PORTFOLIO: CORE. 4.6K members, Public, 10+ posts/day. Surface-only.",
+      "notes": "PORTFOLIO: CORE. 4.6K members, Public, 10+ posts/day. Surface-only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a founder's build-in-public update on a background-screening SaaS company (naming/logo/domain progress), 2 reactions, 1 comment. Real founder content, not buyer-intent but genuine engagement.",
       "rejectionReason": null,
       "sourceSeed": true
     },
@@ -3647,14 +3666,14 @@
         "Xero vs QuickBooks / Xero alternatives content"
       ],
       "contentOpportunity": null,
-      "notes": "UNIVERSE DISCOVERY ROUND 2. Large, real, product-specific accounting-software community — Private (higher trust signal). Surface data only.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2. Large, real, product-specific accounting-software community — Private (higher trust signal). Surface data only.\n\nROUND 3 2026-08-18: FEED_SAMPLE_BLOCKED — private group, Discussion tab shows no visible posts without membership. Real evidence gathered instead: explicit 'No self promotion (this isn't a sales channel)' rule, 155 posts/month, +63 members/week — genuinely active despite the block.",
       "rejectionReason": null,
       "sourceSeed": false
     },
     {
       "id": "zoho-crm-tips-tricks",
       "name": "Zoho CRM Tips & Tricks",
-      "url": null,
+      "url": "https://www.facebook.com/groups/1548636698800249/",
       "cluster": "software_buyers_tech",
       "privacy": "PUBLIC",
       "memberCount": 11000,
@@ -3675,21 +3694,21 @@
       "audienceBuyerLikelihood": "MEDIUM",
       "sellerVsBuyerSkew": "UNKNOWN",
       "aiSpamOverrun": "UNKNOWN",
-      "postsInspected": 0,
+      "postsInspected": 1,
       "score": {
-        "audienceFit": 13,
+        "audienceFit": 15,
         "buyingIntent": 11,
-        "engagementQuality": 5,
+        "engagementQuality": 7,
         "distributionOpportunity": 3,
         "contentFit": 6,
         "promotionViability": 3,
         "geoLanguageFit": 4,
         "penalties": 0,
         "penaltyReasons": [],
-        "total": 45
+        "total": 49
       },
       "tier": "B",
-      "verification": "UNKNOWN",
+      "verification": "PARTIALLY_VERIFIED",
       "dateChecked": "2026-08-18",
       "membershipState": "NOT_JOINED",
       "lastPost": null,
@@ -3698,7 +3717,7 @@
         "Zoho CRM alternatives content"
       ],
       "contentOpportunity": null,
-      "notes": "UNIVERSE DISCOVERY ROUND 2. Surface data only.",
+      "notes": "UNIVERSE DISCOVERY ROUND 2. Surface data only.\n\nROUND 3 FEED SAMPLE 2026-08-18: 1 real post visible — a genuine user support question ('How can we do grouping of customers/contacts in Zoho CRM to send collective emails and text messages?'), 8 comments including a real helpful step-by-step reply from another member. Real product-usage support discussion, low spam, real community value — score revised up.",
       "rejectionReason": null,
       "sourceSeed": false
     }
