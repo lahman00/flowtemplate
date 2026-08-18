@@ -21,11 +21,13 @@ export const APPLICANT_BUSINESS_NAME = "Miloosh";
 export const APPLICANT_WEBSITE = "https://miloosh.com";
 /**
  * The email actually used on the real, already-submitted Pipedrive
- * application (recorded 2026-08-14) — kept distinct on purpose from
- * lib/site.ts's SITE_EMAIL ("hello@miloosh.app"), which is the public
- * contact address shown on the site itself. Do not silently "fix" this
- * mismatch by substituting one for the other; flag it for the owner to
- * confirm which address should be used going forward.
+ * application (recorded 2026-08-14). 2026-08-18 — the owner confirmed
+ * this is the correct address; lib/site.ts's SITE_EMAIL was corrected to
+ * match (it previously pointed at hello@miloosh.app, a domain with no
+ * MX records). Kept as its own literal constant rather than importing
+ * SITE_EMAIL — this file records what a real, already-submitted external
+ * application says, which must stay stable even if the site's displayed
+ * contact address changes again later.
  */
 export const APPLICANT_BUSINESS_EMAIL = "hello@miloosh.com";
 /** Recorded 2026-08-14 from the owner directly — the real Miloosh LinkedIn company page. Reused for every application pack; do not ask the owner for this again. */
