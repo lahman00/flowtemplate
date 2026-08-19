@@ -1,8 +1,9 @@
 import type { ChannelVariant, PublishResult } from "@/lib/social/types";
-import { type SocialAdapter, buildPublishResult, defaultFormat } from "@/lib/social/channels/types";
+import { type SocialAdapter, buildPublishResult, defaultFormat, envAll, missingEnvNames } from "@/lib/social/channels/types";
 
 /**
- * LinkedIn adapter — MANUAL_ONLY by design, not a missing feature.
+ * LinkedIn Company Page adapter. It fails closed until the production
+ * environment has both approved API access and the required credentials.
  *
  * Real research (2026-08-16, directly fetched from learn.microsoft.com/
  * linkedin, re-verified 2026-08-19): posting to a LinkedIn COMPANY PAGE
@@ -28,34 +29,41 @@ import { type SocialAdapter, buildPublishResult, defaultFormat } from "@/lib/soc
  * LinkedIn", w_member_social) posts to a PERSONAL profile, not a company
  * page — not a fit for Miloosh's brand page.
  *
- * Given that, this adapter always returns MANUAL_ONLY: the content
- * engine and QA gates still produce a fully platform-native, ready-to-
- * paste LinkedIn variant, but a human copies it in — never a fabricated
- * "PUBLISHED" for a channel this codebase cannot actually post to. If
- * the owner later completes LinkedIn's partner application and the
- * Posts API becomes available, replace this file's publish() with a real
- * OAuth 2.0 + Posts API call; the interface won't need to change.
+ * The implementation is ready for POST /rest/posts, but production has
+ * no LinkedIn credentials today. SETUP_REQUIRED is therefore the only
+ * live outcome until the external access gate is completed.
  */
 
-const CHAR_LIMIT = 3000; // LinkedIn's real post limit; kept short in practice by the content engine.
+const CHAR_LIMIT = 3000;
+const REQUIRED_ENV = ["SOCIAL_LINKEDIN_ACCESS_TOKEN", "SOCIAL_LINKEDIN_ORGANIZATION_ID", "SOCIAL_LINKEDIN_VERSION"];
 
 export const linkedinAdapter: SocialAdapter = {
   channel: "linkedin",
-  requiredEnv: [],
+  requiredEnv: REQUIRED_ENV,
   charLimit: CHAR_LIMIT,
-  isConfigured: () => false, // never "configured" for auto-publish — see file header
-  missingEnv: () => ["LinkedIn Community Management API partner approval (no env var can substitute — see setup pack)"],
+  isConfigured: () => envAll(REQUIRED_ENV) !== null,
+  missingEnv: () => missingEnvNames(REQUIRED_ENV),
   format: (text, link) => defaultFormat(text, link, CHAR_LIMIT),
 
-  async publish(variant: ChannelVariant, _options): Promise<PublishResult> {
-    void _options;
+  async publish(variant: ChannelVariant, options): Promise<PublishResult> {
     const body = defaultFormat(variant.text, variant.link, CHAR_LIMIT);
-    return buildPublishResult({
-      channel: "linkedin",
-      status: "MANUAL_ONLY",
-      text: body,
-      link: variant.link ?? "",
-      error: "LinkedIn company-page posting requires Community Management API partner approval — no self-serve path exists. Copy this text and post manually, or complete the partner application to enable automation.",
-    });
+    if (options.dryRun) return buildPublishResult({ channel: "linkedin", status: "DRY_RUN", text: body, link: variant.link ?? "" });
+    if (!envAll(REQUIRED_ENV)) return buildPublishResult({ channel: "linkedin", status: "SETUP_REQUIRED", text: body, link: variant.link ?? "", error: `Missing ${missingEnvNames(REQUIRED_ENV).join(", ")} and/or LinkedIn Community Management API access (w_organization_social).` });
+    try {
+      const response = await fetch("https://api.linkedin.com/rest/posts", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${process.env.SOCIAL_LINKEDIN_ACCESS_TOKEN!}`, "Content-Type": "application/json", "Linkedin-Version": process.env.SOCIAL_LINKEDIN_VERSION!, "X-Restli-Protocol-Version": "2.0.0" },
+        body: JSON.stringify({ author: `urn:li:organization:${process.env.SOCIAL_LINKEDIN_ORGANIZATION_ID!}`, commentary: body, visibility: "PUBLIC", distribution: { feedDistribution: "MAIN_FEED", targetEntities: [], thirdPartyDistributionChannels: [] }, lifecycleState: "PUBLISHED", isReshareDisabledByAuthor: false }),
+      });
+      if (!response.ok) {
+        const detail = (await response.text()).slice(0, 500);
+        return buildPublishResult({ channel: "linkedin", status: response.status === 429 ? "RATE_LIMITED" : "FAILED", text: body, link: variant.link ?? "", error: `LinkedIn Posts API HTTP ${response.status}: ${detail}` });
+      }
+      const postId = response.headers.get("x-restli-id");
+      if (!postId) return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", error: "LinkedIn returned success without x-restli-id; publication identity is unknown, so automatic retry is withheld." });
+      return buildPublishResult({ channel: "linkedin", status: "PUBLISHED", text: body, link: variant.link ?? "", postId, verified: false });
+    } catch (error) {
+      return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", error: `LinkedIn request failed with unknown publication outcome; inspect the Page before retrying: ${error instanceof Error ? error.message : String(error)}` });
+    }
   },
 };

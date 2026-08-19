@@ -50,6 +50,19 @@ export type PublishResult = {
   mode?: "IMAGE_POST" | "LINK_POST" | null;
 };
 
+/** Durable, provider-specific delivery state. Optional for backwards compatibility with queue records created before this field existed. */
+export type ProviderPublishState = {
+  status: "PENDING" | "PUBLISHED" | "FAILED" | "UNKNOWN_OUTCOME" | "MANUAL_READY" | "BLOCKED";
+  attempts: number;
+  lastAttemptAt: string | null;
+  publishedAt: string | null;
+  postId: string | null;
+  postUrl: string | null;
+  contentHash: string;
+  verified: boolean;
+  error: string;
+};
+
 /** Phase 14 dashboard vocabulary — one status per channel, independent of any single post's PublishStatus. */
 export type ChannelHealthStatus = "CONNECTED" | "READY" | "NEEDS_OWNER_AUTH" | "API_COST_BLOCK" | "DISABLED" | "ERROR";
 
@@ -124,6 +137,8 @@ export type ChannelVariant = {
   hashtags: string[];
   /** Populated once a publish attempt (real or dry-run) has run for this channel. */
   publishResult: PublishResult | null;
+  /** Independent delivery lifecycle; prevents one provider success from discarding another provider's pending work. */
+  providerState?: ProviderPublishState;
 };
 
 export type SocialQueueEntry = {

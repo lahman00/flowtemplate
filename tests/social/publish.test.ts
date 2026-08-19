@@ -389,6 +389,11 @@ describe("hasChannelPublishedToday", () => {
     expect(hasChannelPublishedToday(queue, "facebook", today)).toBe(false);
   });
 
+  it("uses the configured business timezone across a UTC midnight", () => {
+    const queue = [publishedEntry("facebook", "2026-08-18T03:30:00.000Z")]; // Aug 17, 23:30 New York
+    expect(hasChannelPublishedToday(queue, "facebook", new Date("2026-08-18T04:30:00.000Z"), "America/New_York")).toBe(false);
+  });
+
   it("false when no entry has a PUBLISHED result for that channel at all", () => {
     const queue = [fixtureEntry({ facebook: blankVariant })];
     expect(hasChannelPublishedToday(queue, "facebook", today)).toBe(false);
@@ -455,6 +460,31 @@ describe("runPublishCycle — Facebook per-day cap enforcement", () => {
     await runPublishCycle({ dryRun: false, now: new Date(), adapters });
     const after = await readQueue();
     expect(after[0]!.channels.facebook?.publishResult?.status).toBe("PUBLISHED");
+  });
+
+  it("retains Facebook as pending when Bluesky succeeds, then publishes Facebook on the next business day", async () => {
+    const now = new Date("2026-08-19T17:00:00.000Z");
+    const alreadyPublishedToday: SocialQueueEntry = {
+      ...fixtureEntry({ facebook: { ...blankVariant, publishResult: { channel: "facebook", status: "PUBLISHED", text: "x", link: "", postUrl: null, postId: "existing", verified: true, error: "", contentHash: "x" } } }),
+      id: "already-published",
+      state: "PUBLISHED",
+      scheduledFor: "2026-08-19T16:00:00.000Z",
+      history: [{ state: "PUBLISHED", at: now.toISOString(), note: null }],
+    };
+    const candidate = { ...fixtureEntry({ facebook: { ...blankVariant }, bluesky: { ...blankVariant } }), id: "provider-independent", scheduledFor: "2026-08-19T16:30:00.000Z" };
+    await addQueueEntries([alreadyPublishedToday, candidate]);
+    const adapters = { facebook: fakeAdapter("facebook", "publish"), bluesky: fakeAdapter("bluesky", "publish") } as Record<Channel, SocialAdapter>;
+
+    await runPublishCycle({ dryRun: false, now, adapters });
+    let updated = (await readQueue()).find((entry) => entry.id === candidate.id)!;
+    expect(updated.state).toBe("PUBLISHED");
+    expect(updated.channels.facebook?.providerState).toBeUndefined();
+    expect(updated.channels.bluesky?.providerState?.status).toBe("PUBLISHED");
+
+    await runPublishCycle({ dryRun: false, now: new Date("2026-08-20T17:00:00.000Z"), adapters });
+    updated = (await readQueue()).find((entry) => entry.id === candidate.id)!;
+    expect(updated.channels.facebook?.providerState?.status).toBe("PUBLISHED");
+    expect(updated.channels.bluesky?.providerState?.attempts).toBe(1);
   });
 });
 

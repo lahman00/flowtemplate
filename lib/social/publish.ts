@@ -4,7 +4,7 @@ import { ADAPTERS } from "@/lib/social/channels/registry";
 import type { SocialAdapter } from "@/lib/social/channels/types";
 import { publishWithRetry } from "@/lib/social/retry";
 import { buildUtmUrl } from "@/lib/social/utm";
-import type { Channel, ChannelVariant, PublishResult, SocialQueueEntry } from "@/lib/social/types";
+import type { Channel, ChannelVariant, ProviderPublishState, PublishResult, SocialQueueEntry } from "@/lib/social/types";
 
 /**
  * Publish orchestrator — the TypeScript equivalent of Need Go Home's
@@ -74,8 +74,8 @@ function countPriorRequeues(entry: SocialQueueEntry): number {
   return entry.history.filter((h) => h.note?.startsWith("stale-requeue:")).length;
 }
 
-function isSameUtcDay(a: Date, b: Date): boolean {
-  return a.toISOString().slice(0, 10) === b.toISOString().slice(0, 10);
+export function businessDayKey(date: Date, timeZone: string): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
 }
 
 /**
@@ -89,14 +89,36 @@ function isSameUtcDay(a: Date, b: Date): boolean {
  * SETUP_REQUIRED don't count, matching the same real-vs-manual
  * distinction as the PUBLISHED state fix above.
  */
-export function hasChannelPublishedToday(queue: SocialQueueEntry[], channel: Channel, now: Date): boolean {
+export function hasChannelPublishedToday(queue: SocialQueueEntry[], channel: Channel, now: Date, timeZone = "UTC"): boolean {
   return queue.some((e) => {
-    const result = e.channels[channel]?.publishResult;
+    const variant = e.channels[channel];
+    const result = variant?.publishResult;
     if (result?.status !== "PUBLISHED") return false;
-    const publishedAt = e.history.filter((h) => h.state === "PUBLISHED").map((h) => h.at).at(-1);
+    const publishedAt = variant?.providerState?.publishedAt ?? e.history.filter((h) => h.state === "PUBLISHED").map((h) => h.at).at(-1);
     if (!publishedAt) return false;
-    return isSameUtcDay(new Date(publishedAt), now);
+    return businessDayKey(new Date(publishedAt), timeZone) === businessDayKey(now, timeZone);
   });
+}
+
+function channelNeedsAttempt(variant: ChannelVariant): boolean {
+  if (variant.providerState) return variant.providerState.status === "PENDING" || (variant.providerState.status === "FAILED" && variant.providerState.attempts < 3);
+  return variant.publishResult === null || variant.publishResult.status === "FAILED" || variant.publishResult.status === "RATE_LIMITED";
+}
+
+function providerStateFromResult(previous: ProviderPublishState | undefined, result: PublishResult, attemptedAt: string): ProviderPublishState {
+  const unknownOutcome = result.status === "FAILED" && (result.error.includes("NETWORK_ERROR") || result.error.includes("unknown publication outcome"));
+  const status: ProviderPublishState["status"] = result.status === "PUBLISHED" ? "PUBLISHED" : result.status === "MANUAL_ONLY" ? "MANUAL_READY" : result.status === "SETUP_REQUIRED" ? "BLOCKED" : result.status === "DRY_RUN" || result.status === "DUPLICATE_SKIPPED" ? "PENDING" : unknownOutcome ? "UNKNOWN_OUTCOME" : "FAILED";
+  return {
+    status,
+    attempts: (previous?.attempts ?? 0) + (result.status === "DRY_RUN" ? 0 : 1),
+    lastAttemptAt: result.status === "DRY_RUN" ? previous?.lastAttemptAt ?? null : attemptedAt,
+    publishedAt: result.status === "PUBLISHED" ? attemptedAt : previous?.publishedAt ?? null,
+    postId: result.postId,
+    postUrl: result.postUrl,
+    contentHash: result.contentHash,
+    verified: result.verified,
+    error: result.error,
+  };
 }
 
 /** Pure — no I/O, easy to unit test. Splits due SCHEDULED entries into on-time (publish normally) vs stale (never auto-published as-is). Stale entries are sorted oldest-first so the longest-waiting ones claim the bounded per-run catch-up slots first. */
@@ -104,9 +126,19 @@ export function classifyScheduledEntries(queue: SocialQueueEntry[], now: Date): 
   const onTime: SocialQueueEntry[] = [];
   const stale: SocialQueueEntry[] = [];
   for (const e of queue) {
-    if (e.state !== "SCHEDULED" || !e.scheduledFor) continue;
+    if (!e.scheduledFor) continue;
+    const hasPendingProvider = Object.values(e.channels).some((variant) => variant && channelNeedsAttempt(variant));
+    // A provider may still be pending after another provider moved the
+    // compatibility entry state to PUBLISHED/READY_FOR_MANUAL. Keep that
+    // channel eligible on later business days instead of losing it.
+    if (e.state !== "SCHEDULED" && e.state !== "PUBLISHED" && e.state !== "READY_FOR_MANUAL" && e.state !== "FAILED") continue;
+    if (e.state !== "SCHEDULED" && !hasPendingProvider) continue;
     const scheduledMs = new Date(e.scheduledFor).getTime();
     if (scheduledMs > now.getTime()) continue; // not due yet
+    if (e.state !== "SCHEDULED") {
+      onTime.push(e);
+      continue;
+    }
     const overdueMs = now.getTime() - scheduledMs;
     if (overdueMs <= GRACE_WINDOW_MS) onTime.push(e);
     else stale.push(e);
@@ -132,7 +164,7 @@ export async function publishOneEntry(
   skipChannels: Channel[] = []
 ): Promise<{ channel: Channel; result: PublishResult }[]> {
   const attempts: { channel: Channel; result: PublishResult }[] = [];
-  const channelKeys = Object.keys(entry.channels) as Channel[];
+  const channelKeys = (Object.keys(entry.channels) as Channel[]).filter((channel) => channelNeedsAttempt(entry.channels[channel]!));
 
   for (const channel of channelKeys) {
     if (skipChannels.includes(channel)) continue;
@@ -232,7 +264,7 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
   // PUBLISHED, every later entry in the same run must also see the cap
   // as reached, not just entries processed by a future invocation.
   const publishedTodayByChannel = new Map<Channel, boolean>();
-  const channelHasPublishedToday = (channel: Channel) => publishedTodayByChannel.get(channel) ?? hasChannelPublishedToday(queue, channel, now);
+  const channelHasPublishedToday = (channel: Channel) => publishedTodayByChannel.get(channel) ?? hasChannelPublishedToday(queue, channel, now, strategy.timezone);
 
   for (const entry of due) {
     // Two independent, permanent-until-config-changes reasons a channel
@@ -280,7 +312,8 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
 
     const updatedChannels = { ...entry.channels };
     for (const { channel, result } of attempts) {
-      updatedChannels[channel] = { ...updatedChannels[channel]!, publishResult: result };
+      const current = updatedChannels[channel]!;
+      updatedChannels[channel] = { ...current, publishResult: result, providerState: providerStateFromResult(current.providerState, result, now.toISOString()) };
     }
     await updateQueueEntry(entry.id, { channels: updatedChannels });
 
@@ -297,7 +330,7 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     const manualReady = attempts.some((a) => a.result.status === "MANUAL_ONLY");
     const nextState = realPublish ? "PUBLISHED" : manualReady ? "READY_FOR_MANUAL" : "FAILED";
     const note = nextState === "FAILED" ? "All channel attempts failed — see per-channel publishResult for detail." : nextState === "READY_FOR_MANUAL" ? "No channel published automatically — manual-only content is drafted and ready for a human to post (see per-channel publishResult)." : undefined;
-    await setQueueState(entry.id, nextState, note);
+    if (entry.state === "SCHEDULED") await setQueueState(entry.id, nextState, note);
   }
 
   return { ranAt: now.toISOString(), dryRun: options.dryRun, paused: false, entriesAttempted: due.length, results, staleHandling };
