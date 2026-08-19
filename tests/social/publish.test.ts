@@ -542,4 +542,35 @@ describe("runPublishCycle — LinkedIn-only daily continuity", () => {
     const summary = await runPublishCycle({ dryRun: false, now: new Date("2026-08-31T17:30:00.000Z"), adapters: { linkedin: fakeAdapter("linkedin", "publish") } as Record<Channel, SocialAdapter> });
     expect(summary.results).toHaveLength(0);
   });
+
+  it("never catches LinkedIn up at the later 18:00 UTC cron while leaving Facebook eligible", async () => {
+    const entry = { ...fixtureEntry({ linkedin: safeLinkedIn, facebook: blankVariant }), id: "missed-linkedin-window", scheduledFor: "2026-08-20T17:00:00.000Z" };
+    await addQueueEntries([entry]);
+
+    const summary = await runPublishCycle({ dryRun: false, now: new Date("2026-08-20T18:00:00.000Z"), adapters: { linkedin: fakeAdapter("linkedin", "publish"), facebook: fakeAdapter("facebook", "publish") } as Record<Channel, SocialAdapter> });
+
+    expect(summary.results).toEqual([{ entryId: entry.id, channel: "facebook", status: "PUBLISHED" }]);
+    const updated = (await readQueue())[0]!;
+    expect(updated.channels.linkedin?.providerState).toBeUndefined();
+    expect(updated.channels.facebook?.providerState?.status).toBe("PUBLISHED");
+  });
+
+  it("honors a channel-specific LinkedIn time without delaying or duplicating other channels", async () => {
+    const entry = {
+      ...fixtureEntry({ linkedin: { ...safeLinkedIn, scheduledFor: "2026-08-21T17:00:00.000Z" } }),
+      id: "channel-specific-linkedin-time",
+      scheduledFor: "2026-08-20T17:00:00.000Z",
+    };
+    await addQueueEntries([entry]);
+    const adapters = { linkedin: fakeAdapter("linkedin", "publish") } as Record<Channel, SocialAdapter>;
+
+    const first = await runPublishCycle({ dryRun: false, now: new Date("2026-08-20T17:00:00.000Z"), adapters });
+    expect(first.results).toEqual([]);
+
+    const second = await runPublishCycle({ dryRun: false, now: new Date("2026-08-21T17:00:05.000Z"), adapters });
+    expect(second.results).toEqual([{ entryId: entry.id, channel: "linkedin", status: "PUBLISHED" }]);
+    const updated = (await readQueue())[0]!;
+    expect(updated.id).toBe(entry.id);
+    expect(updated.channels.linkedin?.providerState?.attempts).toBe(1);
+  });
 });

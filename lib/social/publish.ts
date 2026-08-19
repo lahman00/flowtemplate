@@ -172,6 +172,16 @@ export function classifyScheduledEntries(queue: SocialQueueEntry[], now: Date): 
     if (e.state !== "SCHEDULED" && !hasPendingProvider) continue;
     const scheduledMs = new Date(e.scheduledFor).getTime();
     if (scheduledMs > now.getTime()) continue; // not due yet
+    const hasDueChannelSchedule = Object.values(e.channels).some((variant) =>
+      variant && channelNeedsAttempt(variant) && variant.scheduledFor && new Date(variant.scheduledFor).getTime() <= now.getTime()
+    );
+    // A channel-specific schedule is authoritative for that provider. It
+    // must not be discarded merely because the shared entry became stale
+    // while this one channel was deliberately waiting for its own window.
+    if (hasDueChannelSchedule) {
+      onTime.push(e);
+      continue;
+    }
     if (e.state !== "SCHEDULED") {
       onTime.push(e);
       continue;
@@ -228,7 +238,7 @@ export async function publishOneEntry(
     const taggedVariant: ChannelVariant = variant.link ? { ...variant, link: buildUtmUrl(variant.link, channel, entry.campaign, entry.id) } : variant;
     let result: PublishResult;
     try {
-      result = await publishWithRetry(() => adapter.publish(taggedVariant, { dryRun, entryId: entry.id, scheduledAt: entry.scheduledFor }));
+      result = await publishWithRetry(() => adapter.publish(taggedVariant, { dryRun, entryId: entry.id, scheduledAt: variant.scheduledFor ?? entry.scheduledFor }));
     } catch (err) {
       // Failure-safe fallback in case an adapter implementation itself
       // throws instead of catching its own error (contract violation,
@@ -365,6 +375,12 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     // accepted.
     const skipChannels = (Object.keys(entry.channels) as Channel[]).filter((channel) => {
       if (linkedinOnlyEntryIds.has(entry.id) && channel !== "linkedin") return true;
+      const channelScheduledFor = entry.channels[channel]?.scheduledFor;
+      if (channelScheduledFor && new Date(channelScheduledFor).getTime() > now.getTime()) return true;
+      // LinkedIn has one deliberate professional publication window. A
+      // missed invocation waits for the next day's window instead of
+      // becoming a late-night catch-up; other channels remain unaffected.
+      if (channel === "linkedin" && now.getUTCHours() !== 17) return true;
       if (channel === "linkedin" && channelHasAttemptedToday(channel)) return true;
       if (channelHasPublishedToday(channel)) return true;
       const excludedPillars = strategy.excludedPillarsByChannel[channel];

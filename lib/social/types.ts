@@ -144,6 +144,8 @@ export function isValidQueueTransition(from: QueueState, to: QueueState): boolea
 /** One platform-native rendering of a queue entry's content. */
 export type ChannelVariant = {
   text: string;
+  /** Optional channel-specific eligibility time. Keeps one provider deferred without moving the shared entry or any other channel. */
+  scheduledFor?: string | null;
   /** Canonical Miloosh URL before UTM tagging — UTM params are appended at publish time by lib/social/utm.ts, never baked into stored copy. */
   link: string | null;
   imageUrl: string | null;
