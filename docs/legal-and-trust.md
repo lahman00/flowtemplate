@@ -42,7 +42,8 @@ than assumed:
   Sprint 11 launch audit confirmed they were still unused and removed them
   entirely, so there's no longer even a dormant cookie-based session
   mechanism sitting in the dependency tree.
-- Confirmed there is no `middleware.ts`, and the only `<form>` on the site
+- Confirmed there is no legacy `middleware.ts`; the `proxy.ts` access gate
+  only protects `/internal/*`, and the only `<form>` on the public site
   (`SearchForm`) does a client-side redirect and never sends a network
   request. Two API routes were added later (`app/api/outbound-click/route.ts`,
   Sprint 9; `app/api/recommendation-click/route.ts`, Sprint 10) — both

@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { NextRequest } from "next/server";
-import { middleware } from "@/middleware";
+import { proxy } from "@/proxy";
 
 /**
  * Regression tests for the /internal/ access gate added during the
@@ -22,7 +22,7 @@ function requestTo(path: string, authHeader?: string): NextRequest {
   return new NextRequest(new URL(path, "https://miloosh.com"), { headers });
 }
 
-describe("internal dashboard access gate (middleware.ts)", () => {
+describe("internal dashboard access gate (proxy.ts)", () => {
   afterEach(() => {
     if (ORIGINAL_USER === undefined) delete process.env.INTERNAL_DASHBOARD_USER;
     else process.env.INTERNAL_DASHBOARD_USER = ORIGINAL_USER;
@@ -33,14 +33,14 @@ describe("internal dashboard access gate (middleware.ts)", () => {
   it("fails closed (401) when no credentials are configured at all, even with no Authorization header", () => {
     delete process.env.INTERNAL_DASHBOARD_USER;
     delete process.env.INTERNAL_DASHBOARD_PASSWORD;
-    const res = middleware(requestTo("/internal/growth"));
+    const res = proxy(requestTo("/internal/growth"));
     expect(res.status).toBe(401);
   });
 
   it("fails closed (401) when credentials are configured but no Authorization header is sent", () => {
     process.env.INTERNAL_DASHBOARD_USER = "operator";
     process.env.INTERNAL_DASHBOARD_PASSWORD = "correct-horse-battery-staple";
-    const res = middleware(requestTo("/internal/growth"));
+    const res = proxy(requestTo("/internal/growth"));
     expect(res.status).toBe(401);
     expect(res.headers.get("WWW-Authenticate")).toContain("Basic");
   });
@@ -48,21 +48,21 @@ describe("internal dashboard access gate (middleware.ts)", () => {
   it("rejects (401) wrong credentials", () => {
     process.env.INTERNAL_DASHBOARD_USER = "operator";
     process.env.INTERNAL_DASHBOARD_PASSWORD = "correct-horse-battery-staple";
-    const res = middleware(requestTo("/internal/growth", basicAuthHeader("operator", "wrong-password")));
+    const res = proxy(requestTo("/internal/growth", basicAuthHeader("operator", "wrong-password")));
     expect(res.status).toBe(401);
   });
 
   it("allows through (no 401) with correct credentials", () => {
     process.env.INTERNAL_DASHBOARD_USER = "operator";
     process.env.INTERNAL_DASHBOARD_PASSWORD = "correct-horse-battery-staple";
-    const res = middleware(requestTo("/internal/growth", basicAuthHeader("operator", "correct-horse-battery-staple")));
+    const res = proxy(requestTo("/internal/growth", basicAuthHeader("operator", "correct-horse-battery-staple")));
     expect(res.status).not.toBe(401);
   });
 
   it("rejects a correct password paired with the wrong username", () => {
     process.env.INTERNAL_DASHBOARD_USER = "operator";
     process.env.INTERNAL_DASHBOARD_PASSWORD = "correct-horse-battery-staple";
-    const res = middleware(requestTo("/internal/maintenance", basicAuthHeader("someone-else", "correct-horse-battery-staple")));
+    const res = proxy(requestTo("/internal/maintenance", basicAuthHeader("someone-else", "correct-horse-battery-staple")));
     expect(res.status).toBe(401);
   });
 });

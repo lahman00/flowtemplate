@@ -212,7 +212,7 @@ normal env var.
   from the public site (same posture as `/internal/maintenance`,
   `/internal/revenue`, `/internal/outbound-clicks`, `/internal/recommendations`).
   Links to and from `/internal/maintenance`. **Also gated behind HTTP Basic
-  Auth** (`middleware.ts`, matches `/internal/:path*`) — see "Access
+  Auth** (`proxy.ts`, matches `/internal/:path*`) — see "Access
   control" below. This is new as of the production-exposure review that
   shipped alongside this system; the other four `/internal/` pages picked
   up the same gate as a side effect of matching the whole prefix, since
@@ -260,7 +260,7 @@ visitor would see them. Findings:
   public," not narrowly "does it contain secrets."
 
 Given that last point, both dashboards are now gated behind **HTTP Basic
-Auth via `middleware.ts`**, matching `/internal/:path*` (the same prefix
+Auth via `proxy.ts`**, matching `/internal/:path*` (the same prefix
 `app/robots.ts` already disallows). Deliberately the smallest mechanism
 available — no new dependency, no login page, no session/cookie/database,
 ~40 lines: check the `Authorization` header against
@@ -279,12 +279,8 @@ execution, external outreach, deployment, or paid API usage through a GET
 request; Basic Auth adds access control on top of behavior that was
 already read-only.
 
-**Recorded tech debt, not urgent**: Next.js 16 deprecated the
-`middleware.ts` file convention in favor of `proxy.ts` (identical export
-shape) — a build-time warning only, no functional difference today. See
-the comment at the top of `middleware.ts`. Not prioritized over the
-growth-integration work above since it isn't causing any actual production
-issue.
+The access gate uses Next.js 16's `proxy.ts` convention and remains scoped
+to `/internal/:path*`.
 
 ## Cost control
 

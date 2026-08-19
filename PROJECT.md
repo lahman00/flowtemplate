@@ -166,7 +166,7 @@ handful of hand-written pages.
   keys, credentials, or tokens found; one real latent gap (a QA agent's
   captured build/lint output could leak an absolute local filesystem path
   on failure) found and fixed before it ever shipped. All five `/internal/*`
-  pages now gated behind HTTP Basic Auth (`middleware.ts`, fails closed if
+  pages now gated behind HTTP Basic Auth (`proxy.ts`, fails closed if
   credentials aren't set) — the smallest available mechanism, no new
   dependency, no login system. Credentials rotated at least once since
   (old ones verified invalidated) — see `docs/agents-architecture.md`
