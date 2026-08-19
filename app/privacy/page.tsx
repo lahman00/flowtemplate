@@ -34,9 +34,9 @@ export default function PrivacyPage() {
             <>
               <p>
                 {SITE_NAME}{" "}
-                has no user accounts and no database. Searching for software or
-                browsing comparisons doesn&apos;t submit any data to a server — it all happens
-                directly in your browser.
+                has no user accounts and does not require visitors to create an
+                account. Searching for software or browsing comparisons doesn&apos;t submit any
+                personal data to a server — it all happens directly in your browser.
               </p>
               <ul className="list-disc space-y-1 pl-5">
                 <li>We do not require or collect account information.</li>
@@ -70,6 +70,24 @@ export default function PrivacyPage() {
               information about those products, but we don&apos;t control their sites or their
               privacy practices — review each vendor&apos;s own policy before using their
               product.
+            </p>
+          ),
+        },
+        {
+          heading: "Third-party platform integrations",
+          body: (
+            <p>
+              {SITE_NAME}{" "}
+              may connect to third-party platforms, such as LinkedIn, to manage and
+              publish {SITE_NAME}&apos;s own content. When such an integration is enabled, {SITE_NAME}{" "}
+              may receive and process limited information necessary to authenticate and operate
+              it — for example, authorization credentials or tokens, account or organization
+              identifiers, and information related to content managed or published through the
+              integration. This information is used only to operate the relevant integration. It
+              is not sold, and it is not used by {SITE_NAME}{" "}
+              for advertising. Information received
+              from a third-party platform is handled in accordance with that platform&apos;s own
+              terms and policies.
             </p>
           ),
         },
