@@ -21,13 +21,24 @@ describe("canonical active affiliate partner registry", () => {
     },
   );
 
-  it("Brevo is not in the canonical registry (rejected by Brevo 2026-08-19) and falls back to its official URL", () => {
+  it("Brevo (REJECTED) is not in the canonical registry and gets the ordinary official link, no affiliate CTA", () => {
     // The slug union type no longer includes "brevo" at all — that's itself
     // a compile-time guarantee it was removed, not just an empty runtime find.
     const slugs: readonly string[] = ACTIVE_PARTNERS.map(({ slug }) => slug);
     const software = getSoftware("brevo");
 
     expect(slugs).not.toContain("brevo");
+    expect(getSoftwareCtaUrl(software!)).toBe(software!.website);
+    expect(getSoftwareCtaRel(software!)).toBe("noopener noreferrer");
+    expect(shouldShowAffiliateDisclosure(software!)).toBe(false);
+  });
+
+  it("Miro (HOLD / UNCLEAR) is not in the canonical registry and gets the ordinary official link, no affiliate CTA", () => {
+    const slugs: readonly string[] = ACTIVE_PARTNERS.map(({ slug }) => slug);
+    const software = getSoftware("miro");
+
+    expect(slugs).not.toContain("miro");
+    expect(software!.affiliateUrl).toBeUndefined();
     expect(getSoftwareCtaUrl(software!)).toBe(software!.website);
     expect(getSoftwareCtaRel(software!)).toBe("noopener noreferrer");
     expect(shouldShowAffiliateDisclosure(software!)).toBe(false);

@@ -94,6 +94,17 @@ describe("trackSoftwareCtaClick — Wix funnel dimensions", () => {
     });
   });
 
+  it("a single affiliate CTA click emits exactly one event, never zero or duplicated", () => {
+    const todoist = getSoftware("todoist")!;
+    trackSoftwareCtaClick(todoist, "https://get.todoist.io/dobo71f2y038", "/software/todoist", "software-page-cta");
+    expect(getOutboundEvents()).toHaveLength(1);
+
+    // A second, distinct click adds exactly one more — proves events
+    // accumulate cleanly rather than the log being rewritten/deduped away.
+    trackSoftwareCtaClick(todoist, "https://get.todoist.io/dobo71f2y038", "/compare/todoist-vs-airtable", "compare-page-choose-card");
+    expect(getOutboundEvents()).toHaveLength(2);
+  });
+
   it("never records secrets or unrelated personal data — only the documented dimensions", () => {
     const wix = getSoftware("wix")!;
     trackSoftwareCtaClick(wix, WIX_FUNNELS["website-builder"].url, "/software/wix", "software-page-cta");
