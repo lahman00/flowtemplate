@@ -7,9 +7,18 @@ export function normalizeQuery(query: string): string {
 
 export function softwareEntitiesForQuery(query: string, software: Software[]): Software[] {
   const normalized = ` ${normalizeQuery(query)} `;
-  return software.filter((item) => {
+  const compact = normalizeQuery(query).replace(/\s/g, "");
+  const matches = software.filter((item) => {
     const names = [item.slug.replace(/-/g, " "), normalizeQuery(item.name)].filter((value) => value.length > 1);
-    return names.some((name) => normalized.includes(` ${name} `));
+    return names.some((name) => normalized.includes(` ${name} `) || (name.replace(/\s/g, "").length >= 5 && compact.includes(name.replace(/\s/g, ""))));
+  }).sort((a, b) => normalizeQuery(b.name).length - normalizeQuery(a.name).length);
+
+  // Prefer the most specific entity: "craft cms" should not also become
+  // the separate "craft" product merely because its shorter name is a
+  // substring. This keeps opportunity graph identities stable.
+  return matches.filter((item, index) => {
+    const name = normalizeQuery(item.name);
+    return !matches.slice(0, index).some((specific) => ` ${normalizeQuery(specific.name)} `.includes(` ${name} `));
   });
 }
 

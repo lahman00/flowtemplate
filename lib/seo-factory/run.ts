@@ -60,7 +60,7 @@ const ACTION_PRIORITY: Record<SeoAction, number> = { MERGE: 10, REDIRECT: 9, MET
 export function clusterOpportunities(items: SeoOpportunity[]): SeoOpportunity[] {
   const groups = new Map<string, SeoOpportunity[]>();
   for (const item of items) {
-    const key = `${item.existingUrl ?? item.targetUrl ?? "missing"}|${item.intent}`;
+    const key = `${item.existingUrl ?? item.targetUrl ?? "missing"}|${item.intent}|${[...item.relatedSoftware].sort().join(",") || "no-entity"}`;
     groups.set(key, [...(groups.get(key) ?? []), item]);
   }
   return [...groups.values()].map((group) => {

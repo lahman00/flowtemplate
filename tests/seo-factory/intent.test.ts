@@ -6,6 +6,9 @@ const products = [
   { slug: "pipedrive", name: "Pipedrive" },
   { slug: "hubspot", name: "HubSpot" },
   { slug: "microsoft-teams", name: "Microsoft Teams" },
+  { slug: "help-scout", name: "Help Scout" },
+  { slug: "craft", name: "Craft" },
+  { slug: "craft-cms", name: "Craft CMS" },
 ] as Software[];
 
 describe("SEO Factory intent classification", () => {
@@ -22,5 +25,10 @@ describe("SEO Factory intent classification", () => {
   it("matches multi-word and internally-capitalized entities deterministically", () => {
     expect(softwareEntitiesForQuery("Microsoft Teams pricing", products).map((item) => item.slug)).toEqual(["microsoft-teams"]);
     expect(normalizeQuery("  HubSpot—VS—Pipedrive ")).toBe("hubspot vs pipedrive");
+  });
+
+  it("recognizes compact aliases and prefers the longest specific entity", () => {
+    expect(softwareEntitiesForQuery("helpscout alternatives", products).map((item) => item.slug)).toEqual(["help-scout"]);
+    expect(softwareEntitiesForQuery("craft cms alternatives", products).map((item) => item.slug)).toEqual(["craft-cms"]);
   });
 });

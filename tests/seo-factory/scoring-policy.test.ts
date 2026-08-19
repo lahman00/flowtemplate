@@ -39,6 +39,15 @@ describe("SEO Factory scoring and safety policy", () => {
     expect(clustered[0]!.evidence.at(-1)).toContain("Clustered 2 query variant");
   });
 
+  it("does not cluster different entity intents merely because Google ranks the same URL", () => {
+    const common = { query: "a alternatives", intent: "ALTERNATIVES", action: "IMPROVE", targetUrl: "/software/a", existingUrl: "/software/a", category: "x", gsc: { impressions: 10, clicks: 0, ctr: 0, position: 50 }, affiliateStatus: "NONE", moneyScore: null, opportunityScore: 50, scoreComponents: [], cannibalizationRisk: "none", canonicalWinner: null, recommendation: "Improve", evidence: [], confidence: "medium", state: "ANALYZED", publicationEligible: false } satisfies Omit<SeoOpportunity, "id" | "relatedSoftware">;
+    const clustered = clusterOpportunities([
+      { ...common, id: "a", relatedSoftware: ["a"] },
+      { ...common, id: "b", query: "b alternatives", relatedSoftware: ["b"] },
+    ]);
+    expect(clustered).toHaveLength(2);
+  });
+
   it("never marks a page publishable in Level 0, even with strong evidence", () => {
     const result = assessPublicationThreshold({ impressions: 1000, intent: "PRICING", existingCanonical: null, factualSources: 5, internalLinkSources: 8, uniqueDecisionValue: true, cannibalizationRisk: "none" });
     expect(result.eligible).toBe(false);
