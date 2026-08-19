@@ -74,6 +74,21 @@ export default function PrivacyPage() {
           ),
         },
         {
+          heading: "Outbound link tracking",
+          body: (
+            <p>
+              When you click a &quot;Visit official site&quot; or affiliate link on a product
+              or comparison page, {SITE_NAME}{" "}
+              may record that the click happened — which product, which page it was on, which
+              button, and the destination link — for internal analytics and revenue
+              measurement. Recording an outbound click doesn&apos;t use a cookie or create any
+              account or identifier for you, and it doesn&apos;t capture your IP address or
+              browser information. This information stays on {SITE_NAME}&apos;s own systems; it
+              isn&apos;t sold or shared with a third-party analytics provider.
+            </p>
+          ),
+        },
+        {
           heading: "Third-party platform integrations",
           body: (
             <p>
