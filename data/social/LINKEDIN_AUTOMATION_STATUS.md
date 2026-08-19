@@ -4,7 +4,13 @@ Re-verified 2026-08-19 against LinkedIn's current official Microsoft Learn docum
 
 ## Architecture
 
-LinkedIn uses the existing queue, scheduling, QA, UTM, retry, and provider-state pipeline. `lib/social/channels/linkedin.ts` implements the official `POST /rest/posts` Company Page path and fails closed when its access values are absent.
+LinkedIn uses the existing queue, scheduling, QA, UTM, retry, and provider-state pipeline. `LINKEDIN_TRANSPORT=direct` selects the official Posts API implementation; `LINKEDIN_TRANSPORT=make` selects a signed Make webhook bridge. Both transports share the same queue identity and provider state, so switching requires no editorial or queue migration.
+
+## Make bridge status
+
+The code path is ready, but production has no Make webhook URL, authentication secret, or transport selection yet. Make remains an external transport only: Miloosh sends the final publication-time UTM copy and stable `linkedin:{queueEntryId}` idempotency key. A synchronous response with a LinkedIn post ID becomes `PUBLISHED`; acceptance without that ID becomes `PENDING_CONFIRMATION`; ambiguous network results become `UNKNOWN_OUTCOME` and are not blindly retried.
+
+If Make completes asynchronously, it calls `POST /api/social/make/linkedin-result` with the same queue identity. The callback requires bearer authentication, rejects unknown IDs, is idempotent, and only updates the LinkedIn channel.
 
 ## The exact blocker
 

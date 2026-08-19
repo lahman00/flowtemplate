@@ -28,6 +28,7 @@ export type Channel = (typeof CHANNELS)[number];
 /** Ported directly from base.py's PublishResult status vocabulary. */
 export type PublishStatus =
   | "PUBLISHED"
+  | "PENDING_CONFIRMATION"
   | "DRY_RUN"
   | "SETUP_REQUIRED"
   | "DUPLICATE_SKIPPED"
@@ -48,11 +49,14 @@ export type PublishResult = {
   contentHash: string;
   /** Which real API mechanism was (or, in a dry run, would be) used — e.g. Facebook's IMAGE_POST (`/photos`) vs LINK_POST (`/feed`). null for adapters that only have one publish mechanism. Set even in a dry run, so the mode is visible without a real network call. */
   mode?: "IMAGE_POST" | "LINK_POST" | null;
+  /** Optional transport metadata for bridge-backed providers such as Make. */
+  transport?: "direct" | "make" | null;
+  executionId?: string | null;
 };
 
 /** Durable, provider-specific delivery state. Optional for backwards compatibility with queue records created before this field existed. */
 export type ProviderPublishState = {
-  status: "PENDING" | "PUBLISHED" | "FAILED" | "UNKNOWN_OUTCOME" | "MANUAL_READY" | "BLOCKED";
+  status: "PENDING" | "PENDING_CONFIRMATION" | "PUBLISHED" | "FAILED" | "UNKNOWN_OUTCOME" | "MANUAL_READY" | "BLOCKED";
   attempts: number;
   lastAttemptAt: string | null;
   publishedAt: string | null;
@@ -61,6 +65,8 @@ export type ProviderPublishState = {
   contentHash: string;
   verified: boolean;
   error: string;
+  transport?: "direct" | "make" | null;
+  executionId?: string | null;
 };
 
 /** Phase 14 dashboard vocabulary — one status per channel, independent of any single post's PublishStatus. */

@@ -107,7 +107,7 @@ function channelNeedsAttempt(variant: ChannelVariant): boolean {
 
 function providerStateFromResult(previous: ProviderPublishState | undefined, result: PublishResult, attemptedAt: string): ProviderPublishState {
   const unknownOutcome = result.status === "FAILED" && (result.error.includes("NETWORK_ERROR") || result.error.includes("unknown publication outcome"));
-  const status: ProviderPublishState["status"] = result.status === "PUBLISHED" ? "PUBLISHED" : result.status === "MANUAL_ONLY" ? "MANUAL_READY" : result.status === "SETUP_REQUIRED" ? "BLOCKED" : result.status === "DRY_RUN" || result.status === "DUPLICATE_SKIPPED" ? "PENDING" : unknownOutcome ? "UNKNOWN_OUTCOME" : "FAILED";
+  const status: ProviderPublishState["status"] = result.status === "PUBLISHED" ? "PUBLISHED" : result.status === "PENDING_CONFIRMATION" ? "PENDING_CONFIRMATION" : result.status === "MANUAL_ONLY" ? "MANUAL_READY" : result.status === "SETUP_REQUIRED" ? "BLOCKED" : result.status === "DRY_RUN" || result.status === "DUPLICATE_SKIPPED" ? "PENDING" : unknownOutcome ? "UNKNOWN_OUTCOME" : "FAILED";
   return {
     status,
     attempts: (previous?.attempts ?? 0) + (result.status === "DRY_RUN" ? 0 : 1),
@@ -118,6 +118,8 @@ function providerStateFromResult(previous: ProviderPublishState | undefined, res
     contentHash: result.contentHash,
     verified: result.verified,
     error: result.error,
+    transport: result.transport ?? previous?.transport ?? null,
+    executionId: result.executionId ?? previous?.executionId ?? null,
   };
 }
 
@@ -132,6 +134,7 @@ export function classifyScheduledEntries(queue: SocialQueueEntry[], now: Date): 
     // compatibility entry state to PUBLISHED/READY_FOR_MANUAL. Keep that
     // channel eligible on later business days instead of losing it.
     if (e.state !== "SCHEDULED" && e.state !== "PUBLISHED" && e.state !== "READY_FOR_MANUAL" && e.state !== "FAILED") continue;
+    if (e.state === "SCHEDULED" && !hasPendingProvider) continue;
     if (e.state !== "SCHEDULED" && !hasPendingProvider) continue;
     const scheduledMs = new Date(e.scheduledFor).getTime();
     if (scheduledMs > now.getTime()) continue; // not due yet
@@ -184,7 +187,7 @@ export async function publishOneEntry(
     const taggedVariant: ChannelVariant = variant.link ? { ...variant, link: buildUtmUrl(variant.link, channel, entry.campaign, entry.id) } : variant;
     let result: PublishResult;
     try {
-      result = await publishWithRetry(() => adapter.publish(taggedVariant, { dryRun }));
+      result = await publishWithRetry(() => adapter.publish(taggedVariant, { dryRun, entryId: entry.id, scheduledAt: entry.scheduledFor }));
     } catch (err) {
       // Failure-safe fallback in case an adapter implementation itself
       // throws instead of catching its own error (contract violation,
@@ -328,9 +331,10 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     // manual content ready -> READY_FOR_MANUAL; neither -> FAILED.
     const realPublish = attempts.some((a) => a.result.status === "PUBLISHED");
     const manualReady = attempts.some((a) => a.result.status === "MANUAL_ONLY");
-    const nextState = realPublish ? "PUBLISHED" : manualReady ? "READY_FOR_MANUAL" : "FAILED";
+    const pendingConfirmation = attempts.some((a) => a.result.status === "PENDING_CONFIRMATION");
+    const nextState = realPublish ? "PUBLISHED" : manualReady ? "READY_FOR_MANUAL" : pendingConfirmation ? "SCHEDULED" : "FAILED";
     const note = nextState === "FAILED" ? "All channel attempts failed — see per-channel publishResult for detail." : nextState === "READY_FOR_MANUAL" ? "No channel published automatically — manual-only content is drafted and ready for a human to post (see per-channel publishResult)." : undefined;
-    if (entry.state === "SCHEDULED") await setQueueState(entry.id, nextState, note);
+    if (entry.state === "SCHEDULED" && nextState !== "SCHEDULED") await setQueueState(entry.id, nextState, note);
   }
 
   return { ranAt: now.toISOString(), dryRun: options.dryRun, paused: false, entriesAttempted: due.length, results, staleHandling };

@@ -26,7 +26,7 @@ export type SocialAdapter = {
    * take down the others in the orchestrator's loop (Phase 8's "a failed
    * channel must NOT block all other channels").
    */
-  publish(variant: ChannelVariant, options: { dryRun: boolean }): Promise<PublishResult>;
+  publish(variant: ChannelVariant, options: { dryRun: boolean; entryId?: string; scheduledAt?: string | null }): Promise<PublishResult>;
 };
 
 function getEnv(name: string): string | undefined {
@@ -86,6 +86,8 @@ export function buildPublishResult(partial: {
   verified?: boolean;
   error?: string;
   mode?: PublishResult["mode"];
+  transport?: PublishResult["transport"];
+  executionId?: string | null;
 }): PublishResult {
   return {
     channel: partial.channel,
@@ -98,5 +100,7 @@ export function buildPublishResult(partial: {
     error: partial.error ?? "",
     contentHash: contentHash(partial.channel, partial.text),
     mode: partial.mode ?? null,
+    transport: partial.transport ?? null,
+    executionId: partial.executionId ?? null,
   };
 }
