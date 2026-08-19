@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/social-publish",
       "schedule": "0 9,16,17,18 * * *"
+    },
+    {
+      "path": "/api/cron/seo-factory",
+      "schedule": "0 22 * * *"
     }
   ]
 }
