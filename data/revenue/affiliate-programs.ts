@@ -832,19 +832,25 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "semrush",
-    lastVerifiedAt: "2026-08-14",
+    lastVerifiedAt: "2026-08-20",
     programExists: "yes",
     type: "network",
     networkName: "Impact",
     countryRestrictions: null,
     commissionModel:
-      "Official KB article confirms fixed commissions per sale or free-trial activation but does not disclose exact dollar tiers in the fetched text. Third-party sources separately cite tiered $200/$250/$300/$350 per sale (by quarterly volume) plus $10 per free-trial signup — not independently confirmed on the official page itself.",
+      "Confirmed directly on semrush.com/lp/affiliate-program/en/ (live page, 2026-08-20): $10 per free trial for every toolkit except AI Visibility Toolkit (no trial commission listed); per-sale base commission by toolkit — Semrush One $300, SEO Toolkit $200, AI Visibility Toolkit $100, Content Toolkit $100, Social Toolkit $50, Local Toolkit $50, Traffic & Market Toolkit $200, Advertising Toolkit $100. Loyalty tiers scale Semrush One up to $450/sale (Basic 0-4, Silver 5-19, Gold 20-49, Platinum 50+ sales per quarter), plus quarterly content bonuses ($200-$1,500 by tier). Not one flat rate — varies by product and by the affiliate's own quarterly sales volume.",
     recurrence: "one_time",
     notes:
-      "Official KB article (semrush.com/kb/97-affiliate-program) directly fetched and confirms: 120-day cookie, runs on Impact, apply via Impact registration with ~2-business-day review, contact affiliates@semrush.com for program-fit questions.",
-    sourceUrls: ["https://www.semrush.com/kb/97-affiliate-program"],
-    applicationUrl: "https://www.semrush.com/kb/97-affiliate-program",
+      "Program is live and unchanged in substance since 2026-08-14/15 checks. Direct application entry point is Semrush's own \"Become a partner\" link, which routes straight to the Impact campaign page (not the KB article). Genuine blocker for Miloosh: applying requires an authenticated Impact.com account, and no Impact.com session exists in Miloosh's working environment (confirmed live 2026-08-20 by navigating to app.impact.com directly — redirected to login, no session). Miloosh has other Impact relationships (Shopify, Wix) but their session/credentials are not available here either. Creating a new Impact account requires setting a password and, per Impact's own onboarding, eventually payment/tax details — both outside what this agent may do autonomously. Recorded as needs_owner_action in the affiliate pipeline; see lib/revenue/affiliate-pipeline.ts history for full audit trail. Do not apply until an authenticated Impact session is available.",
+    sourceUrls: [
+      "https://www.semrush.com/kb/97-affiliate-program",
+      "https://www.semrush.com/lp/affiliate-program/en/",
+    ],
+    applicationUrl:
+      "https://app.impact.com/campaign-campaign-info-v2/Semrush.brand?io=DP3hjNntyIpHsEPndkNbE2O5yH9ju8feMzfbzqahAju%2BmiWuC0MVbq7eXPb9iTc0",
     cookieDuration: "120 days",
+    eligibility:
+      "Verbatim from Semrush's own FAQ (2026-08-20): applicant's website should have a minimum of 1,000 unique visitors in monthly traffic, OR a social network page/channel with a significant number of organic followers/likes/views (typically at least 1,000). Reviewed by Semrush's team after application, not self-attested on the form. Miloosh's real monthly-unique-visitor count is not independently verifiable from this environment (no GA4 Data API access) and must not be misrepresented on any future application.",
     confidence: "high",
   },
   {

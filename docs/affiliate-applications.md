@@ -1,6 +1,6 @@
 # Affiliate applications — live status + acquisition queue
 
-Updated: 2026-08-20
+Updated: 2026-08-20 (Semrush re-verification + owner-action blocker added)
 
 This file is the operational affiliate list for Miloosh across PartnerStack accounts and direct networks. Statuses below distinguish **ACTIVE**, **PENDING**, **KNOWN REJECTED**, and **MONITORING TARGETS**. Never mark a program active until a real tracking URL has been issued and verified.
 
@@ -40,6 +40,7 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 |---|---|---|---|
 | Shopify | Impact | ACTIVE | Real Impact tracking URL recorded (`https://shopify.pxf.io/L0EG9O`) |
 | Wix | Impact | ACTIVE | Multi-funnel Impact routing (`https://wix.pxf.io/c/7623171/2096727/25616`) |
+| Semrush | Impact | BLOCKED — needs owner action | Highest real-traffic unmonetized gap identified by the Phase 12 Money Map. Program re-verified live 2026-08-20: $10/trial, $50-$300/sale by toolkit (Semrush One up to $450 at Platinum tier), 120-day cookie, direct apply link is Semrush's own "Become a partner" button → `app.impact.com/campaign-campaign-info-v2/Semrush.brand`. **Cannot be submitted by Claude**: no Impact.com session/account exists in this environment (confirmed live by navigating to app.impact.com — redirected to login). Applying requires creating a new Impact account (password) and likely payment/tax setup, both outside Claude's authority. Owner action needed: sign in to Impact.com in the Miloosh working session (reuse Shopify/Wix credentials if the same account) or create a new publisher account, then Claude can complete the program-specific application truthfully. See `data/revenue/affiliate-programs.ts` and the affiliate pipeline (`slug: "semrush"`) for full evidence and eligibility text. Do NOT activate Semrush on any public page until a real tracking URL is issued. |
 
 ## Known Rejected / Not Pending
 
