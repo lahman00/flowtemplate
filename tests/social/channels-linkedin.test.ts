@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { linkedinAdapter, reconcileBufferLinkedInPost } from "@/lib/social/channels/linkedin";
+import { resetLocalLinkedInDeliveryClaimsForTests } from "@/lib/social/linkedin-delivery-claims";
 import type { ChannelVariant } from "@/lib/social/types";
 
 const variant: ChannelVariant = { text: "Miro or Lucidchart?", link: "https://miloosh.com/compare/miro-vs-lucidchart", imageUrl: null, altText: null, hashtags: [], publishResult: null };
@@ -7,6 +8,7 @@ const keys = ["LINKEDIN_TRANSPORT", "MAKE_LINKEDIN_WEBHOOK_URL", "MAKE_LINKEDIN_
 
 afterEach(() => {
   vi.restoreAllMocks();
+  resetLocalLinkedInDeliveryClaimsForTests();
   for (const key of keys) delete process.env[key];
 });
 
@@ -105,6 +107,33 @@ describe("linkedinAdapter", () => {
     expect((init?.headers as Record<string, string>).Authorization).toBe("Bearer secret");
     const request = JSON.parse(String(init?.body));
     expect(request.variables.input).toMatchObject({ channelId: "channel-1", schedulingType: "automatic", mode: "shareNow", source: "miloosh:linkedin:entry-1" });
+    expect(request.variables.input.assets).toEqual([]);
+  });
+
+  it("attaches a trusted public card URL as a Buffer image asset", async () => {
+    process.env.LINKEDIN_TRANSPORT = "buffer";
+    process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY = "secret";
+    process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID = "channel-1";
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ data: { createPost: { post: { id: "buffer-image", status: "buffer", sentAt: null } } } }), { status: 200 }));
+    const imageUrl = "https://miloosh.com/api/social/card?size=linkedin&kind=research&headline=Verified";
+    await linkedinAdapter.publish({ ...variant, imageUrl, altText: "Miloosh research card" }, { dryRun: false, entryId: "entry-image" });
+    const request = JSON.parse(String(fetchMock.mock.calls[0]![1]?.body));
+    expect(request.variables.input.assets).toEqual([{ image: { url: imageUrl } }]);
+  });
+
+  it("allows only one Buffer mutation for concurrent attempts with the same stable identity", async () => {
+    process.env.LINKEDIN_TRANSPORT = "buffer";
+    process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY = "secret";
+    process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID = "channel-1";
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ data: { createPost: { post: { id: "buffer-once", status: "buffer", sentAt: null } } } }), { status: 200 }));
+
+    const [first, second] = await Promise.all([
+      linkedinAdapter.publish(variant, { dryRun: false, entryId: "same-entry" }),
+      linkedinAdapter.publish(variant, { dryRun: false, entryId: "same-entry" }),
+    ]);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect([first.status, second.status].sort()).toEqual(["DUPLICATE_SKIPPED", "PENDING_CONFIRMATION"]);
   });
 
   it("reconciles a Buffer post as sent without inventing a LinkedIn post ID", async () => {
@@ -121,8 +150,10 @@ describe("linkedinAdapter", () => {
     process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID = "channel-1";
     const fetchMock = vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("timed out"));
     const result = await linkedinAdapter.publish(variant, { dryRun: false, entryId: "entry-1" });
+    const retry = await linkedinAdapter.publish(variant, { dryRun: false, entryId: "entry-1" });
     expect(result.status).toBe("FAILED");
     expect(result.error).toContain("unknown publication outcome");
+    expect(retry.status).toBe("DUPLICATE_SKIPPED");
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });

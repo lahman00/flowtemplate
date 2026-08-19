@@ -6,6 +6,7 @@ import { publishWithRetry } from "@/lib/social/retry";
 import { buildUtmUrl } from "@/lib/social/utm";
 import type { Channel, ChannelVariant, ProviderPublishState, PublishResult, SocialQueueEntry } from "@/lib/social/types";
 import { reconcileBufferLinkedInPost } from "@/lib/social/channels/linkedin";
+import { linkedinPublishIssues, prepareLinkedInVariant } from "@/lib/social/linkedin-readiness";
 
 /**
  * Publish orchestrator — the TypeScript equivalent of Need Go Home's
@@ -33,7 +34,15 @@ export type PublishRunSummary = {
   dryRun: boolean;
   paused: boolean;
   entriesAttempted: number;
-  results: Array<{ entryId: string; channel: Channel; status: PublishResult["status"] }>;
+  results: Array<{
+    entryId: string;
+    channel: Channel;
+    status: PublishResult["status"];
+    transport?: PublishResult["transport"];
+    bufferPostId?: string;
+    linkedinPostId?: string;
+    error?: string;
+  }>;
   staleHandling: {
     graceWindowMs: number;
     maxCatchupPerRun: number;
@@ -98,6 +107,13 @@ export function hasChannelPublishedToday(queue: SocialQueueEntry[], channel: Cha
     const publishedAt = variant?.providerState?.publishedAt ?? e.history.filter((h) => h.state === "PUBLISHED").map((h) => h.at).at(-1);
     if (!publishedAt) return false;
     return businessDayKey(new Date(publishedAt), timeZone) === businessDayKey(now, timeZone);
+  });
+}
+
+export function hasChannelAttemptedToday(queue: SocialQueueEntry[], channel: Channel, now: Date, timeZone = "UTC"): boolean {
+  return queue.some((entry) => {
+    const attemptedAt = entry.channels[channel]?.providerState?.lastAttemptAt;
+    return Boolean(attemptedAt && businessDayKey(new Date(attemptedAt), timeZone) === businessDayKey(now, timeZone));
   });
 }
 
@@ -189,9 +205,16 @@ export async function publishOneEntry(
 
   for (const channel of channelKeys) {
     if (skipChannels.includes(channel)) continue;
-    const variant = entry.channels[channel];
+    const variant = channel === "linkedin" ? prepareLinkedInVariant(entry) : entry.channels[channel];
     if (!variant) continue;
     const adapter = adapters[channel];
+    if (channel === "linkedin" && adapter === ADAPTERS.linkedin) {
+      const issues = linkedinPublishIssues(entry, variant);
+      if (issues.length) {
+        attempts.push({ channel, result: buildBlockedPublishResult(channel, variant, issues) });
+        continue;
+      }
+    }
     // UTM tagging happens here, at publish time, never baked into the
     // stored draft — this is the one choke point every channel's real
     // publish() call goes through (dry-run included, so a dry-run proves
@@ -228,6 +251,22 @@ export async function publishOneEntry(
   return attempts;
 }
 
+function buildBlockedPublishResult(channel: Channel, variant: ChannelVariant, issues: string[]): PublishResult {
+  return {
+    channel,
+    status: "FAILED",
+    text: variant.text,
+    link: variant.link ?? "",
+    postUrl: null,
+    postId: null,
+    verified: false,
+    error: `Deterministic pre-publish quality gate blocked this post: ${issues.join(" ")}`,
+    contentHash: "",
+    transport: channel === "linkedin" ? "buffer" : null,
+    targetId: channel === "linkedin" ? process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID ?? null : null,
+  };
+}
+
 export async function runPublishCycle(options: { dryRun: boolean; now?: Date; strategy?: ReturnType<typeof getSocialStrategy>; adapters?: Record<Channel, SocialAdapter> }): Promise<PublishRunSummary> {
   const now = options.now ?? new Date();
   const strategy = options.strategy ?? getSocialStrategy();
@@ -246,6 +285,22 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
   if (!options.dryRun) await reconcilePendingBufferPosts(queue, now);
   const { onTime, stale } = classifyScheduledEntries(queue, now);
   const due = onTime.slice(0, DAILY_ENTRY_CAP);
+  const linkedinOnlyEntryIds = new Set<string>();
+  // LinkedIn-only continuity once the pre-scheduled runway is exhausted.
+  // The selected APPROVED entry is explicitly marked LinkedIn-only for
+  // this invocation; no other adapter is eligible and the shared entry's
+  // schedule/state is not changed. 17:00 UTC matches the existing slots.
+  const hasDueLinkedIn = due.some((entry) => entry.channels.linkedin && channelNeedsAttempt(entry.channels.linkedin));
+  if (now.getUTCHours() === 17 && !hasDueLinkedIn && !hasChannelAttemptedToday(queue, "linkedin", now, strategy.timezone)) {
+    const approvedLinkedIn = queue.find((entry) => {
+      const variant = prepareLinkedInVariant(entry);
+      return entry.state === "APPROVED_FOR_AUTO" && variant && channelNeedsAttempt(variant) && linkedinPublishIssues(entry, variant).length === 0;
+    });
+    if (approvedLinkedIn) {
+      due.push(approvedLinkedIn);
+      linkedinOnlyEntryIds.add(approvedLinkedIn.id);
+    }
+  }
   const staleToHandle = stale.slice(0, MAX_CATCHUP_PER_RUN);
 
   const requeued: PublishRunSummary["staleHandling"]["requeued"] = [];
@@ -289,7 +344,9 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
   // PUBLISHED, every later entry in the same run must also see the cap
   // as reached, not just entries processed by a future invocation.
   const publishedTodayByChannel = new Map<Channel, boolean>();
+  const attemptedTodayByChannel = new Map<Channel, boolean>();
   const channelHasPublishedToday = (channel: Channel) => publishedTodayByChannel.get(channel) ?? hasChannelPublishedToday(queue, channel, now, strategy.timezone);
+  const channelHasAttemptedToday = (channel: Channel) => attemptedTodayByChannel.get(channel) ?? hasChannelAttemptedToday(queue, channel, now, strategy.timezone);
 
   for (const entry of due) {
     // Two independent, permanent-until-config-changes reasons a channel
@@ -307,6 +364,8 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     // needs per-channel state, not per-entry — flagged, not silently
     // accepted.
     const skipChannels = (Object.keys(entry.channels) as Channel[]).filter((channel) => {
+      if (linkedinOnlyEntryIds.has(entry.id) && channel !== "linkedin") return true;
+      if (channel === "linkedin" && channelHasAttemptedToday(channel)) return true;
       if (channelHasPublishedToday(channel)) return true;
       const excludedPillars = strategy.excludedPillarsByChannel[channel];
       return Boolean(excludedPillars?.includes(entry.pillar));
@@ -314,8 +373,17 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
 
     const attempts = await publishOneEntry(entry, options.dryRun, adapters, skipChannels);
     for (const { channel, result } of attempts) {
-      results.push({ entryId: entry.id, channel, status: result.status });
+      results.push({
+        entryId: entry.id,
+        channel,
+        status: result.status,
+        ...(result.transport ? { transport: result.transport } : {}),
+        ...(result.bufferPostId ? { bufferPostId: result.bufferPostId } : {}),
+        ...(result.linkedinPostId ? { linkedinPostId: result.linkedinPostId } : {}),
+        ...(result.error ? { error: result.error } : {}),
+      });
       if (result.status === "PUBLISHED") publishedTodayByChannel.set(channel, true);
+      if (channel === "linkedin" && !options.dryRun && result.status !== "DUPLICATE_SKIPPED") attemptedTodayByChannel.set(channel, true);
     }
 
     // Every channel was withheld (daily cap already hit, or every
@@ -334,6 +402,11 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     // transition, so this would be irreversible. Only a real (--live /
     // authenticated cron) run is allowed to persist anything.
     if (options.dryRun) continue;
+
+    // A concurrent/retried invocation that lost the durable LinkedIn
+    // provider claim made no external request and must not overwrite the
+    // winner's state or mark the shared queue entry failed.
+    if (attempts.every((attempt) => attempt.result.status === "DUPLICATE_SKIPPED")) continue;
 
     const updatedChannels = { ...entry.channels };
     for (const { channel, result } of attempts) {

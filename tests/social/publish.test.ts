@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
-import { publishOneEntry, runPublishCycle, classifyScheduledEntries, hasChannelPublishedToday, GRACE_WINDOW_MS, MAX_CATCHUP_PER_RUN, MAX_REQUEUE_ATTEMPTS, REQUEUE_OFFSET_MS } from "@/lib/social/publish";
+import { publishOneEntry, runPublishCycle, classifyScheduledEntries, hasChannelAttemptedToday, hasChannelPublishedToday, GRACE_WINDOW_MS, MAX_CATCHUP_PER_RUN, MAX_REQUEUE_ATTEMPTS, REQUEUE_OFFSET_MS } from "@/lib/social/publish";
 import { readQueue, addQueueEntries } from "@/lib/social/queue";
 import { getSocialStrategy } from "@/lib/social/strategy";
 import type { SocialAdapter } from "@/lib/social/channels/types";
@@ -512,5 +512,34 @@ describe("runPublishCycle — pillar exclusion per channel", () => {
 
     const after = await readQueue();
     expect(after[0]!.channels.facebook?.publishResult?.status).toBe("PUBLISHED");
+  });
+});
+
+describe("runPublishCycle — LinkedIn-only daily continuity", () => {
+  const safeLinkedIn = { ...blankVariant, text: "A durable software decision starts with the workflow constraint your team cannot compromise on, not a generic feature-count ranking." };
+
+  it("selects one approved LinkedIn candidate at 17:00 UTC without calling Facebook", async () => {
+    const approved = { ...fixtureEntry({ linkedin: safeLinkedIn, facebook: blankVariant }), id: "approved-linkedin", state: "APPROVED_FOR_AUTO" as const, scheduledFor: null };
+    await addQueueEntries([approved]);
+    const linkedin = fakeAdapter("linkedin", "publish");
+    const facebook = fakeAdapter("facebook", "publish");
+
+    const summary = await runPublishCycle({ dryRun: false, now: new Date("2026-08-31T17:00:00.000Z"), adapters: { linkedin, facebook } as Record<Channel, SocialAdapter> });
+    const updated = (await readQueue())[0]!;
+
+    expect(summary.results).toEqual([{ entryId: "approved-linkedin", channel: "linkedin", status: "PUBLISHED" }]);
+    expect(updated.channels.linkedin?.providerState?.status).toBe("PUBLISHED");
+    expect(updated.channels.facebook?.publishResult).toBeNull();
+    expect(updated.state).toBe("APPROVED_FOR_AUTO");
+  });
+
+  it("does not select another LinkedIn candidate after any real attempt on the same business day", async () => {
+    const attempted = { ...fixtureEntry({ linkedin: { ...safeLinkedIn, providerState: { status: "FAILED" as const, attempts: 1, lastAttemptAt: "2026-08-31T17:00:00.000Z", publishedAt: null, postId: null, postUrl: null, contentHash: "x", verified: false, error: "definite failure", transport: "buffer" as const } } }), id: "attempted", state: "FAILED" as const };
+    const approved = { ...fixtureEntry({ linkedin: safeLinkedIn }), id: "next-approved", state: "APPROVED_FOR_AUTO" as const, scheduledFor: null };
+    await addQueueEntries([attempted, approved]);
+
+    expect(hasChannelAttemptedToday(await readQueue(), "linkedin", new Date("2026-08-31T18:00:00.000Z"), "America/New_York")).toBe(true);
+    const summary = await runPublishCycle({ dryRun: false, now: new Date("2026-08-31T17:30:00.000Z"), adapters: { linkedin: fakeAdapter("linkedin", "publish") } as Record<Channel, SocialAdapter> });
+    expect(summary.results).toHaveLength(0);
   });
 });

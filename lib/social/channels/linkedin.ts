@@ -1,6 +1,7 @@
 import { createHmac } from "node:crypto";
 import type { ChannelVariant, PublishResult } from "@/lib/social/types";
 import { type SocialAdapter, buildPublishResult, defaultFormat, envAll, missingEnvNames } from "@/lib/social/channels/types";
+import { claimLinkedInDelivery, recordLinkedInDelivery, releaseLinkedInDelivery } from "@/lib/social/linkedin-delivery-claims";
 
 /**
  * LinkedIn Company Page adapter. It fails closed until the production
@@ -79,13 +80,24 @@ function resultFromBufferPost(post: BufferPost, body: string, link: string, inde
 
 async function publishViaBuffer(variant: ChannelVariant, body: string, options: { entryId?: string }): Promise<PublishResult> {
   if (!envAll(BUFFER_ENV) || !options.entryId) return buildPublishResult({ channel: "linkedin", status: "SETUP_REQUIRED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Missing ${[...missingEnvNames(BUFFER_ENV), ...(!options.entryId ? ["stable queue entry ID"] : [])].join(", ")}.` });
+  const providerIdentity = `linkedin:${options.entryId}`;
+  if (!(await claimLinkedInDelivery(providerIdentity))) {
+    return buildPublishResult({ channel: "linkedin", status: "DUPLICATE_SKIPPED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Durable provider claim already exists for ${providerIdentity}; no Buffer mutation was attempted.` });
+  }
   try {
     const query = `mutation CreateLinkedInPost($input: CreatePostInput!) { createPost(input: $input) { ... on PostActionSuccess { post { id status sentAt } } ... on MutationError { message } } }`;
-    const { response, result } = await bufferRequest(query, { input: { text: body, channelId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, schedulingType: "automatic", mode: "shareNow", assets: [], source: `miloosh:linkedin:${options.entryId}` } });
+    const assets = variant.imageUrl ? [{ image: { url: variant.imageUrl } }] : [];
+    const { response, result } = await bufferRequest(query, { input: { text: body, channelId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, schedulingType: "automatic", mode: "shareNow", assets, source: `miloosh:${providerIdentity}` } });
     const error = bufferError(result);
-    if (!response.ok || error) return buildPublishResult({ channel: "linkedin", status: response.status === 429 || error?.rateLimited ? "RATE_LIMITED" : "FAILED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer API ${error?.message || `HTTP ${response.status}`}` });
+    if (!response.ok || error) {
+      const retryable = response.status === 429 || error?.rateLimited;
+      const definiteFailure = Boolean(error) || (response.status >= 400 && response.status < 500);
+      if (definiteFailure) await releaseLinkedInDelivery(providerIdentity);
+      return buildPublishResult({ channel: "linkedin", status: retryable ? "RATE_LIMITED" : "FAILED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer API ${error?.message || `HTTP ${response.status}`}` });
+    }
     const post = result.data?.createPost?.post;
     if (!post?.id) return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: "Buffer returned success without a Buffer post ID; unknown publication outcome, so automatic retry is withheld." });
+    await recordLinkedInDelivery(providerIdentity, { bufferPostId: post.id, status: post.status, channelId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID });
     return resultFromBufferPost(post, body, variant.link ?? "");
   } catch (error) {
     return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer request failed with unknown publication outcome: ${error instanceof Error ? error.message : String(error)}` });

@@ -44,5 +44,6 @@ export async function GET(request: NextRequest) {
   }
 
   const summary = await runPublishCycle({ dryRun: forcedDryRun || !isAuthenticated });
+  console.info("Social publish cycle", JSON.stringify(summary));
   return NextResponse.json({ authenticated: isAuthenticated, ...summary });
 }
