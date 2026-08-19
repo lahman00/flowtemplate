@@ -13,7 +13,7 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 | Todoist | PartnerStack | ACTIVE (Approved) | Up to 25%; yearly one-time/monthly up to 12 payments | Link active in canonical registry |
 | Moosend | PartnerStack | ACTIVE (Approved) | 30–40% recurring | Link active in canonical registry |
 | Volza | PartnerStack | ACTIVE (Approved) | 20–30% revenue share (program wording) | Link active in canonical registry |
-| Brevo | PartnerStack | ACTIVE (Approved) | Commission terms UNKNOWN in collected materials | Copy personalized tracking URL from dashboard |
+| Miro | PartnerStack (unconfirmed for this account) | NOT FOUND on this account | Live-verified 2026-08-19: zero results in both Partnerships and Invitations search on this PartnerStack login. Production affiliate pipeline had shown `status: "approved"` for Miro, but that entry's own history showed the jump to approved was self-reported as "fast-tracked" with no cited evidence, and briefly carried an affiliate URL later admitted to be copy-pasted from monday.com's entry — the "approved" pipeline status had no verifiable basis. **Corrected in code the same day**: reclassified `HOLD / UNCLEAR` in `partner-materials-audit.ts`, and the production affiliate pipeline was moved to `needs_owner_action`. Public program (`market.partnerstack.com/page/miroaffiliate`) states $10–$40 per qualified corporate trial signup by geography — unverified against any Miloosh dashboard since no partnership record exists here | Confirm with Eyal whether Miro was ever applied to, and under which account/email, before assuming approval |
 | Pipedrive | PartnerStack | ACTIVE (Approved) | 20%/30% revenue share for first 12 months; Power custom | Link active in canonical registry |
 | GetResponse | PartnerStack | ACTIVE (Approved) | 40%/50%/60% for 12 months by tier | Link active in canonical registry |
 | KrispCall | PartnerStack | ACTIVE (Approved) | Commission terms UNKNOWN in collected materials | Link active in canonical registry |
@@ -44,6 +44,7 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 
 - **HubSpot**: Rejected by vendor affiliate program. Do NOT treat as pending or reapply.
 - **n8n**: Rejected by vendor affiliate program. Do NOT treat as pending or reapply.
+- **Brevo** (moved here 2026-08-19, was previously listed ACTIVE in the table above — that was wrong): PartnerStack's top-level partnership badge still shows "Active," but the program's own Messages tab (same account, hello@miloosh.com, same program) shows a first-party Brevo message dated Today: *"Your application was not approved... your application has been removed from our onboarding process."* A prior message (Yesterday) said the application was "under review." This fully explains the missing Offer/referral link. **Corrected in code the same day**: removed from `active-partners.ts`, reclassified `REJECTED` in `partner-materials-audit.ts`, and the production affiliate pipeline was moved to `rejected`. Do NOT treat as pending or reapply without owner review of why it was rejected.
 
 ## Activation Rule
 

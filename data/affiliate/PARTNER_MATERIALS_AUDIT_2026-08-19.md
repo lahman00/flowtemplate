@@ -20,11 +20,13 @@ Processed evidence:
 
 ## Reconciliation outcome
 
-- 12 canonical active partners: 11 have verified personalized URLs; Brevo alone is approved but missing its URL.
+**Correction, 2026-08-19 (same day, after this section was first written) — supersedes the Brevo and Miro lines below:** live dashboard re-verification found Brevo's PartnerStack Messages thread contains a first-party rejection ("Your application was not approved... removed from our onboarding process"), and found zero Miro partnership/invitation record on the connected PartnerStack account. Both `data/affiliate/active-partners.ts` and `data/affiliate/partner-materials-audit.ts` have been corrected accordingly (Brevo removed from the active registry and reclassified `REJECTED`; Miro reclassified `HOLD / UNCLEAR`), and the production affiliate pipeline was corrected to match (`brevo` → `rejected`, `miro` → `needs_owner_action`). Full evidence: `AFFILIATE_EVIDENCE_AND_SURFACES_2026-08-19.md`'s live re-verification addendum. The bullets below are kept as the original record of what this audit concluded at the time, not current state.
+
+- ~~12 canonical active partners: 11 have verified personalized URLs; Brevo alone is approved but missing its URL.~~ **Now 11 canonical active partners, all with verified personalized URLs.**
 - Shopify and Wix remain separate active Impact integrations backed by their software records.
 - Seven PartnerStack applications are pending: FreshBooks, ActiveCampaign, Close, ClickUp, Kit, Wrike, Zendesk.
-- The production affiliate pipeline records Miro as approved without a URL, while the canonical active registry omits it. It is classified `APPROVED BUT NEEDS LINK`; no CTA activation occurs until the approval and personalized URL are externally reconfirmed.
-- HubSpot and n8n are rejected, not pending.
+- ~~The production affiliate pipeline records Miro as approved without a URL, while the canonical active registry omits it. It is classified `APPROVED BUT NEEDS LINK`; no CTA activation occurs until the approval and personalized URL are externally reconfirmed.~~ **The "approved" pipeline status had no verifiable source and is corrected; Miro is now `HOLD / UNCLEAR` pending confirmation of whether/where an application actually exists.**
+- HubSpot and n8n are rejected, not pending. **Brevo joins this group as of 2026-08-19 (see correction note above).**
 - KrispCall was missing from today's draft revenue map and has been restored.
 - GetResponse's stale `33–40%` draft was replaced by the repository's official-source research wording: 40%/50%/60% for 12 months by tier.
 - Brevo's product pricing model had been placed in the commission column; commission is now `UNKNOWN`.
@@ -40,11 +42,11 @@ Pipedrive, GetResponse, Todoist, Constant Contact, Moosend, Airtable, monday.com
 
 ### Tier B — valuable, waiting
 
-Brevo and Miro (approved, need links); ActiveCampaign, ClickUp, Close, FreshBooks, Kit, Wrike, Zendesk (pending approval).
+ActiveCampaign, ClickUp, Close, FreshBooks, Kit, Wrike, Zendesk (pending approval). Brevo and Miro moved out of this tier 2026-08-19 (see Reconciliation outcome correction) — Brevo is rejected, Miro's approval evidence didn't hold up.
 
 ### Hold
 
-Iconosquare, Carepatron, Ruby, MindStudio, 8fig, Pagecloud, RocketReach, Flatpay, Hubstaff, Closely. Current Miloosh approval/application evidence is absent. HubSpot and n8n are separately rejected.
+Iconosquare, Carepatron, Ruby, MindStudio, 8fig, Pagecloud, RocketReach, Flatpay, Hubstaff, Closely, **Miro** (added 2026-08-19 — prior "approved" claim had no verifiable source). Current Miloosh approval/application evidence is absent. HubSpot, n8n, and **Brevo** (added 2026-08-19) are separately rejected.
 
 ## Top five immediate opportunities
 

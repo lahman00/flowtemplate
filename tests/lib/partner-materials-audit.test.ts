@@ -22,9 +22,15 @@ describe("partner materials audit", () => {
     for (const slug of required) expect(slugs.has(slug)).toBe(true);
   });
 
-  it("keeps rejected, pending, and missing-link states distinct", () => {
+  it("keeps rejected, pending, and hold states distinct", () => {
     expect(PARTNER_MATERIAL_AUDIT.find((record) => record.slug === "hubspot")?.readiness).toBe("REJECTED");
     expect(PARTNER_MATERIAL_AUDIT.find((record) => record.slug === "clickup")?.readiness).toBe("PENDING APPROVAL");
-    expect(PARTNER_MATERIAL_AUDIT.find((record) => record.slug === "brevo")?.readiness).toBe("APPROVED BUT NEEDS LINK");
+    // Brevo: PartnerStack's top-level badge still showed Active, but the program's own Messages
+    // thread carried a first-party rejection dated 2026-08-19 — corrected from APPROVED BUT NEEDS
+    // LINK to REJECTED, same treatment as HubSpot/n8n.
+    expect(PARTNER_MATERIAL_AUDIT.find((record) => record.slug === "brevo")?.readiness).toBe("REJECTED");
+    // Miro: the prior "approved" pipeline status had no cited source and is contradicted by a live
+    // PartnerStack check (zero results) — corrected from APPROVED BUT NEEDS LINK to HOLD / UNCLEAR.
+    expect(PARTNER_MATERIAL_AUDIT.find((record) => record.slug === "miro")?.readiness).toBe("HOLD / UNCLEAR");
   });
 });

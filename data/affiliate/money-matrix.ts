@@ -43,7 +43,7 @@ export function getPartnerMoneyMatrix(): PartnerMoneyMatrixRow[] {
       blocker: partner.blocker,
       nextAction: url
         ? "Monitor outbound clicks and conversions; refresh commercial facts on schedule."
-        : "Obtain and verify the Brevo affiliate URL, then add it to the canonical registry.",
+        : `Obtain and verify a personalized affiliate URL for ${software.name}, then add it to the canonical registry.`,
     };
   });
 }

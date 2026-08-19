@@ -5,9 +5,9 @@ import { getSoftware } from "@/data/software";
 import { getSoftwareCtaRel, getSoftwareCtaUrl, shouldShowAffiliateDisclosure } from "@/lib/affiliate";
 
 describe("canonical active affiliate partner registry", () => {
-  it("contains exactly the 12 verified active partners", () => {
-    expect(ACTIVE_PARTNERS).toHaveLength(12);
-    expect(new Set(ACTIVE_PARTNERS.map(({ slug }) => slug)).size).toBe(12);
+  it("contains exactly the 11 verified active partners", () => {
+    expect(ACTIVE_PARTNERS).toHaveLength(11);
+    expect(new Set(ACTIVE_PARTNERS.map(({ slug }) => slug)).size).toBe(11);
   });
 
   it.each(ACTIVE_PARTNERS.filter((partner) => partner.affiliateUrl))(
@@ -21,23 +21,23 @@ describe("canonical active affiliate partner registry", () => {
     },
   );
 
-  it("keeps Brevo on its official URL until a legitimate affiliate URL exists", () => {
-    const partner = ACTIVE_PARTNERS.find(({ slug }) => slug === "brevo");
+  it("Brevo is not in the canonical registry (rejected by Brevo 2026-08-19) and falls back to its official URL", () => {
+    // The slug union type no longer includes "brevo" at all — that's itself
+    // a compile-time guarantee it was removed, not just an empty runtime find.
+    const slugs: readonly string[] = ACTIVE_PARTNERS.map(({ slug }) => slug);
     const software = getSoftware("brevo");
 
-    expect(partner).toMatchObject({ affiliateUrl: null, blocker: "missing_affiliate_url" });
+    expect(slugs).not.toContain("brevo");
     expect(getSoftwareCtaUrl(software!)).toBe(software!.website);
     expect(getSoftwareCtaRel(software!)).toBe("noopener noreferrer");
     expect(shouldShowAffiliateDisclosure(software!)).toBe(false);
   });
 
-  it("builds a 12-row operational money matrix with only Brevo blocked", () => {
+  it("builds an 11-row operational money matrix with no partners blocked", () => {
     const matrix = getPartnerMoneyMatrix();
-    expect(matrix).toHaveLength(12);
+    expect(matrix).toHaveLength(11);
     expect(matrix.filter(({ revenueReady }) => revenueReady)).toHaveLength(11);
-    expect(matrix.filter(({ blocker }) => blocker)).toEqual([
-      expect.objectContaining({ slug: "brevo", blocker: "missing_affiliate_url" }),
-    ]);
+    expect(matrix.filter(({ blocker }) => blocker)).toEqual([]);
     expect(matrix.every(({ coverage }) => coverage.comparisonRoutes > 0)).toBe(true);
     expect(matrix.find(({ slug }) => slug === "krispcall")).toMatchObject({
       url: "https://try.krispcall.com/aikpbrrrl8k9",
