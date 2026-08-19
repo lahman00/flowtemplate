@@ -395,20 +395,21 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "freshdesk",
-    lastVerifiedAt: "2026-08-16",
+    lastVerifiedAt: "2026-08-20",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
     countryRestrictions:
       "Preferred applicants have 'prior B2B software sales experience,' run PPC/email campaigns, or operate technology-focused websites (per official FAQ); all applications reviewed individually; no membership fee.",
     commissionModel:
-      "RESOLVED 2026-08-16: prior conflicting third-party figures replaced with the real terms directly fetched from Freshworks' own FAQ page — '15% commission on the monthly deal value of a customer you refer, for the first 12 months of the life of the customer.' This is the umbrella Freshworks affiliate program (covers Freshdesk plus other Freshworks products), run on PartnerStack, not a Freshdesk-only program.",
+      "UPDATED 2026-08-20: three real, non-fabricated figures found across three sources, genuinely conflicting — reported as-is, not resolved to one number. (1) Freshworks' own FAQ (freshworks.com): flat 15% of MRR for the first 12 months. (2) The PartnerStack application landing page headline: 'up to 30% in recurring commissions' (unqualified, likely a stale/marketing-rounded ceiling). (3) PartnerStack's own in-app 'Offer structure', shown after opening the application — the most current and most detailed of the three: 'Freshworks Affiliate' tier = 20% recurring for year one by default; 'Power Affiliate' = 25% recurring for year one at 100+ qualified leads; 'Champion Affiliate' = a custom plan at 200+ qualified leads; plus a separate CPL deal per qualified sign-up. Treat (3) as most authoritative (it's the live program configuration shown directly to the applicant), but (1) and (2) are real claims too, not invented — do not silently discard them. This is the umbrella Freshworks affiliate program (covers Freshdesk plus other Freshworks products), run on PartnerStack, not a Freshdesk-only program.",
     recurrence: "recurring",
     notes:
-      "Official program is run at the Freshworks company level, not per-product. Confirmed 2026-08-16 via direct fetch of freshworks.com/company/affiliate-partner/faq/ — real commission terms and PartnerStack network now confirmed (previously unresolved between conflicting third-party figures).",
+      "Official program is run at the Freshworks company level, not per-product. Application submitted 2026-08-20 under the existing Miloosh PartnerStack account (hello@miloosh.com), for Freshdesk + Freshsales specifically (the two Freshworks products Miloosh has real content for). Status: pending review (PartnerStack UI shows 'Application pending'; first-party confirmation: 'Your application was received... via email at hello@miloosh.com'). See data/affiliate/affiliate-revenue-map.md and the production affiliate pipeline (slug 'freshdesk') for full evidence and history. No affiliate URL exists yet — do not activate Freshdesk on any public page until one is actually issued and verified.",
     sourceUrls: [
       "https://www.freshworks.com/company/affiliate-partner/faq/",
       "https://www.freshworks.com/company/affiliate-partner/affiliate-signup/",
+      "https://dash.partnerstack.com/application?company=freshworks4391&group=default",
     ],
     applicationUrl: "https://www.freshworks.com/company/affiliate-partner/affiliate-signup/",
     cookieDuration: "90 days",
