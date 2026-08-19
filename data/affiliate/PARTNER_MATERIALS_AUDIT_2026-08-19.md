@@ -2,6 +2,8 @@
 
 Canonical detailed fields are in `partner-materials-audit.ts`. This report records inventory, reconciliation, content fit, priority, and unresolved evidence. `UNKNOWN` is intentional and means no accessible source proved the field.
 
+The complete 34-company evidence-gap matrix, existing-route inventory, implementation groups, and top ten monetization surfaces are in `AFFILIATE_EVIDENCE_AND_SURFACES_2026-08-19.md`.
+
 ## Materials inventory
 
 Searched the Miloosh repository, current worktree, `~/Downloads`, `~/Desktop`, `~/Documents`, and all Codex attachments created on 2026-08-19. No partner PDF, DOCX, screenshot, dashboard export, Pipedrive Partner Guide, GetResponse FAQ/swipe pack, Volza promotion pack, or Todoist Brand Guidelines file was present.
