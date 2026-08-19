@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { assessPublicationThreshold, experimentIsCoolingDown } from "@/lib/seo-factory/policy";
-import { computeOpportunityScore, selectCanonicalWinner } from "@/lib/seo-factory/run";
-import type { ScoreComponent } from "@/lib/seo-factory/types";
+import { clusterOpportunities, computeOpportunityScore, selectCanonicalWinner } from "@/lib/seo-factory/run";
+import type { ScoreComponent, SeoOpportunity } from "@/lib/seo-factory/types";
 
 describe("SEO Factory scoring and safety policy", () => {
   it("excludes unavailable signals instead of treating them as zero", () => {
@@ -24,6 +24,19 @@ describe("SEO Factory scoring and safety policy", () => {
       { keys: ["q", "https://miloosh.com/software/a"], clicks: 1, impressions: 100, ctr: 0.01, position: 5 },
       { keys: ["q", "https://miloosh.com/software/b"], clicks: 2, impressions: 20, ctr: 0.1, position: 2 },
     ])).toBe("/software/b");
+  });
+
+  it("clusters synonymous query rows into one executable page+intent action", () => {
+    const base = {
+      id: "a", query: "semrush alternatives", intent: "ALTERNATIVES", action: "IMPROVE", targetUrl: "/software/semrush", existingUrl: "/software/semrush", relatedSoftware: ["semrush"], category: "seo", affiliateStatus: "VIABLE", moneyScore: 50, opportunityScore: 70, scoreComponents: [], cannibalizationRisk: "none", canonicalWinner: null, recommendation: "Improve", evidence: [], confidence: "high", state: "ANALYZED", publicationEligible: false,
+    } satisfies Omit<SeoOpportunity, "gsc">;
+    const clustered = clusterOpportunities([
+      { ...base, gsc: { impressions: 100, clicks: 1, ctr: 0.01, position: 70 } },
+      { ...base, id: "b", query: "alternative semrush", gsc: { impressions: 50, clicks: 2, ctr: 0.04, position: 60 } },
+    ]);
+    expect(clustered).toHaveLength(1);
+    expect(clustered[0]!.gsc).toMatchObject({ impressions: 150, clicks: 3, ctr: 0.02 });
+    expect(clustered[0]!.evidence.at(-1)).toContain("Clustered 2 query variant");
   });
 
   it("never marks a page publishable in Level 0, even with strong evidence", () => {

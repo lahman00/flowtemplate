@@ -54,6 +54,37 @@ function opportunityId(query: string, page: string | null): string {
   return createHash("sha256").update(`${normalizeQuery(query)}|${page ?? "missing"}`).digest("hex").slice(0, 20);
 }
 
+const ACTION_PRIORITY: Record<SeoAction, number> = { MERGE: 10, REDIRECT: 9, META_TEST: 8, INTERNAL_LINK: 7, IMPROVE: 6, REFRESH: 5, MONETIZE: 4, CREATE: 3, WAIT: 2, IGNORE: 1 };
+
+/** One executable page intervention, not one row per synonymous query. */
+export function clusterOpportunities(items: SeoOpportunity[]): SeoOpportunity[] {
+  const groups = new Map<string, SeoOpportunity[]>();
+  for (const item of items) {
+    const key = `${item.existingUrl ?? item.targetUrl ?? "missing"}|${item.intent}`;
+    groups.set(key, [...(groups.get(key) ?? []), item]);
+  }
+  return [...groups.values()].map((group) => {
+    const sorted = [...group].sort((a, b) => b.gsc.impressions - a.gsc.impressions || b.opportunityScore - a.opportunityScore || a.id.localeCompare(b.id));
+    const representative = sorted[0]!;
+    const impressions = group.reduce((sum, item) => sum + item.gsc.impressions, 0);
+    const clicks = group.reduce((sum, item) => sum + item.gsc.clicks, 0);
+    const position = impressions > 0 ? group.reduce((sum, item) => sum + item.gsc.position * item.gsc.impressions, 0) / impressions : representative.gsc.position;
+    const strongestAction = [...group].sort((a, b) => ACTION_PRIORITY[b.action] - ACTION_PRIORITY[a.action])[0]!.action;
+    const confirmed = group.find((item) => item.cannibalizationRisk === "confirmed");
+    return {
+      ...representative,
+      id: opportunityId(`${representative.existingUrl ?? representative.targetUrl}|${representative.intent}`, representative.existingUrl ?? representative.targetUrl),
+      action: strongestAction,
+      gsc: { impressions, clicks, ctr: impressions > 0 ? clicks / impressions : 0, position },
+      opportunityScore: Math.min(100, Math.max(...group.map((item) => item.opportunityScore)) + Math.min(5, Math.floor(Math.log2(group.length + 1)))),
+      cannibalizationRisk: confirmed ? "confirmed" : representative.cannibalizationRisk,
+      canonicalWinner: confirmed?.canonicalWinner ?? representative.canonicalWinner,
+      confidence: impressions >= 50 ? "high" : representative.confidence,
+      evidence: [...representative.evidence, `Clustered ${group.length} query variant(s): ${sorted.slice(0, 8).map((item) => `"${item.query}"`).join(", ")}`],
+    };
+  });
+}
+
 function median(values: number[]): number | null {
   if (!values.length) return null;
   const sorted = [...values].sort((a, b) => a - b);
@@ -156,7 +187,8 @@ export async function runSeoFactory(options: { persist?: boolean } = {}): Promis
     });
   }
 
-  const opportunities = evaluated
+  const clustered = clusterOpportunities(evaluated);
+  const opportunities = clustered
     .sort((a, b) => b.opportunityScore - a.opportunityScore || b.gsc.impressions - a.gsc.impressions || a.id.localeCompare(b.id))
     .slice(0, 100);
   const comparisonRows = rows.filter((row) => canonicalPath(row.keys[1] ?? "")?.startsWith("/compare/"));
@@ -169,7 +201,7 @@ export async function runSeoFactory(options: { persist?: boolean } = {}): Promis
     autonomyLevel: 0, massPublishingEnabled: false, gscRowsAnalyzed: rows.length, pagesAnalyzed: inventory.size,
     inventory: { software: software.length, comparisons: PUBLISHED_COMPARISONS.length, categories: categories.length, total: inventory.size },
     comparisonDiagnosis: { pagesWithVisibility: visibleComparisons.size, impressions: comparisonRows.reduce((sum, row) => sum + row.impressions, 0), clicks: comparisonRows.reduce((sum, row) => sum + row.clicks, 0), medianPosition: median(comparisonRows.map((row) => row.position)) },
-    actionCounts, intentCounts, leaveAloneCount: evaluated.filter((item) => item.action === "WAIT" || item.action === "IGNORE").length,
+    actionCounts, intentCounts, leaveAloneCount: clustered.filter((item) => item.action === "WAIT" || item.action === "IGNORE").length,
     opportunities, errors: [],
   };
   if (options.persist !== false) await writeSeoFactoryRun(run);
