@@ -16,6 +16,8 @@ Buffer acceptance returns a Buffer post ID, stored as `bufferPostId`, and remain
 
 Dry-run selects `buffer` and reports the non-secret target channel ID, but does not call Buffer or mutate queue/provider state.
 
+Authenticated `GET /api/social/buffer/verify` is the read-only production health check. It uses `CRON_SECRET`, queries only Buffer channel metadata, and cannot create a post or mutate the Miloosh queue.
+
 ## Make fallback
 
 Make remains an external fallback transport only: Miloosh sends the final publication-time UTM copy and stable `linkedin:{queueEntryId}` idempotency key. A synchronous response with a LinkedIn post ID becomes `PUBLISHED`; acceptance without that ID becomes `PENDING_CONFIRMATION`; ambiguous network results become `UNKNOWN_OUTCOME` and are not blindly retried.

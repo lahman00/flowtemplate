@@ -108,6 +108,16 @@ export async function reconcileBufferLinkedInPost(bufferPostId: string, text = "
   }
 }
 
+export async function verifyBufferLinkedInChannel(): Promise<{ id: string; name: string; displayName: string | null; descriptor: string; service: string; type: string; isDisconnected: boolean; isLocked: boolean }> {
+  if (!envAll(BUFFER_ENV)) throw new Error(`Missing ${missingEnvNames(BUFFER_ENV).join(", ")}.`);
+  const query = `query VerifyLinkedInChannel($input: ChannelInput!) { channel(input: $input) { id name displayName descriptor service type isDisconnected isLocked } }`;
+  const response = await fetch(BUFFER_API, { method: "POST", headers: { Authorization: `Bearer ${process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY!}`, "Content-Type": "application/json" }, body: JSON.stringify({ query, variables: { input: { id: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID } } }), signal: AbortSignal.timeout(20_000) });
+  const result = await response.json() as { data?: { channel?: { id: string; name: string; displayName: string | null; descriptor: string; service: string; type: string; isDisconnected: boolean; isLocked: boolean } }; errors?: Array<{ message?: string }> };
+  if (!response.ok || result.errors?.length || !result.data?.channel) throw new Error(result.errors?.[0]?.message || `Buffer channel query HTTP ${response.status}`);
+  if (result.data.channel.id !== process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID) throw new Error("Buffer returned a different channel identity.");
+  return result.data.channel;
+}
+
 async function publishViaMake(variant: ChannelVariant, body: string, options: { entryId?: string; scheduledAt?: string | null }): Promise<PublishResult> {
   const env = envAll(MAKE_ENV);
   if (!env || !options.entryId) return buildPublishResult({ channel: "linkedin", status: "SETUP_REQUIRED", text: body, link: variant.link ?? "", transport: "make", error: `Missing ${[...missingEnvNames(MAKE_ENV), ...(!options.entryId ? ["stable queue entry ID"] : [])].join(", ")}.` });
