@@ -4,11 +4,21 @@ Re-verified 2026-08-19 against LinkedIn's current official Microsoft Learn docum
 
 ## Architecture
 
-LinkedIn uses the existing queue, scheduling, QA, UTM, retry, and provider-state pipeline. `LINKEDIN_TRANSPORT=direct` selects the official Posts API implementation; `LINKEDIN_TRANSPORT=make` selects a signed Make webhook bridge. Both transports share the same queue identity and provider state, so switching requires no editorial or queue migration.
+LinkedIn uses the existing queue, scheduling, QA, UTM, retry, and provider-state pipeline. The preferred production transport is `LINKEDIN_TRANSPORT=buffer`; `make` is the fallback and `direct` remains the future first-party LinkedIn API path. All transports share the stable `linkedin:{queueEntryId}` identity, so switching requires no editorial or queue migration.
 
-## Make bridge status
+## Buffer production transport
 
-The code path is ready, but production has no Make webhook URL, authentication secret, or transport selection yet. Make remains an external transport only: Miloosh sends the final publication-time UTM copy and stable `linkedin:{queueEntryId}` idempotency key. A synchronous response with a LinkedIn post ID becomes `PUBLISHED`; acceptance without that ID becomes `PENDING_CONFIRMATION`; ambiguous network results become `UNKNOWN_OUTCOME` and are not blindly retried.
+Miloosh remains the source of truth: its queue decides eligibility and adds final UTM parameters, then the adapter calls Buffer only when the entry is due. Buffer is not used as a second editorial calendar. The adapter uses Buffer's official GraphQL endpoint (`POST https://api.buffer.com`) with bearer authentication and `createPost(input: CreatePostInput!)`, `schedulingType: automatic`, and `mode: shareNow`.
+
+The production target is channel `6a85e8c8ccaf649a67d876cb`, verified through Buffer as the **Miloosh LinkedIn Page** (LinkedIn Page, not a personal profile). The production API key expires **Aug 19, 2027**.
+
+Buffer acceptance returns a Buffer post ID, stored as `bufferPostId`, and remains `PENDING_CONFIRMATION` unless the returned lifecycle is already `sent`. The safe `post(input:{id})` reconciliation query maps `sent` to `PUBLISHED`, `error` to `FAILED`, and every other lifecycle to `PENDING_CONFIRMATION`. Buffer's current schema does not expose the LinkedIn post ID, so `linkedinPostId` remains null and a Buffer ID is never copied into it. A timeout/network failure is `UNKNOWN_OUTCOME` in durable provider state and is not blindly retried; only explicit `RATE_LIMITED` results receive the existing single bounded retry.
+
+Dry-run selects `buffer` and reports the non-secret target channel ID, but does not call Buffer or mutate queue/provider state.
+
+## Make fallback
+
+Make remains an external fallback transport only: Miloosh sends the final publication-time UTM copy and stable `linkedin:{queueEntryId}` idempotency key. A synchronous response with a LinkedIn post ID becomes `PUBLISHED`; acceptance without that ID becomes `PENDING_CONFIRMATION`; ambiguous network results become `UNKNOWN_OUTCOME` and are not blindly retried.
 
 If Make completes asynchronously, it calls `POST /api/social/make/linkedin-result` with the same queue identity. The callback requires bearer authentication, rejects unknown IDs, is idempotent, and only updates the LinkedIn channel.
 

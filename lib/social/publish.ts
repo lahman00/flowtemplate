@@ -5,6 +5,7 @@ import type { SocialAdapter } from "@/lib/social/channels/types";
 import { publishWithRetry } from "@/lib/social/retry";
 import { buildUtmUrl } from "@/lib/social/utm";
 import type { Channel, ChannelVariant, ProviderPublishState, PublishResult, SocialQueueEntry } from "@/lib/social/types";
+import { reconcileBufferLinkedInPost } from "@/lib/social/channels/linkedin";
 
 /**
  * Publish orchestrator — the TypeScript equivalent of Need Go Home's
@@ -120,7 +121,24 @@ function providerStateFromResult(previous: ProviderPublishState | undefined, res
     error: result.error,
     transport: result.transport ?? previous?.transport ?? null,
     executionId: result.executionId ?? previous?.executionId ?? null,
+    bufferPostId: result.bufferPostId ?? previous?.bufferPostId ?? null,
+    linkedinPostId: result.linkedinPostId ?? previous?.linkedinPostId ?? null,
   };
+}
+
+async function reconcilePendingBufferPosts(queue: SocialQueueEntry[], now: Date): Promise<void> {
+  for (const entry of queue) {
+    const variant = entry.channels.linkedin;
+    const previous = variant?.providerState;
+    if (!variant || previous?.status !== "PENDING_CONFIRMATION" || previous.transport !== "buffer" || !previous.bufferPostId) continue;
+    const result = await reconcileBufferLinkedInPost(previous.bufferPostId, variant.text, variant.link ?? "");
+    const providerState = providerStateFromResult(previous, result, now.toISOString());
+    // Reconciliation is a read, not another publication attempt.
+    providerState.attempts = previous.attempts;
+    providerState.lastAttemptAt = previous.lastAttemptAt;
+    await updateQueueEntry(entry.id, { channels: { ...entry.channels, linkedin: { ...variant, publishResult: result, providerState } } });
+    if (result.status === "PUBLISHED" && entry.state === "SCHEDULED") await setQueueState(entry.id, "PUBLISHED", `LinkedIn publication confirmed by Buffer reconciliation (${previous.bufferPostId}).`);
+  }
 }
 
 /** Pure — no I/O, easy to unit test. Splits due SCHEDULED entries into on-time (publish normally) vs stale (never auto-published as-is). Stale entries are sorted oldest-first so the longest-waiting ones claim the bounded per-run catch-up slots first. */
@@ -222,6 +240,10 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
   }
 
   const queue = await readQueue();
+  // A dry run must not contact Buffer or mutate provider state. Live cron
+  // invocations reconcile prior Buffer acceptance before considering new
+  // due work, so Buffer remains transport rather than a second scheduler.
+  if (!options.dryRun) await reconcilePendingBufferPosts(queue, now);
   const { onTime, stale } = classifyScheduledEntries(queue, now);
   const due = onTime.slice(0, DAILY_ENTRY_CAP);
   const staleToHandle = stale.slice(0, MAX_CATCHUP_PER_RUN);

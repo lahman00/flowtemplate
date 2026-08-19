@@ -38,17 +38,74 @@ import { type SocialAdapter, buildPublishResult, defaultFormat, envAll, missingE
 const CHAR_LIMIT = 3000;
 const DIRECT_ENV = ["SOCIAL_LINKEDIN_ACCESS_TOKEN", "SOCIAL_LINKEDIN_ORGANIZATION_ID", "SOCIAL_LINKEDIN_VERSION"];
 const MAKE_ENV = ["MAKE_LINKEDIN_WEBHOOK_URL", "MAKE_LINKEDIN_WEBHOOK_SECRET"];
+const BUFFER_ENV = ["SOCIAL_LINKEDIN_BUFFER_API_KEY", "SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID"];
+const BUFFER_API = "https://api.buffer.com";
 const ORGANIZATION_ID = "141163964";
 const ORGANIZATION_URN = `urn:li:organization:${ORGANIZATION_ID}`;
 
-export type LinkedInTransport = "direct" | "make";
+export type LinkedInTransport = "direct" | "make" | "buffer";
 
 export function getLinkedInTransport(): LinkedInTransport {
-  return process.env.LINKEDIN_TRANSPORT === "make" ? "make" : "direct";
+  const value = process.env.LINKEDIN_TRANSPORT;
+  return value === "buffer" || value === "make" ? value : "direct";
 }
 
 function requiredEnv(): string[] {
-  return getLinkedInTransport() === "make" ? MAKE_ENV : DIRECT_ENV;
+  const transport = getLinkedInTransport();
+  return transport === "buffer" ? BUFFER_ENV : transport === "make" ? MAKE_ENV : DIRECT_ENV;
+}
+
+type BufferPost = { id: string; status: string; sentAt?: string | null };
+type BufferGraphqlResult = { data?: { createPost?: { post?: BufferPost; message?: string }; post?: BufferPost }; errors?: Array<{ message?: string; extensions?: { code?: string } }> };
+
+async function bufferRequest(query: string, variables: Record<string, unknown>): Promise<{ response: Response; result: BufferGraphqlResult }> {
+  const response = await fetch(BUFFER_API, { method: "POST", headers: { Authorization: `Bearer ${process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY!}`, "Content-Type": "application/json" }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(20_000) });
+  const result = await response.json() as BufferGraphqlResult;
+  return { response, result };
+}
+
+function bufferError(result: BufferGraphqlResult): { message: string; rateLimited: boolean } | null {
+  const graph = result.errors?.[0];
+  if (graph) return { message: graph.message || "Buffer GraphQL error", rateLimited: graph.extensions?.code === "RATE_LIMIT_EXCEEDED" };
+  const typed = result.data?.createPost?.message;
+  return typed ? { message: typed, rateLimited: false } : null;
+}
+
+function resultFromBufferPost(post: BufferPost, body: string, link: string, independentlyRead = false): PublishResult {
+  if (post.status === "sent") return buildPublishResult({ channel: "linkedin", status: "PUBLISHED", text: body, link, transport: "buffer", bufferPostId: post.id, verified: independentlyRead, targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: "Buffer reports the post as sent to LinkedIn; Buffer does not expose LinkedIn's post ID." });
+  if (post.status === "error") return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link, transport: "buffer", bufferPostId: post.id, targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: "Buffer reports a definite LinkedIn publication failure." });
+  return buildPublishResult({ channel: "linkedin", status: "PENDING_CONFIRMATION", text: body, link, transport: "buffer", bufferPostId: post.id, targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer accepted the post with status ${post.status}; LinkedIn publication is not yet confirmed.` });
+}
+
+async function publishViaBuffer(variant: ChannelVariant, body: string, options: { entryId?: string }): Promise<PublishResult> {
+  if (!envAll(BUFFER_ENV) || !options.entryId) return buildPublishResult({ channel: "linkedin", status: "SETUP_REQUIRED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Missing ${[...missingEnvNames(BUFFER_ENV), ...(!options.entryId ? ["stable queue entry ID"] : [])].join(", ")}.` });
+  try {
+    const query = `mutation CreateLinkedInPost($input: CreatePostInput!) { createPost(input: $input) { ... on PostActionSuccess { post { id status sentAt } } ... on MutationError { message } } }`;
+    const { response, result } = await bufferRequest(query, { input: { text: body, channelId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, schedulingType: "automatic", mode: "shareNow", assets: [], source: `miloosh:linkedin:${options.entryId}` } });
+    const error = bufferError(result);
+    if (!response.ok || error) return buildPublishResult({ channel: "linkedin", status: response.status === 429 || error?.rateLimited ? "RATE_LIMITED" : "FAILED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer API ${error?.message || `HTTP ${response.status}`}` });
+    const post = result.data?.createPost?.post;
+    if (!post?.id) return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: "Buffer returned success without a Buffer post ID; unknown publication outcome, so automatic retry is withheld." });
+    return resultFromBufferPost(post, body, variant.link ?? "");
+  } catch (error) {
+    return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", transport: "buffer", targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer request failed with unknown publication outcome: ${error instanceof Error ? error.message : String(error)}` });
+  }
+}
+
+/** Safe read-only reconciliation for a previously accepted Buffer post. */
+export async function reconcileBufferLinkedInPost(bufferPostId: string, text = "", link = ""): Promise<PublishResult> {
+  if (!envAll(BUFFER_ENV)) return buildPublishResult({ channel: "linkedin", status: "SETUP_REQUIRED", text, link, transport: "buffer", bufferPostId, targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Missing ${missingEnvNames(BUFFER_ENV).join(", ")}.` });
+  try {
+    const query = `query ReconcileLinkedInPost($input: PostInput!) { post(input: $input) { id status sentAt } }`;
+    const { response, result } = await bufferRequest(query, { input: { id: bufferPostId } });
+    const graph = result.errors?.[0];
+    if (!response.ok || graph) return buildPublishResult({ channel: "linkedin", status: response.status === 429 || graph?.extensions?.code === "RATE_LIMIT_EXCEEDED" ? "RATE_LIMITED" : "FAILED", text, link, transport: "buffer", bufferPostId, targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer reconciliation ${graph?.message || `HTTP ${response.status}`}` });
+    const post = result.data?.post;
+    if (!post || post.id !== bufferPostId) return buildPublishResult({ channel: "linkedin", status: "FAILED", text, link, transport: "buffer", bufferPostId, targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: "Buffer reconciliation returned no matching post; definite lookup failure." });
+    return resultFromBufferPost(post, text, link, true);
+  } catch (error) {
+    return buildPublishResult({ channel: "linkedin", status: "FAILED", text, link, transport: "buffer", bufferPostId, targetId: process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID, error: `Buffer reconciliation failed with unknown outcome: ${error instanceof Error ? error.message : String(error)}` });
+  }
 }
 
 async function publishViaMake(variant: ChannelVariant, body: string, options: { entryId?: string; scheduledAt?: string | null }): Promise<PublishResult> {
@@ -63,7 +120,7 @@ async function publishViaMake(variant: ChannelVariant, body: string, options: { 
     if (!response.ok) return buildPublishResult({ channel: "linkedin", status: response.status === 429 ? "RATE_LIMITED" : "FAILED", text: body, link: variant.link ?? "", transport: "make", error: `Make webhook HTTP ${response.status}: ${raw}` });
     let result: { status?: string; executionId?: string; linkedinPostId?: string; linkedinPostUrl?: string; error?: string } = {};
     try { result = raw ? JSON.parse(raw) : {}; } catch { /* A 2xx without a definitive JSON result is acceptance only. */ }
-    if (result.status === "published" && result.linkedinPostId) return buildPublishResult({ channel: "linkedin", status: "PUBLISHED", text: body, link: variant.link ?? "", transport: "make", executionId: result.executionId, postId: result.linkedinPostId, postUrl: result.linkedinPostUrl ?? null, verified: true });
+    if (result.status === "published" && result.linkedinPostId) return buildPublishResult({ channel: "linkedin", status: "PUBLISHED", text: body, link: variant.link ?? "", transport: "make", executionId: result.executionId, postId: result.linkedinPostId, linkedinPostId: result.linkedinPostId, postUrl: result.linkedinPostUrl ?? null, verified: true });
     if (result.status === "failed") return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", transport: "make", executionId: result.executionId, error: result.error || "Make reported a definite LinkedIn module failure." });
     return buildPublishResult({ channel: "linkedin", status: "PENDING_CONFIRMATION", text: body, link: variant.link ?? "", transport: "make", executionId: result.executionId, error: "Make accepted the request but did not return a definitive LinkedIn post ID; awaiting authenticated reconciliation." });
   } catch (error) {
@@ -85,7 +142,7 @@ async function publishDirect(variant: ChannelVariant, body: string): Promise<Pub
     }
     const postId = response.headers.get("x-restli-id");
     if (!postId) return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", transport: "direct", error: "LinkedIn returned success without x-restli-id; publication identity is unknown, so automatic retry is withheld." });
-    return buildPublishResult({ channel: "linkedin", status: "PUBLISHED", text: body, link: variant.link ?? "", transport: "direct", postId, verified: false });
+    return buildPublishResult({ channel: "linkedin", status: "PUBLISHED", text: body, link: variant.link ?? "", transport: "direct", postId, linkedinPostId: postId, verified: false });
   } catch (error) {
     return buildPublishResult({ channel: "linkedin", status: "FAILED", text: body, link: variant.link ?? "", transport: "direct", error: `LinkedIn request failed with unknown publication outcome; inspect the Page before retrying: ${error instanceof Error ? error.message : String(error)}` });
   }
@@ -93,7 +150,7 @@ async function publishDirect(variant: ChannelVariant, body: string): Promise<Pub
 
 export const linkedinAdapter: SocialAdapter = {
   channel: "linkedin",
-  requiredEnv: [...DIRECT_ENV, ...MAKE_ENV, "LINKEDIN_TRANSPORT"],
+  requiredEnv: [...DIRECT_ENV, ...MAKE_ENV, ...BUFFER_ENV, "LINKEDIN_TRANSPORT"],
   charLimit: CHAR_LIMIT,
   isConfigured: () => envAll(requiredEnv()) !== null,
   missingEnv: () => missingEnvNames(requiredEnv()),
@@ -102,7 +159,7 @@ export const linkedinAdapter: SocialAdapter = {
   async publish(variant: ChannelVariant, options): Promise<PublishResult> {
     const body = defaultFormat(variant.text, variant.link, CHAR_LIMIT);
     const transport = getLinkedInTransport();
-    if (options.dryRun) return buildPublishResult({ channel: "linkedin", status: "DRY_RUN", text: body, link: variant.link ?? "", transport });
-    return transport === "make" ? publishViaMake(variant, body, options) : publishDirect(variant, body);
+    if (options.dryRun) return buildPublishResult({ channel: "linkedin", status: "DRY_RUN", text: body, link: variant.link ?? "", transport, targetId: transport === "buffer" ? process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID ?? null : null });
+    return transport === "buffer" ? publishViaBuffer(variant, body, options) : transport === "make" ? publishViaMake(variant, body, options) : publishDirect(variant, body);
   },
 };

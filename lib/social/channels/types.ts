@@ -88,6 +88,9 @@ export function buildPublishResult(partial: {
   mode?: PublishResult["mode"];
   transport?: PublishResult["transport"];
   executionId?: string | null;
+  bufferPostId?: string | null;
+  linkedinPostId?: string | null;
+  targetId?: string | null;
 }): PublishResult {
   return {
     channel: partial.channel,
@@ -102,5 +105,8 @@ export function buildPublishResult(partial: {
     mode: partial.mode ?? null,
     transport: partial.transport ?? null,
     executionId: partial.executionId ?? null,
+    bufferPostId: partial.bufferPostId ?? null,
+    linkedinPostId: partial.linkedinPostId ?? null,
+    targetId: partial.targetId ?? null,
   };
 }

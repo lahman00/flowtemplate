@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { linkedinAdapter } from "@/lib/social/channels/linkedin";
+import { linkedinAdapter, reconcileBufferLinkedInPost } from "@/lib/social/channels/linkedin";
 import type { ChannelVariant } from "@/lib/social/types";
 
 const variant: ChannelVariant = { text: "Miro or Lucidchart?", link: "https://miloosh.com/compare/miro-vs-lucidchart", imageUrl: null, altText: null, hashtags: [], publishResult: null };
-const keys = ["LINKEDIN_TRANSPORT", "MAKE_LINKEDIN_WEBHOOK_URL", "MAKE_LINKEDIN_WEBHOOK_SECRET", "SOCIAL_LINKEDIN_ACCESS_TOKEN", "SOCIAL_LINKEDIN_ORGANIZATION_ID", "SOCIAL_LINKEDIN_VERSION"] as const;
+const keys = ["LINKEDIN_TRANSPORT", "MAKE_LINKEDIN_WEBHOOK_URL", "MAKE_LINKEDIN_WEBHOOK_SECRET", "SOCIAL_LINKEDIN_ACCESS_TOKEN", "SOCIAL_LINKEDIN_ORGANIZATION_ID", "SOCIAL_LINKEDIN_VERSION", "SOCIAL_LINKEDIN_BUFFER_API_KEY", "SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID"] as const;
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -83,5 +83,46 @@ describe("linkedinAdapter", () => {
     const result = await linkedinAdapter.publish(variant, { dryRun: false, entryId: "entry-1" });
     expect(result.status).toBe("FAILED");
     expect(result.error).toContain("unknown publication outcome");
+  });
+
+  it("selects Buffer in dry-run without calling Buffer or mutating provider state", async () => {
+    process.env.LINKEDIN_TRANSPORT = "buffer";
+    process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID = "channel-1";
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+    const result = await linkedinAdapter.publish(variant, { dryRun: true, entryId: "entry-1" });
+    expect(result).toMatchObject({ status: "DRY_RUN", transport: "buffer", targetId: "channel-1", bufferPostId: null, linkedinPostId: null });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("uses Buffer shareNow and preserves the stable queue identity as source", async () => {
+    process.env.LINKEDIN_TRANSPORT = "buffer";
+    process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY = "secret";
+    process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID = "channel-1";
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ data: { createPost: { post: { id: "buffer-7", status: "buffer", sentAt: null } } } }), { status: 200 }));
+    const result = await linkedinAdapter.publish(variant, { dryRun: false, entryId: "entry-1" });
+    expect(result).toMatchObject({ status: "PENDING_CONFIRMATION", transport: "buffer", bufferPostId: "buffer-7", linkedinPostId: null, postId: null });
+    const [, init] = fetchMock.mock.calls[0]!;
+    expect((init?.headers as Record<string, string>).Authorization).toBe("Bearer secret");
+    const request = JSON.parse(String(init?.body));
+    expect(request.variables.input).toMatchObject({ channelId: "channel-1", schedulingType: "automatic", mode: "shareNow", source: "miloosh:linkedin:entry-1" });
+  });
+
+  it("reconciles a Buffer post as sent without inventing a LinkedIn post ID", async () => {
+    process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY = "secret";
+    process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID = "channel-1";
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ data: { post: { id: "buffer-7", status: "sent", sentAt: "2026-08-30T17:00:10Z" } } }), { status: 200 }));
+    const result = await reconcileBufferLinkedInPost("buffer-7", variant.text, variant.link!);
+    expect(result).toMatchObject({ status: "PUBLISHED", verified: true, bufferPostId: "buffer-7", linkedinPostId: null, postId: null });
+  });
+
+  it("does not retry an ambiguous Buffer network outcome", async () => {
+    process.env.LINKEDIN_TRANSPORT = "buffer";
+    process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY = "secret";
+    process.env.SOCIAL_LINKEDIN_BUFFER_CHANNEL_ID = "channel-1";
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("timed out"));
+    const result = await linkedinAdapter.publish(variant, { dryRun: false, entryId: "entry-1" });
+    expect(result.status).toBe("FAILED");
+    expect(result.error).toContain("unknown publication outcome");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });

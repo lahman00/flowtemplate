@@ -50,8 +50,14 @@ export type PublishResult = {
   /** Which real API mechanism was (or, in a dry run, would be) used — e.g. Facebook's IMAGE_POST (`/photos`) vs LINK_POST (`/feed`). null for adapters that only have one publish mechanism. Set even in a dry run, so the mode is visible without a real network call. */
   mode?: "IMAGE_POST" | "LINK_POST" | null;
   /** Optional transport metadata for bridge-backed providers such as Make. */
-  transport?: "direct" | "make" | null;
+  transport?: "direct" | "make" | "buffer" | null;
   executionId?: string | null;
+  /** Buffer's internal post identity. Never substitute this for a LinkedIn post identity. */
+  bufferPostId?: string | null;
+  /** LinkedIn's post identity, only when a provider explicitly returns it. */
+  linkedinPostId?: string | null;
+  /** Non-secret provider target identifier, surfaced in dry-runs for safe routing QA. */
+  targetId?: string | null;
 };
 
 /** Durable, provider-specific delivery state. Optional for backwards compatibility with queue records created before this field existed. */
@@ -65,8 +71,10 @@ export type ProviderPublishState = {
   contentHash: string;
   verified: boolean;
   error: string;
-  transport?: "direct" | "make" | null;
+  transport?: "direct" | "make" | "buffer" | null;
   executionId?: string | null;
+  bufferPostId?: string | null;
+  linkedinPostId?: string | null;
 };
 
 /** Phase 14 dashboard vocabulary — one status per channel, independent of any single post's PublishStatus. */
