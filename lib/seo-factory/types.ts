@@ -68,3 +68,16 @@ export type SeoExperiment = {
   result: null | { measuredAt: string; impressions: number; clicks: number; ctr: number; position: number };
   decision: "MEASURING" | "WON" | "LOST" | "INCONCLUSIVE";
 };
+
+/** Immutable pre-intervention evidence captured before editorial review. */
+export type SeoExperimentBaseline = {
+  schemaVersion: 1;
+  id: string;
+  capturedAt: string;
+  runId: string;
+  page: string;
+  queryCluster: string[];
+  window: { startDate: string; endDate: string };
+  query: { impressions: number; clicks: number; ctr: number; position: number };
+  pageAggregate: { impressions: number; clicks: number; ctr: number; position: number };
+};

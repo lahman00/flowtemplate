@@ -1,20 +1,21 @@
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { readLatestSeoFactoryRun, readSeoExperiments, recordSeoExperiment, writeSeoFactoryRun } from "@/lib/seo-factory/store";
-import type { SeoExperiment, SeoFactoryRun } from "@/lib/seo-factory/types";
+import { readLatestSeoFactoryRun, readSeoExperimentBaselines, readSeoExperiments, recordSeoExperiment, recordSeoExperimentBaselines, writeSeoFactoryRun } from "@/lib/seo-factory/store";
+import type { SeoExperiment, SeoExperimentBaseline, SeoFactoryRun } from "@/lib/seo-factory/types";
 
 const latestPath = path.join(process.cwd(), "var", "agents", "seo-factory-latest.json");
 const experimentsPath = path.join(process.cwd(), "var", "agents", "seo-factory-experiments.json");
+const baselinesPath = path.join(process.cwd(), "var", "agents", "seo-factory-experiment-baselines.json");
 const backups = new Map<string, string | null>();
 let blobToken: string | undefined;
 
 beforeAll(() => {
   blobToken = process.env.BLOB_READ_WRITE_TOKEN;
   delete process.env.BLOB_READ_WRITE_TOKEN;
-  for (const file of [latestPath, experimentsPath]) backups.set(file, fs.existsSync(file) ? fs.readFileSync(file, "utf-8") : null);
+  for (const file of [latestPath, experimentsPath, baselinesPath]) backups.set(file, fs.existsSync(file) ? fs.readFileSync(file, "utf-8") : null);
 });
-beforeEach(() => { for (const file of [latestPath, experimentsPath]) fs.rmSync(file, { force: true }); });
+beforeEach(() => { for (const file of [latestPath, experimentsPath, baselinesPath]) fs.rmSync(file, { force: true }); });
 afterAll(() => {
   for (const [file, backup] of backups) {
     if (backup === null) fs.rmSync(file, { force: true });
@@ -40,5 +41,12 @@ describe("SEO Factory durable state contract", () => {
     expect((await recordSeoExperiment(experiment("one", "2026-08-01T00:00:00Z"))).recorded).toBe(true);
     expect((await recordSeoExperiment(experiment("two", "2026-09-15T00:00:00Z"))).recorded).toBe(false);
     expect(await readSeoExperiments()).toHaveLength(1);
+  });
+
+  it("records a baseline once and refuses to overwrite the same immutable id", async () => {
+    const baseline = { schemaVersion: 1, id: "baseline-1", capturedAt: "2026-08-20T00:00:00Z", runId: "run-1", page: "/software/pipedrive", queryCluster: ["pipedrive alternatives"], window: run.window, query: { impressions: 100, clicks: 1, ctr: 0.01, position: 8 }, pageAggregate: { impressions: 200, clicks: 2, ctr: 0.01, position: 9 } } satisfies SeoExperimentBaseline;
+    expect((await recordSeoExperimentBaselines([baseline])).recorded).toBe(true);
+    expect((await recordSeoExperimentBaselines([{ ...baseline, query: { ...baseline.query, impressions: 999 } }])).recorded).toBe(false);
+    expect(await readSeoExperimentBaselines()).toEqual([baseline]);
   });
 });

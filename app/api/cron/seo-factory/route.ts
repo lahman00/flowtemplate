@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { runSeoFactory } from "@/lib/seo-factory/run";
-import { claimSeoFactoryRun, readLatestSeoFactoryRun, releaseSeoFactoryRunClaim } from "@/lib/seo-factory/store";
+import { captureExecutionBaselines } from "@/lib/seo-factory/baseline";
+import { claimSeoFactoryRun, readLatestSeoFactoryRun, readSeoExperimentBaselines, releaseSeoFactoryRunClaim } from "@/lib/seo-factory/store";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -19,6 +20,8 @@ export async function GET(request: NextRequest) {
 
   try {
     const run = await runSeoFactory();
+    const existingBaselines = await readSeoExperimentBaselines();
+    const baselines = existingBaselines.length ? [] : await captureExecutionBaselines(run);
     console.info("SEO Factory completed", {
       runId: run.id,
       gscRowsAnalyzed: run.gscRowsAnalyzed,
@@ -27,8 +30,9 @@ export async function GET(request: NextRequest) {
       actionCounts: run.actionCounts,
       autonomyLevel: run.autonomyLevel,
       massPublishingEnabled: run.massPublishingEnabled,
+      baselinesRecorded: baselines.length,
     });
-    return NextResponse.json({ ok: true, runId: run.id, gscRowsAnalyzed: run.gscRowsAnalyzed, pagesAnalyzed: run.pagesAnalyzed, opportunities: run.opportunities.length, autonomyLevel: 0, massPublishingEnabled: false });
+    return NextResponse.json({ ok: true, runId: run.id, gscRowsAnalyzed: run.gscRowsAnalyzed, pagesAnalyzed: run.pagesAnalyzed, opportunities: run.opportunities.length, baselinesRecorded: baselines.length, autonomyLevel: 0, massPublishingEnabled: false });
   } catch (error) {
     await releaseSeoFactoryRunClaim(day);
     const message = error instanceof Error ? error.message : "SEO Factory failed";

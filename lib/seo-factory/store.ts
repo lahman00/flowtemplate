@@ -1,13 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import { AGENTS_DIR } from "@/lib/agents/paths";
-import type { SeoExperiment, SeoFactoryRun } from "@/lib/seo-factory/types";
+import type { SeoExperiment, SeoExperimentBaseline, SeoFactoryRun } from "@/lib/seo-factory/types";
 import { experimentIsCoolingDown } from "@/lib/seo-factory/policy";
 
 const LATEST_BLOB = "seo-factory/latest-run.json";
 const EXPERIMENTS_BLOB = "seo-factory/experiments.json";
 const LOCAL_LATEST = path.join(AGENTS_DIR, "seo-factory-latest.json");
 const LOCAL_EXPERIMENTS = path.join(AGENTS_DIR, "seo-factory-experiments.json");
+const BASELINES_BLOB = "seo-factory/experiment-baselines.json";
+const LOCAL_BASELINES = path.join(AGENTS_DIR, "seo-factory-experiment-baselines.json");
 
 function hasBlob(): boolean { return Boolean(process.env.BLOB_READ_WRITE_TOKEN); }
 function readLocal<T>(file: string, fallback: T): T { try { return JSON.parse(fs.readFileSync(file, "utf-8")) as T; } catch { return fallback; } }
@@ -55,6 +57,20 @@ export async function recordSeoExperiment(experiment: SeoExperiment): Promise<{ 
   const updated = [...existing, experiment];
   await writeSeoExperiments(updated);
   return { recorded: true, experiments: updated };
+}
+
+export async function readSeoExperimentBaselines(): Promise<SeoExperimentBaseline[]> {
+  return hasBlob() ? readBlob(BASELINES_BLOB, []) : readLocal(LOCAL_BASELINES, []);
+}
+
+export async function recordSeoExperimentBaselines(baselines: SeoExperimentBaseline[]): Promise<{ recorded: boolean; baselines: SeoExperimentBaseline[] }> {
+  const existing = await readSeoExperimentBaselines();
+  const ids = new Set(existing.map((item) => item.id));
+  if (baselines.some((item) => ids.has(item.id))) return { recorded: false, baselines: existing };
+  const updated = [...existing, ...baselines];
+  if (!hasBlob()) writeLocal(LOCAL_BASELINES, updated);
+  else await writeBlob(BASELINES_BLOB, updated);
+  return { recorded: true, baselines: updated };
 }
 
 export async function claimSeoFactoryRun(day: string): Promise<boolean> {

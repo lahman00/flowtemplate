@@ -45,8 +45,11 @@ The queue supports `CREATE`, `IMPROVE`, `MERGE`, `REDIRECT`, `INTERNAL_LINK`, `M
 - Immutable history: `seo-factory/runs/{run-id}.json`
 - Daily concurrency claim: `seo-factory/claims/{YYYY-MM-DD}.json`
 - Experiment ledger: `seo-factory/experiments.json`
+- Immutable pre-intervention baselines: `seo-factory/experiment-baselines.json`
 
 The experiment ledger rejects a second intervention on a page while an experiment is measuring or inside its measurement cooldown.
+Baseline records carry their GSC window, capture timestamp, query cluster, query metrics, and page aggregate. A duplicate baseline ID is rejected rather than overwritten.
+The first execution cohort baseline is captured reproducibly with `npx tsx --env-file=.env.local scripts/seo/freeze-execution-baseline.ts`; the command fails closed if GSC is unavailable, a required candidate disappears, or an immutable ID already exists.
 
 ## Schedule and observability
 
