@@ -1,0 +1,109 @@
+{
+  "name": "KrispCall",
+  "slug": "krispcall",
+  "category": "communication",
+  "description": "KrispCall is a cloud-based business phone system providing global calling, SMS/MMS, and voicemail in one unified inbox, with call recording, IVR, power dialer, and 100+ integrations for growing businesses.",
+  "website": "https://krispcall.com",
+  "platforms": [
+    "Web",
+    "Windows",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Positioned for small and growing businesses that want an affordable cloud phone system with global numbers, unified calling/SMS/voicemail, and CRM integrations, without enterprise-grade contact-center complexity.",
+  "features": [
+    "Unified inbox for calls, SMS, MMS, and voicemail in a single window",
+    "Global business phone numbers across 100+ countries",
+    "One-click call recording on web and mobile apps",
+    "Multi-level IVR, power dialer, and call transfer/routing",
+    "Customizable welcome messages, auto attendant, and hold music",
+    "100+ integrations including HubSpot, Salesforce, and Pipedrive"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$12/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_plan": false,
+    "free_trial": {
+      "available": false
+    },
+    "entry_paid": {
+      "amount": "12",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "unit": "user",
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Essential",
+        "amount": "12",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Billed at $12/user/month annually ($15/user/month billed monthly). For teams of 1-5 needing business calling, SMS, and basic call routing. Includes 1 free US/UK/CA number per user."
+      },
+      {
+        "name": "Standard",
+        "amount": "32",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Billed at $32/user/month annually ($40/user/month billed monthly). For growing teams of up to 50 users; adds call recording, call transfer, transcription and summaries, Power Dialer, bulk SMS, and Salesforce integration."
+      },
+      {
+        "name": "Enterprise",
+        "notes": "For teams of 50+ seats requiring SSO, a dedicated account manager, custom SLAs, or volume pricing. Custom quote."
+      }
+    ],
+    "last_verified": "2026-08-19",
+    "official_source": "https://krispcall.com/pricing/"
+  },
+  "pros": [
+    "Confirmed low entry price ($12/user/month annual) for a full cloud business phone system, including a free number per user",
+    "Global number coverage across 100+ countries with 100+ third-party integrations",
+    "Every paid plan includes a 14-day money-back guarantee"
+  ],
+  "cons": [
+    "No free tier — paid subscription required from the start, unlike some competitors with a limited free plan",
+    "Calling and SMS usage is billed separately from the subscription, and numbers outside the included US/UK/Canada options can add fees"
+  ],
+  "faq": [
+    {
+      "question": "Does KrispCall have a free plan?",
+      "answer": "No. KrispCall does not offer a permanent free tier; the Essential plan starts at $12/user/month billed annually. Every paid plan includes a 14-day money-back guarantee."
+    },
+    {
+      "question": "How much does KrispCall cost?",
+      "answer": "The Essential plan starts at $12/user/month billed annually ($15/user/month billed monthly), for teams of 1-5. Standard is $32/user/month billed annually ($40 monthly), and Enterprise uses custom pricing. Calling and SMS usage is billed separately."
+    },
+    {
+      "question": "What integrations does KrispCall support?",
+      "answer": "KrispCall integrates with 100+ applications, including CRMs like HubSpot, Salesforce, and Pipedrive."
+    }
+  ],
+  "links": {
+    "pricing": "https://krispcall.com/pricing/"
+  },
+  "sources": [
+    "https://krispcall.com/pricing/",
+    "https://krispcall.com/downloads/",
+    "https://krispcall.com/what-is-krispcall/"
+  ],
+  "accessed_at": "2026-08-19",
+  "alternatives": [
+    {
+      "name": "RingCentral",
+      "slug": "ringcentral",
+      "description": "A cloud communications platform providing business phone, team messaging, video meetings, and AI-powered customer engagement and contact center tools.",
+      "best_for": "Businesses of all sizes, from small teams to Fortune 1000 enterprises, that need unified phone, video, messaging, and contact center capabilities in one platform.",
+      "strengths": [
+        "Enterprise-scale contact center features",
+        "Unified video, messaging, and phone in one platform",
+        "Fortune 1000-proven reliability"
+      ]
+    }
+  ],
+  "order": 229
+}

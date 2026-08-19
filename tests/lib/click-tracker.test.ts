@@ -78,6 +78,22 @@ describe("trackSoftwareCtaClick — Wix funnel dimensions", () => {
     expect(event.affiliateFunnel).toBeUndefined();
   });
 
+  it("records KrispCall's canonical affiliate destination and CTA location", () => {
+    const krispcall = getSoftware("krispcall")!;
+    const affiliateUrl = "https://try.krispcall.com/aikpbrrrl8k9";
+    trackSoftwareCtaClick(krispcall, affiliateUrl, "/software/krispcall", "software-page-cta");
+
+    const [event] = getOutboundEvents();
+    expect(event).toMatchObject({
+      type: "affiliate_link_click",
+      softwareSlug: "krispcall",
+      destination: "affiliate",
+      url: affiliateUrl,
+      sourcePage: "/software/krispcall",
+      ctaLocation: "software-page-cta",
+    });
+  });
+
   it("never records secrets or unrelated personal data — only the documented dimensions", () => {
     const wix = getSoftware("wix")!;
     trackSoftwareCtaClick(wix, WIX_FUNNELS["website-builder"].url, "/software/wix", "software-page-cta");

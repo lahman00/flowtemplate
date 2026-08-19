@@ -59,6 +59,8 @@ Fixed by downloading the real Inter TTF weights directly from Google Fonts' own 
 
 ## 7. Visual template inventory (as of this audit)
 
+**LinkedIn Company Page banner:** V3 is live as of 2026-08-19 and passed live desktop/mobile QA after Eyal uploaded it. The prior `BLOCKED_HUMAN_FILE_PICKER` status is closed.
+
 | Surface | File | Distinct? |
 |---|---|---|
 | Homepage / fallback OG + Twitter card | `app/opengraph-image.tsx`, `app/twitter-image.tsx` | Wordmark + tagline, stacked |

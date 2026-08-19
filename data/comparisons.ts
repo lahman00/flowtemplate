@@ -1184,6 +1184,10 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   // indexable and reachable through the standard comparison template.
   ["whatconverts", "google-analytics"],
   ["whatconverts", "hubspot"],
+
+  // KrispCall's existing sourced alternative: an SMB-focused cloud phone
+  // system versus RingCentral's broader unified communications platform.
+  ["krispcall", "ringcentral"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
