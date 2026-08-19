@@ -33,9 +33,9 @@ const DESTINATION_LABEL: Record<string, string> = {
   vendor_link_click: "Vendor link",
 };
 
-export default function OutboundClicksReportPage() {
+export default async function OutboundClicksReportPage() {
   const trackingEnabled = isOutboundTrackingEnabled();
-  const events = getOutboundEvents();
+  const events = await getOutboundEvents();
   const summary = summarizeOutboundEventsByProduct(events);
   const softwareBySlug = new Map(getAllSoftware().map((item) => [item.slug, item]));
 

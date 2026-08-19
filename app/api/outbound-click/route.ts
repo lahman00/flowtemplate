@@ -52,10 +52,10 @@ export async function POST(request: NextRequest) {
   const resolvedCtaLocation = typeof ctaLocation === "string" ? ctaLocation : undefined;
 
   if (kind === "vendor-link") {
-    trackVendorLinkClick(software, software.website, sourcePage);
+    await trackVendorLinkClick(software, software.website, sourcePage);
   } else {
     const url = slug === "wix" && isWixContext(wixContext) ? getWixAffiliateUrl(wixContext) : getSoftwareCtaUrl(software);
-    trackSoftwareCtaClick(software, url, sourcePage, resolvedCtaLocation);
+    await trackSoftwareCtaClick(software, url, sourcePage, resolvedCtaLocation);
   }
 
   return NextResponse.json({ ok: true }, { status: 202 });

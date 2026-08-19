@@ -1,23 +1,50 @@
 import fs from "node:fs";
 import path from "node:path";
+import { randomUUID } from "node:crypto";
 
 /**
- * Sprint 8 Phase 4 (architecture) / Sprint 9 Task 6 (real sink) — Outbound
- * Event abstraction. Defines the shape of a revenue-relevant outbound
- * interaction (a click toward a vendor's site) and a single choke point
- * for recording one. Gated behind NEXT_PUBLIC_REVENUE_TRACKING_ENABLED
- * (unset by default — same "off by default" convention as
- * lib/analytics.ts), so this stays a no-op until someone deliberately
- * turns it on. See docs/revenue.md for the privacy-policy prerequisite
- * before enabling it in production.
+ * Sprint 8 Phase 4 (architecture) / Sprint 9 Task 6 (real sink) / Phase 11
+ * Blob migration (2026-08-19) — Outbound Event abstraction. Defines the
+ * shape of a revenue-relevant outbound interaction (a click toward a
+ * vendor's site) and a single choke point for recording one. Gated behind
+ * NEXT_PUBLIC_REVENUE_TRACKING_ENABLED (unset — off), following the same
+ * env-var-gate convention as lib/analytics.ts, so this stays a no-op
+ * until someone deliberately turns it on. See the Privacy Policy's
+ * "Outbound link tracking" section — the prerequisite for turning it on
+ * in production.
  *
- * The sink is a local, first-party JSON file (var/outbound-clicks.json,
- * gitignored) — no third-party analytics provider, per Sprint 9's Task 6.
- * This is intentionally simple: it works for a single, persistent Node
- * process (`next start` on one machine/container) but won't aggregate
- * correctly across multiple serverless instances or survive an ephemeral
- * filesystem — see docs/revenue.md "Risks" for this limitation stated
- * plainly, same as every other honestly-documented gap in this project.
+ * Storage backend: one private Vercel Blob object per event
+ * (`outbound-clicks/{uuid}.json`) when BLOB_READ_WRITE_TOKEN is present —
+ * same store this project already uses for lib/revenue/affiliate-
+ * pipeline.ts. Deliberately NOT one shared mutable JSON blob (the
+ * pipeline's own pattern): that's a read-modify-write over a single
+ * object, safe for a low-traffic internal dashboard touched by one human
+ * at a time, but a real lost-update race under concurrent public clicks —
+ * two requests could both read the same array, both append, and the
+ * second write would silently discard the first click. One immutable
+ * object per event has no shared mutable state to race over: every write
+ * is independent, so concurrent clicks can never collide or clobber each
+ * other. The read side (getOutboundEvents) pays for this with a list +
+ * N gets instead of one read — an acceptable, honestly-documented
+ * tradeoff at this project's real traffic scale, same "simple and
+ * plain about its limits" philosophy as the rest of this module.
+ *
+ * Falls back to the same local-file, single-JSON-array pattern used
+ * before (var/outbound-clicks.json, gitignored) only when the Blob token
+ * isn't set — local dev without `vercel env pull`, or the test suite.
+ * Tests never need real network access to a blob store, and the
+ * read-modify-write race doesn't matter there: a single Node process
+ * running tests serially, not concurrent public traffic.
+ *
+ * 2026-08-19 production finding: the previous version of this file wrote
+ * to `path.join(process.cwd(), "var", "outbound-clicks.json")`
+ * unconditionally. That path is read-only on deployed Vercel serverless
+ * functions (only /tmp is writable there), so enabling tracking in
+ * production made every single outbound click 500. Confirmed by a real
+ * controlled test against the live API route before this fix, and by the
+ * fact this never surfaced locally — dev and tests both run on an
+ * ordinary writable filesystem, so the bug was invisible until a real
+ * production request hit it.
  */
 
 export type OutboundEventType = "official_site_click" | "affiliate_link_click" | "vendor_link_click";
@@ -54,7 +81,9 @@ export type StoredOutboundEvent = OutboundEvent & {
   timestamp: string;
 };
 
-const LOG_FILE = path.join(process.cwd(), "var", "outbound-clicks.json");
+const BLOB_PREFIX = "outbound-clicks/";
+const LOCAL_FALLBACK_PATH = path.join(process.cwd(), "var", "outbound-clicks.json");
+/** Read-side safety cap — the most recent events a single list() call will pull. See the module header for why "most recent" is best-effort, not guaranteed, once total volume exceeds this. */
 const MAX_STORED_EVENTS = 5000;
 
 /**
@@ -66,9 +95,13 @@ export function isOutboundTrackingEnabled(): boolean {
   return process.env.NEXT_PUBLIC_REVENUE_TRACKING_ENABLED === "true";
 }
 
-function readLog(): StoredOutboundEvent[] {
+function hasBlobToken(): boolean {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}
+
+function readLocalFallback(): StoredOutboundEvent[] {
   try {
-    const contents = fs.readFileSync(LOG_FILE, "utf-8");
+    const contents = fs.readFileSync(LOCAL_FALLBACK_PATH, "utf-8");
     const parsed: unknown = JSON.parse(contents);
     return Array.isArray(parsed) ? (parsed as StoredOutboundEvent[]) : [];
   } catch {
@@ -77,9 +110,11 @@ function readLog(): StoredOutboundEvent[] {
   }
 }
 
-function writeLog(events: StoredOutboundEvent[]): void {
-  fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });
-  fs.writeFileSync(LOG_FILE, JSON.stringify(events, null, 2));
+function appendLocalFallback(event: StoredOutboundEvent): void {
+  const events = readLocalFallback();
+  events.push(event);
+  fs.mkdirSync(path.dirname(LOCAL_FALLBACK_PATH), { recursive: true });
+  fs.writeFileSync(LOCAL_FALLBACK_PATH, JSON.stringify(events.slice(-MAX_STORED_EVENTS), null, 2));
 }
 
 /**
@@ -87,8 +122,16 @@ function writeLog(events: StoredOutboundEvent[]): void {
  * is explicitly enabled. `sourcePage` is supplied by the caller (the
  * click-tracking API route), which reads it from the request itself, not
  * from anything the browser could spoof into a different shape.
+ *
+ * Never throws: a persistence failure (network blip, misconfigured
+ * store, anything) must never break the API route that called this —
+ * the visitor's actual click and navigation already happened in their
+ * browser regardless of whether Miloosh managed to log it. Same "never
+ * crash on a transient storage problem" discipline as
+ * affiliate-pipeline.ts's readAffiliatePipeline(), applied here to the
+ * write side instead of the read side.
  */
-export function recordOutboundEvent(event: OutboundEvent, sourcePage: string): void {
+export async function recordOutboundEvent(event: OutboundEvent, sourcePage: string): Promise<void> {
   if (!isOutboundTrackingEnabled()) {
     return;
   }
@@ -99,14 +142,68 @@ export function recordOutboundEvent(event: OutboundEvent, sourcePage: string): v
     timestamp: new Date().toISOString(),
   };
 
-  const events = readLog();
-  events.push(stored);
-  writeLog(events.slice(-MAX_STORED_EVENTS));
+  if (!hasBlobToken()) {
+    try {
+      appendLocalFallback(stored);
+    } catch {
+      // Local dev/test filesystem hiccup — never crash the caller over it.
+    }
+    return;
+  }
+
+  try {
+    const { put } = await import("@vercel/blob");
+    await put(`${BLOB_PREFIX}${randomUUID()}.json`, JSON.stringify(stored), {
+      access: "private",
+      addRandomSuffix: false,
+      // A fresh random UUID should never collide with an existing object;
+      // refusing to overwrite is a cheap extra guard against silently
+      // clobbering a different event if it somehow did.
+      allowOverwrite: false,
+      contentType: "application/json",
+    });
+  } catch {
+    // Store unreachable/misconfigured/transient error — this is
+    // best-effort analytics, not a critical path. Never let it 500 the
+    // route that's supposed to just be forwarding a click.
+  }
 }
 
-/** Full event log, most recent first. Powers the /internal/outbound-clicks report. */
-export function getOutboundEvents(): StoredOutboundEvent[] {
-  return [...readLog()].reverse();
+/**
+ * Full event log, most recent first. Powers the /internal/outbound-clicks
+ * report. One list() call plus one get() per listed blob — see the module
+ * header for why this trades read cost for write-side safety. A single
+ * unreadable/corrupt blob is skipped, not fatal to the whole report.
+ */
+export async function getOutboundEvents(): Promise<StoredOutboundEvent[]> {
+  if (!hasBlobToken()) {
+    return [...readLocalFallback()].reverse();
+  }
+
+  try {
+    const { list, get } = await import("@vercel/blob");
+    const { blobs } = await list({ prefix: BLOB_PREFIX, limit: MAX_STORED_EVENTS });
+
+    const events = await Promise.all(
+      blobs.map(async (blob): Promise<StoredOutboundEvent | null> => {
+        try {
+          const result = await get(blob.pathname, { access: "private", useCache: false });
+          if (!result) return null;
+          const text = await new Response(result.stream).text();
+          return JSON.parse(text) as StoredOutboundEvent;
+        } catch {
+          return null;
+        }
+      })
+    );
+
+    return events
+      .filter((event): event is StoredOutboundEvent => event !== null)
+      .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+  } catch {
+    // Store not yet initialized (first write hasn't happened) or a transient error — never crash a read.
+    return [];
+  }
 }
 
 export type OutboundClickSummaryRow = {
