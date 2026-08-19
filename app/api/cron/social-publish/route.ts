@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { getLinkedInTransport, verifyBufferLinkedInTarget } from "@/lib/social/channels/linkedin";
 import { runPublishCycle } from "@/lib/social/publish";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +25,23 @@ export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   const isAuthenticated = Boolean(secret) && authHeader === `Bearer ${secret}`;
   const forcedDryRun = new URL(request.url).searchParams.get("dryRun") === "true";
+
+  // Temporary production-only verification gate. It is deliberately evaluated
+  // before runPublishCycle so this execution cannot read, publish, or write the
+  // social queue. Vercel supplies the existing CRON_SECRET header when it invokes
+  // this configured cron path; the flag is removed immediately after verification.
+  if (isAuthenticated && process.env.SOCIAL_BUFFER_VERIFY_ONLY === "true") {
+    try {
+      const verification = await verifyBufferLinkedInTarget();
+      const result = { authenticated: true, mode: "buffer-verification", transport: getLinkedInTransport(), ...verification };
+      console.info("Buffer production verification", result);
+      return NextResponse.json(result);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Buffer verification failed";
+      console.error("Buffer production verification failed", { authenticated: true, mode: "buffer-verification", message });
+      return NextResponse.json({ authenticated: true, mode: "buffer-verification", error: message }, { status: 502 });
+    }
+  }
 
   const summary = await runPublishCycle({ dryRun: forcedDryRun || !isAuthenticated });
   return NextResponse.json({ authenticated: isAuthenticated, ...summary });

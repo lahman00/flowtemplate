@@ -118,6 +118,25 @@ export async function verifyBufferLinkedInChannel(): Promise<{ id: string; name:
   return result.data.channel;
 }
 
+export async function verifyBufferLinkedInTarget(): Promise<{
+  bufferAuthenticated: true;
+  channel: Awaited<ReturnType<typeof verifyBufferLinkedInChannel>>;
+  target: "company_page";
+}> {
+  const channel = await verifyBufferLinkedInChannel();
+  const service = channel.service.toLowerCase();
+  const targetMetadata = `${channel.type} ${channel.descriptor}`.toLowerCase();
+  const isLinkedIn = service.includes("linkedin");
+  const isPersonalProfile = /personal|profile|member/.test(targetMetadata);
+  const isCompanyPage = /organization|organisation|company|page/.test(targetMetadata);
+
+  if (!isLinkedIn || isPersonalProfile || !isCompanyPage) {
+    throw new Error("Configured Buffer channel is not a LinkedIn Company Page.");
+  }
+
+  return { bufferAuthenticated: true, channel, target: "company_page" };
+}
+
 async function publishViaMake(variant: ChannelVariant, body: string, options: { entryId?: string; scheduledAt?: string | null }): Promise<PublishResult> {
   const env = envAll(MAKE_ENV);
   if (!env || !options.entryId) return buildPublishResult({ channel: "linkedin", status: "SETUP_REQUIRED", text: body, link: variant.link ?? "", transport: "make", error: `Missing ${[...missingEnvNames(MAKE_ENV), ...(!options.entryId ? ["stable queue entry ID"] : [])].join(", ")}.` });
