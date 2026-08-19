@@ -6,6 +6,10 @@ Approved entries live in the private Vercel Blob object `social/queue.json`. Eac
 
 Vercel calls `/api/cron/social-publish` at `09:00`, `16:00`, `17:00`, and `18:00` UTC. These are health/catch-up, pre-slot, primary-slot, and retry checks. Eligibility and the one-per-business-day cap are enforced by the publisher in `America/New_York`; the number of cron calls does not determine whether a post is eligible.
 
+### Production blocker found 2026-08-19
+
+Authenticated `?dryRun=true` checks against both `miloosh.com` and the Vercel production alias returned `authenticated:false`, even when the request used the non-empty `CRON_SECRET` pulled from the linked production project. The route therefore ran safely as a dry run, but this proves the current scheduled cron cannot be counted as live publishing until the Vercel secret/runtime mismatch is corrected and the same check returns `authenticated:true`. Rotating or replacing the credential requires owner approval; do not work around this fail-closed guard.
+
 ## Failure and retry rules
 
 - A successful provider is never called again for the same queue entry.
