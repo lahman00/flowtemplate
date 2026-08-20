@@ -2,20 +2,80 @@
   "name": "Ecwid",
   "slug": "ecwid",
   "category": "ecommerce",
-  "description": "Ecwid is an ecommerce platform, branded \"#1 Ecommerce Shopping Cart & Online Store,\" that lets merchants launch a store with no transaction fees and embed selling widgets into existing sites.",
+  "description": "Ecwid by Lightspeed is an ecommerce platform that enables merchants to launch a standalone store or embed shopping cart widgets into existing websites with zero platform transaction fees.",
   "website": "https://www.ecwid.com",
   "platforms": ["Web", "iOS", "Android"],
-  "best_for": "Positioned for businesses at any stage, from first-time sellers to scaling enterprises, with named verticals including dropshipping, wholesale, fashion, nonprofits, restaurants, and individual creators.",
+  "best_for": "Small businesses, creators, and existing website owners wanting to add ecommerce checkout to WordPress, Wix, or custom sites without migrating platforms.",
   "features": [
-    "Embeddable shopping cart/widget for existing websites",
-    "Social selling (Instagram, Facebook, TikTok, Pinterest, Snapchat, WhatsApp)",
-    "Built-in POS for in-person sales",
-    "Automated tax calculation and shipping labels",
-    "Abandoned-cart email recovery",
-    "AI-powered product photo enhancement"
+    "Embeddable shopping cart widget for existing websites (WordPress, Wix, Squarespace)",
+    "Social selling synchronization across Instagram, Facebook, TikTok, and WhatsApp",
+    "Point-of-sale (POS) integration for in-person retail sales",
+    "Automated tax calculations and discount coupon codes",
+    "Automated abandoned-cart email recovery sequences",
+    "Support for physical products, digital downloads, and recurring subscriptions"
   ],
-  "sources": ["https://www.ecwid.com"],
-  "accessed_at": "2026-08-01",
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$14.08/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true
+    },
+    "entry_paid": {
+      "amount": "14.08",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 5 products, customizable instant site, and zero platform transaction fees."
+      },
+      {
+        "name": "Venture",
+        "amount": "14.08",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Billed annually at $14.08/mo (or $19/mo monthly); adds up to 100 products, digital goods (up to 25GB), and Facebook/Instagram shops."
+      },
+      {
+        "name": "Business",
+        "amount": "29.08",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Billed annually at $29.08/mo (or $39/mo monthly); adds up to 2,500 products, abandoned cart recovery, and Amazon/eBay marketplace sync."
+      },
+      {
+        "name": "Unlimited",
+        "amount": "82.50",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Billed annually at $82.50/mo (or $99/mo monthly); adds unlimited products, custom branded mobile app (ShopApp), and POS integration."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.ecwid.com/pricing"
+  },
+  "pros": [
+    "Easily embeds into any pre-existing website or CMS without requiring a full site redesign or store migration",
+    "Zero platform transaction fees charged by Ecwid across all plan tiers",
+    "Multi-channel inventory synchronization spanning social commerce, online marketplaces, and physical POS"
+  ],
+  "cons": [
+    "Free plan is capped at 5 physical products and excludes digital downloads",
+    "Storefront design and layout flexibility is more restricted compared to dedicated full-site builders like Shopify",
+    "Advanced SEO URL editing and product filters require upgrading to the Business tier"
+  ],
+  "sources": [
+    "https://www.ecwid.com/pricing",
+    "https://www.ecwid.com"
+  ],
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Shopify",

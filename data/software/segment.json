@@ -14,8 +14,62 @@
     "Integration with 750+ applications and destinations, including data warehouses",
     "Combines customer data infrastructure with Twilio's communications capabilities"
   ],
-  "sources": ["https://www.twilio.com/en-us/segment"],
-  "accessed_at": "2026-08-04",
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$120/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "120",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 1,000 monthly active visitors/MTUs, 2 sources, and unlimited destinations."
+      },
+      {
+        "name": "Team",
+        "amount": "120",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Starts at $120/mo for 10,000 MTUs; adds 1 data warehouse destination and custom event filters."
+      },
+      {
+        "name": "Business",
+        "amount": "Custom",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Custom enterprise pricing; adds real-time data governance (Protocols), reverse ETL, Unify profiles, and Twilio Engage."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://segment.com/pricing"
+  },
+  "pros": [
+    "Unified customer data pipeline (CDP) connecting a single tracking SDK to 550+ analytics, marketing, and warehouse destinations",
+    "Eliminates client-side tag bloat and reduces custom engineering maintenance across multiple tools",
+    "Real-time identity resolution, data hygiene validation (Protocols), and automated audience orchestration"
+  ],
+  "cons": [
+    "Steep pricing escalation based on Monthly Tracked Users (MTUs) as web and mobile traffic scales",
+    "Primarily a data routing infrastructure platform rather than an out-of-the-box visual analytics dashboard",
+    "Advanced data governance and reverse ETL features require enterprise Business plan contracts"
+  ],
+  "sources": [
+    "https://segment.com/pricing",
+    "https://www.twilio.com/en-us/segment"
+  ],
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Amplitude",

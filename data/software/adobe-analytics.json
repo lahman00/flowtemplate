@@ -15,8 +15,33 @@
     "Role-based dashboards and a mobile scorecard app",
     "Bulk and streaming APIs, data feeds, and warehouse exports to Azure, Amazon S3, Google BigQuery, and Snowflake"
   ],
-  "sources": ["https://business.adobe.com/products/analytics/adobe-analytics.html", "https://business.adobe.com/products/analytics/adobe-analytics-features.html"],
-  "accessed_at": "2026-08-04",
+  "pricing": {
+    "model": "paid",
+    "starting_price": "Custom enterprise pricing",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": false
+    },
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://business.adobe.com/products/analytics/pricing.html"
+  },
+  "pros": [
+    "Deep enterprise cross-channel attribution and multi-dimensional segmentation in Analysis Workspace",
+    "Native bidirectional data integration with Adobe Experience Cloud (Target, Campaign, AEP, Marketo)",
+    "Robust data governance and high-volume streaming exports to Snowflake, BigQuery, and AWS S3"
+  ],
+  "cons": [
+    "High enterprise contract pricing starting in the tens of thousands annually with no free tier",
+    "Steep learning curve requiring dedicated analytics engineers and implementation consultants",
+    "Tag management and variable mapping (e-vars, props) can be cumbersome without Adobe Launch/Tags"
+  ],
+  "sources": [
+    "https://business.adobe.com/products/analytics/adobe-analytics.html",
+    "https://business.adobe.com/products/analytics/pricing.html"
+  ],
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Google Analytics",
