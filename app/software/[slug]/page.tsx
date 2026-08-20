@@ -16,6 +16,8 @@ import { TrackedCtaLink } from "@/components/TrackedCtaLink";
 import { ListingBadges } from "@/components/ListingBadges";
 import { VendorLinksBlock } from "@/components/VendorLinksBlock";
 import { PricingSection } from "@/components/PricingSection";
+import { AlternativeDecisionGuide } from "@/components/AlternativeDecisionGuide";
+import { getAlternativeGuide } from "@/data/seo/alternative-guides";
 import { getAllSoftware, getSoftware } from "@/data/software";
 import { getCategoryName } from "@/data/categories";
 import { getRelatedSoftware } from "@/lib/related";
@@ -95,6 +97,7 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
       return softwareA && softwareB ? { softwareA, softwareB } : null;
     })
     .filter((item): item is NonNullable<typeof item> => item !== null);
+  const alternativeGuide = getAlternativeGuide(software.slug);
 
   return (
     <main className="flex-1 py-16 sm:py-20">
@@ -211,6 +214,8 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
             ))}
           </div>
         </section>
+
+        {alternativeGuide ? <AlternativeDecisionGuide guide={alternativeGuide} category={software.category} /> : null}
 
         <PricingSection software={software} />
 

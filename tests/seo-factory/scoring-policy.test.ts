@@ -1,9 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { assessPublicationThreshold, experimentIsCoolingDown } from "@/lib/seo-factory/policy";
-import { clusterOpportunities, computeOpportunityScore, selectCanonicalWinner } from "@/lib/seo-factory/run";
+import { clusterOpportunities, computeOpportunityScore, selectCanonicalWinner, suppressActiveExperimentRecommendations } from "@/lib/seo-factory/run";
 import type { ScoreComponent, SeoOpportunity } from "@/lib/seo-factory/types";
 
+function opportunity(overrides: Partial<SeoOpportunity> = {}): SeoOpportunity {
+  return { id: "x", query: "pipedrive alternatives", intent: "ALTERNATIVES", action: "IMPROVE", targetUrl: "/software/pipedrive", existingUrl: "/software/pipedrive", relatedSoftware: ["pipedrive"], category: "crm", gsc: { impressions: 100, clicks: 0, ctr: 0, position: 70 }, affiliateStatus: "ACTIVE", moneyScore: 50, opportunityScore: 70, scoreComponents: [], cannibalizationRisk: "none", canonicalWinner: null, recommendation: "Improve", evidence: [], confidence: "high", state: "ANALYZED", publicationEligible: false, ...overrides };
+}
+
 describe("SEO Factory scoring and safety policy", () => {
+  it("suppresses another major intervention while a page experiment is measuring", () => {
+    const item = opportunity({ action: "IMPROVE", existingUrl: "/software/pipedrive", targetUrl: "/software/pipedrive" });
+    const [suppressed] = suppressActiveExperimentRecommendations([item], [{ page: "/software/pipedrive", decision: "MEASURING", measurementWindowDays: 28, recordedAt: "2026-08-20T00:00:00Z" }]);
+    expect(suppressed.action).toBe("WAIT");
+    expect(suppressed.recommendation).toContain("Active SEO experiment");
+  });
   it("excludes unavailable signals instead of treating them as zero", () => {
     const components: ScoreComponent[] = [
       { name: "real", value: 1, weight: 3, kind: "real", source: "GSC", confidence: "high" },

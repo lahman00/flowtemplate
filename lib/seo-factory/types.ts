@@ -67,6 +67,15 @@ export type SeoExperiment = {
   measurementWindowDays: number;
   result: null | { measuredAt: string; impressions: number; clicks: number; ctr: number; position: number };
   decision: "MEASURING" | "WON" | "LOST" | "INCONCLUSIVE";
+  baselineId?: string;
+  queryCluster?: string[];
+  diagnosis?: string;
+  exactChange?: string;
+  evidenceSources?: string[];
+  internalLinksChanged?: string[];
+  deploymentTimestamp?: string;
+  affiliateStatusAtT0?: string;
+  checkpoints?: Array<{ days: 7 | 14 | 28; dueAt: string; kind: "DIRECTIONAL" | "PRIMARY"; measuredAt: null }>;
 };
 
 /** Immutable pre-intervention evidence captured before editorial review. */

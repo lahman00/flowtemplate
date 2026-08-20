@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { readLatestSeoFactoryRun, readSeoExperimentBaselines, readSeoExperiments, recordSeoExperiment, recordSeoExperimentBaselines, writeSeoFactoryRun } from "@/lib/seo-factory/store";
+import { readLatestSeoFactoryRun, readSeoExperimentBaselines, readSeoExperiments, recordSeoExperiment, recordSeoExperimentBaselines, recordSeoExperimentBatch, writeSeoFactoryRun } from "@/lib/seo-factory/store";
 import type { SeoExperiment, SeoExperimentBaseline, SeoFactoryRun } from "@/lib/seo-factory/types";
 
 const latestPath = path.join(process.cwd(), "var", "agents", "seo-factory-latest.json");
@@ -48,5 +48,13 @@ describe("SEO Factory durable state contract", () => {
     expect((await recordSeoExperimentBaselines([baseline])).recorded).toBe(true);
     expect((await recordSeoExperimentBaselines([{ ...baseline, query: { ...baseline.query, impressions: 999 } }])).recorded).toBe(false);
     expect(await readSeoExperimentBaselines()).toEqual([baseline]);
+  });
+
+  it("records an experiment cohort atomically and rejects a duplicate page", async () => {
+    const first = experiment("one", "2026-08-20T00:00:00Z");
+    const second = { ...experiment("two", "2026-08-20T00:00:00Z"), page: "/software/airtable" };
+    expect((await recordSeoExperimentBatch([first, second])).recorded).toBe(true);
+    expect((await recordSeoExperimentBatch([{ ...second, id: "three" }])).recorded).toBe(false);
+    expect(await readSeoExperiments()).toHaveLength(2);
   });
 });

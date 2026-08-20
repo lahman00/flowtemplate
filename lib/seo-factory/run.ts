@@ -10,7 +10,7 @@ import { GoogleSearchConsoleClient, type SearchAnalyticsRow } from "@/scripts/ag
 import { recentAndPriorWindows } from "@/scripts/agents/seo/lib/date-windows";
 import { classifySeoIntent, normalizeQuery, softwareEntitiesForQuery } from "@/lib/seo-factory/intent";
 import { assessPublicationThreshold } from "@/lib/seo-factory/policy";
-import { writeSeoFactoryRun } from "@/lib/seo-factory/store";
+import { readSeoExperiments, writeSeoFactoryRun } from "@/lib/seo-factory/store";
 import { SEO_ACTIONS, SEO_INTENTS, type ScoreComponent, type SeoAction, type SeoFactoryRun, type SeoIntent, type SeoOpportunity } from "@/lib/seo-factory/types";
 
 const SITE_ORIGIN = "https://miloosh.com";
@@ -82,6 +82,16 @@ export function clusterOpportunities(items: SeoOpportunity[]): SeoOpportunity[] 
       confidence: impressions >= 50 ? "high" : representative.confidence,
       evidence: [...representative.evidence, `Clustered ${group.length} query variant(s): ${sorted.slice(0, 8).map((item) => `"${item.query}"`).join(", ")}`],
     };
+  });
+}
+
+export function suppressActiveExperimentRecommendations(items: SeoOpportunity[], experiments: Array<{ page: string; decision: string; measurementWindowDays: number; recordedAt: string }>): SeoOpportunity[] {
+  const active = new Map(experiments.filter((item) => item.decision === "MEASURING").map((item) => [item.page, item]));
+  return items.map((item) => {
+    const experiment = active.get(item.existingUrl ?? item.targetUrl ?? "");
+    if (!experiment || !["CREATE", "IMPROVE", "MERGE", "REDIRECT", "META_TEST", "REFRESH"].includes(item.action)) return item;
+    const measurementEnds = new Date(new Date(experiment.recordedAt).getTime() + experiment.measurementWindowDays * 86_400_000).toISOString();
+    return { ...item, action: "WAIT", recommendation: `Active SEO experiment is measuring until ${measurementEnds}; suppress another major intervention unless a factual, technical, legal, or indexability defect is confirmed.` };
   });
 }
 
@@ -188,7 +198,8 @@ export async function runSeoFactory(options: { persist?: boolean } = {}): Promis
   }
 
   const clustered = clusterOpportunities(evaluated);
-  const opportunities = clustered
+  const experiments = await readSeoExperiments();
+  const opportunities = suppressActiveExperimentRecommendations(clustered, experiments)
     .sort((a, b) => b.opportunityScore - a.opportunityScore || b.gsc.impressions - a.gsc.impressions || a.id.localeCompare(b.id))
     .slice(0, 100);
   const comparisonRows = rows.filter((row) => canonicalPath(row.keys[1] ?? "")?.startsWith("/compare/"));

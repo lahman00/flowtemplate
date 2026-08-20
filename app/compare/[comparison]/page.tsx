@@ -30,6 +30,7 @@ import { SITE_URL } from "@/lib/site";
 import { formatIsoDate } from "@/lib/date";
 import { getSoftwareCtaRel, shouldShowAffiliateDisclosure } from "@/lib/affiliate";
 import { resolveComparisonCtaUrl, getWixContextForComparison } from "@/lib/wix-funnels";
+import { getAlternativeGuide } from "@/data/seo/alternative-guides";
 
 type ComparePageProps = {
   params: Promise<{ comparison: string }>;
@@ -133,6 +134,7 @@ export default async function ComparePage({ params }: ComparePageProps) {
   }
 
   const { softwareA, softwareB } = data;
+  const guidedAlternatives = [softwareA, softwareB].filter((software) => getAlternativeGuide(software.slug));
 
   const relatedComparisons = [
     ...getComparisonsInvolving(softwareA.slug),
@@ -295,6 +297,16 @@ export default async function ComparePage({ params }: ComparePageProps) {
             <ComparisonChoiceCta software={softwareB} otherSlug={softwareA.slug} />
           </Card>
         </section>
+
+        {guidedAlternatives.length > 0 ? (
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-zinc-400">
+            {guidedAlternatives.map((software) => (
+              <Link key={software.slug} href={`/software/${software.slug}#alternative-decision-heading`} className="underline underline-offset-4 hover:text-white">
+                Explore the {software.name} alternatives decision guide
+              </Link>
+            ))}
+          </div>
+        ) : null}
 
         <Card className="mt-14 border-amber-500/20 bg-amber-500/[0.03]">
           <p className="text-sm leading-7 text-zinc-400">

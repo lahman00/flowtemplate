@@ -59,6 +59,19 @@ export async function recordSeoExperiment(experiment: SeoExperiment): Promise<{ 
   return { recorded: true, experiments: updated };
 }
 
+export async function recordSeoExperimentBatch(experiments: SeoExperiment[]): Promise<{ recorded: boolean; experiments: SeoExperiment[] }> {
+  const existing = await readSeoExperiments();
+  const ids = new Set(existing.map((item) => item.id));
+  const measuringPages = new Set(existing.filter((item) => item.decision === "MEASURING").map((item) => item.page));
+  const batchIds = new Set<string>();
+  const batchPages = new Set<string>();
+  const invalid = experiments.some((item) => ids.has(item.id) || measuringPages.has(item.page) || batchIds.has(item.id) || batchPages.has(item.page) || (batchIds.add(item.id), batchPages.add(item.page), false));
+  if (invalid) return { recorded: false, experiments: existing };
+  const updated = [...existing, ...experiments];
+  await writeSeoExperiments(updated);
+  return { recorded: true, experiments: updated };
+}
+
 export async function readSeoExperimentBaselines(): Promise<SeoExperimentBaseline[]> {
   return hasBlob() ? readBlob(BASELINES_BLOB, []) : readLocal(LOCAL_BASELINES, []);
 }

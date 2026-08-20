@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
-import { readLatestSeoFactoryRun, readSeoExperiments } from "@/lib/seo-factory/store";
+import { readLatestSeoFactoryRun, readSeoExperimentBaselines, readSeoExperiments } from "@/lib/seo-factory/store";
 
 export const metadata: Metadata = { title: "SEO Factory", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 export default async function SeoFactoryPage() {
-  const [run, experiments] = await Promise.all([readLatestSeoFactoryRun(), readSeoExperiments()]);
+  const [run, experiments, baselines] = await Promise.all([readLatestSeoFactoryRun(), readSeoExperiments(), readSeoExperimentBaselines()]);
   return (
     <main className="flex-1 py-16 sm:py-20">
       <Container>
@@ -21,7 +21,7 @@ export default async function SeoFactoryPage() {
           <>
             <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                ["GSC query/page rows", run.gscRowsAnalyzed], ["Inventory pages", run.pagesAnalyzed], ["Ranked actions", run.opportunities.length], ["Experiments", experiments.length],
+                ["GSC query/page rows", run.gscRowsAnalyzed], ["Inventory pages", run.pagesAnalyzed], ["Ranked actions", run.opportunities.length], ["Experiments / baselines", `${experiments.length} / ${baselines.length}`],
               ].map(([label, value]) => <Card key={String(label)}><p className="text-xs uppercase tracking-wider text-zinc-500">{label}</p><p className="mt-2 text-3xl font-bold text-white">{value}</p></Card>)}
             </section>
             <Card className="mt-6">
