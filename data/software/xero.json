@@ -94,12 +94,34 @@
     {
       "name": "QuickBooks Online",
       "slug": "quickbooks-online",
-      "description": "Intuit's cloud accounting software with the widest US bookkeeper and accountant ecosystem.",
+      "description": "Intuit cloud accounting software with the widest US bookkeeper and accountant ecosystem.",
       "best_for": "Small businesses that want the accounting software most US bookkeepers already know how to use",
       "strengths": [
         "Largest accountant ecosystem",
         "Native payroll add-on",
         "Uncapped invoicing on entry tier"
+      ]
+    },
+    {
+      "name": "FreshBooks",
+      "slug": "freshbooks",
+      "description": "Cloud accounting and invoicing software with built-in time tracking and client estimate workflows.",
+      "best_for": "Freelancers and consultants needing simple client billing and project profitability",
+      "strengths": [
+        "Built-in project time tracking",
+        "Client estimate workflows",
+        "Simpler invoice customization"
+      ]
+    },
+    {
+      "name": "Wave",
+      "slug": "wave",
+      "description": "Free cloud accounting and invoicing software designed for solopreneurs and micro-businesses.",
+      "best_for": "Solopreneurs seeking zero-subscription invoicing and basic double-entry bookkeeping",
+      "strengths": [
+        "Free starter tier",
+        "Zero monthly subscription cost",
+        "Simple setup"
       ]
     }
   ],

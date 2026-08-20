@@ -1285,6 +1285,24 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["hubstaff", "asana"],
   ["hubstaff", "clickup"],
   ["harvest", "asana"],
+
+  // 2026-08-20 Master Commercial Growth Mission — Accounting & SMB Finance Cluster:
+  // 1. Direct SMB accounting & invoicing substitutes:
+  ["quickbooks-online", "freshbooks"],
+  ["quickbooks-online", "wave"],
+  ["quickbooks-online", "zoho-books"],
+  ["xero", "freshbooks"],
+  ["xero", "wave"],
+  ["xero", "zoho-books"],
+  ["freshbooks", "wave"],
+  ["freshbooks", "zoho-books"],
+  ["wave", "zoho-books"],
+
+  // 2. Freelancer invoicing & time tracking cross-over bridges:
+  ["freshbooks", "harvest"],
+  ["freshbooks", "toggl-track"],
+  ["freshbooks", "clockify"],
+  ["wave", "harvest"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {

@@ -109,6 +109,28 @@
         "Unlimited users on every plan",
         "Strong bank-reconciliation UX"
       ]
+    },
+    {
+      "name": "FreshBooks",
+      "slug": "freshbooks",
+      "description": "Cloud accounting and invoicing software built for service-based small businesses and freelancers with built-in time tracking.",
+      "best_for": "Service businesses and freelancers prioritizing simple invoicing and project time tracking",
+      "strengths": [
+        "Simpler invoicing workflow",
+        "Built-in time tracking",
+        "Lower entry list price"
+      ]
+    },
+    {
+      "name": "Wave",
+      "slug": "wave",
+      "description": "Free cloud accounting and invoicing software designed for solopreneurs and freelancers.",
+      "best_for": "Solopreneurs and micro-businesses seeking zero-subscription invoicing and bookkeeping",
+      "strengths": [
+        "Perpetual free base plan",
+        "Unlimited invoicing",
+        "Transparent transaction fees"
+      ]
     }
   ],
   "order": 224

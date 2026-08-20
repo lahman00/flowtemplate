@@ -1,0 +1,140 @@
+{
+  "name": "FreshBooks",
+  "slug": "freshbooks",
+  "category": "accounting",
+  "description": "FreshBooks is cloud accounting and invoicing software built for freelancers, self-employed professionals, and small service businesses, featuring client invoicing, expense tracking, time tracking, project profitability, and double-entry accounting reports.",
+  "website": "https://www.freshbooks.com",
+  "company": "FreshBooks (2ndSite Inc.)",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Freelancers, consultants, agencies, and service-based small businesses that prioritize client invoicing, time tracking, and professional estimates over complex inventory management.",
+  "features": [
+    "Customizable client invoicing with automated payment reminders",
+    "Online payment acceptance via credit card, ACH, PayPal, and Stripe",
+    "Expense tracking with bank feeds and automated receipt scanning",
+    "Built-in time tracking with billable hours converted directly to invoices",
+    "Project profitability tracking and team timesheet management",
+    "Double-entry accounting reports including Balance Sheet, General Ledger, and Trial Balance",
+    "Client estimate creation with one-click conversion to active invoices",
+    "Mileage tracking via mobile iOS and Android applications"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$19/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 30
+    },
+    "entry_paid": {
+      "amount": "19",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Lite",
+        "amount": "19",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Send unlimited invoices to up to 5 billable clients; track expenses and tax reports."
+      },
+      {
+        "name": "Plus",
+        "amount": "33",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 50 billable clients; adds automated recurring invoices, client retainers, and double-entry reports."
+      },
+      {
+        "name": "Premium",
+        "amount": "60",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited billable clients; adds project profitability tracking, customize email templates, and accounts payable."
+      },
+      {
+        "name": "Select",
+        "amount": "Custom",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Dedicated account manager, customized migration, and lower credit card transaction fees."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.freshbooks.com/pricing"
+  },
+  "pros": [
+    "Exceptionally user-friendly invoicing and client payment workflow",
+    "Built-in time tracking and project profitability tools included in core platform",
+    "Client portal allowing customers to view, accept estimates, and pay invoices directly"
+  ],
+  "cons": [
+    "Lower tiers enforce strict limits on billable client counts (5 on Lite, 50 on Plus)",
+    "Each additional team member seat costs an extra $11/month",
+    "Inventory tracking and advanced supply-chain features are less comprehensive than QuickBooks Online"
+  ],
+  "faq": [
+    {
+      "question": "Is FreshBooks true double-entry accounting software?",
+      "answer": "Yes — FreshBooks provides complete double-entry accounting features including General Ledger, Balance Sheet, Trial Balance, and Chart of Accounts, making it suitable for year-end tax filing and CPA collaboration."
+    },
+    {
+      "question": "How does FreshBooks pricing compare to QuickBooks Online?",
+      "answer": "FreshBooks entry pricing ($19/mo on Lite) is lower than QuickBooks Online Simple Start ($38/mo), but FreshBooks caps the number of active billable clients on Lite (5) and Plus (50), whereas QuickBooks does not cap client counts."
+    }
+  ],
+  "tags": [
+    "accounting",
+    "bookkeeping",
+    "invoicing",
+    "time-tracking",
+    "freelance",
+    "small-business"
+  ],
+  "sources": [
+    "https://www.freshbooks.com/pricing",
+    "https://www.freshbooks.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "QuickBooks Online",
+      "slug": "quickbooks-online",
+      "description": "Intuit cloud accounting platform with deep CPA ecosystem support and advanced inventory capabilities.",
+      "best_for": "Growing businesses needing uncapped client volume and wide accountant familiarity",
+      "strengths": [
+        "Largest CPA ecosystem",
+        "Uncapped client counts",
+        "Advanced inventory tracking"
+      ]
+    },
+    {
+      "name": "Xero",
+      "slug": "xero",
+      "description": "Cloud accounting software designed with unlimited users on every tier and strong bank reconciliation UX.",
+      "best_for": "Small businesses collaborating with multiple team members without per-seat fees",
+      "strengths": [
+        "Unlimited users on every plan",
+        "Multi-currency support",
+        "Strong bank reconciliation"
+      ]
+    },
+    {
+      "name": "Wave",
+      "slug": "wave",
+      "description": "Free cloud accounting and invoicing software tailored for solopreneurs and freelancers.",
+      "best_for": "Freelancers wanting zero-subscription invoicing and basic double-entry bookkeeping",
+      "strengths": [
+        "Perpetual free base plan",
+        "Unlimited invoicing",
+        "No monthly software subscription"
+      ]
+    }
+  ]
+}

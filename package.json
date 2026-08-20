@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "validate:data": "tsx scripts/validate-data.ts",
+    "audit:growth": "tsx scripts/growth/commercial-audit.ts",
     "report:pricing": "tsx scripts/report-pricing-freshness.ts",
     "report:links": "tsx scripts/report-internal-links.ts",
     "maintenance": "tsx scripts/maintenance/run-all.ts",

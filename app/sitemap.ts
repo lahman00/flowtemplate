@@ -3,6 +3,7 @@ import { SITE_URL } from "@/lib/site";
 import { LEGAL_PAGES } from "@/lib/legal";
 import { getAllSoftware } from "@/data/software";
 import { getAllCategories } from "@/data/categories";
+import { getAllRoleGuides } from "@/data/guides/registry";
 import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -16,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}/category/${category.slug}`,
     changeFrequency: "weekly",
     priority: 0.7,
+  }));
+
+  const roleGuidePages: MetadataRoute.Sitemap = getAllRoleGuides().map((guide) => ({
+    url: `${SITE_URL}/${guide.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.85,
   }));
 
   const comparisonPages: MetadataRoute.Sitemap = [
@@ -48,5 +55,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/recommend`, changeFrequency: "monthly", priority: 0.9 },
   ];
 
-  return [...staticPages, ...categoryPages, ...softwarePages, ...comparisonPages, ...legalPages];
+  return [...staticPages, ...categoryPages, ...roleGuidePages, ...softwarePages, ...comparisonPages, ...legalPages];
 }

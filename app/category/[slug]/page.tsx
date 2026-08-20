@@ -15,6 +15,7 @@ import { getBreadcrumbJsonLd, getCategoryJsonLd } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/site";
 import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 import { generateCategorySynthesis, getCategoryFeaturedComparisons } from "@/lib/category";
+import { getRoleGuidesForCategory } from "@/data/guides/registry";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -55,6 +56,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const software = getSoftwareByCategory(category.slug);
   const categorySlugs = new Set(software.map((item) => item.slug));
+  const roleGuides = getRoleGuidesForCategory(category.slug);
   const featuredComparisons = getCategoryFeaturedComparisons(category.slug, 6);
   const comparisons = PUBLISHED_COMPARISONS.filter(
     ([slugA, slugB]) => categorySlugs.has(slugA) || categorySlugs.has(slugB)
@@ -104,6 +106,42 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             ))}
           </div>
         </section>
+
+        {roleGuides.length > 0 && (
+          <section className="mt-16 border-t border-white/10 pt-14">
+            <SectionHeading
+              eyebrow="Buyer Guides"
+              title={`Best ${category.name.toLowerCase()} software by role`}
+              description={`In-depth decision guides tailored to specific business models, team sizes, and workflows.`}
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {roleGuides.map((guide) => (
+                <Link
+                  key={guide.slug}
+                  href={`/${guide.slug}`}
+                  className="group block h-full"
+                >
+                  <Card className="flex h-full flex-col justify-between group-hover:border-white/25 group-hover:bg-white/[0.05]">
+                    <div>
+                      <div className="flex items-start justify-between gap-4">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-400">
+                          Role Guide
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 shrink-0 text-zinc-500 transition group-hover:text-white" />
+                      </div>
+                      <h3 className="mt-3 text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
+                        {guide.title}
+                      </h3>
+                      <p className="mt-2 text-xs text-zinc-400 line-clamp-2">
+                        {guide.headline}
+                      </p>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {featuredComparisons.length > 0 ? (
           <section className="mt-16 border-t border-white/10 pt-14">

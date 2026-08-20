@@ -238,4 +238,30 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(getComparisonsInvolving("toggl-track").length).toBeGreaterThanOrEqual(11);
     expect(getComparisonsInvolving("clockify").length).toBeGreaterThanOrEqual(14);
   });
+
+  it("verifies Accounting & SMB Finance cluster authority (QuickBooks, Xero, FreshBooks, Wave, Zoho Books)", () => {
+    // Core SMB accounting comparisons
+    expect(isPublishedComparison("quickbooks-online", "freshbooks")).toBe(true);
+    expect(isPublishedComparison("quickbooks-online", "wave")).toBe(true);
+    expect(isPublishedComparison("quickbooks-online", "zoho-books")).toBe(true);
+    expect(isPublishedComparison("xero", "freshbooks")).toBe(true);
+    expect(isPublishedComparison("xero", "wave")).toBe(true);
+    expect(isPublishedComparison("xero", "zoho-books")).toBe(true);
+    expect(isPublishedComparison("freshbooks", "wave")).toBe(true);
+    expect(isPublishedComparison("freshbooks", "zoho-books")).toBe(true);
+    expect(isPublishedComparison("wave", "zoho-books")).toBe(true);
+
+    // Invoicing & time tracking bridges
+    expect(isPublishedComparison("freshbooks", "harvest")).toBe(true);
+    expect(isPublishedComparison("freshbooks", "toggl-track")).toBe(true);
+    expect(isPublishedComparison("freshbooks", "clockify")).toBe(true);
+    expect(isPublishedComparison("wave", "harvest")).toBe(true);
+
+    // Verify degree expansions
+    expect(getComparisonsInvolving("quickbooks-online").length).toBeGreaterThanOrEqual(4);
+    expect(getComparisonsInvolving("xero").length).toBeGreaterThanOrEqual(4);
+    expect(getComparisonsInvolving("freshbooks").length).toBeGreaterThanOrEqual(6);
+    expect(getComparisonsInvolving("wave").length).toBeGreaterThanOrEqual(5);
+    expect(getComparisonsInvolving("zoho-books").length).toBeGreaterThanOrEqual(4);
+  });
 });

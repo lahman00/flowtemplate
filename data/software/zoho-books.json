@@ -1,0 +1,151 @@
+{
+  "name": "Zoho Books",
+  "slug": "zoho-books",
+  "category": "accounting",
+  "description": "Zoho Books is comprehensive cloud accounting software for growing businesses that automates core financial workflows, handles multi-currency invoicing, manages inventory, and integrates seamlessly with the entire Zoho ecosystem.",
+  "website": "https://www.zoho.com/books",
+  "company": "Zoho Corporation",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "Windows",
+    "macOS"
+  ],
+  "best_for": "Small to mid-sized businesses and existing Zoho users wanting deep workflow automation, inventory tracking, and cost-effective multi-user accounting.",
+  "features": [
+    "Customizable invoicing, recurring billing, and payment reminders",
+    "Automated bank feeds with rules-based transaction reconciliation",
+    "Client and vendor self-service portals with payment history and statement downloads",
+    "Inventory tracking with stock alerts and purchase order management",
+    "Project billing with timesheet tracking and task-level budgeting",
+    "Custom workflow automation with email alerts, field updates, and webhooks",
+    "Comprehensive financial reporting with over 50 standard reports",
+    "Multi-currency support and automated exchange rate feeds"
+  ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$12.50",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_plan": true,
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "12.50",
+      "currency": "USD",
+      "billing_period": "annual",
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "For businesses with revenue under $50k/yr; 1 user + 1 accountant, up to 1,000 invoices/yr."
+      },
+      {
+        "name": "Standard",
+        "amount": "12.50",
+        "currency": "USD",
+        "billing_period": "annual",
+        "notes": "3 users, up to 5,000 invoices, automated workflows, and recurring expenses (billed annually at $150/yr)."
+      },
+      {
+        "name": "Professional",
+        "amount": "30.00",
+        "currency": "USD",
+        "billing_period": "annual",
+        "notes": "5 users, sales orders, purchase orders, multi-currency support, and project billing (billed annually at $360/yr)."
+      },
+      {
+        "name": "Premium",
+        "amount": "50.00",
+        "currency": "USD",
+        "billing_period": "annual",
+        "notes": "10 users, vendor portal, budgeting, custom domain, and validation rules (billed annually at $600/yr)."
+      },
+      {
+        "name": "Elite",
+        "amount": "100.00",
+        "currency": "USD",
+        "billing_period": "annual",
+        "notes": "15 users, advanced inventory management, and custom reports (billed annually at $1,200/yr)."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.zoho.com/books/pricing/"
+  },
+  "pros": [
+    "Extensive end-to-end workflow automation and custom triggers",
+    "Generous pricing tiers offering more user seats per dollar than QuickBooks Online",
+    "Deep native integration with Zoho CRM, Zoho Desk, and Zoho Inventory"
+  ],
+  "cons": [
+    "US CPA and bookkeeper familiarity is lower than QuickBooks Online",
+    "Free plan enforces strict eligibility ceiling (annual revenue under $50,000)",
+    "Interface can feel complex due to extensive feature depth and configuration options"
+  ],
+  "faq": [
+    {
+      "question": "Is Zoho Books good for businesses already using Zoho?",
+      "answer": "Yes — Zoho Books offers deep out-of-the-box synchronization with Zoho CRM, Zoho Desk, Zoho Inventory, and Zoho Analytics, making it the most cost-effective accounting choice for teams already in the Zoho ecosystem."
+    },
+    {
+      "question": "How does Zoho Books compare to QuickBooks Online?",
+      "answer": "Zoho Books delivers significantly more automation features, inventory tools, and multi-user seats at lower price points ($12.50-$50/mo vs $38-$140/mo), although QuickBooks Online remains the undisputed leader in US accountant and bookkeeper familiarity."
+    }
+  ],
+  "tags": [
+    "accounting",
+    "bookkeeping",
+    "invoicing",
+    "automation",
+    "inventory",
+    "small-business"
+  ],
+  "sources": [
+    "https://www.zoho.com/books/pricing/",
+    "https://www.zoho.com/books"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "QuickBooks Online",
+      "slug": "quickbooks-online",
+      "description": "Industry-standard cloud accounting with the widest accountant familiarity and third-party app marketplace.",
+      "best_for": "Businesses needing universal accountant support and native US payroll integration",
+      "strengths": [
+        "Unrivaled CPA network",
+        "Widespread accountant familiarity",
+        "Native payroll add-on"
+      ]
+    },
+    {
+      "name": "Xero",
+      "slug": "xero",
+      "description": "Cloud accounting software with unlimited users on every plan and clean bank reconciliation UX.",
+      "best_for": "Teams prioritizing clean UI and unlimited user seats",
+      "strengths": [
+        "Unlimited users on all plans",
+        "Clean bank reconciliation",
+        "Strong app ecosystem"
+      ]
+    },
+    {
+      "name": "FreshBooks",
+      "slug": "freshbooks",
+      "description": "User-friendly invoicing and time tracking software built for service-based businesses and freelancers.",
+      "best_for": "Freelancers and consultants needing simple invoicing, time tracking, and estimate workflows",
+      "strengths": [
+        "Simpler invoicing UI",
+        "Built-in project time tracking",
+        "Client portal estimates"
+      ]
+    }
+  ]
+}

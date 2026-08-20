@@ -1,0 +1,127 @@
+{
+  "name": "Wave",
+  "slug": "wave",
+  "category": "accounting",
+  "description": "Wave is free cloud-based accounting and invoicing software designed for solo entrepreneurs, freelancers, and micro-businesses, offering unlimited invoicing, double-entry bookkeeping, and payment processing without recurring subscription fees on its base plan.",
+  "website": "https://www.waveapps.com",
+  "company": "Wave Financial Inc.",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Solopreneurs, freelancers, contractors, and micro-businesses seeking zero-subscription invoicing and basic double-entry bookkeeping.",
+  "features": [
+    "Unlimited customizable invoicing with payment links and recurring schedules",
+    "Double-entry bookkeeping with income statements, balance sheets, and cash flow reports",
+    "Credit card and bank payment processing (2.9% + $0.60 per card, 1% per ACH)",
+    "Income and expense tracking with sales tax calculation",
+    "Automated bank feeds and automated transaction import (Pro tier)",
+    "Mobile receipt scanning with automatic line-item parsing (Pro tier)",
+    "Collaborator access for accountants and business partners (Pro tier)",
+    "Optional payroll add-on for employee and contractor direct deposits"
+  ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$0",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_plan": true,
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "16",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Starter",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited customizable invoices, accounting, double-entry reports, and manual bank transaction imports."
+      },
+      {
+        "name": "Pro",
+        "amount": "16",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds automatic bank transaction imports, unlimited receipt scanning, multiple users, and live chat support (billed annually at $170/yr = $14.17/mo or monthly at $16/mo)."
+      }
+    ],
+    "enterprise_contact_sales": false,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.waveapps.com/pricing"
+  },
+  "pros": [
+    "Perpetual free plan with unlimited invoicing and core accounting features",
+    "Clean, intuitive interface with simple setup and zero learning curve",
+    "Built-in payment processing with transparent pay-per-transaction pricing"
+  ],
+  "cons": [
+    "Automated bank transaction feeds and receipt scanning require the paid Pro tier ($16/mo)",
+    "No built-in inventory tracking, project tracking, or formal audit trail",
+    "Third-party integration ecosystem is limited compared to QuickBooks and Xero"
+  ],
+  "faq": [
+    {
+      "question": "Is Wave completely free?",
+      "answer": "Wave Starter is genuinely free with no monthly subscription, offering unlimited invoicing and core accounting. Wave charges standard transaction fees when clients pay online via card or bank transfer, and charges $16/month for its optional Pro tier (which includes automated bank feeds and receipt scanning)."
+    },
+    {
+      "question": "How does Wave compare to QuickBooks Online?",
+      "answer": "Wave is drastically more affordable ($0 vs $38+/mo) and easier to set up for solopreneurs, but lacks the deep CPA ecosystem, inventory tracking, project costing, and advanced reporting found in QuickBooks Online."
+    }
+  ],
+  "tags": [
+    "accounting",
+    "bookkeeping",
+    "invoicing",
+    "free",
+    "freelance",
+    "small-business"
+  ],
+  "sources": [
+    "https://www.waveapps.com/pricing",
+    "https://www.waveapps.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "FreshBooks",
+      "slug": "freshbooks",
+      "description": "Cloud invoicing and accounting tool built for freelancers and service agencies with time tracking and retainers.",
+      "best_for": "Freelancers needing built-in time tracking, project profitability, and retainer billing",
+      "strengths": [
+        "Built-in time tracking",
+        "Project profitability",
+        "Automated recurring retainers"
+      ]
+    },
+    {
+      "name": "QuickBooks Online",
+      "slug": "quickbooks-online",
+      "description": "Intuit industry-standard accounting platform with full CPA ecosystem and inventory management.",
+      "best_for": "Small businesses requiring CPA collaboration, payroll, and inventory control",
+      "strengths": [
+        "Industry-standard CPA support",
+        "Inventory tracking",
+        "Deep third-party integrations"
+      ]
+    },
+    {
+      "name": "Xero",
+      "slug": "xero",
+      "description": "Cloud accounting software with unlimited users, multi-currency support, and robust bank reconciliation.",
+      "best_for": "Businesses needing multi-user collaboration and automated bank reconciliation feeds",
+      "strengths": [
+        "Unlimited users on all plans",
+        "Automated bank feeds included",
+        "Multi-currency accounting"
+      ]
+    }
+  ]
+}

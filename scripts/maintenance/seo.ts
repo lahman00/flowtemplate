@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getAllSoftware } from "@/data/software";
 import { getAllCategories } from "@/data/categories";
+import { getAllRoleGuides } from "@/data/guides/registry";
 import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 import { generateTitle, generateMetaDescription } from "@/lib/generators";
 import { generateComparisonTitle, generateComparisonMetaDescription } from "@/lib/comparison";
@@ -58,6 +59,7 @@ function checkCanonicals(): MaintenanceIssue[] {
     "app/category/[slug]/page.tsx",
     "app/compare/page.tsx",
     "app/compare/[comparison]/page.tsx",
+    "app/[guide]/page.tsx",
     "app/recommend/page.tsx",
     "app/about/page.tsx",
     "app/contact/page.tsx",
@@ -97,6 +99,7 @@ function checkJsonLd(): MaintenanceIssue[] {
     { label: "Home", files: ["app/layout.tsx"] },
     { label: "Software pages", files: ["app/software/[slug]/page.tsx"] },
     { label: "Category pages", files: ["app/category/[slug]/page.tsx"] },
+    { label: "Role Guides", files: ["app/[guide]/page.tsx"] },
     { label: "Compare index", files: ["app/compare/page.tsx"] },
     { label: "Comparison pages", files: ["app/compare/[comparison]/page.tsx"] },
     { label: "Legal pages", files: ["components/LegalPageLayout.tsx"] },
@@ -237,6 +240,7 @@ async function run() {
     const softwareB = getAllSoftware().find((s) => s.slug === b)!;
     return { label: `/compare/${getComparisonSlug(a, b)}`, value: generateComparisonTitle(softwareA, softwareB) };
   });
+  const roleGuideTitles = getAllRoleGuides().map((g) => ({ label: `/${g.slug}`, value: `${g.title} | Miloosh` }));
   const legalTitles = LEGAL_PAGES.map((p) => ({ label: p.href, value: p.name }));
   const staticTitles = [
     { label: "/compare", value: "Compare software" },
@@ -246,6 +250,7 @@ async function run() {
   ];
 
   const softwareDescriptions = getAllSoftware().map((s) => ({ label: `/software/${s.slug}`, value: generateMetaDescription(s) }));
+  const roleGuideDescriptions = getAllRoleGuides().map((g) => ({ label: `/${g.slug}`, value: g.metaDescription }));
   const comparisonDescriptions = PUBLISHED_COMPARISONS.map(([a, b]) => {
     const softwareA = getAllSoftware().find((s) => s.slug === a)!;
     const softwareB = getAllSoftware().find((s) => s.slug === b)!;
@@ -253,10 +258,10 @@ async function run() {
   });
 
   const titleIssues = checkDuplicates(
-    [...softwareTitles, ...categoryTitles, ...comparisonTitles, ...legalTitles, ...staticTitles],
+    [...softwareTitles, ...categoryTitles, ...comparisonTitles, ...roleGuideTitles, ...legalTitles, ...staticTitles],
     "title"
   );
-  const descriptionIssues = checkDuplicates([...softwareDescriptions, ...comparisonDescriptions], "meta description");
+  const descriptionIssues = checkDuplicates([...softwareDescriptions, ...roleGuideDescriptions, ...comparisonDescriptions], "meta description");
   const canonicalIssues = checkCanonicals();
   const jsonLdIssues = checkJsonLd();
   const orphanIssues = checkOrphanRisk();
@@ -275,6 +280,7 @@ async function run() {
     `${SITE_URL}/compare`,
     ...getAllSoftware().map((s) => `${SITE_URL}/software/${s.slug}`),
     ...getAllCategories().map((c) => `${SITE_URL}/category/${c.slug}`),
+    ...getAllRoleGuides().map((g) => `${SITE_URL}/${g.slug}`),
     ...PUBLISHED_COMPARISONS.map(([a, b]) => `${SITE_URL}/compare/${getComparisonSlug(a, b)}`),
     ...LEGAL_PAGES.map((p) => `${SITE_URL}${p.href}`),
   ];
