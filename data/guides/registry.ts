@@ -160,6 +160,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       {
         question: "Which time tracker is best for a solo freelancer on a tight budget?",
         answer: "Clockify and Toggl Track both provide generous free tiers. If you prefer intuitive interface design and keyboard shortcuts, Toggl Track is ideal. If you want completely uncapped projects and basic invoicing for free, Clockify is the top pick."
+      },
+      {
+        question: "Can I generate client invoices directly from logged time?",
+        answer: "Yes — Harvest and FreshBooks are purpose-built to convert tracked billable hours into itemized client invoices with integrated payment gateways, while Toggl Track relies on integrations."
       }
     ]
   },
@@ -239,6 +243,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       {
         question: "Do freelancers really need dedicated accounting software?",
         answer: "While spreadsheets can work initially, dedicated accounting software automates invoice reminders, processes online credit card payments, tracks tax-deductible expenses via bank feeds, and generates year-end Profit and Loss reports automatically."
+      },
+      {
+        question: "Is Wave completely free for freelancers?",
+        answer: "Wave core accounting and invoicing tools are 100% free with no monthly subscription. You only pay standard transaction fees if clients pay invoices via credit card or bank transfer, or if you opt into paid automated bank feed add-ons."
       }
     ]
   },
@@ -318,6 +326,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       {
         question: "Should a small business choose QuickBooks Online or Xero?",
         answer: "Choose QuickBooks Online if having universal CPA and bookkeeper familiarity is your top priority. Choose Xero if you want unlimited user seats on all tiers, lower list prices, and strong real-time bank reconciliation."
+      },
+      {
+        question: "How does multi-user pricing differ between small business accounting platforms?",
+        answer: "QuickBooks Online charges tiered pricing with strict user limits (e.g. 1 on Simple Start, 3 on Essentials, 5 on Plus), whereas Xero includes unlimited users on all plans, making Xero significantly cheaper for teams."
       }
     ]
   },
@@ -397,6 +409,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       {
         question: "Why do consultants prefer Pipedrive over complex enterprise CRMs?",
         answer: "Pipedrive focuses strictly on the visual deal pipeline and next required action (e.g. follow up on proposal, schedule scoping call). Unlike enterprise CRMs that require extensive manual field completion, Pipedrive minimizes admin overhead."
+      },
+      {
+        question: "Can consultants sync their email inbox and calendar with these CRMs?",
+        answer: "Yes — Pipedrive, Close, and HubSpot all offer two-way email and Google Workspace/Microsoft 365 calendar synchronization, automatically logging client correspondence and scheduling meetings directly on the contact timeline."
       }
     ]
   },
@@ -476,6 +492,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       {
         question: "How do I choose between Pipedrive and HubSpot for a small business?",
         answer: "If your primary priority is sales execution, closing deals, and keeping sales reps organized with visual pipelines, Pipedrive is the best and most cost-effective choice. If you need marketing automation, blog/landing pages, and customer support on one platform, HubSpot is the stronger all-in-one choice."
+      },
+      {
+        question: "What is the most affordable CRM for a small team on a tight budget?",
+        answer: "Freshsales offers a free tier for up to 3 users and paid plans from $9/seat/month with built-in calling, while Zoho CRM offers comprehensive customization starting at $14/seat/month."
       }
     ]
   },
@@ -555,6 +575,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       {
         question: "Why is Monday.com popular with creative agencies?",
         answer: "Monday.com is highly visual, flexible, and easy for non-technical team members and external clients to understand immediately. Custom status columns, automated client notifications, and shareable board views eliminate friction during client reviews."
+      },
+      {
+        question: "How do agency project management tools handle client guest permissions?",
+        answer: "Platforms like Monday.com, ClickUp, and Asana provide dedicated guest permissions, allowing agencies to invite clients to review specific task boards and deliverable timelines without exposing internal billing rates or private team comments."
       }
     ]
   },
@@ -634,6 +658,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       {
         question: "Why should a small business move from shared Gmail to Help Scout or Freshdesk?",
         answer: "Shared Gmail accounts lead to colliding replies, lost customer emails, and zero accountability. Dedicated help desks introduce collision detection (seeing who is typing), internal private notes, automated ticket assignment, and response time metrics."
+      },
+      {
+        question: "Which help desk is best for a team of 1 to 5 agents?",
+        answer: "Help Scout provides the cleanest personal email experience with zero ticket-number bloat for customers, while Freshdesk provides a free tier for up to 10 agents with multi-channel ticketing."
       }
     ]
   },

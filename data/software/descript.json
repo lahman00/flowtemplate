@@ -13,7 +13,7 @@
   "best_for": "Podcasters, video creators, marketing teams, and educators who want fast text-based video and audio editing.",
   "features": [
     "Text-based video and audio editing: edit transcripts to cut and rearrange media instantly",
-    "Automatic transcription with industry-leading multi-speaker identification",
+    "Automatic transcription with multi-speaker identification",
     "Studio Sound: AI audio cleanup removing background noise and room echo in one click",
     "One-click filler word removal (eradicates ums, uhs, you knows, and repeated words)",
     "Overdub AI voice cloning: type text to correct audio errors in your own voice",
@@ -67,7 +67,7 @@
     "official_source": "https://www.descript.com/pricing"
   },
   "pros": [
-    "Revolutionary text-based editing workflow reduces podcast and video editing time by 70%",
+    "Text-based editing workflow streamlines podcast and video editing by editing spoken words directly in the transcript",
     "Studio Sound AI audio processing makes smartphone mics sound like professional studio microphones",
     "Comprehensive AI suite (filler word removal, eye contact correction, Overdub) built into one tool"
   ],

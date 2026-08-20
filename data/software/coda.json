@@ -18,11 +18,65 @@
     "Packs for customization",
     "Publishing docs as shareable websites"
   ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$10/doc maker/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "10",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "unit": "doc maker"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited unshared docs, basic table size limits, standard Packs, and collaborative viewing."
+      },
+      {
+        "name": "Pro",
+        "amount": "10",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "doc maker",
+        "notes": "Billed annually at $10/doc maker/mo (or $12/mo monthly); adds unlimited doc size, hidden pages, 30-day version history, and custom domains. Editors and viewers are free."
+      },
+      {
+        "name": "Team",
+        "amount": "30",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "doc maker",
+        "notes": "Billed annually at $30/doc maker/mo (or $36/mo monthly); adds unlimited version history, advanced Packs, automation rules, and team workspaces."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://coda.io/pricing"
+  },
+  "pros": [
+    "Doc maker pricing model only charges for creators while viewers and editors collaborate for free",
+    "Powerful interactive formula language and button automations turn static docs into internal web applications",
+    "Deep two-way integrations (Packs) syncing live data from Jira, Slack, GitHub, and Google Calendar"
+  ],
+  "cons": [
+    "Steeper learning curve for formula and database logic compared to standard document editors",
+    "Mobile app experience is more limited than the full desktop web builder",
+    "Large complex docs with hundreds of automation rules can experience slower initial load times"
+  ],
   "sources": [
-    "https://coda.io",
+    "https://coda.io/pricing",
     "https://coda.io/product"
   ],
-  "accessed_at": "2026-07-31",
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Notion",

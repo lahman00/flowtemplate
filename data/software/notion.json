@@ -20,12 +20,65 @@
     "Project and task tracking",
     "Built-in calendar and third-party app connections"
   ],
-  "sources": [
-    "https://www.notion.com",
-    "https://www.notion.com/desktop",
-    "https://www.notion.com/help/notion-for-desktop"
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$8/seat/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "8",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "unit": "seat"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "For individuals and small teams; includes collaborative workspaces, up to 10 guests, and 7-day page history."
+      },
+      {
+        "name": "Plus",
+        "amount": "8",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "seat",
+        "notes": "Billed annually at $8/seat/mo (or $10/seat/mo monthly); adds unlimited blocks for teams, unlimited file uploads, 30-day page history, and up to 100 guests."
+      },
+      {
+        "name": "Business",
+        "amount": "15",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "seat",
+        "notes": "Billed annually at $15/seat/mo (or $18/seat/mo monthly); adds SAML SSO, private teamspaces, 90-day page history, and up to 250 guests."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.notion.com/pricing"
+  },
+  "pros": [
+    "Versatile modular block architecture combining rich documents, team wikis, and relational databases in one view",
+    "Aesthetic design with thousands of community-built templates and flexible page layouts",
+    "Generous free plan for individuals and small team collaborative workspaces"
   ],
-  "accessed_at": "2026-07-31",
+  "cons": [
+    "Nested database queries and relations can slow down navigation in massive organizational workspaces",
+    "Granular permission inheritance across sub-pages requires deliberate organizational design",
+    "Notion AI features require a separate paid add-on ($8/member/month)"
+  ],
+  "sources": [
+    "https://www.notion.com/pricing",
+    "https://www.notion.com"
+  ],
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "ClickUp",

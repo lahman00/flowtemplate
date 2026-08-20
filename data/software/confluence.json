@@ -18,11 +18,65 @@
     "Role and department-specific templates",
     "Integrations with Jira, Figma, GitHub, Google Drive, Microsoft Teams"
   ],
-  "sources": [
-    "https://www.atlassian.com/software/confluence",
-    "https://www.atlassian.com/software/confluence/mobile-app"
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$6.05/user/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 7
+    },
+    "entry_paid": {
+      "amount": "6.05",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "unit": "user"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 10 users, unlimited spaces and pages, 2GB file storage, and community support."
+      },
+      {
+        "name": "Standard",
+        "amount": "6.05",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Estimated $6.05/user/mo; adds 250GB storage, page-level permissions, audit logs, and business hours support."
+      },
+      {
+        "name": "Premium",
+        "amount": "11.55",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Estimated $11.55/user/mo; adds unlimited storage, 24/7 support, 99.9% uptime SLA, Atlassian Intelligence, and site analytics."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.atlassian.com/software/confluence/pricing"
+  },
+  "pros": [
+    "Native bidirectional integration with Jira, Jira Service Management, and the Atlassian developer ecosystem",
+    "Structured space and page hierarchy suited for enterprise governance and cross-departmental documentation",
+    "Granular page-level permissions, version histories, and audit logs for compliance requirements"
   ],
-  "accessed_at": "2026-07-31",
+  "cons": [
+    "Editor and page formatting feel more structured and rigid compared to modern block editors like Notion",
+    "Licensing costs scale with total seat count across the enterprise",
+    "Search performance in massive multi-space deployments can require careful space architecture"
+  ],
+  "sources": [
+    "https://www.atlassian.com/software/confluence/pricing",
+    "https://www.atlassian.com/software/confluence"
+  ],
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Notion",

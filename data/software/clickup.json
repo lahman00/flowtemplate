@@ -21,12 +21,65 @@
     "Docs, wikis, and in-context chat tied to tasks",
     "AI features and third-party integrations"
   ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$7/user/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "7",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "unit": "user"
+    },
+    "tiers": [
+      {
+        "name": "Free Forever",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "100MB storage, unlimited tasks, unlimited members, collaborative docs, and 2FA."
+      },
+      {
+        "name": "Unlimited",
+        "amount": "7",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Billed annually at $7/user/mo (or $10/user/mo monthly); adds unlimited storage, unlimited integrations, dashboards, and custom fields."
+      },
+      {
+        "name": "Business",
+        "amount": "12",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Billed annually at $12/user/mo (or $19/user/mo monthly); adds advanced time tracking, Google SSO, goal folders, and custom exporting."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://clickup.com/pricing"
+  },
+  "pros": [
+    "Highly customizable workspace capable of replacing separate task, document, and goal tracking apps",
+    "Generous Free Forever plan offering unlimited team member seats and core project tracking",
+    "Robust automation engine with custom webhooks and multi-action trigger capabilities"
+  ],
+  "cons": [
+    "Extensive feature depth creates a steep learning curve for new team members",
+    "Interface and search performance can feel complex in very large workspaces with hundreds of custom fields",
+    "Advanced reporting dashboards and permission tiers require the Business plan"
+  ],
   "sources": [
-    "https://clickup.com",
-    "https://clickup.com/download",
+    "https://clickup.com/pricing",
     "https://clickup.com/features"
   ],
-  "accessed_at": "2026-07-31",
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Asana",

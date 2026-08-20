@@ -15,10 +15,69 @@
     "E-commerce integrations with product recommendations",
     "AI tools for content tailoring, copywriting, and layout selection"
   ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$15.58/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 30
+    },
+    "entry_paid": {
+      "amount": "15.58",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Free Plan",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 500 contacts, 2,500 newsletters/month, and 1 website builder."
+      },
+      {
+        "name": "Email Marketing",
+        "amount": "15.58",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Billed annually at $15.58/mo (or $19/mo monthly) for 1,000 contacts; includes AI email generator, autoresponders, and basic landing pages."
+      },
+      {
+        "name": "Marketing Automation",
+        "amount": "48.38",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Billed annually at $48.38/mo (or $59/mo monthly); adds advanced event-based automations, webinars (up to 100 attendees), and contact scoring."
+      },
+      {
+        "name": "Ecommerce Marketing",
+        "amount": "97.58",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Billed annually at $97.58/mo (or $119/mo monthly); adds transactional emails, abandoned cart recovery, and promo codes."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.getresponse.com/pricing"
+  },
+  "pros": [
+    "Comprehensive all-in-one marketing suite combining email marketing, landing pages, webinars, and conversion funnels",
+    "AI-powered email generator and auto-timing optimization to maximize recipient open rates",
+    "Native ecommerce integrations with Shopify, WooCommerce, and Stripe for automated product recommendations"
+  ],
+  "cons": [
+    "Advanced automation workflows, scoring, and webinar hosting require upgrading to the Marketing Automation tier",
+    "Phone customer support is restricted to enterprise Max custom plans",
+    "Pricing scales progressively with list size as subscriber counts increase"
+  ],
   "sources": [
+    "https://www.getresponse.com/pricing",
     "https://www.getresponse.com"
   ],
-  "accessed_at": "2026-08-04",
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Mailchimp",
