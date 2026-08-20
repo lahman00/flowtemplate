@@ -1195,7 +1195,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "kit",
-    lastVerifiedAt: "2026-08-16",
+    lastVerifiedAt: "2026-08-20",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -1203,8 +1203,9 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "Bronze tier = 10+ paying customers/yr; Silver = 50+/yr; Gold = 100+/yr; base tier has no minimum to start; PPC referrals don't count toward tier qualification.",
     commissionModel: "50% commission for 12 months on first-year payments, then 10-20% recurring indefinitely for affiliates reaching Bronze/Silver/Gold tier (per kit.com/affiliate, directly fetched 2026-08-16).",
     recurrence: "recurring",
-    notes: "New candidate from the affiliate-discovery sprint. Kit is the current brand name for the product formerly called ConvertKit — no separate catalog entry exists under either name, so this is not yet attached to a live software page.",
-    sourceUrls: ["https://kit.com/affiliate"],
+    notes:
+      "REJECTED 2026-08-20. A real application (Business Name: Miloosh, miloosh.com, honest fields throughout -- 0-2,000 social following, 'I haven't started my email list yet', not a Kit user) was submitted and declined the same day. First-party message from Jordan, Senior Affiliate Marketing Manager @ Kit, on the PartnerStack program page's Messages tab: \"After reviewing your application, we've decided not to move forward at this time\" -- citing audience/niche mismatch (\"we partner with creators who help other creators earn a living online\") and insufficient promotional detail. An earlier reconciliation pass the same day wrongly concluded no application existed, based only on a Partnerships-table sweep that omits declined applications -- corrected after checking the program's own direct page. Do not reapply without new evidence. Kit is the current brand name for the product formerly called ConvertKit — no separate catalog entry exists under either name, so this was never attached to a live software page.",
+    sourceUrls: ["https://kit.com/affiliate", "https://dash.partnerstack.com (program page: Kit (formerly ConvertKit), Application + Messages tabs)"],
     applicationUrl: "https://dash.partnerstack.com/application?company=kit&group=kitaffiliates",
     confidence: "high",
   },
@@ -1785,7 +1786,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "Two live offers on the PartnerStack partnership page: 30% for the customer's first year, and 20% in year one -- which applies is set per-signup by PartnerStack/Hubstaff, not disclosed further on this page.",
     recurrence: "recurring",
     notes:
-      "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://affiliate.hubstaff.com/ca2oe167vcj1 (redirects to hubstaff.com). NOT ACTIVATED on Miloosh: there is no data/software/hubstaff.json and no existing Hubstaff editorial content (confirmed by repo search) -- partner-materials-audit.ts previously recorded this as HOLD/UNCLEAR for the same reason. Creating a new software/comparison page is an editorial decision outside the scope of affiliate-reconciliation work and was explicitly not done here. Owner: this is free, real revenue waiting on an editorial decision, not on any further affiliate application step.",
+      "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://affiliate.hubstaff.com/ca2oe167vcj1 (redirects to hubstaff.com). NOT ACTIVATED on Miloosh: there is no data/software/hubstaff.json and no existing Hubstaff editorial content (confirmed by repo search) -- partner-materials-audit.ts previously recorded this as HOLD/UNCLEAR for the same reason. EDITORIAL AUDIT 2026-08-20: EDITORIALLY_APPROVED_FOR_CATALOG, decided independently of the affiliate approval. Hubstaff is a legitimate, well-known time-tracking/workforce-management SaaS (real first-party pricing at hubstaff.com/pricing: $4.99-$25/seat/mo across 4 tiers); Miloosh already covers this exact category (Clockify, Toggl Track), giving real comparison candidates (hubstaff-vs-toggl-track, hubstaff-vs-clockify) with genuine decision value (screenshot/activity monitoring + payroll vs. lighter competitors). Full research handed off in docs/content-briefs/hubstaff.md for Antigravity to build -- the page itself was NOT built in this task. Owner: this is free, real revenue waiting on that content work, not on any further affiliate application step.",
     sourceUrls: ["https://dash.partnerstack.com (partnership page: Hubstaff)"],
     applicationUrl: null,
     confidence: "high",
@@ -1800,7 +1801,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "10% for each Closed Referral (flat percentage, per the live PartnerStack partnership page)",
     recurrence: "unknown",
     notes:
-      "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://try.pdware.com/9l2hndbyhssz (redirects to pdware.com). PDWare has never appeared anywhere in this repo before now (no software page, no prior research entry) -- Miloosh has no editorial content about this company at all, so there is no page to attach the affiliate link to. NOT ACTIVATED. Owner: confirm what PDWare is and whether it fits Miloosh's catalog before any editorial content is written for it.",
+      "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://try.pdware.com/9l2hndbyhssz (redirects to pdware.com). PDWare has never appeared anywhere in this repo before now (no software page, no prior research entry) -- Miloosh has no editorial content about this company at all, so there is no page to attach the affiliate link to. NOT ACTIVATED. EDITORIAL AUDIT 2026-08-20: EDITORIALLY_REJECTED, decided independently of the affiliate approval. PDWare (product: 'ResourceFirst') is an enterprise-only resource/portfolio-management (PPM) tool for large/complex organizations -- pdware.com shows no public pricing at all ('Request Pricing' only, sales-gated), so there is no verifiable first-party pricing/feature depth to build an honest profile without a sales contact. Miloosh's catalog has no close comparable (only tangentially Smartsheet); no existing category or comparison candidates fit. No evidence of buyer interest exists or is likely for this narrow enterprise niche. Do not build a page for this product -- reject the affiliate CTA along with it, not because the program is bad, but because it doesn't belong in Miloosh's catalog.",
     sourceUrls: ["https://dash.partnerstack.com (partnership page: PDWare)"],
     applicationUrl: null,
     confidence: "high",
