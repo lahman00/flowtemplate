@@ -1,0 +1,127 @@
+{
+  "name": "Time Doctor",
+  "slug": "time-doctor",
+  "category": "productivity",
+  "description": "Time Doctor is an employee time tracking and workforce productivity platform that provides real-time work insights, activity monitoring, screenshots, and automated payroll for remote and hybrid teams.",
+  "website": "https://www.timedoctor.com",
+  "founded": 2012,
+  "company": "Time Doctor (Staff.com)",
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$5.90",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_plan": false,
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "5.90",
+      "currency": "USD",
+      "billing_period": "annual",
+      "per_seat": true,
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Basic",
+        "amount": "5.90",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "user/mo",
+        "notes": "Includes time tracking, task tracking, activity monitoring, and 1 screenshot per 30 minutes (billed annually at $5.90/mo or monthly at $7/mo)."
+      },
+      {
+        "name": "Standard",
+        "amount": "8.40",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "user/mo",
+        "notes": "Adds app & URL tracking, automated payroll integrations, 60+ integrations, and up to 3 screenshots per 9 minutes (billed annually at $8.40/mo or monthly at $10/mo)."
+      },
+      {
+        "name": "Premium",
+        "amount": "16.70",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "user/mo",
+        "notes": "Adds client login access, VIP support, video screen recording, and internet connectivity reporting (billed annually at $16.70/mo or monthly at $20/mo)."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.timedoctor.com/pricing"
+  },
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android",
+    "Chrome extension"
+  ],
+  "best_for": "Positioned for BPO companies, remote agencies, outsourcing firms, and enterprises needing granular employee activity metrics, proof of work, distraction management, and automated payroll.",
+  "pros": [
+    "Granular productivity monitoring with optional screencasts and activity level scores",
+    "Automated distraction detection with popups when visiting unproductive sites",
+    "Direct payroll integrations with PayPal, Wise, and Payoneer for global payouts",
+    "Client portal access allowing agencies to share verified time and proof of work"
+  ],
+  "cons": [
+    "No perpetual free plan available (14-day free trial only)",
+    "Strict monitoring capabilities may raise privacy concerns among employees",
+    "Video screen recording and VIP support restricted to the highest Premium tier"
+  ],
+  "features": [
+    "Real-time employee time tracking across desktop, web, and mobile devices",
+    "Automated screen capture and video recording with customizable blur settings",
+    "Keystroke and mouse activity level tracking to measure engagement",
+    "App and website usage categorization with unproductive site alerts",
+    "Automated timesheets with attendance and work schedule reporting",
+    "Direct global payroll integration with Wise, PayPal, Payoneer, and Gusto",
+    "Client login portal for agencies to share real-time billable project progress",
+    "60+ software integrations including Jira, Asana, Trello, and Slack"
+  ],
+  "alternatives": [
+    {
+      "name": "Hubstaff",
+      "slug": "hubstaff",
+      "description": "A workforce management and time tracking tool with automated timesheets, activity monitoring, and payroll integrations.",
+      "best_for": "Remote and field teams needing proof-of-work tracking, geofencing, and automated payroll",
+      "strengths": [
+        "Proof-of-work activity tracking",
+        "GPS location tracking",
+        "Automated payroll integrations"
+      ]
+    },
+    {
+      "name": "Toggl Track",
+      "slug": "toggl-track",
+      "description": "A time tracking tool with one-click timers, background activity tracking, and profitability reporting.",
+      "best_for": "Teams preferring non-invasive timer tracking without screenshot capture",
+      "strengths": [
+        "One-click timers",
+        "Profitability reporting",
+        "100+ integrations"
+      ]
+    },
+    {
+      "name": "Clockify",
+      "slug": "clockify",
+      "description": "A time tracking and timesheet app with attendance, scheduling, and a free plan for unlimited users.",
+      "best_for": "Budget-conscious teams needing free basic timesheets and time tracking",
+      "strengths": [
+        "Free plan for unlimited users",
+        "Kiosk clock-in",
+        "Timesheet approvals"
+      ]
+    }
+  ],
+  "sources": [
+    "https://www.timedoctor.com/pricing",
+    "https://www.timedoctor.com/features"
+  ],
+  "accessed_at": "2026-08-20"
+}

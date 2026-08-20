@@ -40,6 +40,17 @@
       ]
     },
     {
+      "name": "Hubstaff",
+      "slug": "hubstaff",
+      "description": "A workforce management and time tracking tool with automated timesheets, activity monitoring, and payroll integrations.",
+      "best_for": "Teams needing workforce proof-of-work tracking, scheduling, and automated payroll",
+      "strengths": [
+        "Proof-of-work activity tracking",
+        "GPS location tracking",
+        "Automated payroll integrations"
+      ]
+    },
+    {
       "name": "Asana",
       "slug": "asana",
       "description": "A project management platform for planning, tracking, and reporting on team work.",

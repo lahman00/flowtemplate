@@ -1264,6 +1264,27 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["figma", "zeroheight"],
   ["zeplin", "zeroheight"],
   ["sketch", "zeroheight"],
+
+  // 2026-08-20 Heavy Growth Sprint — Time Tracking & Workforce Management Engine:
+  // 1. Hubstaff active partner workforce tracking vs time tracking staples:
+  ["hubstaff", "toggl-track"],
+  ["hubstaff", "clockify"],
+  ["hubstaff", "harvest"],
+  ["hubstaff", "time-doctor"],
+
+  // 2. Core time tracking & agency invoicing substitute tradeoffs:
+  ["toggl-track", "harvest"],
+  ["toggl-track", "time-doctor"],
+  ["clockify", "harvest"],
+  ["clockify", "time-doctor"],
+  ["harvest", "time-doctor"],
+
+  // 3. Workforce time tracking & payroll bridges to project management:
+  ["hubstaff", "todoist"],
+  ["hubstaff", "monday"],
+  ["hubstaff", "asana"],
+  ["hubstaff", "clickup"],
+  ["harvest", "asana"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {

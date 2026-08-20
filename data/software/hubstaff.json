@@ -1,0 +1,147 @@
+{
+  "name": "Hubstaff",
+  "slug": "hubstaff",
+  "category": "productivity",
+  "description": "Hubstaff is a workforce management and time tracking platform that combines desktop, web, and mobile timers with automated timesheets, GPS location tracking, activity levels, screenshots, and payroll integrations.",
+  "website": "https://hubstaff.com",
+  "founded": 2012,
+  "company": "NetWorkTeam, LLC",
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$4.99",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_plan": true,
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "4.99",
+      "currency": "USD",
+      "billing_period": "annual",
+      "per_seat": true,
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Starter",
+        "amount": "4.99",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "seat/mo",
+        "notes": "Includes time tracking, timesheets, and basic activity tracking (2-seat minimum)."
+      },
+      {
+        "name": "Grow",
+        "amount": "7.50",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "seat/mo",
+        "notes": "Adds advanced reporting, URL & app tracking, and 1,500 screenshots/seat/mo (2-seat minimum)."
+      },
+      {
+        "name": "Team",
+        "amount": "10.00",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "seat/mo",
+        "notes": "Adds unlimited screenshots, shift scheduling, payroll integrations, and client invoicing (2-seat minimum)."
+      },
+      {
+        "name": "Enterprise",
+        "amount": "25.00",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "seat/mo",
+        "notes": "Adds VIP support, SOC 2 compliance, and custom account provisioning."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://hubstaff.com/pricing"
+  },
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android",
+    "Browser extension"
+  ],
+  "best_for": "Positioned for remote teams, hybrid companies, field service crews, agencies, and contractors needing unified time tracking, proof-of-work monitoring, scheduling, and automated payroll.",
+  "pros": [
+    "Comprehensive workforce tracking with optional proof-of-work screenshots and activity rates",
+    "Built-in automated payroll integrations with PayPal, Wise, and Payoneer",
+    "GPS location tracking and geofencing for mobile field service teams",
+    "Cross-platform support across desktop, mobile, and browser extensions"
+  ],
+  "cons": [
+    "2-seat minimum required on Starter, Grow, and Team paid plans",
+    "Screenshot and keystroke activity monitoring may face employee privacy resistance",
+    "Invoicing and automated payroll features require Team tier or higher"
+  ],
+  "features": [
+    "Multi-platform time tracking with desktop, mobile, web, and Chrome extension timers",
+    "Automated timesheets with manager approvals and overtime calculation",
+    "Proof-of-work monitoring including customizable screenshot frequency and activity rates",
+    "App and URL usage tracking with productivity classification",
+    "GPS location tracking and geofenced job sites for field teams",
+    "Employee shift scheduling and attendance monitoring with missed-shift alerts",
+    "Automated payroll and contractor payments via PayPal, Wise, Payoneer, and Bitwage",
+    "Client invoicing based on tracked billable hours and customizable pay rates"
+  ],
+  "alternatives": [
+    {
+      "name": "Toggl Track",
+      "slug": "toggl-track",
+      "description": "A time tracking tool with one-click timers, background activity tracking, and profitability reporting.",
+      "best_for": "Teams wanting intuitive timer tracking without invasive employee monitoring",
+      "strengths": [
+        "One-click timers",
+        "Profitability reporting",
+        "100+ integrations"
+      ]
+    },
+    {
+      "name": "Time Doctor",
+      "slug": "time-doctor",
+      "description": "An employee time tracking and workforce productivity platform with screencasts, distraction alerts, and payroll.",
+      "best_for": "BPOs and remote teams needing detailed employee monitoring and distraction alerts",
+      "strengths": [
+        "Screen capture & video recording",
+        "Distraction & off-task alerts",
+        "Direct payroll integrations"
+      ]
+    },
+    {
+      "name": "Clockify",
+      "slug": "clockify",
+      "description": "A time tracking and timesheet app with attendance, scheduling, and a free plan for unlimited users.",
+      "best_for": "Budget-conscious teams needing free basic time tracking and timesheets",
+      "strengths": [
+        "Free plan for unlimited users",
+        "Kiosk clock-in",
+        "Timesheet approvals"
+      ]
+    },
+    {
+      "name": "Harvest",
+      "slug": "harvest",
+      "description": "A time tracking and invoicing software designed for teams and freelancers to track project hours and bill clients.",
+      "best_for": "Agencies and consultancies needing streamlined time tracking tied directly to client invoicing",
+      "strengths": [
+        "Seamless client invoicing",
+        "Project budget burn-down",
+        "Online Stripe/PayPal payments"
+      ]
+    }
+  ],
+  "sources": [
+    "https://hubstaff.com/pricing",
+    "https://hubstaff.com/features"
+  ],
+  "accessed_at": "2026-08-20",
+  "affiliate_url": "https://affiliate.hubstaff.com/ca2oe167vcj1"
+}

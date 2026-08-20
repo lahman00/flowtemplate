@@ -1,7 +1,7 @@
 export const ACTIVE_PARTNER_SLUGS = [
   "constant-contact", "todoist", "moosend", "volza", "pipedrive",
   "getresponse", "airtable", "monday", "whatconverts", "elevenlabs", "krispcall",
-  "setmore",
+  "setmore", "hubstaff",
 ] as const;
 
 export type ActivePartnerSlug = (typeof ACTIVE_PARTNER_SLUGS)[number];
@@ -32,6 +32,9 @@ export type ActivePartner = {
  * (blog/content, organic social, newsletters, website referrals). Any future
  * social/affiliate automation touching Setmore must respect this restriction --
  * do not schedule paid promotion or recommend paid channels for this partner.
+ *
+ * Hubstaff added 2026-08-20: real first-party PartnerStack partnership (account hello@miloosh.com).
+ * Verified affiliate URL: https://affiliate.hubstaff.com/ca2oe167vcj1.
  */
 export const ACTIVE_PARTNERS: readonly ActivePartner[] = [
   { slug: "constant-contact", status: "active", affiliateUrl: "https://join.constantcontact.com/ezj6pum5ei2l", blocker: null },
@@ -46,6 +49,7 @@ export const ACTIVE_PARTNERS: readonly ActivePartner[] = [
   { slug: "elevenlabs", status: "active", affiliateUrl: "https://try.elevenlabs.io/gkp73pehjgtl", blocker: null },
   { slug: "krispcall", status: "active", affiliateUrl: "https://try.krispcall.com/aikpbrrrl8k9", blocker: null },
   { slug: "setmore", status: "active", affiliateUrl: "https://www.setmore.com?ref=nge2zwi", blocker: null },
+  { slug: "hubstaff", status: "active", affiliateUrl: "https://affiliate.hubstaff.com/ca2oe167vcj1", blocker: null },
 ] as const;
 
 const ACTIVE_PARTNERS_BY_SLUG = new Map(ACTIVE_PARTNERS.map((partner) => [partner.slug, partner]));

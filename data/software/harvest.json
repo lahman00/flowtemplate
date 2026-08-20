@@ -1,0 +1,118 @@
+{
+  "name": "Harvest",
+  "slug": "harvest",
+  "category": "productivity",
+  "description": "Harvest is a time tracking and invoicing software designed for teams and freelancers to track project hours, log expenses, monitor budgets, and bill clients seamlessly.",
+  "website": "https://www.getharvest.com",
+  "founded": 2006,
+  "company": "Harvest",
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$10.80",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_plan": true,
+    "free_trial": {
+      "available": true,
+      "days": 30
+    },
+    "entry_paid": {
+      "amount": "10.80",
+      "currency": "USD",
+      "billing_period": "annual",
+      "per_seat": true,
+      "annual_billing_required": true
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "1 seat, 2 projects",
+        "notes": "Includes basic time tracking and invoicing for 1 user on up to 2 active projects."
+      },
+      {
+        "name": "Pro",
+        "amount": "10.80",
+        "currency": "USD",
+        "billing_period": "annual",
+        "unit": "seat/mo",
+        "notes": "Includes unlimited users, unlimited active projects, automated reminders, and integrations (billed annually at $10.80/mo or monthly at $12/mo)."
+      }
+    ],
+    "enterprise_contact_sales": false,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.getharvest.com/pricing"
+  },
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "iOS",
+    "Android",
+    "Browser extension"
+  ],
+  "best_for": "Positioned for creative agencies, consultancies, professional services, and freelancers needing streamlined time tracking tightly connected to project budgets and client invoicing.",
+  "pros": [
+    "Seamless connection between tracked hours, project budgets, and client invoices",
+    "Built-in online payment processing through Stripe and PayPal integrations",
+    "Visual project budget burn-down tracking and capacity reporting",
+    "Clean, user-friendly interface with lightweight desktop and mobile timers"
+  ],
+  "cons": [
+    "Free plan is strictly limited to 1 user and 2 active projects",
+    "Lacks native employee monitoring features like screenshots or keystroke activity",
+    "No built-in shift scheduling or GPS geofenced location tracking"
+  ],
+  "features": [
+    "One-click time tracking across web, desktop, mobile, and browser extensions",
+    "Automated timesheet submission, review, and manager approval workflows",
+    "Client invoicing generated directly from billable hours and tracked expenses",
+    "Integrated online payments via Stripe and PayPal",
+    "Project budget tracking with visual progress and burn-down alerts",
+    "Team capacity and utilization reports to balance workloads",
+    "Expense tracking with receipt attachment and multi-currency support",
+    "50+ native integrations with Asana, Trello, Slack, QuickBooks, and Xero"
+  ],
+  "alternatives": [
+    {
+      "name": "Toggl Track",
+      "slug": "toggl-track",
+      "description": "A time tracking tool with one-click timers, background activity tracking, and profitability reporting.",
+      "best_for": "Teams wanting flexible time tracking and deep profitability analytics",
+      "strengths": [
+        "One-click timers",
+        "Profitability reporting",
+        "100+ integrations"
+      ]
+    },
+    {
+      "name": "Clockify",
+      "slug": "clockify",
+      "description": "A time tracking and timesheet app with attendance, scheduling, and a free plan for unlimited users.",
+      "best_for": "Teams wanting free time tracking for unlimited users with basic billing",
+      "strengths": [
+        "Free plan for unlimited users",
+        "Kiosk clock-in",
+        "Timesheet approvals"
+      ]
+    },
+    {
+      "name": "Hubstaff",
+      "slug": "hubstaff",
+      "description": "A workforce management and time tracking tool with automated timesheets, activity monitoring, and payroll integrations.",
+      "best_for": "Remote teams needing proof-of-work tracking and automated contractor payroll",
+      "strengths": [
+        "Proof-of-work activity tracking",
+        "GPS location tracking",
+        "Automated payroll integrations"
+      ]
+    }
+  ],
+  "sources": [
+    "https://www.getharvest.com/pricing",
+    "https://www.getharvest.com/features"
+  ],
+  "accessed_at": "2026-08-20"
+}

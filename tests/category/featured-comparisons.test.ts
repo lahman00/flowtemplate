@@ -91,12 +91,19 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     );
     expect(hasNonAffiliate).toBe(true);
 
-    // In productivity: Things, TickTick, Clockify must appear
-    const prodFeatured = getCategoryFeaturedComparisons("productivity", 6);
-    const prodHasNonAffiliate = prodFeatured.some(
+    // In design: Miro, Figma, Sketch, Whimsical have no affiliate program but appear
+    const designFeatured = getCategoryFeaturedComparisons("design", 6);
+    const designHasNonAffiliate = designFeatured.some(
       (c) => !activeSlugsSet.has(c.slugA) && !activeSlugsSet.has(c.slugB)
     );
-    expect(prodHasNonAffiliate).toBe(true);
+    expect(designHasNonAffiliate).toBe(true);
+
+    // In productivity: non-affiliate software (Clockify, Harvest, Time Doctor, Toggl Track, TickTick, Things) are prominently featured
+    const prodFeatured = getCategoryFeaturedComparisons("productivity", 6);
+    const prodIncludesNonAffiliates = prodFeatured.every(
+      (c) => !activeSlugsSet.has(c.slugA) || !activeSlugsSet.has(c.slugB)
+    );
+    expect(prodIncludesNonAffiliates).toBe(true);
   });
 
   it("ensures no program marked rejected, hold, or pending is treated as active", () => {
@@ -201,5 +208,34 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(getComparisonsInvolving("miro").length).toBeGreaterThanOrEqual(9);
     expect(getComparisonsInvolving("figma").length).toBeGreaterThanOrEqual(11);
     expect(getComparisonsInvolving("zeplin").length).toBeGreaterThanOrEqual(9);
+  });
+
+  it("verifies Time Tracking & Workforce Management cluster authority and Hubstaff monetization", () => {
+    // Hubstaff active comparisons
+    expect(isPublishedComparison("hubstaff", "toggl-track")).toBe(true);
+    expect(isPublishedComparison("hubstaff", "clockify")).toBe(true);
+    expect(isPublishedComparison("hubstaff", "harvest")).toBe(true);
+    expect(isPublishedComparison("hubstaff", "time-doctor")).toBe(true);
+
+    // Core time tracking & invoicing comparisons
+    expect(isPublishedComparison("toggl-track", "harvest")).toBe(true);
+    expect(isPublishedComparison("toggl-track", "time-doctor")).toBe(true);
+    expect(isPublishedComparison("clockify", "harvest")).toBe(true);
+    expect(isPublishedComparison("clockify", "time-doctor")).toBe(true);
+    expect(isPublishedComparison("harvest", "time-doctor")).toBe(true);
+
+    // Project management bridges
+    expect(isPublishedComparison("hubstaff", "todoist")).toBe(true);
+    expect(isPublishedComparison("hubstaff", "monday")).toBe(true);
+    expect(isPublishedComparison("hubstaff", "asana")).toBe(true);
+    expect(isPublishedComparison("hubstaff", "clickup")).toBe(true);
+    expect(isPublishedComparison("harvest", "asana")).toBe(true);
+
+    // Verify degree metrics
+    expect(getComparisonsInvolving("hubstaff").length).toBeGreaterThanOrEqual(8);
+    expect(getComparisonsInvolving("harvest").length).toBeGreaterThanOrEqual(4);
+    expect(getComparisonsInvolving("time-doctor").length).toBeGreaterThanOrEqual(4);
+    expect(getComparisonsInvolving("toggl-track").length).toBeGreaterThanOrEqual(11);
+    expect(getComparisonsInvolving("clockify").length).toBeGreaterThanOrEqual(14);
   });
 });
