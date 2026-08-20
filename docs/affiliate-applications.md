@@ -1,6 +1,6 @@
 # Affiliate applications — live status + acquisition queue
 
-Updated: 2026-08-20 (real submissions: Help Scout, Amplitude, Toggl Track; Webflow diagnosed and still blocked; 23 programs confirmed absent from PartnerStack this sweep)
+Updated: 2026-08-20 (reconciled Webflow + ActiveCampaign to REJECTED from real first-party emails; Setmore ACTIVATED from a real first-party approval email)
 
 This file is the operational affiliate list for Miloosh across PartnerStack accounts and direct networks. Statuses below distinguish **ACTIVE**, **PENDING**, **KNOWN REJECTED**, and **MONITORING TARGETS**. Never mark a program active until a real tracking URL has been issued and verified.
 
@@ -9,6 +9,7 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 | Program | Network | Status | Commission / Evidence | Next Action |
 |---|---|---|---|---|
 | Airtable | PartnerStack | ACTIVE | 20% recurring | Link active in Miloosh (`https://airtable.partnerlinks.io/b0dz88v48tek`) |
+| Setmore | Tapfiliate | ACTIVE | Real first-party approval email received 2026-08-20 (network: Tapfiliate, `setmore.com/affiliates`). Commission terms not stated in the approval email; not yet independently re-verified beyond the approval itself. Live affiliate URL `https://www.setmore.com?ref=nge2zwi` verified 2026-08-20: resolves to the genuine Setmore homepage, ref parameter preserved, no third-party redirect. **⚠️ COMPLIANCE RESTRICTION (from the approval email): NO PAID MEDIA / PPC / BRAND OR NON-BRAND ADS.** Google Ads, PPC, display ads, and paid social are strictly prohibited — commissions from prohibited channels will not be approved or paid. Only organic promotion is permitted (blog/content, organic social, newsletters, website referrals). PayPal payout details should be kept updated by the owner (not configured by this agent — remains an owner action). 9 real comparison pages involve Setmore (`calendly-vs-setmore`, `doodle-vs-setmore`, `acuity-scheduling-vs-setmore`, `microsoft-bookings-vs-setmore`, `cal-com-vs-setmore`, `motion-vs-setmore`, `reclaim-ai-vs-setmore`, `savvycal-vs-setmore`, `setmore-vs-youcanbookme`) — all 9 gained exactly one newly-monetized side (none of the counterparts are active partners, so none became dual-monetized) | Link active in canonical registry. Do NOT use or recommend paid promotion for this partner in any social/affiliate automation |
 | Constant Contact | PartnerStack | ACTIVE (Approved) | Commission terms not re-verified in today's collected materials | Link active in canonical registry |
 | Todoist | PartnerStack | ACTIVE (Approved) | Up to 25%; yearly one-time/monthly up to 12 payments | Link active in canonical registry |
 | Moosend | PartnerStack | ACTIVE (Approved) | 30–40% recurring | Link active in canonical registry |
@@ -19,7 +20,6 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 | KrispCall | PartnerStack | ACTIVE (Approved) | Commission terms UNKNOWN in collected materials | Link active in canonical registry |
 | Freshworks (Freshdesk + Freshsales) | PartnerStack | PENDING | Submitted 2026-08-20 for Miloosh, targeting Freshdesk (highest real-traffic monetization gap identified by the Phase 12 Money Map — 1029 real 28-day GSC impressions, unmonetized) and Freshsales (Miloosh also has real content for it). First-party confirmation: "Your application was received." Real commission figures conflict across 3 sources — 15% (Freshworks FAQ), "up to 30%" (PartnerStack landing page), 20%/25%/custom tiered (PartnerStack in-app Offer structure, most authoritative). See `data/revenue/affiliate-programs.ts` for full detail | Wait; do not reapply. Do NOT activate Freshdesk/Freshsales on any public page until a real URL is issued |
 | FreshBooks | PartnerStack | PENDING | Application under review | Wait; do not reapply |
-| ActiveCampaign | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | Close | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | ClickUp | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | Kit | PartnerStack | PENDING | Application under review | Wait; do not reapply |
@@ -50,12 +50,8 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 - **HubSpot**: Rejected by vendor affiliate program. Do NOT treat as pending or reapply.
 - **n8n**: Rejected by vendor affiliate program. Do NOT treat as pending or reapply.
 - **Brevo** (moved here 2026-08-19, was previously listed ACTIVE in the table above — that was wrong): PartnerStack's top-level partnership badge still shows "Active," but the program's own Messages tab (same account, hello@miloosh.com, same program) shows a first-party Brevo message dated Today: *"Your application was not approved... your application has been removed from our onboarding process."* A prior message (Yesterday) said the application was "under review." This fully explains the missing Offer/referral link. **Corrected in code the same day**: removed from `active-partners.ts`, reclassified `REJECTED` in `partner-materials-audit.ts`, and the production affiliate pipeline was moved to `rejected`. Do NOT treat as pending or reapply without owner review of why it was rejected.
-
-## Blocked — Diagnosed Vendor Form Defect
-
-| Program | Network | Commission | Notes |
-|---|---|---|---|
-| Webflow | PartnerStack | 50% for 12 months per new customer | Real Miloosh page exists (`/software/webflow`). Two genuine submission attempts 2026-08-20 both failed safely (no data sent) after a thorough diagnosis: the form's PrimeVue dropdown overlays never close once opened, and a tall overlay (e.g. the 249-option Country list) can silently cover and intercept clicks meant for a field below it — confirmed directly by watching Country=Israel silently change to Ireland from a misdirected click. Tried precise coordinate targeting, bottom-to-top fill order, and keyboard-only focus; none fully eliminated the risk across all 7 dropdown fields. This is a real bug in Webflow's own PartnerStack-hosted form, not an owner-only blocker — safe to retry with a different automation approach, or complete manually. See the affiliate pipeline (`slug: "webflow"`) for the full diagnostic history. |
+- **Webflow** (moved here 2026-08-20): owner-provided first-party PartnerStack email, subject *"Updates to your Webflow Application"*: *"After careful consideration, Webflow has declined your application to join their program."* This supersedes the earlier "diagnosed vendor form defect / still blocked" status recorded the same day — the form-interaction diagnosis (dropdown overlays never closing, one silently corrupting a Country selection) remains factually accurate as a real bug encountered, but the actual outcome is a real decline, not an open/retryable application. Never added to `active-partners.ts`. Do NOT reapply without new evidence.
+- **ActiveCampaign** (moved here 2026-08-20, was previously listed PENDING in the table above — that was stale): owner-provided first-party PartnerStack email, subject *"Updates to your ActiveCampaign Application"*: *"After careful consideration, ActiveCampaign has declined your application."* Never added to `active-partners.ts`. Do NOT reapply without new evidence.
 
 ## Confirmed No PartnerStack Listing (2026-08-20 sweep)
 

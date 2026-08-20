@@ -70,7 +70,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "activecampaign",
-    lastVerifiedAt: "2026-08-14",
+    lastVerifiedAt: "2026-08-20",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
@@ -78,7 +78,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "Tiered 20-30% recurring commission (starts at 20%, climbs based on new business and retention) for up to 12 months per referred customer; official page cites an average of $1,350 per referral",
     recurrence: "recurring",
     notes:
-      "Official page (activecampaign.com/partner/affiliate) directly fetched — confirms PartnerStack (activecampaign.partnerstack.com), explicitly states 'you don't need to be a customer to join,' targeted at content creators/influencers/publishers.",
+      "REJECTED 2026-08-20: owner-provided first-party PartnerStack email, subject \"Updates to your ActiveCampaign Application\": \"After careful consideration, ActiveCampaign has declined your application.\" Do not reapply without new evidence. See the affiliate pipeline (slug: activecampaign) for full history.",
     sourceUrls: ["https://activecampaign.com/partner/affiliate"],
     applicationUrl: "https://activecampaign.partnerstack.com/",
     payoutThreshold: "$100",
@@ -1015,7 +1015,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "webflow",
-    lastVerifiedAt: "2026-08-14",
+    lastVerifiedAt: "2026-08-20",
     programExists: "yes",
     type: "direct",
     networkName: null,
@@ -1024,7 +1024,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "Base tier: 50% revenue share on a new customer's first subscription for up to 12 months. Pro Affiliate tier adds another 10% revenue share for up to 12 additional months if the customer renews; Premium Affiliate tier adds 15%. Confirmed directly on the live, rendered application page.",
     recurrence: "recurring",
     notes:
-      "Re-verified 2026-08-14 via a real rendered browser load (two prior direct-fetch attempts by a simple HTTP client failed — header overflow, then 403 — this is a client-rendered page). Confirmed: 90-day cookie, no limit on number of referrals, direct in-house program (no PartnerStack/Impact/etc). Eligibility is explicitly restricted to 'content creator, influencer, or blogger' — agencies/freelancers must use a separate Certified Partner Program instead. Applying requires a real multi-step form (basic info incl. a personal first/last name and business name, affiliate strategy, then accepting Webflow's program terms) — this agent cannot submit it: it has no real personal name on file to enter (never fabricated) and accepting the program agreement is a step the owner must take personally. Re-attempted 2026-08-16: all direct-fetch attempts (webflow.com/affiliates, /solutions/affiliates, /legal/affiliate-terms, Help Center) failed again (403/404/header-overflow) — same client-rendering issue as before, not evidence of a program change. Terms above remain from the one successful 2026-08-14 render and are not re-confirmed today.",
+      "REJECTED 2026-08-20: owner-provided first-party PartnerStack email, subject \"Updates to your Webflow Application\": \"After careful consideration, Webflow has declined your application to join their program.\" Do not reapply without new evidence. Note: Webflow also has a separate PartnerStack marketplace listing (distinct from the direct webflow.com program described below) -- the rejection came through that PartnerStack channel; an application must have reached Webflow for them to decline it, even though this agent's own tracked submission attempts on 2026-08-20 were blocked by a form defect before reaching a confirmed-submitted state (see the affiliate pipeline, slug: webflow, for the full diagnostic history). Earlier research on the direct webflow.com program remains below for reference: re-verified 2026-08-14 via a real rendered browser load (two prior direct-fetch attempts by a simple HTTP client failed — header overflow, then 403 — this is a client-rendered page). Confirmed: 90-day cookie, no limit on number of referrals, direct in-house program (no PartnerStack/Impact/etc). Eligibility is explicitly restricted to 'content creator, influencer, or blogger' — agencies/freelancers must use a separate Certified Partner Program instead.",
     sourceUrls: ["https://webflow.com/solutions/affiliates"],
     applicationUrl: "https://webflow.com/solutions/affiliates",
     cookieDuration: "90 days",
@@ -1579,17 +1579,18 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   },
   {
     slug: "setmore",
-    lastVerifiedAt: "2026-08-17",
+    lastVerifiedAt: "2026-08-20",
     programExists: "yes",
     type: "network",
     networkName: "Tapfiliate",
     countryRestrictions: null,
     commissionModel: null,
     recurrence: "unknown",
-    notes: "Found via automated discovery: setmore.com/affiliates returns HTTP 200 with a Tapfiliate signature (no commission-language keywords matched beyond the network signature itself — confirm terms manually).",
+    notes:
+      "APPROVED 2026-08-20: real, owner-provided first-party Setmore approval email. Real affiliate URL verified live: https://www.setmore.com?ref=nge2zwi (resolves to the genuine Setmore homepage, ref parameter preserved, no third-party redirect). Activated in data/affiliate/active-partners.ts. Commission terms were not stated in the approval email and remain unverified. COMPLIANCE RESTRICTION per the approval email: paid advertising is strictly prohibited (no Google Ads, PPC, display ads, or paid social) -- commissions from prohibited channels will not be approved or paid; only organic promotion (blog/content, organic social, newsletters, website referrals) is permitted. PayPal payout details should be kept updated by the owner (not configured by this agent).",
     sourceUrls: ["https://www.setmore.com/affiliates"],
     applicationUrl: "https://www.setmore.com/affiliates",
-    confidence: "low",
+    confidence: "high",
   },
   {
     slug: "shift4shop",

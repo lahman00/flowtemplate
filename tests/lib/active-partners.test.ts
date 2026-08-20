@@ -5,9 +5,9 @@ import { getSoftware } from "@/data/software";
 import { getSoftwareCtaRel, getSoftwareCtaUrl, shouldShowAffiliateDisclosure } from "@/lib/affiliate";
 
 describe("canonical active affiliate partner registry", () => {
-  it("contains exactly the 11 verified active partners", () => {
-    expect(ACTIVE_PARTNERS).toHaveLength(11);
-    expect(new Set(ACTIVE_PARTNERS.map(({ slug }) => slug)).size).toBe(11);
+  it("contains exactly the 12 verified active partners", () => {
+    expect(ACTIVE_PARTNERS).toHaveLength(12);
+    expect(new Set(ACTIVE_PARTNERS.map(({ slug }) => slug)).size).toBe(12);
   });
 
   it.each(ACTIVE_PARTNERS.filter((partner) => partner.affiliateUrl))(
@@ -44,10 +44,10 @@ describe("canonical active affiliate partner registry", () => {
     expect(shouldShowAffiliateDisclosure(software!)).toBe(false);
   });
 
-  it("builds an 11-row operational money matrix with no partners blocked", () => {
+  it("builds a 12-row operational money matrix with no partners blocked", () => {
     const matrix = getPartnerMoneyMatrix();
-    expect(matrix).toHaveLength(11);
-    expect(matrix.filter(({ revenueReady }) => revenueReady)).toHaveLength(11);
+    expect(matrix).toHaveLength(12);
+    expect(matrix.filter(({ revenueReady }) => revenueReady)).toHaveLength(12);
     expect(matrix.filter(({ blocker }) => blocker)).toEqual([]);
     expect(matrix.every(({ coverage }) => coverage.comparisonRoutes > 0)).toBe(true);
     expect(matrix.find(({ slug }) => slug === "krispcall")).toMatchObject({

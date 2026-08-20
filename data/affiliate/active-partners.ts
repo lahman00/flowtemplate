@@ -1,6 +1,7 @@
 export const ACTIVE_PARTNER_SLUGS = [
   "constant-contact", "todoist", "moosend", "volza", "pipedrive",
   "getresponse", "airtable", "monday", "whatconverts", "elevenlabs", "krispcall",
+  "setmore",
 ] as const;
 
 export type ActivePartnerSlug = (typeof ACTIVE_PARTNER_SLUGS)[number];
@@ -22,6 +23,15 @@ export type ActivePartner = {
  * no referral link were ever attached, consistent with a rejected application.
  * See data/affiliate/partner-materials-audit.ts and
  * data/affiliate/AFFILIATE_EVIDENCE_AND_SURFACES_2026-08-19.md for full evidence.
+ *
+ * Setmore added 2026-08-20: real first-party approval email (network: Tapfiliate).
+ * COMPLIANCE RESTRICTION -- SETMORE: NO PAID MEDIA / PPC / BRAND OR NON-BRAND ADS.
+ * The approval email explicitly prohibits Google Ads, PPC, display ads, and paid
+ * social advertising for this program; commissions generated through prohibited
+ * paid channels will not be approved or paid. Only organic promotion is permitted
+ * (blog/content, organic social, newsletters, website referrals). Any future
+ * social/affiliate automation touching Setmore must respect this restriction --
+ * do not schedule paid promotion or recommend paid channels for this partner.
  */
 export const ACTIVE_PARTNERS: readonly ActivePartner[] = [
   { slug: "constant-contact", status: "active", affiliateUrl: "https://join.constantcontact.com/ezj6pum5ei2l", blocker: null },
@@ -35,6 +45,7 @@ export const ACTIVE_PARTNERS: readonly ActivePartner[] = [
   { slug: "whatconverts", status: "active", affiliateUrl: "https://partners.whatconverts.com/bmckzlf0vnl8", blocker: null },
   { slug: "elevenlabs", status: "active", affiliateUrl: "https://try.elevenlabs.io/gkp73pehjgtl", blocker: null },
   { slug: "krispcall", status: "active", affiliateUrl: "https://try.krispcall.com/aikpbrrrl8k9", blocker: null },
+  { slug: "setmore", status: "active", affiliateUrl: "https://www.setmore.com?ref=nge2zwi", blocker: null },
 ] as const;
 
 const ACTIVE_PARTNERS_BY_SLUG = new Map(ACTIVE_PARTNERS.map((partner) => [partner.slug, partner]));
