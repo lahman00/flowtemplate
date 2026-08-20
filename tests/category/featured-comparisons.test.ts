@@ -184,4 +184,22 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(getComparisonsInvolving("posthog").length).toBeGreaterThanOrEqual(13);
     expect(getComparisonsInvolving("readme").length).toBeGreaterThanOrEqual(12);
   });
+
+  it("verifies Sprint #5 design systems, visual whiteboarding & structured workspace authority", () => {
+    // Visual whiteboards vs Notion
+    expect(isPublishedComparison("miro", "notion")).toBe(true);
+    expect(isPublishedComparison("whimsical", "notion")).toBe(true);
+    expect(isPublishedComparison("lucidchart", "notion")).toBe(true);
+
+    // Design tools & handoff vs Zeroheight
+    expect(isPublishedComparison("figma", "zeroheight")).toBe(true);
+    expect(isPublishedComparison("zeplin", "zeroheight")).toBe(true);
+    expect(isPublishedComparison("sketch", "zeroheight")).toBe(true);
+
+    // Verify degree increases
+    expect(getComparisonsInvolving("zeroheight").length).toBeGreaterThanOrEqual(13);
+    expect(getComparisonsInvolving("miro").length).toBeGreaterThanOrEqual(9);
+    expect(getComparisonsInvolving("figma").length).toBeGreaterThanOrEqual(11);
+    expect(getComparisonsInvolving("zeplin").length).toBeGreaterThanOrEqual(9);
+  });
 });

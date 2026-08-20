@@ -1253,6 +1253,17 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
 
   // 3. Enterprise SaaS auth/SSO API integration vs employee access MFA/SSO:
   ["workos", "duo-security"],
+
+  // 2026-08-20 Growth Sprint #5 — Design systems, visual whiteboarding & structured workspace authority:
+  // 1. Visual infinite whiteboard / diagramming canvases vs structured document workspace:
+  ["miro", "notion"],
+  ["whimsical", "notion"],
+  ["lucidchart", "notion"],
+
+  // 2. UI design tools & developer handoff vs dedicated design system documentation:
+  ["figma", "zeroheight"],
+  ["zeplin", "zeroheight"],
+  ["sketch", "zeroheight"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
