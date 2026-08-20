@@ -1365,6 +1365,9 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["linear", "notion"],
   ["cal-com", "pipedrive"],
   ["callrail", "klaviyo"],
+
+  // 2026-08-21 Revenue Expansion — High-intent substitute comparison:
+  ["postmark", "brevo"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {

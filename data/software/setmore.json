@@ -20,11 +20,64 @@
     "Zoom and Google Meet integration for virtual appointments",
     "Two-way calendar sync with Google Calendar and Office 365"
   ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$5/user/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true
+    },
+    "entry_paid": {
+      "amount": "5",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "unit": "user"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 4 user calendars, unlimited appointments, email reminders, Square payments, and custom booking URL."
+      },
+      {
+        "name": "Pro",
+        "amount": "5",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Billed annually at $5/user/mo (or $12/user/mo monthly); adds 2-way Google/Office calendar sync, SMS reminders, and recurring appointments (1-2 users)."
+      },
+      {
+        "name": "Team",
+        "amount": "5",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "user",
+        "notes": "Billed annually at $5/user/mo (or $9/user/mo monthly); includes all Pro features for 3+ team staff members."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.setmore.com/pricing"
+  },
+  "pros": [
+    "Generous Free tier supporting up to 4 staff calendars and unlimited online appointment bookings",
+    "Seamless point-of-sale payment integrations with Square, Stripe, and PayPal",
+    "Native video meeting integrations with Zoom, Google Meet, and Teleport for virtual client consultations"
+  ],
+  "cons": [
+    "Two-way synchronization with Google Calendar and Office 365 requires a paid Pro or Team subscription",
+    "Automated SMS appointment reminders are restricted to paid plans",
+    "Intake form customization and recurring service packages are less flexible than Acuity Scheduling"
+  ],
   "sources": [
-    "https://www.setmore.com",
+    "https://www.setmore.com/pricing",
     "https://www.setmore.com/features"
   ],
-  "accessed_at": "2026-08-04",
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Calendly",

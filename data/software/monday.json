@@ -20,12 +20,73 @@
     "Forms for intake and Docs for collaborative documentation",
     "AI agents for research, reporting, and scheduling"
   ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$9/seat/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "9",
+      "currency": "USD",
+      "billing_period": "monthly",
+      "unit": "seat"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 2 seats, 3 boards, unlimited docs, and 200+ templates."
+      },
+      {
+        "name": "Basic",
+        "amount": "9",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "seat",
+        "notes": "Billed annually at $9/seat/mo ($27/mo min for 3 seats); adds unlimited items, 5GB storage, and prioritized support."
+      },
+      {
+        "name": "Standard",
+        "amount": "12",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "seat",
+        "notes": "Billed annually at $12/seat/mo ($36/mo min); adds Timeline/Gantt views, Calendar view, guest access, and 250 automations/mo."
+      },
+      {
+        "name": "Pro",
+        "amount": "19",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "seat",
+        "notes": "Billed annually at $19/seat/mo ($57/mo min); adds private boards, formula columns, time tracking, and 25,000 automations/mo."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://monday.com/pricing"
+  },
+  "pros": [
+    "Intuitive color-coded visual boards with flexible column custom fields and cross-board dashboard widgets",
+    "Rich no-code automation engine connecting status triggers, email alerts, and external app integrations",
+    "Built-in intake request forms and shareable client guest views for seamless project coordination"
+  ],
+  "cons": [
+    "Strict 3-seat minimum requirement on all paid plans increases entry cost for solo practitioners and 2-person teams",
+    "Time tracking, formula columns, and dependency logic require upgrading to the Pro plan ($19/seat/month)",
+    "Can feel overly complex for simple task tracking compared to lightweight checklist apps"
+  ],
   "sources": [
-    "https://monday.com",
-    "https://monday.com/lang/download",
+    "https://monday.com/pricing",
     "https://monday.com/work-management"
   ],
-  "accessed_at": "2026-07-31",
+  "accessed_at": "2026-08-20",
   "alternatives": [
     {
       "name": "Asana",
