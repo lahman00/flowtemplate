@@ -1584,12 +1584,23 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     type: "network",
     networkName: "Tapfiliate",
     countryRestrictions: null,
-    commissionModel: null,
-    recurrence: "unknown",
+    commissionModel:
+      "30% of the referred customer's first subscription payment, one-time (not recurring). Verbatim dollar tiers from the official affiliate-terms PDF (https://assets.setmore.com/website/pdf/setmore-affiliate-terms.pdf): Monthly -- Pro 1-user $12 -> $3.60, Pro 2-user $24 -> $7.20, Team 3-6 users $27-$54 -> $8.10-$16.20. Yearly -- Pro 1-user $60 -> $18, Pro 2-user $120 -> $36, Team 3-6 users $180-$360 -> $54-$108. The 30% figure is a computed ratio consistent across every tier in the PDF, not a separately-stated headline rate -- the dollar amounts are the verbatim source; the percentage is derived, not fabricated.",
+    recurrence: "one_time",
     notes:
-      "APPROVED 2026-08-20: real, owner-provided first-party Setmore approval email. Real affiliate URL verified live: https://www.setmore.com?ref=nge2zwi (resolves to the genuine Setmore homepage, ref parameter preserved, no third-party redirect). Activated in data/affiliate/active-partners.ts. Commission terms were not stated in the approval email and remain unverified. COMPLIANCE RESTRICTION per the approval email: paid advertising is strictly prohibited (no Google Ads, PPC, display ads, or paid social) -- commissions from prohibited channels will not be approved or paid; only organic promotion (blog/content, organic social, newsletters, website referrals) is permitted. PayPal payout details should be kept updated by the owner (not configured by this agent).",
-    sourceUrls: ["https://www.setmore.com/affiliates"],
+      "APPROVED 2026-08-20: real, owner-provided first-party Setmore approval email. Real affiliate URL verified live: https://www.setmore.com?ref=nge2zwi (resolves to the genuine Setmore homepage, ref parameter preserved, no third-party redirect). Activated in data/affiliate/active-partners.ts. COMMISSION/PAYOUT TERMS VERIFIED 2026-08-20 against the official Setmore affiliate-terms PDF (first-party, assets.setmore.com): commission is one-time (paid once per referred customer, not recurring); commission is held for a retention/validity period after the referred signup (PDF: 30-day hold for monthly-plan referrals, 365-day hold for yearly-plan referrals) before it is payable, and is then paid out roughly 90 days after that validity period ends; cookie/referral window is 90 days. CONFLICTING PPC RESTRICTION -- do not resolve silently: the official affiliate-terms PDF states only a narrow restriction (affiliates may not bid on Setmore's own brand keywords in Google Ads); the owner-provided approval email (quoted in the 2026-08-20 activation note) states a much broader restriction covering ALL paid advertising -- Google Ads, PPC, display ads, and paid social, branded or not. Both are preserved here as first-party sources that disagree in scope; treat the broader (approval-email) restriction as the operative one for any Miloosh automation until the owner clarifies, since it is the stricter reading and errs toward compliance, but this is a policy choice, not a claim that the conflict is resolved. UNVERIFIED (not stated in the PDF or any other first-party source checked): payout threshold dollar amount, payout method, geographic restrictions, minimum activity requirements, self-referral rules, and detailed attribution rules beyond the 90-day cookie. PAYOUT METHOD / PAYPAL: the PDF never mentions PayPal or any other payout method by name. Checked setmore.tapfiliate.com/login 2026-08-20 (no data entered): it renders a 4-step account-setup wizard (Profile -> Address -> Additional information -> Payout method) with an existing account avatar shown top-right, indicating a real Tapfiliate account already exists for this program but onboarding -- including Step 4, Payout method -- has not been completed by the owner. This is owner action, not something this agent can or should complete (would require entering personal/payout data). Also checked https://www.setmore.com/terms-of-use (general site ToS, first-party): no affiliate-specific commission, payout, or restriction language found there; it does not add to or conflict with the affiliate-terms PDF. COMPLIANCE RESTRICTION (paid advertising): see above -- only organic promotion (blog/content, organic social, newsletters, website referrals) is permitted; commissions from prohibited paid channels will not be approved or paid. Other PDF-stated eligibility terms: affiliate must be 18+; content promoting Setmore may not be adult, hateful, gambling-related, spammy, or presented in a false context; Setmore may change program terms and the relationship is terminable at will.",
+    sourceUrls: [
+      "https://www.setmore.com/affiliates",
+      "https://assets.setmore.com/website/pdf/setmore-affiliate-terms.pdf",
+      "https://www.setmore.com/terms-of-use",
+      "https://setmore.tapfiliate.com/login",
+    ],
     applicationUrl: "https://www.setmore.com/affiliates",
+    cookieDuration: "90 days",
+    payoutMethod: null,
+    payoutThreshold: null,
+    eligibility:
+      "18+ only. Content promoting Setmore may not be adult, hateful, gambling-related, spammy, or presented in a false context. PPC restriction is CONFLICTING between sources -- see notes.",
     confidence: "high",
   },
   {
