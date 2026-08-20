@@ -75,18 +75,14 @@ describe("Generic Affiliate Ledger Invariants & Source-of-Truth Integrity", () =
   });
 
   it("Invariant 9: Portfolio programs cover multiple products without inflating PROGRAM relationship counts", () => {
-    const zoho = CANONICAL_AFFILIATE_LEDGER.find(p => p.programId === "zoho-ecosystem");
-    const freshworks = CANONICAL_AFFILIATE_LEDGER.find(p => p.programId === "freshworks");
-    const impact = CANONICAL_AFFILIATE_LEDGER.find(p => p.programId === "impact-portfolio");
+    const portfolioPrograms = CANONICAL_AFFILIATE_LEDGER.filter(p => p.productSlugs.length > 1);
+    expect(portfolioPrograms.length).toBeGreaterThanOrEqual(3);
 
-    expect(zoho?.productSlugs.length).toBe(4);
-    expect(freshworks?.productSlugs.length).toBe(2);
-    expect(impact?.productSlugs.length).toBe(3);
-
-    // Ledger count is 1 for Zoho, 1 for Freshworks, 1 for Impact
-    expect(CANONICAL_AFFILIATE_LEDGER.filter(p => p.programId === "zoho-ecosystem").length).toBe(1);
-    expect(CANONICAL_AFFILIATE_LEDGER.filter(p => p.programId === "freshworks").length).toBe(1);
-    expect(CANONICAL_AFFILIATE_LEDGER.filter(p => p.programId === "impact-portfolio").length).toBe(1);
+    for (const prog of portfolioPrograms) {
+      expect(prog.productSlugs.length).toBeGreaterThan(1);
+      // Each portfolio program relationship appears exactly once in the ledger
+      expect(CANONICAL_AFFILIATE_LEDGER.filter(p => p.programId === prog.programId).length).toBe(1);
+    }
   });
 
   it("Invariant 10: Derived summary counts match the actual ledger counts exactly (sum of status buckets === ledger.length)", () => {

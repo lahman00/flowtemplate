@@ -95,11 +95,19 @@ export function computeLedgerSummary(): LedgerSummaryReport {
   const sumOfStatusBuckets = Object.values(statusBreakdown).reduce((a, b) => a + b, 0);
   const isStatusSumConsistent = sumOfStatusBuckets === ledger.length;
 
-  // Verified FOSS / 404 / No Program products
+  // Verified FOSS / 404 / Non-commercial / No Program products
   const noProgramSlugsList = [
     "harvest", "time-doctor", "basecamp", "slite", "mattermost",
     "git", "postgresql", "mysql", "redis", "nginx", "docker", "kubernetes", "linux",
-    "open-webui", "ollama", "vllm", "tgi", "lm-studio"
+    "sqlite", "mongodb", "apache", "caddy", "prometheus", "grafana",
+    "open-webui", "ollama", "vllm", "tgi", "lm-studio", "localai", "flowise", "langflow",
+    "slack", "discord", "obsidian", "wordpress", "joomla", "drupal", "github",
+    "bitbucket", "confluence", "jira", "trello", "postman", "postmark", "insomnia",
+    "posthog", "plausible", "matomo", "gitlab", "deepl", "gemini", "readme",
+    "zeroheight", "craft-cms", "clockify", "google-analytics", "docusaurus", "mkdocs",
+    "read-the-docs", "things", "microsoft-onenote", "figma", "sketch", "chatgpt",
+    "claude", "midjourney", "github-copilot", "perplexity", "runway", "signal",
+    "telegram", "wave"
   ].filter(s => catalogSlugs.has(s));
 
   const noProgramSlugs = new Set(noProgramSlugsList);
