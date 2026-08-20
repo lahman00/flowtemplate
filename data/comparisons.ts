@@ -1188,6 +1188,19 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   // KrispCall's existing sourced alternative: an SMB-focused cloud phone
   // system versus RingCentral's broader unified communications platform.
   ["krispcall", "ringcentral"],
+
+  // 2026-08-20 Growth Sprint #1 — KrispCall telephony expansion:
+  // SMB cloud business phone vs video/unified communication platforms
+  // (Zoom Phone, Teams Phone, Webex Calling) within Communication category.
+  ["krispcall", "zoom"],
+  ["krispcall", "microsoft-teams"],
+  ["krispcall", "webex"],
+
+  // 2026-08-20 Growth Sprint #1 — Field-Service-Management graph repair:
+  // Connects enterprise-scale quote-only ServiceTitan with published-price
+  // competitors Jobber and Housecall Pro within Field Service Management.
+  ["servicetitan", "jobber"],
+  ["servicetitan", "housecall-pro"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {

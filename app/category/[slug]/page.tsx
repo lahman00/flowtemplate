@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LayoutGrid } from "lucide-react";
+import { ArrowUpRight, GitCompare, LayoutGrid } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SoftwareCard } from "@/components/SoftwareCard";
+import { Card } from "@/components/Card";
 import { JsonLd } from "@/components/JsonLd";
 import { getAllCategories, getCategory } from "@/data/categories";
 import { getSoftware } from "@/data/software";
@@ -13,7 +14,7 @@ import { getSoftwareByCategory } from "@/lib/related";
 import { getBreadcrumbJsonLd, getCategoryJsonLd } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/site";
 import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
-import { generateCategorySynthesis } from "@/lib/category";
+import { generateCategorySynthesis, getCategoryFeaturedComparisons } from "@/lib/category";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -54,6 +55,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const software = getSoftwareByCategory(category.slug);
   const categorySlugs = new Set(software.map((item) => item.slug));
+  const featuredComparisons = getCategoryFeaturedComparisons(category.slug, 6);
   const comparisons = PUBLISHED_COMPARISONS.filter(
     ([slugA, slugB]) => categorySlugs.has(slugA) || categorySlugs.has(slugB)
   )
@@ -103,17 +105,58 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </div>
         </section>
 
-        {comparisons.length > 0 ? (
+        {featuredComparisons.length > 0 ? (
+          <section className="mt-16 border-t border-white/10 pt-14">
+            <SectionHeading
+              eyebrow="Head-to-head"
+              title="Popular comparisons"
+              description={`Side-by-side breakdowns of commonly compared ${category.name.toLowerCase()} tools.`}
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {featuredComparisons.map((item) => (
+                <Link
+                  key={item.comparisonSlug}
+                  href={`/compare/${item.comparisonSlug}`}
+                  className="group block h-full"
+                >
+                  <Card className="flex h-full flex-col justify-between group-hover:border-white/25 group-hover:bg-white/[0.05]">
+                    <div>
+                      <div className="flex items-start justify-between gap-4">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400">
+                          <GitCompare className="h-3.5 w-3.5 text-zinc-500" />
+                          Head-to-head
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 shrink-0 text-zinc-500 transition group-hover:text-white" />
+                      </div>
+                      <h3 className="mt-3 text-lg font-semibold text-white">
+                        {item.softwareA.name} <span className="font-normal text-zinc-400">vs</span>{" "}
+                        {item.softwareB.name}
+                      </h3>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {comparisons.length > featuredComparisons.length ? (
           <section className="mt-14">
-            <SectionHeading eyebrow="Head-to-head" title="Comparisons in this category" />
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <SectionHeading
+              eyebrow="Directory"
+              title={`All ${category.name.toLowerCase()} comparisons`}
+            />
+            <div className="mt-6 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
               {comparisons.map(({ softwareA, softwareB }) => (
                 <Link
                   key={getComparisonSlug(softwareA.slug, softwareB.slug)}
                   href={`/compare/${getComparisonSlug(softwareA.slug, softwareB.slug)}`}
-                  className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm font-medium text-zinc-300 transition hover:border-white/25 hover:text-white"
+                  className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-zinc-300 transition hover:border-white/20 hover:bg-white/[0.04] hover:text-white"
                 >
-                  {softwareA.name} vs {softwareB.name}
+                  <span>
+                    {softwareA.name} <span className="text-zinc-500">vs</span> {softwareB.name}
+                  </span>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
                 </Link>
               ))}
             </div>
