@@ -16,31 +16,31 @@ export function getLatestProductionDeployment(): DeploymentRecord {
     for (const url of lines) {
       if (!url.startsWith("https://flowtemplate-")) continue;
 
-      // Inspect deployment details
-      let id = "";
-      let status: DeploymentRecord["status"] = "Unknown";
-      let aliases: string[] = [];
       try {
         const inspectRaw = execSync(`vercel inspect ${url} 2>&1`, { encoding: "utf8" });
         const cleanInspect = inspectRaw.replace(/[\u001b\x1b]\[[0-9;]*[a-zA-Z]/g, "");
         const idMatch = cleanInspect.match(/id\s+([a-zA-Z0-9_]+)/);
-        if (idMatch && idMatch[1]) id = idMatch[1];
-        if (cleanInspect.includes("● Ready") || cleanInspect.includes("Ready")) status = "Ready";
-        else if (cleanInspect.includes("● Error") || cleanInspect.includes("Error")) status = "Error";
-        else if (cleanInspect.includes("● Building") || cleanInspect.includes("Building")) status = "Building";
-        const aliasMatches = cleanInspect.match(/https:\/\/[a-zA-Z0-9\.\-]+/g) || [];
-        aliases = Array.from(new Set(aliasMatches.filter(a => a !== url)));
-      } catch {
-        // ignore inspect error
-      }
+        const id = (idMatch && idMatch[1]) ? idMatch[1] : "";
 
-      return {
-        id,
-        url,
-        status,
-        environment: "Production",
-        aliases
-      };
+        let status: DeploymentRecord["status"] = "Unknown";
+        if (cleanInspect.includes("● Ready") || cleanInspect.includes("status\t● Ready")) status = "Ready";
+        else if (cleanInspect.includes("● Error") || cleanInspect.includes("status\t● Error")) status = "Error";
+        else if (cleanInspect.includes("● Building") || cleanInspect.includes("status\t● Building")) status = "Building";
+
+        const aliasMatches = cleanInspect.match(/https:\/\/[a-zA-Z0-9\.\-]+/g) || [];
+        const aliases = Array.from(new Set(aliasMatches.filter(a => a !== url)));
+
+        // If this is the latest deployment, return it
+        return {
+          id,
+          url,
+          status,
+          environment: "Production",
+          aliases
+        };
+      } catch {
+        // continue to next deployment
+      }
     }
   } catch (err: any) {
     console.error("Failed to run vercel CLI:", err.message);
