@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "verify:deployment": "tsx scripts/deployment/verify-deployment.ts",
     "validate:data": "tsx scripts/validate-data.ts",
     "audit:growth": "tsx scripts/growth/commercial-audit.ts",
     "growth:priority": "tsx scripts/growth/commercial-priority-engine.ts",
