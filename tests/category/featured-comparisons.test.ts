@@ -108,4 +108,30 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(activeSlugsSet.has("help-scout")).toBe(false);
     expect(activeSlugsSet.has("clickup")).toBe(false);
   });
+
+  it("verifies Sprint #2 graph expansion on active partners and low-degree nodes", () => {
+    // GoHighLevel: degree increased from 1 to 4
+    const ghlComps = getComparisonsInvolving("gohighlevel");
+    expect(ghlComps.length).toBeGreaterThanOrEqual(4);
+    expect(isPublishedComparison("gohighlevel", "pipedrive")).toBe(true);
+    expect(isPublishedComparison("gohighlevel", "zoho-crm")).toBe(true);
+    expect(isPublishedComparison("gohighlevel", "activecampaign")).toBe(true);
+
+    // WhatConverts: degree increased from 2 to 4
+    const wcComps = getComparisonsInvolving("whatconverts");
+    expect(wcComps.length).toBeGreaterThanOrEqual(4);
+    expect(isPublishedComparison("pipedrive", "whatconverts")).toBe(true);
+    expect(isPublishedComparison("whatconverts", "mixpanel")).toBe(true);
+
+    // Volza: degree increased from 2 to 3
+    const volzaComps = getComparisonsInvolving("volza");
+    expect(volzaComps.length).toBeGreaterThanOrEqual(3);
+    expect(isPublishedComparison("volza", "google-analytics")).toBe(true);
+
+    // Pipedrive: degree increased from 8 to 12
+    const pdComps = getComparisonsInvolving("pipedrive");
+    expect(pdComps.length).toBeGreaterThanOrEqual(12);
+    expect(isPublishedComparison("monday", "pipedrive")).toBe(true);
+    expect(isPublishedComparison("airtable", "pipedrive")).toBe(true);
+  });
 });

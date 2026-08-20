@@ -1201,6 +1201,25 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   // competitors Jobber and Housecall Pro within Field Service Management.
   ["servicetitan", "jobber"],
   ["servicetitan", "housecall-pro"],
+
+  // 2026-08-20 Growth Sprint #2 — Commercial graph & active partner expansion:
+  // 1. HighLevel (GoHighLevel) CRM connectivity & direct alternatives:
+  //    All-in-one agency platform vs dedicated sales/marketing CRMs.
+  ["gohighlevel", "pipedrive"],
+  ["gohighlevel", "zoho-crm"],
+  ["gohighlevel", "activecampaign"],
+
+  // 2. High-intent cross-category dual-active partner comparisons:
+  //    Work OS / No-code database / Lead attribution vs dedicated Sales CRM.
+  ["monday", "pipedrive"],
+  ["airtable", "pipedrive"],
+  ["pipedrive", "whatconverts"],
+
+  // 3. WhatConverts marketing lead attribution vs behavioral analytics:
+  ["whatconverts", "mixpanel"],
+
+  // 4. Volza global B2B trade data vs general web analytics:
+  ["volza", "google-analytics"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
