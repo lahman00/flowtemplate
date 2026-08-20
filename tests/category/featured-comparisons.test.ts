@@ -134,4 +134,34 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(isPublishedComparison("monday", "pipedrive")).toBe(true);
     expect(isPublishedComparison("airtable", "pipedrive")).toBe(true);
   });
+
+  it("verifies Sprint #3 graph expansion on high-intent substitutes and active-partner routing", () => {
+    // GoHighLevel: degree increased from 4 to 7
+    const ghlComps = getComparisonsInvolving("gohighlevel");
+    expect(ghlComps.length).toBeGreaterThanOrEqual(7);
+    expect(isPublishedComparison("gohighlevel", "keap")).toBe(true);
+    expect(isPublishedComparison("gohighlevel", "close")).toBe(true);
+    expect(isPublishedComparison("gohighlevel", "freshsales")).toBe(true);
+
+    // Obsidian: degree increased from 5 to 6
+    const obsComps = getComparisonsInvolving("obsidian");
+    expect(obsComps.length).toBeGreaterThanOrEqual(6);
+    expect(isPublishedComparison("obsidian", "microsoft-onenote")).toBe(true);
+
+    // Moosend: degree increased from 6 to 8
+    const mooComps = getComparisonsInvolving("moosend");
+    expect(mooComps.length).toBeGreaterThanOrEqual(8);
+    expect(isPublishedComparison("moosend", "marketo-engage")).toBe(true);
+    expect(isPublishedComparison("moosend", "braze")).toBe(true);
+
+    // Setmore: degree increased from 9 to 10
+    const setmoreComps = getComparisonsInvolving("setmore");
+    expect(setmoreComps.length).toBeGreaterThanOrEqual(10);
+    expect(isPublishedComparison("setmore", "hubspot")).toBe(true);
+
+    // KrispCall: degree increased from 4 to 5
+    const kcComps = getComparisonsInvolving("krispcall");
+    expect(kcComps.length).toBeGreaterThanOrEqual(5);
+    expect(isPublishedComparison("krispcall", "google-meet")).toBe(true);
+  });
 });

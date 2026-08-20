@@ -100,6 +100,6 @@ describe("Growth Audit Tooling", () => {
     expect(linkAudit.underlinkedActiveAffiliates.length).toBeGreaterThan(0);
     const krispcall = linkAudit.underlinkedActiveAffiliates.find((s) => s.url === "/software/krispcall");
     expect(krispcall).toBeDefined();
-    expect(krispcall?.inboundCount).toBe(6);
+    expect(krispcall?.inboundCount).toBe(7);
   });
 });

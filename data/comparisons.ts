@@ -1220,6 +1220,25 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
 
   // 4. Volza global B2B trade data vs general web analytics:
   ["volza", "google-analytics"],
+
+  // 2026-08-20 Growth Sprint #3 — Editorial substitutes, CRM suite expansion, and active-partner routing:
+  // 1. HighLevel (GoHighLevel) agency funnel/CRM suite vs SMB/inside-sales CRMs:
+  ["gohighlevel", "keap"],
+  ["gohighlevel", "close"],
+  ["gohighlevel", "freshsales"],
+
+  // 2. Personal markdown knowledge base vs Microsoft note hierarchy:
+  ["obsidian", "microsoft-onenote"],
+
+  // 3. Moosend active partner email suite vs enterprise marketing automation:
+  ["moosend", "marketo-engage"],
+  ["moosend", "braze"],
+
+  // 4. Setmore active partner scheduling vs CRM meeting links:
+  ["setmore", "hubspot"],
+
+  // 5. KrispCall active partner cloud phone system vs Google Meet video calls:
+  ["krispcall", "google-meet"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
