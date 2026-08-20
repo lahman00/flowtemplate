@@ -1775,6 +1775,36 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     sourceUrls: ["https://dash.partnerstack.com (marketplace listing: Toggl)"],
     confidence: "high",
   },
+  {
+    slug: "hubstaff",
+    lastVerifiedAt: "2026-08-20",
+    programExists: "yes",
+    type: "network",
+    networkName: "PartnerStack",
+    countryRestrictions: null,
+    commissionModel: "Two live offers on the PartnerStack partnership page: 30% for the customer's first year, and 20% in year one -- which applies is set per-signup by PartnerStack/Hubstaff, not disclosed further on this page.",
+    recurrence: "recurring",
+    notes:
+      "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://affiliate.hubstaff.com/ca2oe167vcj1 (redirects to hubstaff.com). NOT ACTIVATED on Miloosh: there is no data/software/hubstaff.json and no existing Hubstaff editorial content (confirmed by repo search) -- partner-materials-audit.ts previously recorded this as HOLD/UNCLEAR for the same reason. Creating a new software/comparison page is an editorial decision outside the scope of affiliate-reconciliation work and was explicitly not done here. Owner: this is free, real revenue waiting on an editorial decision, not on any further affiliate application step.",
+    sourceUrls: ["https://dash.partnerstack.com (partnership page: Hubstaff)"],
+    applicationUrl: null,
+    confidence: "high",
+  },
+  {
+    slug: "pdware",
+    lastVerifiedAt: "2026-08-20",
+    programExists: "yes",
+    type: "network",
+    networkName: "PartnerStack",
+    countryRestrictions: null,
+    commissionModel: "10% for each Closed Referral (flat percentage, per the live PartnerStack partnership page)",
+    recurrence: "unknown",
+    notes:
+      "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://try.pdware.com/9l2hndbyhssz (redirects to pdware.com). PDWare has never appeared anywhere in this repo before now (no software page, no prior research entry) -- Miloosh has no editorial content about this company at all, so there is no page to attach the affiliate link to. NOT ACTIVATED. Owner: confirm what PDWare is and whether it fits Miloosh's catalog before any editorial content is written for it.",
+    sourceUrls: ["https://dash.partnerstack.com (partnership page: PDWare)"],
+    applicationUrl: null,
+    confidence: "high",
+  },
 ];
 
 export function getAffiliateProgram(slug: string): AffiliateProgramInfo | undefined {

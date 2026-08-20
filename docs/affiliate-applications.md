@@ -22,7 +22,6 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 | FreshBooks | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | Close | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | ClickUp | PartnerStack | PENDING | Application under review | Wait; do not reapply |
-| Kit | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | Help Scout | PartnerStack | PENDING | Submitted 2026-08-20. 15% or 20% per closed deal for 12 months depending on referral volume. First-party confirmation: "Application submitted! ... Your application was submitted on Aug 20, 2026." | Wait; do not reapply. Do NOT activate on any public page until a real URL is issued |
 | Amplitude | PartnerStack | PENDING | Submitted 2026-08-20. 20% revenue share, first year of subscription. First-party confirmation: "Application submitted!" No fabricated traffic/conversion figures were provided (explicitly stated as not independently verified). | Wait; do not reapply. Do NOT activate on any public page until a real URL is issued |
 | Toggl Track | PartnerStack | PENDING | Submitted 2026-08-20 (new discovery this sweep, not previously tracked). 30% commission on first payment per new customer. First-party confirmation: "Application submitted!" | Wait; do not reapply. Do NOT activate on any public page until a real URL is issued |
@@ -60,6 +59,19 @@ Real negative evidence — searched directly on the PartnerStack marketplace, no
 ## Found But Deprioritized
 
 - **Gorgias** (PartnerStack): live listing confirmed 2026-08-20, but commission is genuinely disclosed as "N/A" and the application form (asks "How many clients do you have on Shopify") is clearly oriented toward agencies/resellers managing client stores, not an editorial publisher like Miloosh. Not applied.
+
+## Corrected 2026-08-20 (reconciliation sweep)
+
+- **Kit (formerly ConvertKit)**: previously tracked here and in `partner-materials-audit.ts` as PartnerStack PENDING/"Application under review" — that was stale/incorrect. A full 20-row sweep of every partnership on this PartnerStack account (hello@miloosh.com), searched by both "Kit" and "Convert", found **no Kit/ConvertKit application at all** — it does not exist as a partnership on this account, pending or otherwise. The program itself is real and live on the PartnerStack marketplace ("Kit (formerly ConvertKit) — Earn 50% recurring commission for customer's 1st year"), so this is a genuine READY_TO_APPLY opportunity, not a pending wait. Not resubmitted in this task (out of scope — this task was reconciliation, not new applications).
+
+## New Approvals Found, Not Yet Monetizable (2026-08-20)
+
+Discovered during the same 20-row sweep — real, already-Active PartnerStack partnerships this agent never applied to (pre-existing on the account) and that were not yet in `active-partners.ts`:
+
+- **Hubstaff**: Active, real referral link `https://affiliate.hubstaff.com/ca2oe167vcj1` (→ hubstaff.com), commission offers of 30% (year 1) or 20% (year 1) shown on the partnership page. **Not activated**: Miloosh has no `data/software/hubstaff.json` and no existing Hubstaff editorial content anywhere in the repo. Activating the affiliate link would have no effect since no software/comparison page exists to carry the CTA. This is real, free revenue blocked purely on an editorial decision (whether to cover Hubstaff at all), not on any further affiliate step. See `data/revenue/affiliate-programs.ts` (slug: `hubstaff`).
+- **PDWare**: Active, real referral link `https://try.pdware.com/9l2hndbyhssz` (→ pdware.com), 10% per Closed Referral. **Not activated**: PDWare has never appeared anywhere in this repo before — no editorial content exists, and it's not clear what category of product it is or whether it fits Miloosh's catalog at all. Owner should confirm before any content work. See `data/revenue/affiliate-programs.ts` (slug: `pdware`).
+
+Also noted, not acted on: PartnerStack's own dashboard shows "Agree to terms & conditions for 1 program to gain access" for the **PartnerStack self-referral program itself** (refer other publishers to PartnerStack) — unrelated to any Miloosh software/comparison content, and accepting new terms requires explicit owner sign-off. Not accepted in this task.
 
 ## Activation Rule
 
