@@ -1,6 +1,6 @@
 # Affiliate applications — live status + acquisition queue
 
-Updated: 2026-08-20 (overnight PartnerStack marketplace sweep: Webflow/Help Scout/Amplitude/Toggl Track re-verified and staged, 11 programs confirmed absent from PartnerStack)
+Updated: 2026-08-20 (real submissions: Help Scout, Amplitude, Toggl Track; Webflow diagnosed and still blocked; 23 programs confirmed absent from PartnerStack this sweep)
 
 This file is the operational affiliate list for Miloosh across PartnerStack accounts and direct networks. Statuses below distinguish **ACTIVE**, **PENDING**, **KNOWN REJECTED**, and **MONITORING TARGETS**. Never mark a program active until a real tracking URL has been issued and verified.
 
@@ -23,6 +23,9 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 | Close | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | ClickUp | PartnerStack | PENDING | Application under review | Wait; do not reapply |
 | Kit | PartnerStack | PENDING | Application under review | Wait; do not reapply |
+| Help Scout | PartnerStack | PENDING | Submitted 2026-08-20. 15% or 20% per closed deal for 12 months depending on referral volume. First-party confirmation: "Application submitted! ... Your application was submitted on Aug 20, 2026." | Wait; do not reapply. Do NOT activate on any public page until a real URL is issued |
+| Amplitude | PartnerStack | PENDING | Submitted 2026-08-20. 20% revenue share, first year of subscription. First-party confirmation: "Application submitted!" No fabricated traffic/conversion figures were provided (explicitly stated as not independently verified). | Wait; do not reapply. Do NOT activate on any public page until a real URL is issued |
+| Toggl Track | PartnerStack | PENDING | Submitted 2026-08-20 (new discovery this sweep, not previously tracked). 30% commission on first payment per new customer. First-party confirmation: "Application submitted!" | Wait; do not reapply. Do NOT activate on any public page until a real URL is issued |
 
 ## PartnerStack Account #2 (Preserve / Do Not Modify)
 
@@ -48,20 +51,19 @@ This file is the operational affiliate list for Miloosh across PartnerStack acco
 - **n8n**: Rejected by vendor affiliate program. Do NOT treat as pending or reapply.
 - **Brevo** (moved here 2026-08-19, was previously listed ACTIVE in the table above — that was wrong): PartnerStack's top-level partnership badge still shows "Active," but the program's own Messages tab (same account, hello@miloosh.com, same program) shows a first-party Brevo message dated Today: *"Your application was not approved... your application has been removed from our onboarding process."* A prior message (Yesterday) said the application was "under review." This fully explains the missing Offer/referral link. **Corrected in code the same day**: removed from `active-partners.ts`, reclassified `REJECTED` in `partner-materials-audit.ts`, and the production affiliate pipeline was moved to `rejected`. Do NOT treat as pending or reapply without owner review of why it was rejected.
 
-## Ready to Apply — Deferred Tonight (Browser Tooling Issue)
-
-Discovered/re-verified live via the PartnerStack marketplace during the 2026-08-20 overnight affiliate-expansion sweep. All four are real, open, PartnerStack-hosted programs with no owner-only blockers (no personal-identity fields, no new account needed — the existing Miloosh PartnerStack session applies). Submission was deliberately deferred after a reproducible browser-automation bug was confirmed twice tonight: on multi-dropdown PartnerStack application forms, selecting a second dropdown value silently reset an earlier-confirmed selection (verified via two independent read methods, not a misread). Rather than submit with unverified/possibly-corrupted answers, all four were left at `ready_to_apply` for a clean retry.
+## Blocked — Diagnosed Vendor Form Defect
 
 | Program | Network | Commission | Notes |
 |---|---|---|---|
-| Webflow | PartnerStack | 50% for 12 months per new customer | Real Miloosh page exists (`/software/webflow`). Supersedes an earlier (now-stale) blocker that assumed a direct webflow.com form requiring a personal name — the PartnerStack listing has no such field. |
-| Help Scout | PartnerStack | 15% or 20% per closed deal for 12 months (by referral volume) | Commission upgraded from unconfirmed to verified tonight. Simple 5-field form. |
-| Amplitude | PartnerStack | 20% revenue share, first year | Commission upgraded from unconfirmed to verified tonight. |
-| Toggl Track | PartnerStack | 30% on first payment per new customer | New discovery tonight — not in any prior research pass. |
+| Webflow | PartnerStack | 50% for 12 months per new customer | Real Miloosh page exists (`/software/webflow`). Two genuine submission attempts 2026-08-20 both failed safely (no data sent) after a thorough diagnosis: the form's PrimeVue dropdown overlays never close once opened, and a tall overlay (e.g. the 249-option Country list) can silently cover and intercept clicks meant for a field below it — confirmed directly by watching Country=Israel silently change to Ireland from a misdirected click. Tried precise coordinate targeting, bottom-to-top fill order, and keyboard-only focus; none fully eliminated the risk across all 7 dropdown fields. This is a real bug in Webflow's own PartnerStack-hosted form, not an owner-only blocker — safe to retry with a different automation approach, or complete manually. See the affiliate pipeline (`slug: "webflow"`) for the full diagnostic history. |
 
 ## Confirmed No PartnerStack Listing (2026-08-20 sweep)
 
-Real negative evidence — searched directly on the PartnerStack marketplace, no results. Does not rule out a direct/other-network program; just confirms these are not reachable via the existing PartnerStack session: Intercom, Auth0, Contentful, Copy.ai, Craft CMS, Clockify, Ecwid, MuleSoft, Basecamp, TickTick, Sprout Social. (Notion is listed but confirmed still closed to new affiliates — see program_found history.)
+Real negative evidence — searched directly on the PartnerStack marketplace, no results. Does not rule out a direct/other-network program; just confirms these are not reachable via the existing PartnerStack session: Intercom, Auth0, Contentful, Copy.ai, Craft CMS, Clockify, Ecwid, MuleSoft, Basecamp, TickTick, Sprout Social, Klaviyo, Hotjar, Zoho CRM, Synthesia, Hootsuite, Calendly, Teamwork, Jasper, Smartsheet, Zapier, RingCentral, Matomo. (Notion is listed but confirmed still closed to new affiliates — see program_found history.)
+
+## Found But Deprioritized
+
+- **Gorgias** (PartnerStack): live listing confirmed 2026-08-20, but commission is genuinely disclosed as "N/A" and the application form (asks "How many clients do you have on Shopify") is clearly oriented toward agencies/resellers managing client stores, not an editorial publisher like Miloosh. Not applied.
 
 ## Activation Rule
 
