@@ -9,18 +9,23 @@ interface DiscoveredProgram {
   name: string;
   category: string;
   website: string;
-  comparisons: number;
-  programExists: boolean;
+  relationshipName: string;
   network: string;
   commission: string;
   applicationUrl: string | null;
   status:
+    | "ACTIVE"
+    | "APPROVED_NEEDS_EDITORIAL_CONTENT"
+    | "PENDING_REVIEW"
     | "READY_AND_VERIFIED"
+    | "BLOCKED_FORM_DEFECT"
     | "OWNER_ACTION_REQUIRED"
+    | "REJECTED"
+    | "HOLD"
     | "NO_REAL_PROGRAM_FOUND"
-    | "NOT_ELIGIBLE"
     | "PROGRAM_ENDED";
   evidenceSource: string;
+  ownerBlocker: string | null;
   notes: string;
 }
 
@@ -79,9 +84,10 @@ export async function runAffiliateDiscovery(): Promise<DiscoveredProgram[]> {
   const knownVerifiedPrograms: Record<string, {
     network: string;
     commission: string;
-    applicationUrl: string;
+    applicationUrl: string | null;
     status: DiscoveredProgram["status"];
     evidenceSource: string;
+    ownerBlocker?: string | null;
     notes: string;
   }> = {
     "notion": {
@@ -426,7 +432,6 @@ export async function runAffiliateDiscovery(): Promise<DiscoveredProgram[]> {
 
   for (const slug of unverifiedSlugs) {
     const sw = getSoftware(slug);
-    const comps = compCounts.get(slug) || 0;
     const name = sw ? sw.name : slug;
     const category = sw ? sw.category : "unknown";
     const website = sw ? sw.website : "";
@@ -437,13 +442,13 @@ export async function runAffiliateDiscovery(): Promise<DiscoveredProgram[]> {
         name,
         category,
         website,
-        comparisons: comps,
-        programExists: false,
+        relationshipName: `${name} Partner Program`,
         network: "None",
         commission: "None",
         applicationUrl: null,
         status: "NO_REAL_PROGRAM_FOUND",
         evidenceSource: "Official vendor portal / FOSS repository / enterprise policy",
+        ownerBlocker: null,
         notes: knownNoProgramMap[slug]!
       });
     } else if (knownVerifiedPrograms[slug]) {
@@ -453,13 +458,13 @@ export async function runAffiliateDiscovery(): Promise<DiscoveredProgram[]> {
         name,
         category,
         website,
-        comparisons: comps,
-        programExists: p.status !== "NO_REAL_PROGRAM_FOUND" && p.status !== "PROGRAM_ENDED",
+        relationshipName: `${name} Partner Program`,
         network: p.network,
         commission: p.commission,
         applicationUrl: p.applicationUrl,
         status: p.status,
         evidenceSource: p.evidenceSource,
+        ownerBlocker: p.ownerBlocker || null,
         notes: p.notes
       });
     }

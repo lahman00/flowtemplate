@@ -107,7 +107,15 @@ export function computeLedgerSummary(): LedgerSummaryReport {
     "zeroheight", "craft-cms", "clockify", "google-analytics", "docusaurus", "mkdocs",
     "read-the-docs", "things", "microsoft-onenote", "figma", "sketch", "chatgpt",
     "claude", "midjourney", "github-copilot", "perplexity", "runway", "signal",
-    "telegram", "wave"
+    "telegram", "wave",
+    "youcanbookme", "slab", "nuclino", "knowledgeowl", "stack-overflow-for-teams",
+    "linear", "ticktick", "superhuman", "anydo", "tailscale", "opencart", "ifttt",
+    "pipedream", "rapidapi", "workos", "sentry", "render", "supabase", "firebase",
+    "circleci", "jenkins", "whimsical", "balsamiq", "marvel", "zeplin", "affinity",
+    "tettra", "ahrefs", "otter-ai", "crazy-egg", "kayako", "braze", "appfolio", "servicetitan",
+    "shopware", "kong", "elastic", "adyen", "plaid", "algolia", "datadog", "sanity",
+    "directus", "umbraco", "heap", "fullstory", "cloudflare", "snyk", "wiz", "crowdstrike",
+    "auth0", "okta", "contentful", "storyblok", "strapi", "swaggerhub", "zendesk", "wrike"
   ].filter(s => catalogSlugs.has(s));
 
   const noProgramSlugs = new Set(noProgramSlugsList);
