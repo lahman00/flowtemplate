@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { interleaveByPillarWeight, generateAllRawIdeas, draftQueueEntry } from "@/lib/social/content-engine";
+import { interleaveByPillarWeight, generateAllRawIdeas, draftQueueEntry, IMAGE_KIND_BY_PILLAR, buildCardImageUrlFor } from "@/lib/social/content-engine";
+import { SITE_URL } from "@/lib/site";
 import type { ContentPillar } from "@/lib/social/types";
 
 /**
@@ -148,5 +149,62 @@ describe("renderForChannel (via draftQueueEntry) — platform-native differentia
     const entry = draftQueueEntry(idea, ["bluesky", "linkedin"]);
     expect(entry.channels.bluesky!.text).not.toContain("\n\n");
     expect(entry.channels.linkedin!.text).toContain("\n\n");
+  });
+});
+
+/**
+ * Facebook media backfill (2026-08-20) — the real bug fixed was that every
+ * queue entry generated before 2026-08-17 had channels.facebook.imageUrl:
+ * null even for pillars IMAGE_KIND_BY_PILLAR already covers, because the
+ * card route existed but nothing called it yet at generation time. This
+ * is regression coverage for the two things that must both keep holding:
+ * every NEW Facebook variant for a card-eligible pillar gets a real,
+ * trusted imageUrl at draft time (so the historical gap can't reopen),
+ * and the deliberately text-only pillars stay that way.
+ */
+describe("Facebook media eligibility — every card-eligible pillar gets a real imageUrl at draft time", () => {
+  const eligiblePillars = Object.keys(IMAGE_KIND_BY_PILLAR) as ContentPillar[];
+  const textOnlyPillars: ContentPillar[] = ["buyer_education", "trust_methodology"];
+
+  it.each(eligiblePillars)("pillar '%s' produces a Facebook variant with a trusted card imageUrl", (pillar) => {
+    const idea = generateAllRawIdeas().find((i) => i.pillar === pillar);
+    expect(idea, `no generated idea found for pillar ${pillar} — cannot assert its Facebook image behavior`).toBeDefined();
+    const entry = draftQueueEntry(idea!, ["facebook"]);
+    const fb = entry.channels.facebook!;
+    expect(fb.imageUrl).not.toBeNull();
+    expect(fb.imageUrl!.startsWith(`${SITE_URL}/api/social/card?`)).toBe(true);
+    expect(fb.imageUrl).toContain(`kind=${IMAGE_KIND_BY_PILLAR[pillar]}`);
+    expect(fb.imageUrl).toContain("size=facebook");
+    expect(fb.altText).toContain(idea!.headline);
+  });
+
+  it.each(textOnlyPillars)("deliberately text-only pillar '%s' still gets no imageUrl (not a bug, a design choice)", (pillar) => {
+    const idea = generateAllRawIdeas().find((i) => i.pillar === pillar);
+    expect(idea, `no generated idea found for pillar ${pillar}`).toBeDefined();
+    const entry = draftQueueEntry(idea!, ["facebook"]);
+    expect(entry.channels.facebook!.imageUrl).toBeNull();
+    expect(entry.channels.facebook!.altText).toBeNull();
+  });
+
+  it("covers every ContentPillar between the eligible and text-only lists — a new pillar can't silently fall through uncovered", () => {
+    const allPillars = new Set(generateAllRawIdeas().map((i) => i.pillar));
+    for (const pillar of allPillars) {
+      const isEligible = eligiblePillars.includes(pillar);
+      const isTextOnly = textOnlyPillars.includes(pillar);
+      expect(isEligible || isTextOnly, `pillar '${pillar}' is neither in IMAGE_KIND_BY_PILLAR nor the known text-only list — decide its image eligibility explicitly`).toBe(true);
+    }
+  });
+
+  it("buildCardImageUrlFor returns null for a pillar with no card kind (fails closed, never a broken card URL)", () => {
+    expect(buildCardImageUrlFor("buyer_education", "facebook", "headline", "body")).toBeNull();
+  });
+
+  it("buildCardImageUrlFor truncates headline/sub the same way regardless of caller (draft-time and backfill-time stay identical)", () => {
+    const longHeadline = "x".repeat(200);
+    const longBody = "y".repeat(400);
+    const url = buildCardImageUrlFor("software_decisions", "facebook", longHeadline, longBody);
+    const params = new URL(url!).searchParams;
+    expect(params.get("headline")!.length).toBe(140);
+    expect(params.get("sub")!.length).toBe(220);
   });
 });

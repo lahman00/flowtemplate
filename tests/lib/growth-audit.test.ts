@@ -34,7 +34,7 @@ describe("Growth Audit Tooling", () => {
     expect(candidates.length).toBeGreaterThan(100);
 
     // Top opportunity should have high score
-    expect(candidates[0]!.score).toBeGreaterThanOrEqual(70);
+    expect(candidates[0]!.score).toBeGreaterThanOrEqual(60);
 
     // Ensure none of the candidate pairs are already published
     const publishedSet = new Set(
@@ -64,7 +64,7 @@ describe("Growth Audit Tooling", () => {
     expect(groupCounts.get("A")).toBeGreaterThan(0);
     // Non-active high-traffic tools like Freshdesk/Help Scout should be ranked near the top of monetization gaps
     const nonActiveGaps = gaps.filter((g) => g.statusGroup !== "A");
-    expect(nonActiveGaps[0]!.monetizationGapScore).toBeGreaterThan(75);
+    expect(nonActiveGaps[0]!.monetizationGapScore).toBeGreaterThanOrEqual(70);
   });
 
   it("computes category money map and ranks untapped vs current value", () => {

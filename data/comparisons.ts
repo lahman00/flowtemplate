@@ -1305,17 +1305,12 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["wave", "harvest"],
 
   // 2026-08-20 Commercial Growth Engine Wave 3:
-  ["dialpad", "microsoft-teams"],
-  ["nextiva", "microsoft-teams"],
-  ["slite", "gitbook"],
   ["keeper", "nordpass"],
   ["ringcentral", "dialpad"],
   ["ringcentral", "nextiva"],
   ["krispcall", "dialpad"],
   ["krispcall", "nextiva"],
   ["dialpad", "nextiva"],
-  ["dialpad", "zoom"],
-  ["nextiva", "zoom"],
   ["buffer", "later"],
   ["sprout-social", "later"],
   ["hootsuite", "later"],
@@ -1332,7 +1327,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["notion", "slite"],
   ["coda", "slite"],
   ["freshsales", "salesforce"],
-  ["later", "canva"],
 
   // 2026-08-20 Master Commercial Growth Mission Wave 2:
   ["appfolio", "doorloop"],

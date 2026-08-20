@@ -74,7 +74,7 @@
   "pros": [
     "Rigorous zero-trust, zero-knowledge security architecture certified for SOC 2, ISO 27001, and FedRAMP",
     "Comprehensive enterprise feature set including Secrets Manager and automated SCIM provisioning",
-    "Excellent family plan providing 5 isolated vaults with shared folder permissions"
+    "Family plan provides 5 isolated vaults with shared folder permissions"
   ],
   "cons": [
     "BreachWatch dark web monitoring and secure cloud storage require separate paid add-ons on basic plans",

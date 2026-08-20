@@ -1504,7 +1504,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "pipedrive",
       "badge": "Best Overall for Activity-Based Startup Sales",
       "ranking": 1,
-      "fitReason": "Pipedrive is engineered around activity-based selling, making it exceptionally effective for startup sales reps. Its visual drag-and-drop pipeline, AI Sales Assistant, and automated email sync keep founders focused on revenue-generating actions.",
+      "fitReason": "Pipedrive is engineered around activity-based selling, making it well suited for startup sales reps. Its visual drag-and-drop pipeline, AI Sales Assistant, and automated email sync keep founders focused on revenue-generating actions.",
       "limitations": "Native marketing automation and transactional email tools require third-party integrations.",
       "pricingNote": "Essential $14/user/mo; Advanced $29/user/mo (includes email sync and workflow automation); Professional $49/user/mo (billed annually)."
     },
@@ -1678,7 +1678,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "salesforce",
       "badge": "Best for Enterprise Governance & Complex Ecosystems",
       "ranking": 2,
-      "fitReason": "Salesforce Sales Cloud is the enterprise gold standard for global sales organizations, providing limitless custom object modeling, advanced CPQ quoting, and integration with virtually every enterprise software tool.",
+      "fitReason": "Salesforce Sales Cloud is a widely adopted enterprise sales platform, providing customizable object modeling, CPQ quoting, and integration across enterprise software ecosystems.",
       "limitations": "Heavily administrative, high cost of ownership, and requires dedicated certified administrators for custom workflows.",
       "pricingNote": "Starter Suite $25/user/mo; Professional $80/user/mo; Enterprise $165/user/mo (billed annually)."
     },
@@ -1769,7 +1769,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "freshdesk",
       "badge": "Best Value with Multichannel Support & Free Tier",
       "ranking": 3,
-      "fitReason": "Freshdesk offers an exceptional free plan for up to 10 agents, integrated email and social ticketing, and affordable paid tiers with automated Freddy AI routing.",
+      "fitReason": "Freshdesk offers a free plan for up to 10 agents, integrated email and social ticketing, and affordable paid tiers with automated Freddy AI routing.",
       "limitations": "Ecommerce integrations are less native than Gorgias, requiring plugin setup for store order lookups.",
       "pricingNote": "Free tier up to 10 agents; Growth is $15/agent/mo; Pro is $49/agent/mo (billed annually)."
     },
@@ -1836,7 +1836,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "intercom",
       "badge": "Best Overall for In-App Messenger & Fin AI Bot",
       "ranking": 1,
-      "fitReason": "Intercom is the benchmark for SaaS and tech startups. It combines an industry-leading in-app messenger with Fin AI Copilot, proactive user onboarding tours, product tours, and complete customer engagement workflows.",
+      "fitReason": "Intercom provides a dedicated customer messaging platform for SaaS and tech startups. It combines an in-app messenger with Fin AI Copilot, proactive user onboarding tours, product tours, and complete customer engagement workflows.",
       "limitations": "Standard pricing scales significantly with contact volume; Fin AI usage is billed per resolution ($0.99/resolution).",
       "pricingNote": "Early Stage startup program available ($65/mo for eligible startups); Essential plan is $39/seat/mo; Advanced is $85/seat/mo."
     },
@@ -1919,7 +1919,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "sprout-social",
       "badge": "Best Overall for Enterprise Agencies & Social Listening",
       "ranking": 1,
-      "fitReason": "Sprout Social is the benchmark for professional social media agencies. Its Smart Inbox unifies client conversations, its team approval workflows prevent publishing errors, and its enterprise social listening delivers deep brand sentiment intelligence.",
+      "fitReason": "Sprout Social provides comprehensive social media management for agencies. Its Smart Inbox unifies client conversations, its team approval workflows prevent publishing errors, and its enterprise social listening delivers deep brand sentiment intelligence.",
       "limitations": "High per-seat pricing ($199-$399/seat/mo) makes it an investment best suited for established agencies with premium retainer clients.",
       "pricingNote": "Standard $199/seat/mo; Professional $299/seat/mo; Advanced $399/seat/mo; Enterprise custom."
     },
@@ -2002,7 +2002,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "buffer",
       "badge": "Best Overall for Simple, Low-Cost Social Scheduling",
       "ranking": 1,
-      "fitReason": "Buffer is the gold standard for small businesses. It offers a generous perpetual free plan for up to 3 channels, an intuitive queue calendar, AI assistant for caption ideas, and transparent $5/channel paid pricing.",
+      "fitReason": "Buffer provides straightforward social publishing for small businesses. It offers a generous perpetual free plan for up to 3 channels, an intuitive queue calendar, AI assistant for caption ideas, and transparent $5/channel paid pricing.",
       "limitations": "Visual Instagram grid rearranging is less interactive than Later's dedicated visual planner.",
       "pricingNote": "Free plan (3 channels, 10 scheduled posts/channel); Essentials is $5/channel/mo; Team is $10/channel/mo (billed annually)."
     },
@@ -2085,7 +2085,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "todoist",
       "badge": "Best Overall for Natural Language Input & Productivity",
       "ranking": 1,
-      "fitReason": "Todoist is the gold standard for personal task management. Its natural language date parsing is the fastest in the industry, its customizable filters allow granular GTD views, and its Karma gamification rewards consistent task completion.",
+      "fitReason": "Todoist is a popular personal task manager with fast natural language date parsing, customizable filters for GTD workflows, and Karma gamification to encourage consistent task completion.",
       "limitations": "Task reminders, custom filters, and calendar sync require upgrading to the Pro plan ($4/mo).",
       "pricingNote": "Free plan (up to 5 personal projects); Pro is $4/mo ($48/yr); Business is $6/user/mo (billed annually)."
     },
@@ -2122,8 +2122,8 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
   ],
   "faqs": [
     {
-      "question": "Why is Todoist considered the benchmark for task management?",
-      "answer": "Todoist stands out because of its exceptional natural language parsing engine. Typing 'Submit expense report tomorrow at 3pm p1 #Finance' instantly schedules the task, assigns it to the Finance project, and sets Priority 1 without touching a date picker."
+      "question": "Why is Todoist considered a leading tool for task management?",
+      "answer": "Todoist stands out because of its fast natural language parsing engine. Typing 'Submit expense report tomorrow at 3pm p1 #Finance' instantly schedules the task, assigns it to the Finance project, and sets Priority 1 without touching a date picker."
     },
     {
       "question": "Is Things 3 better than Todoist for Mac users?",
@@ -2251,7 +2251,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "krispcall",
       "badge": "Best Value for Shared Inboxes & Global Numbers",
       "ranking": 1,
-      "fitReason": "KrispCall is an outstanding, cost-effective virtual phone system for modern small businesses. It provides shared team phone numbers, multi-agent inboxes, live call monitoring, and virtual numbers in 100+ countries at highly competitive rates.",
+      "fitReason": "KrispCall is a cost-effective virtual phone system for modern small businesses. It provides shared team phone numbers, multi-agent inboxes, live call monitoring, and virtual numbers in 100+ countries at competitive rates.",
       "limitations": "Enterprise PBX legacy hardware provisioning is simpler than RingCentral.",
       "pricingNote": "Essential is $12/user/mo (annual) or $15/user/mo (monthly); Standard is $32/user/mo; Enterprise custom."
     },
@@ -2259,7 +2259,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "ringcentral",
       "badge": "Best for Complete Enterprise PBX Telephony",
       "ranking": 2,
-      "fitReason": "RingCentral provides the most comprehensive PBX telecommunications infrastructure, offering 99.999% uptime, advanced multi-level IVRs, global PSTN trunks, and complete video meetings.",
+      "fitReason": "RingCentral provides comprehensive PBX telecommunications infrastructure, offering 99.999% uptime, advanced multi-level IVRs, global PSTN trunks, and complete video meetings.",
       "limitations": "Higher base price and more complex configuration menus for small 1-3 person teams.",
       "pricingNote": "Core plan starts at $20/user/mo (annual); Advanced $25/user/mo; Ultra $35/user/mo."
     },
@@ -2267,7 +2267,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "nextiva",
       "badge": "Best for 24/7 Live US Phone Customer Support",
       "ranking": 3,
-      "fitReason": "Nextiva delivers exceptionally reliable business VoIP phone service backed by 24/7 live telephone support, unified team messaging, and integrated customer contact history.",
+      "fitReason": "Nextiva delivers business VoIP phone service backed by 24/7 live telephone support, unified team messaging, and integrated customer contact history.",
       "limitations": "Month-to-month pricing is higher than annual commitment rates.",
       "pricingNote": "Digital starts at $20/user/mo; Core plan with voice is $30/user/mo; Engage is $40/user/mo (billed annually)."
     },
@@ -2425,7 +2425,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "bitwarden",
       "badge": "Best Value Family Plan with Open-Source Trust",
       "ranking": 2,
-      "fitReason": "Bitwarden Families provides exceptional value, offering 6 user accounts with unlimited shared collections and 1GB encrypted file storage for just $40/year total.",
+      "fitReason": "Bitwarden Families provides an affordable family subscription, offering 6 user accounts with unlimited shared collections and 1GB encrypted file storage for $40/year total.",
       "limitations": "Account recovery requires setting up designated emergency access contacts in advance.",
       "pricingNote": "Families plan is $3.33/mo (billed annually at $40/yr for up to 6 users)."
     },

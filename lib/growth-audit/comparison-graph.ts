@@ -5,11 +5,10 @@ import { AFFILIATE_PROGRAMS } from "@/data/revenue/affiliate-programs";
 import type { GraphNodeDegree, MissingComparisonCandidate } from "./types";
 
 export const KNOWN_GSC_IMPRESSIONS: Record<string, number> = {
-  "intercom": 1062, "freshdesk": 992, "semrush": 973, "front": 386, "help-scout": 331,
-  "sprout-social": 298, "buffer": 276, "clickup": 211, "pipedrive": 187, "airtable": 134,
-  "ringcentral": 130, "lastpass": 77, "todoist": 66, "confluence": 62, "mulesoft": 59,
-  "ecwid": 56, "coda": 20, "postmark": 6, "shortcut": 3, "docker": 1, "vercel": 1,
-  "gitlab": 2, "postman": 2, "adobe-analytics": 7, "segment": 7
+  "clickup": 65, "confluence": 62, "ecwid": 47, "pipedrive": 24, "help-scout": 23,
+  "coda": 20, "ringcentral": 19, "sprout-social": 17, "mulesoft": 14, "lastpass": 8,
+  "adobe-analytics": 7, "segment": 7, "postmark": 6, "shortcut": 3, "gitlab": 2,
+  "postman": 2, "docker": 1, "vercel": 1
 };
 
 export function computeGraphNodeDegrees(software: Software[] = getAllSoftware()): GraphNodeDegree[] {
