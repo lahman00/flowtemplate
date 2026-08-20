@@ -102,34 +102,34 @@
     {
       "name": "TickTick",
       "slug": "ticktick",
-      "description": "A cross-platform task manager and to-do list app with built-in calendar view, habit tracker, and Pomodoro timer.",
-      "best_for": "Individuals wanting integrated habit tracking, Pomodoro focus timers, and full calendar view on desktop and mobile",
+      "description": "Task manager with integrated Pomodoro timer, habit tracker, and calendar.",
+      "best_for": "Users wanting combined tasks, habit tracking, and Pomodoro focus",
       "strengths": [
-        "Built-in habit tracker",
-        "Integrated Pomodoro timer",
+        "Built-in Pomodoro timer",
+        "Habit tracking",
         "Full calendar view"
+      ]
+    },
+    {
+      "name": "Any.do",
+      "slug": "anydo",
+      "description": "Task management and daily planner combining to-do checklists and calendar events.",
+      "best_for": "Individuals seeking daily morning planning and WhatsApp reminders",
+      "strengths": [
+        "Any.do Moment daily planning",
+        "WhatsApp task capture",
+        "Unified calendar"
       ]
     },
     {
       "name": "Things",
       "slug": "things",
-      "description": "A task manager for macOS and iOS focused on personal task organization and Getting Things Done (GTD) principles.",
-      "best_for": "Apple-ecosystem users who want a native macOS and iOS design with a one-time purchase model",
+      "description": "GTD task manager designed exclusively for Apple ecosystem devices.",
+      "best_for": "Apple users seeking elegant design and one-time purchase software",
       "strengths": [
-        "Native Apple design",
         "One-time purchase",
-        "GTD workflow focus"
-      ]
-    },
-    {
-      "name": "Asana",
-      "slug": "asana",
-      "description": "A work-management platform focused on projects, tasks, timelines, and cross-functional team coordination.",
-      "best_for": "Teams needing more structured, cross-functional project tracking and workflow automation",
-      "strengths": [
-        "Work Graph data model",
-        "Timeline and Gantt views",
-        "Cross-team workflows"
+        "Exquisite Apple UX",
+        "GTD workflow"
       ]
     }
   ],

@@ -4,7 +4,14 @@
   "category": "security",
   "description": "Bitwarden is an open-source, end-to-end encrypted password manager described by the vendor as \"the most trusted password manager,\" securing passwords, passkeys, and secrets for people, AI agents, and machines.",
   "website": "https://bitwarden.com",
-  "platforms": ["Web", "Windows", "macOS", "Linux", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "Windows",
+    "macOS",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
   "best_for": "The vendor states millions of users choose it to protect themselves and their families, alongside businesses and development/DevOps teams needing secrets management.",
   "features": [
     "End-to-end encrypted, open-source password vault",
@@ -14,22 +21,44 @@
     "Self-hosting capability",
     "Secrets Manager for development teams"
   ],
-  "sources": ["https://bitwarden.com", "https://bitwarden.com/download/"],
+  "sources": [
+    "https://bitwarden.com",
+    "https://bitwarden.com/download/"
+  ],
   "accessed_at": "2026-08-01",
   "alternatives": [
     {
       "name": "1Password",
       "slug": "1password",
-      "description": "A unified vault for identities, credentials, and secrets aimed at enterprise access management.",
-      "best_for": "Organizations wanting integrated privileged access and SaaS governance alongside password management.",
-      "strengths": ["Device trust", "Privileged access", "SaaS management"]
+      "description": "Password manager with Watchtower vulnerability alerts and Travel Mode.",
+      "best_for": "Teams and families wanting polished native apps and secret key security",
+      "strengths": [
+        "Secret Key architecture",
+        "Watchtower audits",
+        "Travel Mode"
+      ]
     },
     {
-      "name": "LastPass",
-      "slug": "lastpass",
-      "description": "A zero-knowledge password manager with family and business plans.",
-      "best_for": "Individuals and families wanting a straightforward vault with dark web monitoring.",
-      "strengths": ["Dark web monitoring", "Family sharing", "MSP support"]
+      "name": "Keeper",
+      "slug": "keeper",
+      "description": "Cybersecurity password vault with role-based policies and SCIM provisioning.",
+      "best_for": "Organizations needing strict compliance and automated user provisioning",
+      "strengths": [
+        "SOC 2 / FedRAMP certified",
+        "SCIM provisioning",
+        "Role-based controls"
+      ]
+    },
+    {
+      "name": "Dashlane",
+      "slug": "dashlane",
+      "description": "Secure password vault with built-in VPN and dark web monitoring.",
+      "best_for": "Users seeking bundled VPN and password security",
+      "strengths": [
+        "Hotspot Shield VPN",
+        "Dark web scanning",
+        "Password health score"
+      ]
     }
   ]
 }

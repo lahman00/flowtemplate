@@ -23,23 +23,23 @@
     {
       "name": "Semrush",
       "slug": "semrush",
-      "description": "A digital marketing platform for SEO, content, and competitive research, with keyword, backlink, and AI visibility tools.",
-      "best_for": "Teams wanting an all-in-one SEO, content, and PPC toolkit",
+      "description": "All-in-one marketing platform covering SEO, PPC, and content marketing.",
+      "best_for": "Marketers managing combined organic and paid search campaigns",
       "strengths": [
-        "Keyword research",
-        "Site audit",
-        "AI visibility tracking"
+        "PPC ad intelligence",
+        "Keyword Magic Tool",
+        "Content marketing suite"
       ]
     },
     {
-      "name": "Google Analytics",
-      "slug": "google-analytics",
-      "description": "A free web analytics platform for tracking website traffic, user behavior, and conversions.",
-      "best_for": "Teams needing free, foundational traffic and conversion analytics",
+      "name": "Moz",
+      "slug": "moz",
+      "description": "SEO suite featuring Domain Authority, keyword research, and rank tracking.",
+      "best_for": "SEO practitioners tracking Domain Authority benchmarks",
       "strengths": [
-        "Free tier",
-        "Traffic analytics",
-        "Google Ads integration"
+        "Domain Authority (DA)",
+        "Actionable page recommendations",
+        "Site crawl audit"
       ]
     }
   ],

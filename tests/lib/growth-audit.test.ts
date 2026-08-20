@@ -92,8 +92,8 @@ describe("Growth Audit Tooling", () => {
 
     // Verify underlinked active affiliates are identified
     expect(linkAudit.underlinkedActiveAffiliates.length).toBeGreaterThan(0);
-    const krispcall = linkAudit.underlinkedActiveAffiliates.find((s) => s.url === "/software/krispcall");
-    expect(krispcall).toBeDefined();
-    expect(krispcall?.inboundCount).toBe(7);
+    const volza = linkAudit.underlinkedActiveAffiliates.find((s) => s.url === "/software/volza");
+    expect(volza).toBeDefined();
+    expect(volza?.inboundCount).toBe(5);
   });
 });

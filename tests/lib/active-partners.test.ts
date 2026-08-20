@@ -53,7 +53,7 @@ describe("canonical active affiliate partner registry", () => {
     expect(matrix.find(({ slug }) => slug === "krispcall")).toMatchObject({
       url: "https://try.krispcall.com/aikpbrrrl8k9",
       revenueReady: true,
-      coverage: { softwareRoute: "/software/krispcall", comparisonRoutes: 5 },
+      coverage: { softwareRoute: "/software/krispcall", comparisonRoutes: 7 },
     });
     expect(matrix.find(({ slug }) => slug === "hubstaff")).toMatchObject({
       url: "https://affiliate.hubstaff.com/ca2oe167vcj1",

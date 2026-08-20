@@ -30,23 +30,34 @@
     {
       "name": "Todoist",
       "slug": "todoist",
-      "description": "A cross-platform task manager with natural-language scheduling, projects, and collaboration features.",
-      "best_for": "Users who want a streamlined task manager without built-in habit tracking",
+      "description": "Task management software with natural language date entry and Karma points.",
+      "best_for": "Productivity enthusiasts wanting rapid text input and filters",
       "strengths": [
-        "Cross-platform availability",
-        "Natural language due dates",
-        "Collaboration"
+        "Natural language parsing",
+        "Karma productivity points",
+        "Vast integration catalog"
+      ]
+    },
+    {
+      "name": "Any.do",
+      "slug": "anydo",
+      "description": "Daily planner and to-do app with unified calendar and WhatsApp reminders.",
+      "best_for": "Users wanting daily morning planning routines",
+      "strengths": [
+        "Any.do Moment planner",
+        "WhatsApp reminders",
+        "Unified calendar"
       ]
     },
     {
       "name": "Things",
       "slug": "things",
-      "description": "A personal task manager for Apple devices with projects, areas, and a one-time purchase price.",
-      "best_for": "Apple users who prefer a one-time purchase over a subscription",
+      "description": "Minimalist GTD task manager for macOS, iPad, and iPhone.",
+      "best_for": "Apple device users wanting one-time purchase task software",
       "strengths": [
-        "Elegant design",
-        "No subscription",
-        "Deep Apple ecosystem integration"
+        "One-time purchase",
+        "Clean visual design",
+        "Strict privacy"
       ]
     }
   ],

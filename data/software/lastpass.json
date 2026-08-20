@@ -4,7 +4,14 @@
   "category": "security",
   "description": "LastPass is a password manager and digital vault that stores and autofills login credentials, using zero-knowledge encryption so LastPass itself cannot access users' stored passwords.",
   "website": "https://www.lastpass.com",
-  "platforms": ["Web", "macOS", "Windows", "Linux", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "macOS",
+    "Windows",
+    "Linux",
+    "iOS",
+    "Android"
+  ],
   "best_for": "The vendor targets individuals, families (up to 6 members), small teams/startups, small-to-medium businesses, enterprises, and Managed Service Providers (MSPs).",
   "features": [
     "Unlimited encrypted password vault",
@@ -14,22 +21,43 @@
     "Single sign-on (SSO) and MFA for business tiers",
     "Secure document storage"
   ],
-  "sources": ["https://www.lastpass.com"],
+  "sources": [
+    "https://www.lastpass.com"
+  ],
   "accessed_at": "2026-08-01",
   "alternatives": [
     {
       "name": "1Password",
       "slug": "1password",
-      "description": "A unified access-management vault covering credentials, secrets, and privileged access for humans and machines.",
-      "best_for": "Organizations needing broader access governance beyond consumer password management.",
-      "strengths": ["Secrets management", "SaaS/device governance", "Privileged access controls"]
+      "description": "Market-leading password manager for businesses and families.",
+      "best_for": "Teams wanting proven security architecture and Travel Mode",
+      "strengths": [
+        "Secret Key protection",
+        "Watchtower security audits",
+        "Polished UX"
+      ]
     },
     {
       "name": "Bitwarden",
       "slug": "bitwarden",
-      "description": "An open-source, end-to-end encrypted password manager with self-hosting options.",
-      "best_for": "Users and businesses that want transparency (open source) and deployment flexibility.",
-      "strengths": ["Open source", "Self-hosting", "Secrets Manager for dev teams"]
+      "description": "Open-source password manager with transparent zero-knowledge security.",
+      "best_for": "Privacy-focused users and developers wanting open-source software",
+      "strengths": [
+        "Open source",
+        "Free multi-device sync",
+        "Self-hosting support"
+      ]
+    },
+    {
+      "name": "Keeper",
+      "slug": "keeper",
+      "description": "Zero-knowledge password vault and privileged access management platform.",
+      "best_for": "Businesses requiring certified zero-trust password infrastructure",
+      "strengths": [
+        "Zero-trust encryption",
+        "BreachWatch monitoring",
+        "Granular admin policies"
+      ]
     }
   ]
 }

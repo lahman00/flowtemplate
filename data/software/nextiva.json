@@ -1,0 +1,115 @@
+{
+  "name": "Nextiva",
+  "slug": "nextiva",
+  "category": "communication",
+  "description": "Nextiva is a cloud business phone system and VoIP communications platform combining voice calling, video conferencing, team chat, SMS, and customer relationship management.",
+  "website": "https://www.nextiva.com",
+  "company": "Nextiva, Inc.",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "macOS",
+    "Windows"
+  ],
+  "best_for": "Growing small-to-midsize businesses seeking reliable VoIP phone service with 24/7 live telephone support.",
+  "features": [
+    "Unlimited domestic business calling and SMS throughout the US and Canada",
+    "Multi-level auto attendants, call routing schedules, and virtual receptionist",
+    "HD video conferencing and screen sharing with up to 250 participants",
+    "Integrated team chat, file sharing, and project task management",
+    "Voicemail-to-email and voicemail-to-SMS digital audio transcription",
+    "Direct integrations with Microsoft Teams, Salesforce, HubSpot, and Outlook"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$20/user/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 7
+    },
+    "entry_paid": {
+      "amount": "20",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Digital",
+        "amount": "20",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited chat, SMS, and video (billed annually)."
+      },
+      {
+        "name": "Core",
+        "amount": "30",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds unlimited voice calling, auto attendant, and toll-free numbers."
+      },
+      {
+        "name": "Engage",
+        "amount": "40",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds advanced CRM integrations and call recording."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.nextiva.com/nextiva-pricing.html"
+  },
+  "pros": [
+    "Exceptional 24/7 live US-based customer telephone support and onboarding assistance",
+    "Proven 99.999% network reliability with enterprise carrier-grade uptime",
+    "Unified interface integrating phone, video, chat, and CRM contact details"
+  ],
+  "cons": [
+    "Monthly rates increase significantly if paying month-to-month rather than annual contracts",
+    "Real-time AI voice transcription and conversation intelligence are less mature than Dialpad",
+    "Advanced integrations require upgrading to higher-tier plans"
+  ],
+  "sources": [
+    "https://www.nextiva.com/nextiva-pricing.html",
+    "https://www.nextiva.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "RingCentral",
+      "slug": "ringcentral",
+      "description": "Enterprise unified business communications and PBX telephony leader.",
+      "best_for": "Enterprises needing extensive PBX administration and large international scale",
+      "strengths": [
+        "Enterprise admin controls",
+        "Broad hardware compatibility",
+        "Global PSTN presence"
+      ]
+    },
+    {
+      "name": "Dialpad",
+      "slug": "dialpad",
+      "description": "AI-powered cloud VoIP platform with live speech transcription and coaching.",
+      "best_for": "Sales and support teams prioritizing live AI call summaries and analytics",
+      "strengths": [
+        "Native AI speech models",
+        "Modern app UX",
+        "Live call sentiment tracking"
+      ]
+    },
+    {
+      "name": "KrispCall",
+      "slug": "krispcall",
+      "description": "Modern virtual business phone system for distributed and remote teams.",
+      "best_for": "Remote teams needing international virtual numbers at low cost",
+      "strengths": [
+        "100+ countries supported",
+        "Shared team inboxes",
+        "Fast self-serve setup"
+      ]
+    }
+  ]
+}

@@ -319,7 +319,7 @@ const LINK_RESERVE = 40;
  * exist in the route and parse these pillars' real headline text, so this
  * is just turning the mapping on, not inventing a new card type.
  */
-const IMAGE_KIND_BY_PILLAR: Partial<Record<ContentPillar, string>> = {
+export const IMAGE_KIND_BY_PILLAR: Partial<Record<ContentPillar, string>> = {
   pricing_intelligence: "pricing",
   migration: "switching",
   software_decisions: "comparison",
@@ -329,7 +329,7 @@ const IMAGE_KIND_BY_PILLAR: Partial<Record<ContentPillar, string>> = {
   category_discovery: "category",
 };
 
-const IMAGE_SIZE_BY_CHANNEL: Partial<Record<Channel, string>> = {
+export const IMAGE_SIZE_BY_CHANNEL: Partial<Record<Channel, string>> = {
   linkedin: "linkedin",
   facebook: "facebook",
   x: "x",
@@ -338,12 +338,24 @@ const IMAGE_SIZE_BY_CHANNEL: Partial<Record<Channel, string>> = {
   threads: "square",
 };
 
-function buildCardImageUrl(idea: RawIdea, channel: Channel): string | null {
-  const kind = IMAGE_KIND_BY_PILLAR[idea.pillar];
+/**
+ * Exported so both draft-time rendering (below) and the one-off queue
+ * backfill (scripts/social/backfill-media.ts) build the exact same URL
+ * from the exact same inputs — one source of truth, not two copies that
+ * can drift. Takes headline/body directly (not a RawIdea) so the backfill
+ * script can pass headline/body recovered from an already-committed
+ * variant's text instead of a live RawIdea it doesn't have.
+ */
+export function buildCardImageUrlFor(pillar: ContentPillar, channel: Channel, headline: string, body: string): string | null {
+  const kind = IMAGE_KIND_BY_PILLAR[pillar];
   const size = IMAGE_SIZE_BY_CHANNEL[channel];
   if (!kind || !size) return null;
-  const params = new URLSearchParams({ size, kind, headline: idea.headline.slice(0, 140), sub: idea.body.slice(0, 220) });
+  const params = new URLSearchParams({ size, kind, headline: headline.slice(0, 140), sub: body.slice(0, 220) });
   return `${SITE_URL}/api/social/card?${params.toString()}`;
+}
+
+function buildCardImageUrl(idea: RawIdea, channel: Channel): string | null {
+  return buildCardImageUrlFor(idea.pillar, channel, idea.headline, idea.body);
 }
 
 function renderForChannel(idea: RawIdea, channel: Channel): ChannelVariant {

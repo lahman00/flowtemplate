@@ -7,8 +7,8 @@ import { isPublishedComparison } from "@/data/comparisons";
 describe("Role & Use-Case Software Engine", () => {
   const guides = getAllRoleGuides();
 
-  it("contains at least 18 curated high-intent role guides", () => {
-    expect(guides.length).toBeGreaterThanOrEqual(18);
+  it("contains at least 30 curated high-intent role guides", () => {
+    expect(guides.length).toBeGreaterThanOrEqual(30);
   });
 
   it("ensures every guide has a unique slug and non-empty metadata", () => {

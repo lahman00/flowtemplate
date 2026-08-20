@@ -1,0 +1,124 @@
+{
+  "name": "Any.do",
+  "slug": "anydo",
+  "category": "productivity",
+  "description": "Any.do is a task management, daily planner, and calendar app that synchronizes personal to-do lists, daily schedules, and collaborative team workspaces across all devices.",
+  "website": "https://www.any.do",
+  "company": "Any.do Inc.",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "macOS",
+    "Windows",
+    "Apple Watch",
+    "Wear OS"
+  ],
+  "best_for": "Individuals, freelancers, and small teams seeking an intuitive daily planner that combines to-do tasks and calendar events in one view.",
+  "features": [
+    "Any.do Moment: daily planning assistant prompting users to review and schedule daily tasks each morning",
+    "Integrated Calendar view unifying Google Calendar, Apple Calendar, and Outlook with task to-do items",
+    "Smart natural language parsing for fast recurring task entry and location-based reminders",
+    "WhatsApp integration allowing users to create tasks and reminders directly via WhatsApp messages",
+    "Collaborative team workspaces with kanban boards, task assignments, and progress tracking",
+    "Cross-platform synchronization spanning mobile, desktop, smartwatches, and smart assistants (Siri, Alexa)"
+  ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$3/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "3",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Personal Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Core task lists, basic calendar integration, and daily planner."
+      },
+      {
+        "name": "Premium",
+        "amount": "3",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Advanced recurring reminders, WhatsApp integration, color tags, and location reminders (billed annually at $36/yr or $5/mo monthly)."
+      },
+      {
+        "name": "Family",
+        "amount": "5",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 4 users, shared lists, and family calendar (billed annually at $60/yr)."
+      },
+      {
+        "name": "Teams",
+        "amount": "5",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Per seat/mo; adds collaborative kanban boards and project management (billed annually at $5/user/mo)."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.any.do/pricing/"
+  },
+  "pros": [
+    "Any.do Moment daily planning routine is outstanding for overcoming morning task overwhelm",
+    "Unique WhatsApp reminder integration allows task capture without opening the app",
+    "Clean unified calendar view merges hourly appointments with daily to-do checklists"
+  ],
+  "cons": [
+    "Advanced recurring reminders and location-based alerts require upgrading to Premium",
+    "Team collaboration features are simpler than dedicated project management tools like ClickUp or Asana",
+    "Free version includes occasional promotional upgrade banners"
+  ],
+  "sources": [
+    "https://www.any.do/pricing/",
+    "https://www.any.do"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "Todoist",
+      "slug": "todoist",
+      "description": "Leading productivity and task manager with natural language parsing and Karma points.",
+      "best_for": "Productivity enthusiasts wanting powerful filters, labels, and fast keyboard entry",
+      "strengths": [
+        "Natural language date parsing",
+        "Deep filter queries",
+        "Extensive integration ecosystem"
+      ]
+    },
+    {
+      "name": "TickTick",
+      "slug": "ticktick",
+      "description": "All-in-one productivity app combining task management, Pomodoro timer, and habit tracking.",
+      "best_for": "Users seeking built-in Pomodoro focus timers and daily habit trackers",
+      "strengths": [
+        "Built-in Pomodoro timer",
+        "Habit tracker",
+        "Full calendar time blocking"
+      ]
+    },
+    {
+      "name": "Things",
+      "slug": "things",
+      "description": "Elegant GTD task manager built exclusively for Apple devices with one-time purchase pricing.",
+      "best_for": "Apple ecosystem users wanting exquisite design and zero monthly subscriptions",
+      "strengths": [
+        "One-time purchase pricing",
+        "Award-winning macOS/iOS design",
+        "GTD workflow structure"
+      ]
+    }
+  ]
+}

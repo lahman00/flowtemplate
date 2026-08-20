@@ -1,0 +1,113 @@
+{
+  "name": "Later",
+  "slug": "later",
+  "category": "marketing",
+  "description": "Later is a social media management and visual scheduling platform designed for Instagram, TikTok, Pinterest, Facebook, and LinkedIn, featuring a visual drag-and-drop content calendar and Link in Bio tool.",
+  "website": "https://later.com",
+  "company": "Later (Mavrck)",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Visual creators, ecommerce brands, and boutique social agencies focusing on Instagram, TikTok, and visual content marketing.",
+  "features": [
+    "Visual Instagram Grid Planner allowing users to preview and rearrange feed aesthetics before posting",
+    "Auto-publishing for Instagram Reels, Carousels, TikToks, Pins, Facebook, and LinkedIn",
+    "Customizable Link in Bio landing page builder linking Instagram posts directly to product pages",
+    "User-generated content (UGC) discovery, media library storage, and hashtag suggestions",
+    "Best time to post AI recommendations based on historical audience engagement",
+    "Multi-profile social inbox for responding to Instagram comments and mentions"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$16.67/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "16.67",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Starter",
+        "amount": "16.67",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "1 user, 1 set of social profiles, 30 posts per profile (billed annually at $200/yr or $25/mo monthly)."
+      },
+      {
+        "name": "Growth",
+        "amount": "33.33",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "3 users, 3 sets of social profiles, 150 posts per profile."
+      },
+      {
+        "name": "Advanced",
+        "amount": "66.67",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "6 users, 6 sets of social profiles, unlimited posts."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://later.com/pricing/"
+  },
+  "pros": [
+    "Best-in-class visual Instagram feed grid preview and drag-and-drop planning",
+    "Robust Link in Bio feature turning Instagram traffic into trackable ecommerce sales",
+    "Intuitive media library with tag-based asset organization and UGC search"
+  ],
+  "cons": [
+    "Post volume caps on Starter (30 posts/profile) and Growth (150 posts/profile) tiers",
+    "B2B analytics for LinkedIn and Twitter/X are less detailed than Sprout Social or Buffer",
+    "No perpetual free plan; requires paid subscription after 14-day trial"
+  ],
+  "sources": [
+    "https://later.com/pricing/",
+    "https://later.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "Buffer",
+      "slug": "buffer",
+      "description": "Simple, intuitive social media publishing, analytics, and engagement platform.",
+      "best_for": "Solopreneurs and small businesses wanting flexible multi-channel scheduling",
+      "strengths": [
+        "Perpetual free plan",
+        "Clean channel-based pricing",
+        "Multi-network publishing"
+      ]
+    },
+    {
+      "name": "Sprout Social",
+      "slug": "sprout-social",
+      "description": "Enterprise social media management, listening, and customer care platform.",
+      "best_for": "Enterprise brands and agencies needing advanced social listening and CRM integration",
+      "strengths": [
+        "Enterprise social listening",
+        "Unified smart inbox",
+        "Deep reporting analytics"
+      ]
+    },
+    {
+      "name": "Hootsuite",
+      "slug": "hootsuite",
+      "description": "Comprehensive social media marketing dashboard for scheduling, monitoring, and ads.",
+      "best_for": "Marketing teams managing large multi-channel social presences",
+      "strengths": [
+        "Multi-stream monitoring",
+        "Bulk post scheduling",
+        "Social advertising management"
+      ]
+    }
+  ]
+}

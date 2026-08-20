@@ -1,0 +1,100 @@
+{
+  "name": "Moz",
+  "slug": "moz",
+  "category": "marketing",
+  "description": "Moz Pro is an all-in-one SEO software suite offering keyword research, backlink analysis with Domain Authority (DA), rank tracking, and automated technical site audits.",
+  "website": "https://moz.com",
+  "company": "Moz (Ziff Davis)",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "In-house SEO specialists, small agencies, and marketing consultants seeking trusted Domain Authority metrics and site audit tools.",
+  "features": [
+    "Keyword Explorer providing keyword volume, difficulty scores, and organic CTR estimations",
+    "Link Explorer tracking backlinks, anchor text distribution, and proprietary Domain Authority / Page Authority metrics",
+    "Weekly automated technical site crawls identifying broken links, duplicate content, and meta tag issues",
+    "Rank tracking across desktop and mobile SERPs with regional and local search engine targeting",
+    "On-page optimization grader providing actionable content recommendations per target keyword",
+    "Custom scheduled PDF reporting for client presentations and executive stakeholders"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$79/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 30
+    },
+    "entry_paid": {
+      "amount": "79",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Standard",
+        "amount": "79",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Track 300 keywords, 1 user seat, 100k page crawls per month (billed annually at $79/mo or $99/mo monthly)."
+      },
+      {
+        "name": "Medium",
+        "amount": "143",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Track 1,500 keywords, 2 user seats, 500k page crawls."
+      },
+      {
+        "name": "Large",
+        "amount": "239",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Track 3,000 keywords, 3 user seats, 1.25M page crawls."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://moz.com/products/pro/pricing"
+  },
+  "pros": [
+    "Proprietary Domain Authority (DA) and Page Authority (PA) are industry-standard benchmark metrics",
+    "Exceptionally beginner-friendly interface and high-quality SEO educational resources (Moz Academy)",
+    "Accurate keyword difficulty scores and organic click-through rate predictive models"
+  ],
+  "cons": [
+    "Backlink index refresh speed and total database size are smaller than Ahrefs and Semrush",
+    "Standard plan limits user seats to 1 and keyword tracking to 300 terms",
+    "Lacks integrated PPC ad competitor intelligence compared to Semrush"
+  ],
+  "sources": [
+    "https://moz.com/products/pro/pricing",
+    "https://moz.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "Semrush",
+      "slug": "semrush",
+      "description": "Comprehensive digital marketing suite covering SEO, PPC, content marketing, and social media.",
+      "best_for": "Marketing teams wanting combined SEO, competitor PPC, and content optimization",
+      "strengths": [
+        "Massive keyword database",
+        "PPC ad intelligence",
+        "Content marketing toolkit"
+      ]
+    },
+    {
+      "name": "Ahrefs",
+      "slug": "ahrefs",
+      "description": "Industry-leading SEO software suite powered by the web largest commercial web crawler.",
+      "best_for": "Advanced SEO professionals prioritizing backlink analysis and technical auditing",
+      "strengths": [
+        "Fastest backlink index",
+        "Content Explorer",
+        "Granular SERP history"
+      ]
+    }
+  ]
+}

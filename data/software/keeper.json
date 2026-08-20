@@ -1,0 +1,124 @@
+{
+  "name": "Keeper",
+  "slug": "keeper",
+  "category": "security",
+  "description": "Keeper is a cybersecurity and zero-knowledge password management platform for enterprises, businesses, and families, featuring encrypted password vaults, dark web monitoring (BreachWatch), and secrets management.",
+  "website": "https://www.keepersecurity.com",
+  "company": "Keeper Security, Inc.",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "macOS",
+    "Windows",
+    "Linux",
+    "Browser Extensions"
+  ],
+  "best_for": "Security-conscious enterprises, SMBs, and families requiring zero-trust password management, SOC 2 compliance, and privileged access security.",
+  "features": [
+    "Zero-knowledge, zero-trust AES-256 encrypted password and digital file vaults",
+    "BreachWatch dark web monitoring alerting users if stored credentials appear in public data breaches",
+    "KeeperFill automated browser and mobile app password generation and auto-fill",
+    "Granular role-based access controls, admin console policies, and automated SCIM user provisioning",
+    "Secure record sharing with time-limited access and emergency digital legacy recovery",
+    "Keeper Secrets Manager for protecting API keys, certificates, and developer credentials"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$2.92/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "2.92",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Personal",
+        "amount": "2.92",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited password storage across all devices (billed annually at $35/yr)."
+      },
+      {
+        "name": "Family",
+        "amount": "6.24",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "5 private vaults and 10GB secure cloud storage (billed annually at $75/yr)."
+      },
+      {
+        "name": "Business Starter",
+        "amount": "2.00",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 10 users, encrypted vaults, and folder sharing (billed annually)."
+      },
+      {
+        "name": "Business",
+        "amount": "3.75",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited users, security audit reporting, and admin console."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.keepersecurity.com/pricing/"
+  },
+  "pros": [
+    "Rigorous zero-trust, zero-knowledge security architecture certified for SOC 2, ISO 27001, and FedRAMP",
+    "Comprehensive enterprise feature set including Secrets Manager and automated SCIM provisioning",
+    "Excellent family plan providing 5 isolated vaults with shared folder permissions"
+  ],
+  "cons": [
+    "BreachWatch dark web monitoring and secure cloud storage require separate paid add-ons on basic plans",
+    "No perpetual free plan for multi-device sync (free tier restricted to single mobile device without cloud sync)",
+    "Admin configuration console has a slight learning curve for non-technical managers"
+  ],
+  "sources": [
+    "https://www.keepersecurity.com/pricing/",
+    "https://www.keepersecurity.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "1Password",
+      "slug": "1password",
+      "description": "Leading password manager for businesses and families featuring Watchtower security audits.",
+      "best_for": "Teams and families wanting a polished user experience and Travel Mode protection",
+      "strengths": [
+        "Watchtower vulnerability alerts",
+        "Travel Mode data protection",
+        "Polished desktop/mobile apps"
+      ]
+    },
+    {
+      "name": "Bitwarden",
+      "slug": "bitwarden",
+      "description": "Open-source password manager with transparent zero-knowledge encryption and self-hosting.",
+      "best_for": "Developers and budget-conscious teams seeking open-source security",
+      "strengths": [
+        "Generous perpetual free tier",
+        "Open-source codebase",
+        "Self-hosting capability"
+      ]
+    },
+    {
+      "name": "Dashlane",
+      "slug": "dashlane",
+      "description": "Password manager featuring integrated VPN and dark web credential monitoring.",
+      "best_for": "Users wanting built-in VPN privacy alongside password management",
+      "strengths": [
+        "Hotspot Shield VPN included",
+        "Instant dark web alerts",
+        "One-click password changer"
+      ]
+    }
+  ]
+}

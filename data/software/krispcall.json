@@ -94,14 +94,36 @@
   "accessed_at": "2026-08-19",
   "alternatives": [
     {
+      "name": "Dialpad",
+      "slug": "dialpad",
+      "description": "AI-powered VoIP communications platform with live speech transcription.",
+      "best_for": "Sales and support teams wanting live call summaries",
+      "strengths": [
+        "Real-time AI summaries",
+        "Native CRM sync",
+        "Modern app interface"
+      ]
+    },
+    {
       "name": "RingCentral",
       "slug": "ringcentral",
-      "description": "A cloud communications platform providing business phone, team messaging, video meetings, and AI-powered customer engagement and contact center tools.",
-      "best_for": "Businesses of all sizes, from small teams to Fortune 1000 enterprises, that need unified phone, video, messaging, and contact center capabilities in one platform.",
+      "description": "Enterprise PBX phone system and unified communications benchmark.",
+      "best_for": "Large organizations needing deep PBX administration",
       "strengths": [
-        "Enterprise-scale contact center features",
-        "Unified video, messaging, and phone in one platform",
-        "Fortune 1000-proven reliability"
+        "Enterprise PBX depth",
+        "99.999% uptime",
+        "Extensive hardware support"
+      ]
+    },
+    {
+      "name": "Nextiva",
+      "slug": "nextiva",
+      "description": "Cloud business phone platform with 24/7 live telephone support.",
+      "best_for": "SMBs prioritizing high-touch customer support",
+      "strengths": [
+        "24/7 phone support",
+        "Carrier-grade uptime",
+        "Unified messaging"
       ]
     }
   ],

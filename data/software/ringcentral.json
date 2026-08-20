@@ -27,36 +27,36 @@
   "accessed_at": "2026-08-04",
   "alternatives": [
     {
-      "name": "Zoom",
-      "slug": "zoom",
-      "description": "A video conferencing platform for meetings, webinars, and team chat used widely across businesses and education.",
-      "best_for": "Teams needing reliable, widely adopted video conferencing",
+      "name": "Dialpad",
+      "slug": "dialpad",
+      "description": "AI cloud phone system with real-time call transcription and live sentiment analysis.",
+      "best_for": "Teams wanting native AI call summaries and softphone workflows",
       "strengths": [
-        "Reliable video quality",
-        "Webinars",
-        "Wide adoption"
+        "Real-time AI transcription",
+        "Modern UX",
+        "Live coaching"
       ]
     },
     {
-      "name": "Microsoft Teams",
-      "slug": "microsoft-teams",
-      "description": "A collaboration hub combining chat, video meetings, and file sharing tightly integrated with Microsoft 365.",
-      "best_for": "Organizations already using Microsoft 365",
+      "name": "Nextiva",
+      "slug": "nextiva",
+      "description": "Cloud business phone system with 24/7 US live telephone customer support.",
+      "best_for": "Growing SMBs needing reliable VoIP phone service and customer support",
       "strengths": [
-        "Microsoft 365 integration",
-        "Chat and video in one app",
-        "Enterprise security"
+        "24/7 live phone support",
+        "99.999% reliability",
+        "Unified CRM features"
       ]
     },
     {
-      "name": "Webex",
-      "slug": "webex",
-      "description": "Cisco's AI-powered collaboration platform for video meetings, webinars, calling, and messaging.",
-      "best_for": "Organizations wanting video, calling, and messaging with in-house AI transcription",
+      "name": "KrispCall",
+      "slug": "krispcall",
+      "description": "Virtual cloud phone system with international numbers in 100+ countries.",
+      "best_for": "Remote teams needing global virtual numbers and shared inboxes",
       "strengths": [
-        "AI meeting assistant",
-        "Real-time translation",
-        "Webinars"
+        "100+ country coverage",
+        "Shared team inboxes",
+        "Low entry cost"
       ]
     }
   ]

@@ -23,23 +23,23 @@
     {
       "name": "Ahrefs",
       "slug": "ahrefs",
-      "description": "An AI-powered SEO and marketing platform built on a proprietary web index, covering keyword research, backlinks, and content marketing.",
-      "best_for": "SEO specialists and content marketers wanting deep backlink and keyword data",
+      "description": "SEO software suite with deep backlink database and keyword research tools.",
+      "best_for": "Advanced SEOs prioritizing backlink analysis and technical site audits",
       "strengths": [
-        "Backlink index",
-        "Keywords Explorer",
-        "AI visibility tracking"
+        "Fastest backlink crawler",
+        "Content Explorer",
+        "Granular SERP history"
       ]
     },
     {
-      "name": "Google Analytics",
-      "slug": "google-analytics",
-      "description": "A free web analytics platform for tracking website traffic, user behavior, and conversions.",
-      "best_for": "Teams needing free, foundational traffic and conversion analytics",
+      "name": "Moz",
+      "slug": "moz",
+      "description": "All-in-one SEO tool suite with Domain Authority and site crawl audits.",
+      "best_for": "In-house marketers and agencies relying on Domain Authority metrics",
       "strengths": [
-        "Free tier",
-        "Traffic analytics",
-        "Google Ads integration"
+        "Domain Authority metrics",
+        "Beginner-friendly UX",
+        "Moz Academy resources"
       ]
     }
   ],

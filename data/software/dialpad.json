@@ -1,0 +1,115 @@
+{
+  "name": "Dialpad",
+  "slug": "dialpad",
+  "category": "communication",
+  "description": "Dialpad is an AI-powered cloud communications platform providing business VoIP calling, video meetings, team messaging, and live AI call transcription with real-time sentiment analysis.",
+  "website": "https://www.dialpad.com",
+  "company": "Dialpad, Inc.",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android",
+    "macOS",
+    "Windows"
+  ],
+  "best_for": "Sales teams, customer support centers, and modern hybrid companies wanting native AI call summaries and live coaching.",
+  "features": [
+    "Dialpad Ai delivering real-time live call transcription and post-call AI summaries",
+    "Unified business phone calling, SMS text messaging, and HD video conferencing",
+    "Real-time sentiment analysis and live AI agent coaching during customer calls",
+    "Automated call routing, multi-level IVR auto-attendants, and call queuing",
+    "Deep bidirectional integrations with Salesforce, HubSpot, Zendesk, and Google Workspace",
+    "Native softphone desktop and mobile applications with HD voice quality"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$15/user/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "15",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Standard",
+        "amount": "15",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited calling in US/CA, SMS/MMS, and real-time AI transcription (billed annually at $15/mo or $23/mo monthly)."
+      },
+      {
+        "name": "Pro",
+        "amount": "25",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds CRM integrations (Salesforce, HubSpot), 24/7 phone support, and global office locations."
+      },
+      {
+        "name": "Enterprise",
+        "amount": "Custom",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "100% uptime SLA, custom data retention, and dedicated account management."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.dialpad.com/pricing/"
+  },
+  "pros": [
+    "Industry-leading built-in real-time AI call transcription and action-item extraction",
+    "Modern, fast desktop and mobile apps with clean user experience",
+    "Seamless softphone switching between desktop, mobile, and desk hardware"
+  ],
+  "cons": [
+    "Pro tier requires a 3-seat minimum to access advanced CRM integrations",
+    "International calling rates and non-US virtual phone numbers incur add-on fees",
+    "Video meetings cap participant count at 10 on the Standard tier"
+  ],
+  "sources": [
+    "https://www.dialpad.com/pricing/",
+    "https://www.dialpad.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "RingCentral",
+      "slug": "ringcentral",
+      "description": "Enterprise unified business communications platform with extensive PBX depth.",
+      "best_for": "Established enterprises needing comprehensive PBX hardware and fax support",
+      "strengths": [
+        "Enterprise PBX depth",
+        "99.999% uptime SLA",
+        "Broad third-party app ecosystem"
+      ]
+    },
+    {
+      "name": "KrispCall",
+      "slug": "krispcall",
+      "description": "Virtual cloud phone system with global phone numbers in 100+ countries.",
+      "best_for": "Remote teams and international businesses needing affordable shared phone numbers",
+      "strengths": [
+        "Global phone numbers (100+ countries)",
+        "Shared team inboxes",
+        "Cost-effective international rates"
+      ]
+    },
+    {
+      "name": "Nextiva",
+      "slug": "nextiva",
+      "description": "Cloud business VoIP phone system with integrated team collaboration and CRM.",
+      "best_for": "Mid-sized businesses wanting reliable customer service and unified VoIP calling",
+      "strengths": [
+        "24/7 live phone support",
+        "Reliable call quality",
+        "Integrated customer portal"
+      ]
+    }
+  ]
+}
