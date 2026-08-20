@@ -1,39 +1,45 @@
-import { CANONICAL_AFFILIATE_LEDGER, type AffiliateProgramRelationship, type CanonicalLedgerStatus } from "@/data/affiliate/canonical-ledger";
+import { CANONICAL_AFFILIATE_LEDGER, type CanonicalLedgerStatus } from "@/data/affiliate/canonical-ledger";
 import { getAllSoftware } from "@/data/software";
 import fs from "node:fs";
 import path from "node:path";
 
+export const ALL_CANONICAL_STATUSES: readonly CanonicalLedgerStatus[] = [
+  "ACTIVE",
+  "APPROVED_NEEDS_LINK",
+  "APPROVED_NEEDS_EDITORIAL_CONTENT",
+  "PENDING_REVIEW",
+  "READY_AND_VERIFIED",
+  "BLOCKED_FORM_DEFECT",
+  "OWNER_ACTION_REQUIRED",
+  "REJECTED",
+  "HOLD",
+  "NO_REAL_PROGRAM_FOUND",
+  "PROGRAM_NOT_VERIFIED",
+  "PROGRAM_ENDED",
+  "NOT_ELIGIBLE"
+] as const;
+
 export interface LedgerSummaryReport {
   timestamp: string;
+  // Section A: Program Relationships
   totalProgramRelationships: number;
+  statusBreakdown: Record<CanonicalLedgerStatus, number>;
+  sumOfStatusBuckets: number;
+  isStatusSumConsistent: boolean;
+  // Section B: Catalog Coverage
   totalCatalogProducts: number;
   catalogProductsWithProgramRelationship: number;
-  statusCounts: Record<CanonicalLedgerStatus, number>;
-  activeProgramsCount: number;
   activeCatalogProductsCovered: number;
-  pendingProgramsCount: number;
   pendingCatalogProductsCovered: number;
-  readyProgramsCount: number;
-  readyCatalogProductsCovered: number;
-  rejectedProgramsCount: number;
-  rejectedCatalogProductsCovered: number;
-  formBlockedProgramsCount: number;
-  formBlockedCatalogProductsCovered: number;
-  ownerBlockedProgramsCount: number;
   ownerBlockedCatalogProductsCovered: number;
-  holdProgramsCount: number;
+  formBlockedCatalogProductsCovered: number;
+  rejectedCatalogProductsCovered: number;
   holdCatalogProductsCovered: number;
   noProgramCatalogProductsCount: number;
   unverifiedCatalogProductsCount: number;
-  programsList: {
-    active: AffiliateProgramRelationship[];
-    pending: AffiliateProgramRelationship[];
-    ready: AffiliateProgramRelationship[];
-    rejected: AffiliateProgramRelationship[];
-    formBlocked: AffiliateProgramRelationship[];
-    ownerBlocked: AffiliateProgramRelationship[];
-    hold: AffiliateProgramRelationship[];
-  };
+  sumOfCatalogCoverageBuckets: number;
+  isCatalogCoverageExhaustive: boolean;
+  // Details
   noProgramSlugs: string[];
   unverifiedSlugs: string[];
 }
@@ -43,7 +49,7 @@ export function computeLedgerSummary(): LedgerSummaryReport {
   const catalogSlugs = new Set(software.map(s => s.slug));
   const ledger = CANONICAL_AFFILIATE_LEDGER;
 
-  const statusCounts: Record<CanonicalLedgerStatus, number> = {
+  const statusBreakdown: Record<CanonicalLedgerStatus, number> = {
     ACTIVE: 0,
     APPROVED_NEEDS_LINK: 0,
     APPROVED_NEEDS_EDITORIAL_CONTENT: 0,
@@ -69,7 +75,7 @@ export function computeLedgerSummary(): LedgerSummaryReport {
   const holdSlugs = new Set<string>();
 
   for (const prog of ledger) {
-    statusCounts[prog.status]++;
+    statusBreakdown[prog.status] = (statusBreakdown[prog.status] ?? 0) + 1;
 
     for (const slug of prog.productSlugs) {
       if (catalogSlugs.has(slug)) {
@@ -86,7 +92,10 @@ export function computeLedgerSummary(): LedgerSummaryReport {
     }
   }
 
-  // Known verified no-program / FOSS / 404 endpoints
+  const sumOfStatusBuckets = Object.values(statusBreakdown).reduce((a, b) => a + b, 0);
+  const isStatusSumConsistent = sumOfStatusBuckets === ledger.length;
+
+  // Verified FOSS / 404 / No Program products
   const noProgramSlugsList = [
     "harvest", "time-doctor", "basecamp", "slite", "mattermost",
     "git", "postgresql", "mysql", "redis", "nginx", "docker", "kubernetes", "linux",
@@ -105,37 +114,28 @@ export function computeLedgerSummary(): LedgerSummaryReport {
     }
   }
 
+  const catalogProductsWithProgramRelationship = coveredCatalogSlugs.size - noProgramSlugs.size;
+  const sumOfCatalogCoverageBuckets = catalogProductsWithProgramRelationship + noProgramSlugs.size + unverifiedSlugs.length;
+  const isCatalogCoverageExhaustive = sumOfCatalogCoverageBuckets === software.length;
+
   return {
     timestamp: new Date().toISOString(),
     totalProgramRelationships: ledger.length,
+    statusBreakdown,
+    sumOfStatusBuckets,
+    isStatusSumConsistent,
     totalCatalogProducts: software.length,
-    catalogProductsWithProgramRelationship: coveredCatalogSlugs.size - noProgramSlugs.size,
-    statusCounts,
-    activeProgramsCount: statusCounts.ACTIVE,
+    catalogProductsWithProgramRelationship,
     activeCatalogProductsCovered: activeSlugs.size,
-    pendingProgramsCount: statusCounts.PENDING_REVIEW,
     pendingCatalogProductsCovered: pendingSlugs.size,
-    readyProgramsCount: statusCounts.READY_AND_VERIFIED,
-    readyCatalogProductsCovered: readySlugs.size,
-    rejectedProgramsCount: statusCounts.REJECTED,
-    rejectedCatalogProductsCovered: rejectedSlugs.size,
-    formBlockedProgramsCount: statusCounts.BLOCKED_FORM_DEFECT,
-    formBlockedCatalogProductsCovered: formBlockedSlugs.size,
-    ownerBlockedProgramsCount: statusCounts.OWNER_ACTION_REQUIRED,
     ownerBlockedCatalogProductsCovered: ownerBlockedSlugs.size,
-    holdProgramsCount: statusCounts.HOLD,
+    formBlockedCatalogProductsCovered: formBlockedSlugs.size,
+    rejectedCatalogProductsCovered: rejectedSlugs.size,
     holdCatalogProductsCovered: holdSlugs.size,
     noProgramCatalogProductsCount: noProgramSlugs.size,
     unverifiedCatalogProductsCount: unverifiedSlugs.length,
-    programsList: {
-      active: ledger.filter(p => p.status === "ACTIVE"),
-      pending: ledger.filter(p => p.status === "PENDING_REVIEW"),
-      ready: ledger.filter(p => p.status === "READY_AND_VERIFIED"),
-      rejected: ledger.filter(p => p.status === "REJECTED"),
-      formBlocked: ledger.filter(p => p.status === "BLOCKED_FORM_DEFECT"),
-      ownerBlocked: ledger.filter(p => p.status === "OWNER_ACTION_REQUIRED"),
-      hold: ledger.filter(p => p.status === "HOLD")
-    },
+    sumOfCatalogCoverageBuckets,
+    isCatalogCoverageExhaustive,
     noProgramSlugs: noProgramSlugsList,
     unverifiedSlugs
   };
@@ -150,18 +150,26 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log(`================================================================`);
   console.log(`         MILOOSH CANONICAL AFFILIATE LEDGER SUMMARY             `);
   console.log(`================================================================\n`);
-  console.log(`PROGRAM RELATIONSHIPS TOTAL:               ${summary.totalProgramRelationships}`);
-  console.log(`CATALOG PRODUCTS TOTAL:                    ${summary.totalCatalogProducts}`);
-  console.log(`PRODUCTS WITH SOME AFFILIATE RELATIONSHIP: ${summary.catalogProductsWithProgramRelationship}\n`);
-  console.log(`PROGRAM BREAKDOWN BY STATUS (PROGRAMS vs PRODUCTS):`);
-  console.log(` - ACTIVE PROGRAMS:           ${summary.activeProgramsCount} (covers ${summary.activeCatalogProductsCovered} catalog products)`);
-  console.log(` - PENDING PROGRAMS:          ${summary.pendingProgramsCount} (covers ${summary.pendingCatalogProductsCovered} catalog products)`);
-  console.log(` - READY PROGRAMS:            ${summary.readyProgramsCount} (covers ${summary.readyCatalogProductsCovered} catalog products)`);
-  console.log(` - REJECTED PROGRAMS:         ${summary.rejectedProgramsCount} (covers ${summary.rejectedCatalogProductsCovered} catalog products)`);
-  console.log(` - FORM-BLOCKED PROGRAMS:     ${summary.formBlockedProgramsCount} (covers ${summary.formBlockedCatalogProductsCovered} catalog products)`);
-  console.log(` - OWNER-BLOCKED PROGRAMS:    ${summary.ownerBlockedProgramsCount} (covers ${summary.ownerBlockedCatalogProductsCovered} catalog products)`);
-  console.log(` - HOLD PROGRAMS:             ${summary.holdProgramsCount} (covers ${summary.holdCatalogProductsCovered} catalog products)`);
-  console.log(` - NO-PROGRAM PRODUCTS:       ${summary.noProgramCatalogProductsCount} catalog products`);
-  console.log(` - UNVERIFIED PRODUCTS:       ${summary.unverifiedCatalogProductsCount} catalog products\n`);
+
+  console.log(`SECTION A — PROGRAM RELATIONSHIPS:`);
+  console.log(`  Program Relationships Total:                ${summary.totalProgramRelationships}`);
+  ALL_CANONICAL_STATUSES.forEach(status => {
+    const count = summary.statusBreakdown[status] ?? 0;
+    console.log(`    - ${status.padEnd(35)}: ${count}`);
+  });
+  console.log(`  Sum of Program Status Buckets:              ${summary.sumOfStatusBuckets} (Match: ${summary.isStatusSumConsistent})\n`);
+
+  console.log(`SECTION B — CATALOG PRODUCT COVERAGE:`);
+  console.log(`  Catalog Products Total:                     ${summary.totalCatalogProducts}`);
+  console.log(`  Products Covered by >=1 Relationship:       ${summary.catalogProductsWithProgramRelationship}`);
+  console.log(`    - Active Monetization:                    ${summary.activeCatalogProductsCovered}`);
+  console.log(`    - Pending Programs:                       ${summary.pendingCatalogProductsCovered}`);
+  console.log(`    - Owner-Blocked Programs:                 ${summary.ownerBlockedCatalogProductsCovered}`);
+  console.log(`    - Form-Blocked Programs:                  ${summary.formBlockedCatalogProductsCovered}`);
+  console.log(`    - Rejected Programs:                      ${summary.rejectedCatalogProductsCovered}`);
+  console.log(`    - Hold Programs:                          ${summary.holdCatalogProductsCovered}`);
+  console.log(`  Products with Verified NO_REAL_PROGRAM:     ${summary.noProgramCatalogProductsCount}`);
+  console.log(`  Products with PROGRAM_NOT_VERIFIED:         ${summary.unverifiedCatalogProductsCount}`);
+  console.log(`  Sum of Catalog Coverage Buckets:            ${summary.sumOfCatalogCoverageBuckets} (Match: ${summary.isCatalogCoverageExhaustive})\n`);
   console.log(`================================================================`);
 }

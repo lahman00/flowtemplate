@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { CANONICAL_AFFILIATE_LEDGER } from "@/data/affiliate/canonical-ledger";
 import { ACTIVE_PARTNERS } from "@/data/affiliate/active-partners";
-import { computeLedgerSummary } from "@/scripts/affiliate/ledger";
+import { computeLedgerSummary, ALL_CANONICAL_STATUSES } from "@/scripts/affiliate/ledger";
 import { getAllSoftware } from "@/data/software";
 
 describe("Generic Affiliate Ledger Invariants & Source-of-Truth Integrity", () => {
@@ -16,6 +16,7 @@ describe("Generic Affiliate Ledger Invariants & Source-of-Truth Integrity", () =
     for (const prog of CANONICAL_AFFILIATE_LEDGER) {
       expect(prog.status).toBeTruthy();
       expect(typeof prog.status).toBe("string");
+      expect(ALL_CANONICAL_STATUSES.includes(prog.status)).toBe(true);
     }
   });
 
@@ -88,16 +89,20 @@ describe("Generic Affiliate Ledger Invariants & Source-of-Truth Integrity", () =
     expect(CANONICAL_AFFILIATE_LEDGER.filter(p => p.programId === "impact-portfolio").length).toBe(1);
   });
 
-  it("Invariant 10: Derived summary counts match the actual ledger counts exactly", () => {
+  it("Invariant 10: Derived summary counts match the actual ledger counts exactly (sum of status buckets === ledger.length)", () => {
     expect(summary.totalProgramRelationships).toBe(CANONICAL_AFFILIATE_LEDGER.length);
-    expect(summary.activeProgramsCount).toBe(CANONICAL_AFFILIATE_LEDGER.filter(p => p.status === "ACTIVE").length);
-    expect(summary.pendingProgramsCount).toBe(CANONICAL_AFFILIATE_LEDGER.filter(p => p.status === "PENDING_REVIEW").length);
-    expect(summary.rejectedProgramsCount).toBe(CANONICAL_AFFILIATE_LEDGER.filter(p => p.status === "REJECTED").length);
-    expect(summary.formBlockedProgramsCount).toBe(CANONICAL_AFFILIATE_LEDGER.filter(p => p.status === "BLOCKED_FORM_DEFECT").length);
-    expect(summary.ownerBlockedProgramsCount).toBe(CANONICAL_AFFILIATE_LEDGER.filter(p => p.status === "OWNER_ACTION_REQUIRED").length);
-    expect(summary.holdProgramsCount).toBe(CANONICAL_AFFILIATE_LEDGER.filter(p => p.status === "HOLD").length);
+    expect(summary.sumOfStatusBuckets).toBe(CANONICAL_AFFILIATE_LEDGER.length);
+    expect(summary.isStatusSumConsistent).toBe(true);
+
+    const statusesInLedger = new Set(CANONICAL_AFFILIATE_LEDGER.map(p => p.status));
+    for (const st of statusesInLedger) {
+      expect(summary.statusBreakdown[st]).toBeGreaterThan(0);
+    }
+
     expect(summary.totalCatalogProducts).toBe(catalogSlugs.size);
     expect(summary.totalCatalogProducts).toBe(247);
+    expect(summary.sumOfCatalogCoverageBuckets).toBe(247);
+    expect(summary.isCatalogCoverageExhaustive).toBe(true);
   });
 
   it("Invariant 11: Setmore contains strict compliance restriction (NO PAID MEDIA / PPC)", () => {
