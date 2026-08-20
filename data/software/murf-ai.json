@@ -1,0 +1,110 @@
+{
+  "name": "Murf AI",
+  "slug": "murf-ai",
+  "category": "ai",
+  "description": "Murf AI is an AI voice generator and text-to-speech studio with over 120+ natural voices across 20+ languages for voiceovers, presentations, and corporate training.",
+  "website": "https://murf.ai",
+  "company": "Murf Inc.",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "Educators, content creators, corporate trainers, and marketers creating voiceovers for presentations, explainers, and ads.",
+  "features": [
+    "120+ natural-sounding AI voices in 20+ languages and accents",
+    "Built-in timeline editor to synchronize voiceover audio with video and slide decks",
+    "Fine-grained pitch, speed, emphasis, and pause control on individual words",
+    "Voice cloning to create a custom AI model of your own voice",
+    "Voice changer allowing users to upload a recorded voice and replace it with an AI voice",
+    "Extensive stock music, image, and video library for commercial multimedia production"
+  ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$23/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true
+    },
+    "entry_paid": {
+      "amount": "23",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "10 mins voice generation and transcription; no downloads."
+      },
+      {
+        "name": "Creator",
+        "amount": "23",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Unlimited downloads, 5 projects, and commercial usage rights."
+      },
+      {
+        "name": "Business",
+        "amount": "79",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "3 users, 80+ voices, and collaboration features."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://murf.ai/pricing"
+  },
+  "pros": [
+    "Integrated slide and video timeline editor makes video voiceover synchronization effortless",
+    "Detailed pronunciation dictionary and pitch/pause controls for custom words",
+    "Commercial usage rights included on all paid subscription tiers"
+  ],
+  "cons": [
+    "Free plan does not permit downloading generated audio files",
+    "Ultra-realistic emotional inflection is slightly less dynamic than ElevenLabs for long-form fiction",
+    "Creator tier limits active projects to 5 unless upgrading to Business"
+  ],
+  "sources": [
+    "https://murf.ai/pricing",
+    "https://murf.ai"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "ElevenLabs",
+      "slug": "elevenlabs",
+      "description": "State-of-the-art AI voice generation and speech synthesis with emotional nuance and instant voice cloning.",
+      "best_for": "Creators, authors, and developers seeking ultra-realistic expressive AI speech",
+      "strengths": [
+        "Ultra-realistic emotional delivery",
+        "Instant voice cloning",
+        "Multilingual dubbing"
+      ]
+    },
+    {
+      "name": "Descript",
+      "slug": "descript",
+      "description": "Text-based audio and video editor with AI voice cloning (Overdub) and automatic transcription.",
+      "best_for": "Podcasters and video creators editing speech via transcript",
+      "strengths": [
+        "Text-based audio editing",
+        "Studio sound cleanup",
+        "One-click filler word removal"
+      ]
+    },
+    {
+      "name": "Synthesia",
+      "slug": "synthesia",
+      "description": "AI video generation platform transforming text into videos with photorealistic avatars.",
+      "best_for": "Corporate training and multilingual video production",
+      "strengths": [
+        "160+ AI avatars",
+        "130+ languages",
+        "No video studio required"
+      ]
+    }
+  ]
+}

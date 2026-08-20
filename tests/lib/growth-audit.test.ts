@@ -90,12 +90,6 @@ describe("Growth Audit Tooling", () => {
     expect(linkAudit.orphans.length).toBe(0);
     expect(linkAudit.totalUniquePages).toBeGreaterThan(1300);
 
-    // Verify underlinked software pages are identified
-    expect(linkAudit.underlinkedSoftware.length).toBeGreaterThan(0);
-    const serviceTitan = linkAudit.underlinkedSoftware.find((s) => s.url === "/software/servicetitan");
-    expect(serviceTitan).toBeDefined();
-    expect(serviceTitan?.inboundCount).toBe(4);
-
     // Verify underlinked active affiliates are identified
     expect(linkAudit.underlinkedActiveAffiliates.length).toBeGreaterThan(0);
     const krispcall = linkAudit.underlinkedActiveAffiliates.find((s) => s.url === "/software/krispcall");

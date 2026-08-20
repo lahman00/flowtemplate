@@ -4,7 +4,9 @@
   "category": "ai",
   "description": "ElevenLabs is an AI audio platform providing an AI voice generator and voice-agents platform for creating lifelike speech.",
   "website": "https://elevenlabs.io/",
-  "platforms": ["Web"],
+  "platforms": [
+    "Web"
+  ],
   "pricing": {
     "status": "verified",
     "free_plan": true,
@@ -15,12 +17,49 @@
       "per_seat": false
     },
     "tiers": [
-      { "name": "Free", "amount": "0", "currency": "USD", "notes": "10k credits/month, 3 Studio projects." },
-      { "name": "Starter", "amount": "6", "currency": "USD", "billing_period": "monthly", "notes": "30k credits/month; adds commercial license, instant voice cloning." },
-      { "name": "Creator", "amount": "11", "currency": "USD", "billing_period": "monthly", "notes": "121k credits/month. Page showed a first-month 50%-off promo ($22 -> $11); $11/mo is the standard ongoing rate." },
-      { "name": "Pro", "amount": "99", "currency": "USD", "billing_period": "monthly", "notes": "600k credits/month; 44.1kHz PCM API audio." },
-      { "name": "Scale", "amount": "299", "currency": "USD", "billing_period": "monthly", "unit": "3 seats", "notes": "1.8M credits/month." },
-      { "name": "Business", "amount": "990", "currency": "USD", "billing_period": "monthly", "unit": "10 seats", "notes": "6M credits/month." }
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "notes": "10k credits/month, 3 Studio projects."
+      },
+      {
+        "name": "Starter",
+        "amount": "6",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "30k credits/month; adds commercial license, instant voice cloning."
+      },
+      {
+        "name": "Creator",
+        "amount": "11",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "121k credits/month. Page showed a first-month 50%-off promo ($22 -> $11); $11/mo is the standard ongoing rate."
+      },
+      {
+        "name": "Pro",
+        "amount": "99",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "600k credits/month; 44.1kHz PCM API audio."
+      },
+      {
+        "name": "Scale",
+        "amount": "299",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "3 seats",
+        "notes": "1.8M credits/month."
+      },
+      {
+        "name": "Business",
+        "amount": "990",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "unit": "10 seats",
+        "notes": "6M credits/month."
+      }
     ],
     "enterprise_contact_sales": true,
     "last_verified": "2026-08-17",
@@ -35,22 +74,43 @@
     "Dubbing with emotion preservation across languages",
     "Conversational voice agents with analytics/testing/guardrails"
   ],
-  "sources": ["https://elevenlabs.io/"],
+  "sources": [
+    "https://elevenlabs.io/"
+  ],
   "accessed_at": "2026-08-01",
   "alternatives": [
     {
-      "name": "Midjourney",
-      "slug": "midjourney",
-      "description": "An AI image/video generation tool, the visual counterpart to ElevenLabs' audio focus.",
-      "best_for": "Creators needing generated imagery/video rather than voice/audio.",
-      "strengths": ["Prompt-based image generation", "Image-to-video", "Style reference system"]
+      "name": "Murf AI",
+      "slug": "murf-ai",
+      "description": "AI voice generator and studio with slide presentation synchronization.",
+      "best_for": "Voiceovers synced to video and slide decks",
+      "strengths": [
+        "Timeline slide sync",
+        "120+ natural voices",
+        "Commercial licensing"
+      ]
     },
     {
-      "name": "Jasper",
-      "slug": "jasper",
-      "description": "A marketing content platform that can pair with audio tools for full multimedia campaigns.",
-      "best_for": "Marketing teams needing on-brand text and imagery at scale.",
-      "strengths": ["Brand governance", "100+ specialized agents", "Enterprise compliance"]
+      "name": "Descript",
+      "slug": "descript",
+      "description": "Text-based audio and video editor with AI voice cloning (Overdub) and automatic transcription.",
+      "best_for": "Podcasters and video creators editing speech via transcript",
+      "strengths": [
+        "Text-based audio editing",
+        "Studio sound cleanup",
+        "One-click filler word removal"
+      ]
+    },
+    {
+      "name": "Synthesia",
+      "slug": "synthesia",
+      "description": "AI video generation platform transforming text into videos with photorealistic avatars.",
+      "best_for": "Corporate training and multilingual video production",
+      "strengths": [
+        "160+ AI avatars",
+        "130+ languages",
+        "No video studio required"
+      ]
     }
   ]
 }

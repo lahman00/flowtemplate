@@ -75,12 +75,34 @@
     {
       "name": "Buildium",
       "slug": "buildium",
-      "description": "Cloud-based property management software with published, tiered pricing and a real consumer affiliate program.",
-      "best_for": "Property managers who want transparent published pricing and a lower entry cost",
+      "description": "Property management software for residential managers and community associations.",
+      "best_for": "Community association and mid-sized residential portfolios",
       "strengths": [
-        "Public pricing",
-        "Lower entry price",
-        "Active affiliate program"
+        "HOA board portals",
+        "Resident center app",
+        "Tenant screening"
+      ]
+    },
+    {
+      "name": "DoorLoop",
+      "slug": "doorloop",
+      "description": "Modern all-in-one property management software with comprehensive accounting and owner portals.",
+      "best_for": "Growing landlords wanting a premium modern interface",
+      "strengths": [
+        "Modern interface",
+        "All property types",
+        "Dedicated phone support"
+      ]
+    },
+    {
+      "name": "TenantCloud",
+      "slug": "tenantcloud",
+      "description": "Affordable cloud property management and rent collection software for DIY landlords.",
+      "best_for": "Smaller DIY landlords seeking budget-friendly rental management",
+      "strengths": [
+        "Low entry price ($17/mo)",
+        "Direct rent collection",
+        "Listing syndication"
       ]
     }
   ],

@@ -95,12 +95,34 @@
     {
       "name": "AppFolio",
       "slug": "appfolio",
-      "description": "Established, feature-rich property management platform with custom-quoted pricing.",
-      "best_for": "Larger portfolios and operators who want a deeply established platform and don't need public pricing",
+      "description": "Enterprise property management platform with AI leasing and multi-family management.",
+      "best_for": "Large property management companies (50+ units)",
       "strengths": [
-        "Established brand",
-        "Deep feature set",
-        "Scales to large portfolios"
+        "AI leasing agent",
+        "Full accounting",
+        "Automated utility billing"
+      ]
+    },
+    {
+      "name": "DoorLoop",
+      "slug": "doorloop",
+      "description": "Modern all-in-one property management software with comprehensive accounting and owner portals.",
+      "best_for": "Growing landlords wanting a premium modern interface",
+      "strengths": [
+        "Modern interface",
+        "All property types",
+        "Dedicated phone support"
+      ]
+    },
+    {
+      "name": "TenantCloud",
+      "slug": "tenantcloud",
+      "description": "Affordable cloud property management and rent collection software for DIY landlords.",
+      "best_for": "Smaller DIY landlords seeking budget-friendly rental management",
+      "strengths": [
+        "Low entry price ($17/mo)",
+        "Direct rent collection",
+        "Listing syndication"
       ]
     }
   ],

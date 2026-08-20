@@ -1125,7 +1125,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "Standard tier 15% for the first 12 months; Super tier 18%; Elite tier 20%; capped at $25,000 per single deal (per zoho.com/affiliate/, directly fetched 2026-08-16).",
     recurrence: "one_time",
     notes:
-      "New research entry (2026-08-16) from the affiliate-discovery sprint. Real, active, directly-fetched official program. Applies at the Zoho company level — the same program would cover any other Zoho product in the catalog (zoho-desk, zoho-flow, zoho-projects) if pursued; recorded once here rather than duplicated across all four to avoid four applications to the same program.",
+      "New research entry (2026-08-16) from the affiliate-discovery sprint. Real, active, directly-fetched official program. Applies at the Zoho company level — the same program would cover any other Zoho product in the catalog (zoho-desk, zoho-flow, zoho-projects) if pursued; recorded once here rather than duplicated across all four to avoid four applications to the same program. PORTFOLIO VALUE: one relationship covers 4 real catalog products. BLOCKED 2026-08-20: the signup page (zoho.com/affiliate/signup.html) explicitly states \"A Zoho account will be created using this email address\" -- this is genuine new third-party account creation, not a simple application form, and is outside this agent's authority (never create accounts/passwords). Owner action required.",
     sourceUrls: ["https://www.zoho.com/affiliate/"],
     applicationUrl: "https://www.zoho.com/affiliate/signup.html",
     cookieDuration: "90 days",
@@ -1328,17 +1328,18 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
   // low-confidence noise.
   {
     slug: "trainual",
-    lastVerifiedAt: "2026-08-17",
+    lastVerifiedAt: "2026-08-20",
     programExists: "yes",
     type: "network",
     networkName: "PartnerStack",
     countryRestrictions: null,
-    commissionModel: null,
+    commissionModel: "Affiliates: 10% commission. Partners: 20% commission (verified live on the PartnerStack marketplace listing, 2026-08-20).",
     recurrence: "unknown",
-    notes: "Found via automated discovery (scripts/affiliate/discover.ts): trainual.com/affiliate returns HTTP 200 with a PartnerStack signature and commission/cookie/recurring-commission language in the page. Commission specifics not read — needs a manual visit before applying.",
-    sourceUrls: ["https://trainual.com/affiliate"],
+    notes:
+      "Application form fully and truthfully filled 2026-08-20 (website=https://miloosh.com, identify-as=Blogger, Trainual customer=No; audience-size left blank, no verified figure) but could not be submitted -- see the affiliate pipeline (slug: trainual) for the diagnosed systemic PartnerStack marketplace-details form-submit blocker (same defect as slug: xero). Real program, real form, genuinely ready to go -- blocked on tooling, not on eligibility.",
+    sourceUrls: ["https://trainual.com/affiliate", "https://dash.partnerstack.com (marketplace listing: Trainual)"],
     applicationUrl: "https://trainual.com/affiliate",
-    confidence: "medium",
+    confidence: "high",
   },
   {
     slug: "brevo",
@@ -1662,7 +1663,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
       "40% recurring commission for the life of any active referred account, plus a 5%/month recurring Tier 2 override on accounts signed up by agencies you referred. A referral only becomes a 'Qualified Purchase' after the referred account stays in good standing for at least 45 days.",
     recurrence: "recurring",
     notes:
-      "Directly fetched both gohighlevel.com/affiliates and gohighlevel.com/affiliate-policy — high-confidence, official-source data. Own affiliate portal at affiliate.gohighlevel.com (not obviously a third-party network like PartnerStack/Impact — appears to be an in-house/white-labeled system). Excludes immediate family of HighLevel employees; requires FTC Endorsement Guide, TCPA, CAN-SPAM, and state telemarketing-law compliance. Not yet applied — absent from var/agents/affiliate-pipeline.json.",
+      "Directly fetched both gohighlevel.com/affiliates and gohighlevel.com/affiliate-policy — high-confidence, official-source data. Own affiliate portal at affiliate.gohighlevel.com (not obviously a third-party network like PartnerStack/Impact — appears to be an in-house/white-labeled system). Excludes immediate family of HighLevel employees; requires FTC Endorsement Guide, TCPA, CAN-SPAM, and state telemarketing-law compliance. BLOCKED 2026-08-20: the signup form at affiliate.gohighlevel.com has a required Password field -- genuine new third-party account creation, outside this agent's authority (never create accounts/passwords). Owner action required.",
     sourceUrls: ["https://www.gohighlevel.com/affiliates", "https://www.gohighlevel.com/affiliate-policy"],
     applicationUrl: "https://affiliate.gohighlevel.com/",
     cookieDuration: "90 days (last-click attribution)",
@@ -1683,7 +1684,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "Up to $250 per successful new QuickBooks Online subscription referred.",
     recurrence: "one_time",
     notes:
-      "Direct WebFetch of quickbooks.intuit.com/partners/affiliates/ and quickbooks.intuit.com/partners/qbbusinessaffiliates/ both failed (ETIMEDOUT / repeated timeouts) — same Intuit bot-blocking pattern seen elsewhere in this project's research. Commission/network/eligibility corroborated via a domain-restricted search of quickbooks.intuit.com only, not a direct page fetch — confidence set to medium, not high, for that reason. Application is via a PartnerStack account; QuickBooks reportedly responds in 7-10 business days. Not yet applied — absent from var/agents/affiliate-pipeline.json. The US-only eligibility restriction is a real, material constraint given Miloosh is not US-based.",
+      "Direct WebFetch of quickbooks.intuit.com/partners/affiliates/ and quickbooks.intuit.com/partners/qbbusinessaffiliates/ both failed (ETIMEDOUT / repeated timeouts) — same Intuit bot-blocking pattern seen elsewhere in this project's research. Commission/network/eligibility corroborated via a domain-restricted search of quickbooks.intuit.com only, not a direct page fetch — confidence set to medium, not high, for that reason. Application is via a PartnerStack account; QuickBooks reportedly responds in 7-10 business days. The US-only eligibility restriction is a real, material constraint given Miloosh is not US-based. Re-checked live on PartnerStack 2026-08-20: the marketplace listing's own \"Offers & commission structure\" shows a customer-facing discount (\"30% off... for 6 months\"), not a stated affiliate payout figure -- and the application form explicitly asks \"What percentage of your audience is in the United States?\", confirming the US-audience requirement is a real, current gate on this specific listing, not just older research. Deprioritized this pass rather than applying: geography is a real material blocker, and the visible commission structure is ambiguous (discount vs. actual affiliate payout).",
     sourceUrls: ["https://quickbooks.intuit.com/partners/qbbusinessaffiliates/"],
     applicationUrl: "https://quickbooks.intuit.com/partners/qbbusinessaffiliates/",
     cookieDuration: null,
@@ -1701,12 +1702,12 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     countryRestrictions:
       "Not explicitly restricted by country in what was found, but the official page states the exact commission rate depends on 'your target audience and geographical location' — negotiated per-affiliate rather than a single published rate.",
     commissionModel:
-      "30% commission on each new paid Xero plan signup is the headline rate quoted on the official campaign page, though the main affiliate-program page states the exact rate is discussed individually per affiliate based on audience/geography.",
+      "CONFLICTING between sources: xero.com's own campaign page previously quoted 30% per signup (medium confidence, page returned HTTP 503 on direct re-fetch attempts). The live PartnerStack marketplace listing (verified directly 2026-08-20, high confidence) instead shows \"Earn $200 per qualified purchase\" -- a flat CPA, not a percentage. Both preserved rather than picking one; PartnerStack's own listing is the more directly verified figure.",
     recurrence: "unknown",
     notes:
-      "Direct WebFetch of xero.com/us/affiliate-program/ and a related partner-programs page both returned HTTP 503 on every attempt this session — a consistent, repeated block, not a one-off. Commission/network/process corroborated via a domain-restricted search of xero.com only, not a direct fetch — confidence set to medium for that reason, matching the same honesty pattern already used elsewhere in this file (see wix). Requires creating a PartnerStack account and accepting the Xero Referral Program Agreement + PartnerStack Terms of Service. Free to join. Not yet applied — absent from var/agents/affiliate-pipeline.json.",
-    sourceUrls: ["https://www.xero.com/us/affiliate-program/"],
-    applicationUrl: "https://www.xero.com/us/affiliate-program/",
+      "Direct WebFetch of xero.com/us/affiliate-program/ and a related partner-programs page both returned HTTP 503 on every attempt this session — a consistent, repeated block, not a one-off. Application form fully and truthfully filled 2026-08-20 on the live PartnerStack marketplace listing (website=https://miloosh.com, Accountant/Bookkeeper=No, existing Xero user=No, primary target audience=Small Businesses, promotion plan and SMB-audience answered honestly, full list of Miloosh's other real PartnerStack partnerships disclosed) but could not be submitted -- see the affiliate pipeline (slug: xero) for the diagnosed systemic PartnerStack marketplace-details form-submit blocker. Real program, real form, genuinely ready to go -- blocked on tooling, not on eligibility.",
+    sourceUrls: ["https://www.xero.com/us/affiliate-program/", "https://dash.partnerstack.com (marketplace listing: Xero)"],
+    applicationUrl: "https://dash.partnerstack.com/marketplace/accounting/details/xero",
     cookieDuration: null,
     payoutThreshold: null,
     payoutMethod: null,
@@ -1805,6 +1806,36 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     sourceUrls: ["https://dash.partnerstack.com (partnership page: PDWare)"],
     applicationUrl: null,
     confidence: "high",
+  },
+  {
+    slug: "harvest",
+    lastVerifiedAt: "2026-08-20",
+    programExists: "no",
+    type: "unknown",
+    networkName: null,
+    countryRestrictions: null,
+    commissionModel: null,
+    recurrence: "unknown",
+    notes:
+      "Researched 2026-08-20 as part of independently investigating monetization for Antigravity's newly-added catalog products (per the Phase 11 compounding workflow -- Antigravity adds editorial content, Claude investigates affiliate monetization). Real negative evidence: getharvest.com/affiliates and getharvest.com/partners both return a genuine 404. No PartnerStack, Impact, or other network listing found for Harvest in this sweep. No affiliate program found -- editorial content was not touched.",
+    sourceUrls: ["https://getharvest.com/affiliates", "https://getharvest.com/partners"],
+    applicationUrl: null,
+    confidence: "medium",
+  },
+  {
+    slug: "time-doctor",
+    lastVerifiedAt: "2026-08-20",
+    programExists: "no",
+    type: "unknown",
+    networkName: null,
+    countryRestrictions: null,
+    commissionModel: null,
+    recurrence: "unknown",
+    notes:
+      "Researched 2026-08-20 as part of independently investigating monetization for Antigravity's newly-added catalog products. Real negative evidence: timedoctor.com/affiliate, /partners, and /affiliates all return a genuine 404. No PartnerStack, Impact, or other network listing found for Time Doctor in this sweep. No affiliate program found -- editorial content was not touched.",
+    sourceUrls: ["https://www.timedoctor.com/affiliate", "https://www.timedoctor.com/partners", "https://www.timedoctor.com/affiliates"],
+    applicationUrl: null,
+    confidence: "medium",
   },
 ];
 

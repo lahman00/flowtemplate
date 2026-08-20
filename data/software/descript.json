@@ -1,0 +1,119 @@
+{
+  "name": "Descript",
+  "slug": "descript",
+  "category": "ai",
+  "description": "Descript is an AI-powered text-based audio and video editor that automatically transcribes recordings, removes filler words, and clones voices with Overdub.",
+  "website": "https://www.descript.com",
+  "company": "Descript, Inc.",
+  "platforms": [
+    "macOS",
+    "Windows",
+    "Web"
+  ],
+  "best_for": "Podcasters, video creators, marketing teams, and educators who want fast text-based video and audio editing.",
+  "features": [
+    "Text-based video and audio editing: edit transcripts to cut and rearrange media instantly",
+    "Automatic transcription with industry-leading multi-speaker identification",
+    "Studio Sound: AI audio cleanup removing background noise and room echo in one click",
+    "One-click filler word removal (eradicates ums, uhs, you knows, and repeated words)",
+    "Overdub AI voice cloning: type text to correct audio errors in your own voice",
+    "AI eye contact correction, green screen background removal, and automatic caption generator"
+  ],
+  "pricing": {
+    "model": "freemium",
+    "starting_price": "$12/month",
+    "has_free_tier": true,
+    "status": "verified",
+    "free_trial": {
+      "available": true
+    },
+    "entry_paid": {
+      "amount": "12",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Free",
+        "amount": "0",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "1 hr transcription/month, 1 watermark-free 720p export."
+      },
+      {
+        "name": "Hobbyist",
+        "amount": "12",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "10 hrs transcription/month, 1080p exports."
+      },
+      {
+        "name": "Creator",
+        "amount": "24",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "30 hrs transcription/month, 4K exports, and AI voice cloning."
+      },
+      {
+        "name": "Business",
+        "amount": "40",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "40 hrs transcription/month, full AI Suite, priority support."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.descript.com/pricing"
+  },
+  "pros": [
+    "Revolutionary text-based editing workflow reduces podcast and video editing time by 70%",
+    "Studio Sound AI audio processing makes smartphone mics sound like professional studio microphones",
+    "Comprehensive AI suite (filler word removal, eye contact correction, Overdub) built into one tool"
+  ],
+  "cons": [
+    "Desktop application can be resource-intensive during heavy multi-track 4K video rendering",
+    "Overdub voice synthesis is specialized for quick audio correction rather than generating entire audiobooks from scratch",
+    "Monthly transcription hours are capped by plan tier, requiring add-on purchases for heavy volume"
+  ],
+  "sources": [
+    "https://www.descript.com/pricing",
+    "https://www.descript.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "ElevenLabs",
+      "slug": "elevenlabs",
+      "description": "State-of-the-art AI voice generation and speech synthesis with emotional nuance and instant voice cloning.",
+      "best_for": "Creators needing top-tier expressive voice synthesis and audiobooks",
+      "strengths": [
+        "Ultra-realistic text-to-speech",
+        "Instant voice cloning",
+        "Multilingual voice translation"
+      ]
+    },
+    {
+      "name": "Murf AI",
+      "slug": "murf-ai",
+      "description": "AI voice generator and studio with slide presentation synchronization.",
+      "best_for": "Voiceovers synced to video and slide decks",
+      "strengths": [
+        "Timeline slide sync",
+        "120+ natural voices",
+        "Commercial licensing"
+      ]
+    },
+    {
+      "name": "Synthesia",
+      "slug": "synthesia",
+      "description": "AI video generation platform transforming text into videos with photorealistic avatars.",
+      "best_for": "Corporate training and multilingual video production",
+      "strengths": [
+        "160+ AI avatars",
+        "130+ languages",
+        "No video studio required"
+      ]
+    }
+  ]
+}

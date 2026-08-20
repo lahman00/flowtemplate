@@ -1,0 +1,113 @@
+{
+  "name": "TenantCloud",
+  "slug": "tenantcloud",
+  "category": "property-management",
+  "description": "TenantCloud is a cloud property management platform built for DIY landlords, featuring online rent collection, tenant screening, maintenance tracking, and Schedule E accounting.",
+  "website": "https://www.tenantcloud.com",
+  "company": "TenantCloud LLC",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "DIY landlords, independent real estate investors, and small property managers seeking affordable rental management.",
+  "features": [
+    "Online rent collection with automatic late fees and payment reminders",
+    "Syndicated rental listings on major rental portals (Zillow, Trulia, HotPads)",
+    "Built-in tenant screening powered by TransUnion (credit, background, eviction)",
+    "E-signature lease agreements with state-specific legal templates",
+    "Maintenance request management with tenant photo uploads and expense logging",
+    "Basic landlord accounting and Schedule E tax reporting"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$17/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "17",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Starter",
+        "amount": "17",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Core rent collection, listings, and tenant screening."
+      },
+      {
+        "name": "Growth",
+        "amount": "32",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds owner portal, QuickBooks sync, and lease builder."
+      },
+      {
+        "name": "Pro",
+        "amount": "55",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds vendor network and maintenance bidding."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.tenantcloud.com/pricing"
+  },
+  "pros": [
+    "Very budget-friendly starting price for landlords with small-to-medium portfolios",
+    "Clean automated rent collection and tenant screening workflow",
+    "Comprehensive mobile apps for both landlords and tenants"
+  ],
+  "cons": [
+    "QuickBooks integration requires the Growth tier ($32/mo)",
+    "Customer support response times can be slower on the entry Starter tier",
+    "Less suited for large commercial or multi-family enterprise portfolios (100+ units)"
+  ],
+  "sources": [
+    "https://www.tenantcloud.com/pricing",
+    "https://www.tenantcloud.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "DoorLoop",
+      "slug": "doorloop",
+      "description": "Modern all-in-one property management software with comprehensive accounting and owner portals.",
+      "best_for": "Growing landlords wanting a premium modern interface",
+      "strengths": [
+        "Modern interface",
+        "All property types",
+        "Dedicated phone support"
+      ]
+    },
+    {
+      "name": "AppFolio",
+      "slug": "appfolio",
+      "description": "Enterprise property management platform with AI leasing and multi-family management.",
+      "best_for": "Large property management companies (50+ units)",
+      "strengths": [
+        "AI leasing agent",
+        "Full accounting",
+        "Automated utility billing"
+      ]
+    },
+    {
+      "name": "Buildium",
+      "slug": "buildium",
+      "description": "Residential and community association property management platform.",
+      "best_for": "HOA and condo association managers",
+      "strengths": [
+        "HOA dues collection",
+        "Board communication",
+        "Work order tracking"
+      ]
+    }
+  ]
+}

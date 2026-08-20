@@ -1,0 +1,110 @@
+{
+  "name": "Ruler Analytics",
+  "slug": "ruler-analytics",
+  "category": "marketing",
+  "description": "Ruler Analytics is a closed-loop marketing attribution and revenue tracking platform connecting website touchpoints across calls, forms, and live chat to closed CRM deals.",
+  "website": "https://www.ruleranalytics.com",
+  "company": "Ruler Analytics Ltd.",
+  "platforms": [
+    "Web"
+  ],
+  "best_for": "B2B marketing teams and performance marketing agencies with multi-touch sales cycles and CRM deal pipelines.",
+  "features": [
+    "Closed-loop revenue attribution syncing CRM deal values back to ad channels (Google Ads, Meta)",
+    "Multi-touch attribution models: first-click, last-click, linear, time-decay, and position-based",
+    "Integrated call tracking, form capture, and live chat tracking on all website visitors",
+    "Visitor-level customer journey mapping across multiple sessions and devices",
+    "Direct bidirectional integrations with Salesforce, HubSpot, Pipedrive, and Zoho CRM",
+    "Automated conversion tracking into Google Analytics 4"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "£199/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": false
+    },
+    "entry_paid": {
+      "amount": "199",
+      "currency": "GBP",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Medium Business",
+        "amount": "199",
+        "currency": "GBP",
+        "billing_period": "monthly",
+        "notes": "Up to 10k monthly visitors and 100 conversions."
+      },
+      {
+        "name": "Large Business",
+        "amount": "499",
+        "currency": "GBP",
+        "billing_period": "monthly",
+        "notes": "Up to 50k monthly visitors."
+      },
+      {
+        "name": "Enterprise",
+        "amount": "Custom",
+        "currency": "GBP",
+        "billing_period": "monthly",
+        "notes": "High volume custom visitor tracking and bespoke integrations."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.ruleranalytics.com/pricing/"
+  },
+  "pros": [
+    "True closed-won revenue attribution rather than superficial lead volume metrics",
+    "Seamless integration connecting website visitor click paths to CRM pipeline stages",
+    "Supports sophisticated multi-touch attribution models for long B2B buying cycles"
+  ],
+  "cons": [
+    "Higher price point (£199/mo baseline) compared to basic call tracking tools",
+    "Requires active CRM pipeline integration to unlock full closed-loop attribution power",
+    "No self-serve free trial; requires guided demo setup"
+  ],
+  "sources": [
+    "https://www.ruleranalytics.com/pricing/",
+    "https://www.ruleranalytics.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "WhatConverts",
+      "slug": "whatconverts",
+      "description": "All-in-one lead tracking with phone calls, forms, chats, and lead valuation.",
+      "best_for": "Agencies needing granular lead tracking and quote valuations",
+      "strengths": [
+        "Lead valuation tools",
+        "White-label client reporting",
+        "Flexible tracking options"
+      ]
+    },
+    {
+      "name": "CallRail",
+      "slug": "callrail",
+      "description": "Industry-standard call tracking and AI conversation intelligence platform.",
+      "best_for": "Call-driven local businesses and PPC agencies",
+      "strengths": [
+        "Dynamic number insertion",
+        "AI conversation insights",
+        "Direct Google Ads sync"
+      ]
+    },
+    {
+      "name": "HubSpot",
+      "slug": "hubspot",
+      "description": "Integrated CRM, marketing automation, and multi-touch attribution suite.",
+      "best_for": "Teams wanting full marketing, sales, and service in one ecosystem",
+      "strengths": [
+        "Native CRM database",
+        "Comprehensive marketing suite",
+        "Customer journey analytics"
+      ]
+    }
+  ]
+}

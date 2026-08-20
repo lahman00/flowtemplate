@@ -75,23 +75,23 @@
     {
       "name": "Jobber",
       "slug": "jobber",
-      "description": "Field-service management software with published pricing, aimed at solo contractors through mid-sized teams.",
-      "best_for": "Smaller field-service businesses that want transparent, lower-cost published pricing",
+      "description": "Field service software tailored for small-to-midsize service businesses.",
+      "best_for": "Growing contractors seeking easy setup and transparent pricing",
       "strengths": [
-        "Published pricing",
-        "Lower cost of entry",
-        "Native QuickBooks/Xero integration"
+        "Faster onboarding",
+        "Transparent pricing",
+        "Client hub"
       ]
     },
     {
       "name": "Housecall Pro",
       "slug": "housecall-pro",
-      "description": "All-in-one field-service platform serving 50+ home-service trades with published pricing.",
-      "best_for": "Small-to-mid teams wanting broad trade coverage without enterprise-level cost",
+      "description": "All-in-one operations platform for home service professionals.",
+      "best_for": "Residential contractors wanting mobile payments and dispatching",
       "strengths": [
-        "Published pricing",
-        "Wide trade coverage",
-        "Strong affiliate program"
+        "Mobile payments",
+        "Consumer financing",
+        "GPS tracking"
       ]
     }
   ],

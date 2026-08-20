@@ -91,12 +91,34 @@
     {
       "name": "Jobber",
       "slug": "jobber",
-      "description": "Field-service management software with direct QuickBooks and Xero integration.",
-      "best_for": "Contractors already using QuickBooks or Xero who want native integration",
+      "description": "Field service software for quotes, scheduling, dispatching, and invoicing.",
+      "best_for": "Growing home service teams wanting client hub and self-serve booking",
       "strengths": [
-        "Native QuickBooks/Xero integration",
-        "Published pricing",
-        "High-commission affiliate program"
+        "Client hub portal",
+        "Flexible scheduling",
+        "Quote follow-up"
+      ]
+    },
+    {
+      "name": "ServiceTitan",
+      "slug": "servicetitan",
+      "description": "Enterprise contractor management software for large residential and commercial trades.",
+      "best_for": "Enterprise contractors requiring custom reporting and call center management",
+      "strengths": [
+        "Call center tools",
+        "Custom reporting",
+        "Inventory management"
+      ]
+    },
+    {
+      "name": "QuickBooks Online",
+      "slug": "quickbooks-online",
+      "description": "Leading double-entry accounting platform for business bookkeeping.",
+      "best_for": "Foundational small business bookkeeping and tax filing",
+      "strengths": [
+        "Double-entry accounting",
+        "Bank feeds",
+        "Tax preparation"
       ]
     }
   ],

@@ -4,7 +4,11 @@
   "category": "project-management",
   "description": "Linear is a product development system combining issue tracking, planning, and AI agent collaboration, built for modern workflows involving both human developers and AI agents.",
   "website": "https://linear.app",
-  "platforms": ["Web", "iOS", "Android"],
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
   "best_for": "Positioned for teams and enterprises combining human development practices with AI workflows, from startups to major enterprises, seeking to increase velocity while reducing operational noise.",
   "features": [
     "AI-powered agent integration from PRD drafting to deployment",
@@ -15,29 +19,43 @@
     "Coding session review on mobile and desktop"
   ],
   "order": 32,
-  "sources": ["https://linear.app"],
+  "sources": [
+    "https://linear.app"
+  ],
   "accessed_at": "2026-07-31",
   "alternatives": [
     {
       "name": "Jira",
       "slug": "jira",
-      "description": "Atlassian's project-management platform for planning, tracking, and delivering work across the software development lifecycle.",
-      "best_for": "Larger teams needing deep configurability and Atlassian ecosystem integration",
-      "strengths": ["Highly configurable", "Atlassian integration", "Enterprise scale"]
-    },
-    {
-      "name": "Asana",
-      "slug": "asana",
-      "description": "A work-management platform focused on projects, tasks, timelines, and team coordination.",
-      "best_for": "Cross-functional teams beyond engineering",
-      "strengths": ["Work Graph", "Multiple views", "Cross-functional coordination"]
+      "description": "Atlassian issue and project tracking software for enterprise agile teams.",
+      "best_for": "Large organizations requiring extensive workflow customization and enterprise compliance",
+      "strengths": [
+        "Deep workflow configuration",
+        "Enterprise compliance",
+        "Vast plugin ecosystem"
+      ]
     },
     {
       "name": "ClickUp",
       "slug": "clickup",
-      "description": "A project-management platform with tasks, dashboards, documents, and workflow automation.",
-      "best_for": "Teams wanting an all-in-one workspace beyond issue tracking",
-      "strengths": ["Task hierarchy", "Dashboards", "Automation"]
+      "description": "All-in-one project management and productivity platform with sprint tracking.",
+      "best_for": "Cross-functional teams wanting sprint management alongside docs and chat",
+      "strengths": [
+        "Integrated docs & wikis",
+        "Flexible views",
+        "Sprint automations"
+      ]
+    },
+    {
+      "name": "Monday.com",
+      "slug": "monday",
+      "description": "Visual work management platform with cross-departmental roadmap collaboration.",
+      "best_for": "Connecting engineering cycles to broader marketing and executive roadmaps",
+      "strengths": [
+        "Visual boards",
+        "Cross-team roadmaps",
+        "No-code automations"
+      ]
     }
   ]
 }

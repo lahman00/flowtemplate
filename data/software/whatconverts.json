@@ -10,7 +10,9 @@
     "starting_price": "$30/mo",
     "has_free_tier": false
   },
-  "platforms": ["Web"],
+  "platforms": [
+    "Web"
+  ],
   "features": [
     "Call tracking with dynamic number insertion and automatic spam blocking",
     "Form tracking for existing website forms",
@@ -38,21 +40,46 @@
   ],
   "alternatives": [
     {
-      "name": "Google Analytics",
-      "slug": "google-analytics",
-      "description": "A free analytics tool from Google that measures customer behavior across websites and apps.",
-      "best_for": "Teams that want free, general-purpose web analytics rather than dedicated call/form/chat lead-source attribution",
-      "strengths": ["Free", "Website/app behavior tracking", "Google Ads integration"]
+      "name": "CallRail",
+      "slug": "callrail",
+      "description": "Industry-standard call tracking and AI conversation intelligence platform.",
+      "best_for": "Call-driven local businesses and PPC agencies",
+      "strengths": [
+        "Dynamic number insertion",
+        "AI conversation insights",
+        "Direct Google Ads sync"
+      ]
+    },
+    {
+      "name": "Ruler Analytics",
+      "slug": "ruler-analytics",
+      "description": "Closed-loop marketing attribution connecting touchpoints to closed CRM revenue.",
+      "best_for": "B2B agencies with multi-touch buyer journeys",
+      "strengths": [
+        "Closed-won CRM sync",
+        "Multi-touch attribution models",
+        "GA4 offline conversions"
+      ]
     },
     {
       "name": "HubSpot",
       "slug": "hubspot",
-      "description": "A CRM platform where businesses track contacts, deals, and marketing activity in one place.",
-      "best_for": "Teams that want lead tracking bundled into a broader CRM and marketing suite rather than a standalone attribution tool",
-      "strengths": ["All-in-one CRM", "Marketing + sales pipeline", "AI assistance built in"]
+      "description": "All-in-one CRM, marketing, and sales platform with built-in attribution.",
+      "best_for": "Teams wanting an all-in-one CRM and marketing hub",
+      "strengths": [
+        "Native CRM integration",
+        "Full lifecycle tracking",
+        "Landing page builder"
+      ]
     }
   ],
-  "tags": ["call tracking", "lead attribution", "conversion tracking", "marketing analytics", "form tracking"],
+  "tags": [
+    "call tracking",
+    "lead attribution",
+    "conversion tracking",
+    "marketing analytics",
+    "form tracking"
+  ],
   "sources": [
     "https://whatconverts.com/",
     "https://whatconverts.com/features/",

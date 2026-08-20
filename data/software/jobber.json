@@ -97,12 +97,34 @@
     {
       "name": "Housecall Pro",
       "slug": "housecall-pro",
-      "description": "All-in-one field-service management platform serving 50+ home-service trades.",
-      "best_for": "Home-service businesses wanting a broader trade coverage and AI customer-service add-ons",
+      "description": "Field service management software for residential home service contractors.",
+      "best_for": "Residential trade contractors wanting dispatching, online booking, and consumer financing",
       "strengths": [
-        "Wide trade coverage",
-        "Published pricing",
-        "Strong affiliate/referral program"
+        "Consumer financing",
+        "Online booking",
+        "Instapay payouts"
+      ]
+    },
+    {
+      "name": "ServiceTitan",
+      "slug": "servicetitan",
+      "description": "Enterprise software platform for residential and commercial trade businesses.",
+      "best_for": "Large multi-truck contractors and enterprise service businesses",
+      "strengths": [
+        "Enterprise dispatching",
+        "Job costing",
+        "Integrated pricebook"
+      ]
+    },
+    {
+      "name": "QuickBooks Online",
+      "slug": "quickbooks-online",
+      "description": "Cloud accounting software for small businesses, contractors, and bookkeepers.",
+      "best_for": "Contractors managing double-entry accounting, payroll, and 1099 compliance",
+      "strengths": [
+        "Double-entry accounting",
+        "Payroll sync",
+        "CPA ecosystem"
       ]
     }
   ],

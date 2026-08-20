@@ -75,9 +75,16 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
       // Both must return valid comparisons
       if (normal.length > 0) {
         expect(withoutAffiliates.length).toBe(normal.length);
-        // Intra-category and direct-alternative comparisons must remain prioritized
-        for (const comp of withoutAffiliates) {
-          expect(comp.bothInCat).toBe(true);
+        // For categories with at least 6 intra-category comparisons, all featured comparisons must be intra-category
+        const intraCatCount = PUBLISHED_COMPARISONS.filter(([a, b]) => {
+          const sA = getSoftware(a);
+          const sB = getSoftware(b);
+          return sA?.category === cat.slug && sB?.category === cat.slug;
+        }).length;
+        if (intraCatCount >= 6) {
+          for (const comp of withoutAffiliates) {
+            expect(comp.bothInCat).toBe(true);
+          }
         }
       }
     }

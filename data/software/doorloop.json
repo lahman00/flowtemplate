@@ -1,0 +1,113 @@
+{
+  "name": "DoorLoop",
+  "slug": "doorloop",
+  "category": "property-management",
+  "description": "DoorLoop is a property management software platform designed to manage residential units, commercial spaces, student housing, and community associations with automated rent collection and full accounting.",
+  "website": "https://www.doorloop.com",
+  "company": "DoorLoop Inc.",
+  "platforms": [
+    "Web",
+    "iOS",
+    "Android"
+  ],
+  "best_for": "Property managers, landlords, and real estate management companies with mixed or growing rental portfolios.",
+  "features": [
+    "Automated online rent collection via ACH, credit card, and debit card",
+    "Comprehensive tenant screening with credit, criminal, and eviction reports",
+    "Complete double-entry accounting with bank reconciliation and QuickBooks sync",
+    "Maintenance request management with vendor dispatch and photo tracking",
+    "Dedicated owner portals with automated distributions and custom reports",
+    "Online tenant portal for lease signing, payments, and communication"
+  ],
+  "pricing": {
+    "model": "paid",
+    "starting_price": "$49/month",
+    "has_free_tier": false,
+    "status": "verified",
+    "free_trial": {
+      "available": true,
+      "days": 14
+    },
+    "entry_paid": {
+      "amount": "49",
+      "currency": "USD",
+      "billing_period": "monthly"
+    },
+    "tiers": [
+      {
+        "name": "Starter",
+        "amount": "49",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Up to 20 units; accounting, CRM, and rent collection."
+      },
+      {
+        "name": "Pro",
+        "amount": "79",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds owner portal, tenant screening, and outgoing payments."
+      },
+      {
+        "name": "Premium",
+        "amount": "109",
+        "currency": "USD",
+        "billing_period": "monthly",
+        "notes": "Adds open API access, custom website, and personalized onboarding."
+      }
+    ],
+    "enterprise_contact_sales": true,
+    "last_verified": "2026-08-20",
+    "official_source": "https://www.doorloop.com/pricing"
+  },
+  "pros": [
+    "Extremely intuitive and modern user interface compared to legacy PM tools",
+    "Supports all property types (residential, commercial, HOA, storage) in one login",
+    "Built-in double-entry accounting eliminates mandatory third-party software"
+  ],
+  "cons": [
+    "No perpetual free plan; requires paid subscription after 14-day trial",
+    "Base price covers up to 20 units; per-unit pricing increases with portfolio scale",
+    "Advanced API access restricted to Premium tier"
+  ],
+  "sources": [
+    "https://www.doorloop.com/pricing",
+    "https://www.doorloop.com"
+  ],
+  "accessed_at": "2026-08-20",
+  "alternatives": [
+    {
+      "name": "AppFolio",
+      "slug": "appfolio",
+      "description": "Enterprise property management platform with AI leasing and multi-family management.",
+      "best_for": "Portfolios with 50+ residential or commercial units",
+      "strengths": [
+        "AI leasing assistant",
+        "Large-scale accounting",
+        "Smart maintenance automation"
+      ]
+    },
+    {
+      "name": "Buildium",
+      "slug": "buildium",
+      "description": "RealPage property management software for residential portfolios and community associations.",
+      "best_for": "Established residential managers and HOAs",
+      "strengths": [
+        "HOA board portals",
+        "Resident center app",
+        "Tenant screening"
+      ]
+    },
+    {
+      "name": "TenantCloud",
+      "slug": "tenantcloud",
+      "description": "Affordable cloud property management and rent collection software for DIY landlords.",
+      "best_for": "Smaller DIY landlords seeking budget-friendly rental management",
+      "strengths": [
+        "Low entry price ($17/mo)",
+        "Direct rent collection",
+        "Listing syndication"
+      ]
+    }
+  ]
+}
