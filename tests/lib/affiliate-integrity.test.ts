@@ -58,6 +58,25 @@ describe("Affiliate Source-of-Truth & State Integrity", () => {
     expect(setmoreRec?.nextAction).toMatch(/NO PAID MEDIA/i);
   });
 
+  it("ensures known form-blocked programs (Xero, Trainual, Tidio) are strictly classified as BLOCKED_FORM_DEFECT", () => {
+    const formBlocked = ["xero", "trainual", "tidio"];
+    for (const slug of formBlocked) {
+      const rec = recordMap.get(slug);
+      expect(rec).toBeDefined();
+      expect(rec?.status).toBe("BLOCKED_FORM_DEFECT");
+    }
+  });
+
+  it("ensures known owner-blocked programs (Semrush, LastPass, Zoho CRM, GoHighLevel, QuickBooks) are strictly classified as OWNER_ACTION_REQUIRED", () => {
+    const ownerBlocked = ["semrush", "lastpass", "zoho-crm", "gohighlevel", "quickbooks-online"];
+    for (const slug of ownerBlocked) {
+      const rec = recordMap.get(slug);
+      expect(rec).toBeDefined();
+      expect(rec?.status).toBe("OWNER_ACTION_REQUIRED");
+      expect(rec?.ownerBlocker).toBeTruthy();
+    }
+  });
+
   it("ensures no duplicate software slugs exist in canonical affiliate records", () => {
     const slugs = canonical.records.map(r => r.slug);
     const uniqueSlugs = new Set(slugs);
