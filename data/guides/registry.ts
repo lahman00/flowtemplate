@@ -388,10 +388,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       }
     ],
     comparisons: [
-      "pipedrive-vs-hubspot",
+      "hubspot-vs-pipedrive",
       "pipedrive-vs-close",
       "pipedrive-vs-zoho-crm",
-      "close-vs-hubspot"
+      "hubspot-vs-close"
     ],
     faqs: [
       {
@@ -467,10 +467,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       }
     ],
     comparisons: [
-      "pipedrive-vs-hubspot",
+      "hubspot-vs-pipedrive",
       "pipedrive-vs-zoho-crm",
       "hubspot-vs-zoho-crm",
-      "freshsales-vs-pipedrive"
+      "pipedrive-vs-freshsales"
     ],
     faqs: [
       {
@@ -546,9 +546,9 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       }
     ],
     comparisons: [
-      "monday-vs-asana",
-      "monday-vs-clickup",
-      "asana-vs-clickup",
+      "asana-vs-monday",
+      "clickup-vs-monday",
+      "clickup-vs-asana",
       "monday-vs-wrike"
     ],
     faqs: [
@@ -625,10 +625,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       }
     ],
     comparisons: [
-      "help-scout-vs-freshdesk",
+      "freshdesk-vs-help-scout",
       "help-scout-vs-zendesk",
       "freshdesk-vs-zendesk",
-      "intercom-vs-help-scout"
+      "help-scout-vs-intercom"
     ],
     faqs: [
       {
@@ -953,9 +953,9 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
     }
   ],
   "comparisons": [
-    "setmore-vs-calendly",
-    "setmore-vs-acuity-scheduling",
-    "setmore-vs-cal-com",
+    "calendly-vs-setmore",
+    "acuity-scheduling-vs-setmore",
+    "cal-com-vs-setmore",
     "calendly-vs-cal-com"
   ],
   "faqs": [
@@ -1202,10 +1202,10 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
     }
   ],
   "comparisons": [
-    "linear-vs-jira",
-    "linear-vs-clickup",
-    "linear-vs-monday",
-    "jira-vs-clickup"
+    "jira-vs-linear",
+    "clickup-vs-linear",
+    "monday-vs-linear",
+    "clickup-vs-jira"
   ],
   "faqs": [
     {
@@ -1286,7 +1286,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
   ],
   "comparisons": [
     "airtable-vs-notion",
-    "airtable-vs-coda",
+    "coda-vs-airtable",
     "airtable-vs-smartsheet",
     "notion-vs-coda"
   ],
@@ -1452,8 +1452,8 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
   ],
   "comparisons": [
     "jobber-vs-housecall-pro",
-    "jobber-vs-servicetitan",
-    "housecall-pro-vs-servicetitan",
+    "servicetitan-vs-jobber",
+    "servicetitan-vs-housecall-pro",
     "quickbooks-online-vs-jobber"
   ],
   "faqs": [
