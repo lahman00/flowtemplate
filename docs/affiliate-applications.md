@@ -1,6 +1,6 @@
 # Affiliate applications — live status + acquisition queue
 
-Updated: 2026-08-20 (reconciled Webflow + ActiveCampaign to REJECTED from real first-party emails; Setmore ACTIVATED from a real first-party approval email; Setmore commission/payout terms independently verified against the official affiliate-terms PDF; Kit corrected to REJECTED from a real first-party decline found on the program's own page, after an earlier same-day pass wrongly concluded no application existed; all 7 named pending programs re-verified directly on their own PartnerStack pages plus first-party Gmail — all still genuinely pending, no decisions found; Wrike/Zendesk could not be independently re-verified this round, no Account #2 session available and no Gmail evidence found for either)
+Updated: 2026-08-20 (reconciled Webflow + ActiveCampaign to REJECTED from real first-party emails; Setmore ACTIVATED from a real first-party approval email; Setmore commission/payout terms independently verified against the official affiliate-terms PDF; Kit corrected to REJECTED from a real first-party decline found on the program's own page, after an earlier same-day pass wrongly concluded no application existed; all 7 named pending programs re-verified directly on their own PartnerStack pages plus first-party Gmail — all still genuinely pending, no decisions found; Wrike/Zendesk could not be independently re-verified this round, no Account #2 session available and no Gmail evidence found for either; expansion sprint found Xero and Trainual applications fully and truthfully filled but blocked by a diagnosed systemic PartnerStack form-submit defect, and found Zoho/GoHighLevel/QuickBooks require account creation or fail US-eligibility)
 
 This file is the operational affiliate list for Miloosh across PartnerStack accounts and direct networks. Statuses below distinguish **ACTIVE**, **PENDING**, **KNOWN REJECTED**, and **MONITORING TARGETS**. Never mark a program active until a real tracking URL has been issued and verified.
 
@@ -72,6 +72,28 @@ Discovered during the same 20-row sweep — real, already-Active PartnerStack pa
 - **PDWare** — **EDITORIALLY_REJECTED.** Active, real referral link `https://try.pdware.com/9l2hndbyhssz` (→ pdware.com), 10% per Closed Referral. Real product ("ResourceFirst"), but an enterprise-only resource/portfolio-management (PPM) tool with no public pricing (sales-gated "Request Pricing" only) and no close comparable already in Miloosh's catalog. No content brief produced — rejected independent of the affiliate approval being real. See `data/revenue/affiliate-programs.ts` (slug: `pdware`).
 
 Also noted, not acted on: PartnerStack's own dashboard shows "Agree to terms & conditions for 1 program to gain access" for the **PartnerStack self-referral program itself** (refer other publishers to PartnerStack) — unrelated to any Miloosh software/comparison content, and accepting new terms requires explicit owner sign-off. Not accepted in this task.
+
+## Ready to Apply, Blocked by a Tooling Defect (2026-08-20)
+
+Both applications below were located via a full PartnerStack marketplace sweep against the current catalog, verified eligible, and **fully and truthfully filled out** — but a systemic defect in PartnerStack's newer `marketplace/{category}/details/{slug}` application-form UI (distinct from the older direct-application flow that worked earlier this session for Help Scout/Amplitude/Toggl Track) silently refuses to submit: the Submit button is enabled, unobstructed by any overlay, shows no validation error — yet real coordinate clicks, real keyboard-Enter after genuine focus, and click-after-blur (4 total genuine attempts across the two forms) all leave the form on the same unsubmitted page. No JS bypass was used. Both are recorded `needs_owner_action` in the pipeline with the exact filled answers, ready for the owner (or a future session, if the underlying tooling issue resolves) to submit with one click.
+
+- **Xero** (PartnerStack, Accounting): real commission **$200 per qualified purchase** per the live listing — conflicts with an older research note that said "30%"; both preserved, see `data/revenue/affiliate-programs.ts`. Filled answers: website=miloosh.com, Accountant/Bookkeeper=No, existing Xero user=No, target audience=Small Businesses, promotion plan and SMB-audience-size answered honestly (no fabricated numbers), full list of Miloosh's other real PartnerStack partnerships disclosed.
+- **Trainual** (PartnerStack, HR/Content Management): real commission **Affiliates 10% / Partners 20%**. Filled answers: website=miloosh.com, identify-as=Blogger, Trainual customer=No (audience-size field left blank — optional, no verified figure to report).
+
+## Requires Owner Account Creation (2026-08-20)
+
+Real programs where the "application" is actually new third-party account creation (password required) — outside this agent's authority (never create accounts or passwords):
+
+- **Zoho** (direct, covers zoho-crm/zoho-desk/zoho-flow/zoho-projects — **portfolio value: one relationship covers 4 real catalog products**): zoho.com/affiliate/signup.html explicitly creates a new Zoho account tied to hello@miloosh.com. Real commission: 15%/18%/20% tiered, capped $25,000/deal.
+- **GoHighLevel** (direct): affiliate.gohighlevel.com's signup form has a required Password field. Real commission: 40% recurring for the life of the account.
+- **QuickBooks Online** (PartnerStack, Accounting): not blocked by account creation, but genuinely deprioritized — the program is explicitly **US-audience-only** ("What percentage of your audience is in the United States?" is a real required field on the live form), a material constraint since Miloosh is not US-based, and the listed "commission" is actually a customer-facing discount (30% off for 6 months), not a stated affiliate payout.
+
+## No Program Found — Antigravity-Added Products (2026-08-20)
+
+Independently researched per the two-agent workflow (Antigravity adds editorial catalog content, Claude investigates monetization) for products Antigravity added this sprint:
+
+- **Harvest**: getharvest.com/affiliates and /partners both return a genuine 404. No affiliate program found on any network checked.
+- **Time Doctor**: timedoctor.com/affiliate, /partners, and /affiliates all return a genuine 404. No affiliate program found on any network checked.
 
 ## Activation Rule
 
