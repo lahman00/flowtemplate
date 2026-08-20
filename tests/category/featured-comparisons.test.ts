@@ -164,4 +164,24 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(kcComps.length).toBeGreaterThanOrEqual(5);
     expect(isPublishedComparison("krispcall", "google-meet")).toBe(true);
   });
+
+  it("verifies Sprint #4 developer tools and API documentation graph authority", () => {
+    // Sentry & Datadog vs PostHog
+    expect(isPublishedComparison("sentry", "posthog")).toBe(true);
+    expect(isPublishedComparison("datadog", "posthog")).toBe(true);
+
+    // API documentation portals & GitBook
+    expect(isPublishedComparison("readme", "gitbook")).toBe(true);
+    expect(isPublishedComparison("swaggerhub", "gitbook")).toBe(true);
+    expect(isPublishedComparison("postman", "readme")).toBe(true);
+    expect(isPublishedComparison("archbee", "gitbook")).toBe(true);
+
+    // WorkOS vs Duo Security
+    expect(isPublishedComparison("workos", "duo-security")).toBe(true);
+
+    // Verify degree increases
+    expect(getComparisonsInvolving("gitbook").length).toBeGreaterThanOrEqual(15);
+    expect(getComparisonsInvolving("posthog").length).toBeGreaterThanOrEqual(13);
+    expect(getComparisonsInvolving("readme").length).toBeGreaterThanOrEqual(12);
+  });
 });

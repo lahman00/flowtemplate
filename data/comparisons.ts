@@ -1239,6 +1239,20 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
 
   // 5. KrispCall active partner cloud phone system vs Google Meet video calls:
   ["krispcall", "google-meet"],
+
+  // 2026-08-20 Growth Sprint #4 — Developer tools, observability & technical documentation authority:
+  // 1. Developer observability & error tracking vs all-in-one product telemetry:
+  ["sentry", "posthog"],
+  ["datadog", "posthog"],
+
+  // 2. Interactive API developer portals vs Git-sync technical documentation wikis:
+  ["readme", "gitbook"],
+  ["swaggerhub", "gitbook"],
+  ["postman", "readme"],
+  ["archbee", "gitbook"],
+
+  // 3. Enterprise SaaS auth/SSO API integration vs employee access MFA/SSO:
+  ["workos", "duo-security"],
 ];
 
 export function getComparisonSlug(slugA: string, slugB: string): string {
