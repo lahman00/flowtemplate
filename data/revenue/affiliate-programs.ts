@@ -1377,7 +1377,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     countryRestrictions: null,
     commissionModel: "20% revenue share for the first year of a customer's subscription",
     recurrence: "one_time",
-    notes: "Re-verified 2026-08-20 directly on the live PartnerStack marketplace listing (dash.partnerstack.com): 1,000-4,999 active partners, program running since Jul 2, 2024. Commission upgraded from unconfirmed to verified. Not yet submitted -- see affiliate pipeline (slug: amplitude).",
+    notes: "Application submitted and PENDING_REVIEW as of 2026-08-20 (superseding an earlier note here that said \"not yet submitted\" -- that was stale). Re-verified 2026-08-20 directly on Amplitude's own PartnerStack program page: \"Your application was received,\" Messages tab empty, no decision yet. DISCREPANCY: the marketplace listing text (dash.partnerstack.com) states \"20% revenue share for the first year,\" but the program's own direct page's \"Offer structure\" field currently shows \"None provided\" -- likely because a personalized offer isn't generated until approval. Treat 20% as a real but unconfirmed-at-the-account-level figure until an actual offer appears post-approval.",
     sourceUrls: ["https://amplitude.com/affiliates", "https://amplitude.com/partner-program", "https://dash.partnerstack.com (marketplace listing: Amplitude)"],
     applicationUrl: "https://amplitude.com/affiliates",
     confidence: "high",
@@ -1772,8 +1772,8 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "30% commission on the first payment from every new customer referred",
     recurrence: "one_time",
     notes:
-      "Discovered 2026-08-20 during the overnight affiliate-expansion sweep of the PartnerStack marketplace (not found in prior research passes). Live PartnerStack listing, 1,000-4,999 active partners, program running since Apr 2, 2025. Application form has multiple dropdown fields; not yet submitted -- see affiliate pipeline (slug: toggl-track) for the exact tooling blocker encountered tonight.",
-    sourceUrls: ["https://dash.partnerstack.com (marketplace listing: Toggl)"],
+      "Discovered 2026-08-20 during the overnight affiliate-expansion sweep of the PartnerStack marketplace (not found in prior research passes). Live PartnerStack listing, 1,000-4,999 active partners, program running since Apr 2, 2025. Application WAS successfully submitted (superseding an earlier note here that said otherwise): confirmed PENDING_REVIEW 2026-08-20 via Toggl's own direct PartnerStack program page (Application tab: \"Your application was received\"; Messages tab: no messages) and first-party Gmail confirmation. No decision yet.",
+    sourceUrls: ["https://dash.partnerstack.com (partnership page: Toggl)"],
     confidence: "high",
   },
   {
