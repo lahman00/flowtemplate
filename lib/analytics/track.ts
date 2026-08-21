@@ -1,6 +1,6 @@
 "use client";
 
-import { markAndCheckSyntheticQa } from "@/lib/analytics/synthetic";
+import { markAndCheckSyntheticQa, getSyntheticQaRun } from "@/lib/analytics/synthetic";
 
 /**
  * Recommend Engine Integrity Patch (2026-08-21) — the shared client-side
@@ -49,11 +49,16 @@ export function getOrCreateSessionId(): string {
  */
 export function trackEvent(data: Record<string, unknown>): void {
   try {
+    const isTest = markAndCheckSyntheticQa();
     const body = JSON.stringify({
       ...data,
       visitorId: getOrCreateVisitorId(),
       sessionId: getOrCreateSessionId(),
-      isTest: markAndCheckSyntheticQa(),
+      isTest,
+      // Analytics Zero-Drop Production Proof Mega Mission (2026-08-21)
+      // Phase 5: qaRun only ever attached alongside isTest:true — a real/
+      // unknown-human event never carries it.
+      ...(isTest && getSyntheticQaRun() ? { qaRun: getSyntheticQaRun() } : {}),
     });
     if (typeof navigator !== "undefined" && navigator.sendBeacon) {
       const blob = new Blob([body], { type: "application/json" });

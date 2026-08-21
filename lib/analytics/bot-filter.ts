@@ -121,6 +121,16 @@ export type RequestClassification = {
  * explicit Miloosh QA traffic is marked via the request BODY's isTest
  * field (set by lib/analytics/synthetic.ts's ?qa=1 flow) and must reach
  * storage, not be discarded here alongside real bots.
+ *
+ * Also deliberately does NOT check `x-vercel-sc-headers` anymore. Root
+ * cause of the 2026-08-21 zero-events incident: this header is injected
+ * by Vercel's own platform on requests reaching this function — proven
+ * with a real production log line, `[analytics] INTERNAL_INFRA:
+ * x-vercel-sc-headers header present`, produced by an ordinary curl POST
+ * with a genuine browser user-agent and nothing else unusual about it.
+ * Its mere presence is not a bot signal; treating it as one had been
+ * silently discarding effectively all analytics traffic — real and
+ * synthetic alike — since this check was added.
  */
 export function classifyRequest(headers: Headers): RequestClassification {
   const userAgent = headers.get("user-agent") || "";
@@ -129,7 +139,6 @@ export function classifyRequest(headers: Headers): RequestClassification {
   }
 
   const infraChecks: Array<[string, boolean]> = [
-    ["x-vercel-sc-headers header present", Boolean(headers.get("x-vercel-sc-headers"))],
     ["x-vercel-cron header present", Boolean(headers.get("x-vercel-cron"))],
     ["purpose: prefetch", headers.get("purpose") === "prefetch"],
     ["sec-purpose: prefetch", headers.get("sec-purpose") === "prefetch"],

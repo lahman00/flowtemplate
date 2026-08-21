@@ -37,11 +37,31 @@ export interface BaseAnalyticsEvent {
   timestamp: string;
   path: string;
   isTest?: boolean;
+  /**
+   * Analytics Zero-Drop Production Proof Mega Mission (2026-08-21) Phase 5:
+   * an operator-supplied run identifier for one specific QA session, so its
+   * events can be found unambiguously in storage. Only ever present when
+   * isTest is true — enforced server-side in app/api/analytics/event/route.ts,
+   * never trusted from the client alone. Not PII: a short opaque string the
+   * operator chose, sanitized to [a-zA-Z0-9_-] before storage.
+   */
+  qaRun?: string;
 }
 
 export interface PageViewEvent extends BaseAnalyticsEvent {
   type: "page_view";
-  referrer?: string;
+  /**
+   * Analytics Zero-Drop Production Proof Mega Mission (2026-08-21) Phase 8:
+   * a hostname only (e.g. "www.google.com") — never the full referrer URL,
+   * which can carry a sensitive query string from the referring page. See
+   * lib/analytics/attribution.ts's extractReferrerHost.
+   */
+  referrerHost?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  /** Normalized via lib/analytics/attribution.ts — never computed ad hoc elsewhere. */
+  trafficSource?: "organic_search" | "social" | "referral" | "direct" | "unknown";
 }
 
 export interface EngagedViewEvent extends BaseAnalyticsEvent {

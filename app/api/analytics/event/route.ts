@@ -58,6 +58,13 @@ export async function POST(request: NextRequest) {
   }
 
   const isTest = body.isTest === true;
+  // Phase 5: qaRun is re-validated server-side, never trusted from the
+  // client alone, and — same rule as the client enforces — can only ever
+  // be present on an isTest:true event. A spoofed isTest:false + qaRun
+  // combination silently drops the qaRun rather than storing it.
+  const rawQaRun = typeof body.qaRun === "string" ? body.qaRun.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 64) : undefined;
+  const qaRun = isTest && rawQaRun ? rawQaRun : undefined;
+
   const sanitizedEvent: FirstPartyEvent = {
     ...body,
     timestamp: new Date().toISOString(),
@@ -65,6 +72,7 @@ export async function POST(request: NextRequest) {
     visitorId: String(body.visitorId).slice(0, 64),
     sessionId: String(body.sessionId).slice(0, 64),
     isTest,
+    qaRun,
   } as FirstPartyEvent;
 
   const stored = await recordFirstPartyEvent(sanitizedEvent);

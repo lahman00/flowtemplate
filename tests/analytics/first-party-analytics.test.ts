@@ -89,8 +89,12 @@ describe("First-Party Analytics, Bot Defense & Funnel Suite", () => {
       const syntheticHeader = new Headers({ "user-agent": humanUA, "x-synthetic-qa": "true" });
       expect(isInternalOrSyntheticTraffic(syntheticHeader)).toBe(false);
 
+      // Root cause of the 2026-08-21 zero-events incident: this header is
+      // injected by Vercel's own platform on ordinary requests — proven via
+      // a real production log line from a genuine curl+real-UA request — so
+      // its mere presence must NOT be treated as a bot/infra signal anymore.
       const vercelHeader = new Headers({ "user-agent": humanUA, "x-vercel-sc-headers": "1" });
-      expect(isInternalOrSyntheticTraffic(vercelHeader)).toBe(true);
+      expect(isInternalOrSyntheticTraffic(vercelHeader)).toBe(false);
 
       const cronHeader = new Headers({ "user-agent": humanUA, "x-vercel-cron": "1" });
       expect(isInternalOrSyntheticTraffic(cronHeader)).toBe(true);

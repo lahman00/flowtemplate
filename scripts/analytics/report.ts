@@ -501,6 +501,49 @@ export async function generateAnalyticsReport() {
   }
   console.log("   Run with --include-synthetic to see these counted back into the numbers above (debug only).");
   console.log("========================================================================================\n");
+
+  // Phase 9 — DATA QUALITY section: makes silent instrumentation gaps
+  // visible. Bot-filtered requests, validation rejects, and storage
+  // failures are NOT stored (by design — a rejected/failed write leaves
+  // no record here), so they cannot be counted from stored data; the
+  // honest way to see those is `vercel logs`, where every BOT,
+  // INTERNAL_INFRA, REJECTED_VALIDATION, and FAILED_STORAGE outcome is
+  // logged (see app/api/analytics/event/route.ts and lib/analytics/
+  // events.ts). This section says so explicitly rather than reporting a
+  // fabricated zero.
+  const realOrUnknownEvents = events.filter(e => !isSyntheticOrTestEvent(e));
+  const syntheticQaEvents = events.filter(e => e.isTest && !isLegacyContaminatedSession(e.sessionId));
+  const legacyContaminatedEvents = events.filter(e => isLegacyContaminatedSession(e.sessionId));
+
+  const coverageByType = new Map<string, number>();
+  for (const e of events) coverageByType.set(e.type, (coverageByType.get(e.type) ?? 0) + 1);
+
+  const trafficSourceCounts = new Map<string, number>();
+  for (const e of realOrUnknownEvents) {
+    if (e.type === "page_view" && e.trafficSource) {
+      trafficSourceCounts.set(e.trafficSource, (trafficSourceCounts.get(e.trafficSource) ?? 0) + 1);
+    }
+  }
+
+  console.log("========================================================================================");
+  console.log(" DATA QUALITY (Analytics Zero-Drop Production Proof Mega Mission, 2026-08-21):");
+  console.log(`   Accepted REAL_OR_UNKNOWN_HUMAN events:  ${realOrUnknownEvents.length}`);
+  console.log(`   SYNTHETIC_QA events (stored, excluded):  ${syntheticQaEvents.length}`);
+  console.log(`   LEGACY_CONTAMINATED events (stored, excluded): ${legacyContaminatedEvents.length}`);
+  console.log(`   BOT_REJECTED / REJECTED_VALIDATION / FAILED_STORAGE: not measurable from stored data by design (never stored) — see \`vercel logs\` for these outcomes, logged at the point of rejection.`);
+  console.log(`\n   Event coverage by type (all time, unfiltered by classification):`);
+  for (const [type, count] of [...coverageByType.entries()].sort((a, b) => b[1] - a[1])) {
+    console.log(`     ${type.padEnd(28)} ${count}`);
+  }
+  console.log(`\n   Traffic source distribution (REAL_OR_UNKNOWN_HUMAN landing page_views only):`);
+  if (trafficSourceCounts.size === 0) {
+    console.log(`     (none recorded yet)`);
+  } else {
+    for (const [source, count] of [...trafficSourceCounts.entries()].sort((a, b) => b[1] - a[1])) {
+      console.log(`     ${source.padEnd(18)} ${count}`);
+    }
+  }
+  console.log("========================================================================================\n");
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
