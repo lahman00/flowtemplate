@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import type { ComponentProps } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import type { WixFunnelContext } from "@/lib/wix-funnels";
+import { markAndCheckSyntheticQa } from "@/lib/analytics/synthetic";
 
 type TrackedCtaLinkProps = ComponentProps<typeof ButtonLink> & {
   /** The software slug this CTA points at — resolved server-side, never trusted from the client alone. */
@@ -34,10 +35,11 @@ export function TrackedCtaLink({ slug, ctaLocation, wixContext, onClick, ...prop
         onClick?.(event);
         const visitorId = typeof localStorage !== "undefined" ? localStorage.getItem("miloosh_vid") ?? undefined : undefined;
         const sessionId = typeof sessionStorage !== "undefined" ? sessionStorage.getItem("miloosh_sid") ?? undefined : undefined;
+        const isTest = markAndCheckSyntheticQa();
         void fetch("/api/outbound-click", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ slug, kind: "cta", sourcePage: pathname, ctaLocation, wixContext, visitorId, sessionId }),
+          body: JSON.stringify({ slug, kind: "cta", sourcePage: pathname, ctaLocation, wixContext, visitorId, sessionId, isTest }),
           keepalive: true,
         }).catch(() => {
           // Best-effort only — a tracking failure must never affect the user's click.

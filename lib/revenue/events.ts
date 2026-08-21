@@ -72,6 +72,16 @@ export type OutboundEvent = {
   campaignId?: string;
   network?: string;
   ctaLocation?: string;
+  /**
+   * Analytics Zero-Drop Production Proof Mega Mission (2026-08-21) —
+   * Phase 11: the legacy outbound-click pipeline never carried the
+   * isTest marker the first-party pipeline uses, so a synthetic QA click
+   * here couldn't be told apart from a real one. Never fabricates a real
+   * vendor-side click for QA purposes — see components/TrackedCtaLink.tsx
+   * and app/api/outbound-click/route.ts for how this stays a safe,
+   * internal-only marker rather than an actual outbound navigation.
+   */
+  isTest?: boolean;
 };
 
 export type StoredOutboundEvent = OutboundEvent & {

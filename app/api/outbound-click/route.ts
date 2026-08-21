@@ -25,6 +25,7 @@ type OutboundClickBody = {
   wixContext?: unknown;
   visitorId?: unknown;
   sessionId?: unknown;
+  isTest?: unknown;
 };
 
 function isWixContext(value: unknown): value is WixFunnelContext {
@@ -54,9 +55,14 @@ export async function POST(request: NextRequest) {
   const resolvedCtaLocation = typeof ctaLocation === "string" ? ctaLocation : undefined;
   const visitorId = typeof body.visitorId === "string" ? body.visitorId : "v_anon";
   const sessionId = typeof body.sessionId === "string" ? body.sessionId : "s_anon";
+  // Analytics Zero-Drop Production Proof Mega Mission (2026-08-21) Phase
+  // 11: propagated to both the legacy outbound-click pipeline (lib/revenue/
+  // events.ts) and first-party analytics, so a synthetic QA click never
+  // gets counted as a real conversion in either system.
+  const isTest = body.isTest === true;
 
   if (kind === "vendor-link") {
-    await trackVendorLinkClick(software, software.website, sourcePage);
+    await trackVendorLinkClick(software, software.website, sourcePage, isTest);
 
     // Also record into first-party analytics event store
     const { recordFirstPartyEvent } = await import("@/lib/analytics/events");
@@ -70,10 +76,11 @@ export async function POST(request: NextRequest) {
       visitorId,
       sessionId,
       timestamp: new Date().toISOString(),
+      isTest,
     });
   } else {
     const url = slug === "wix" && isWixContext(wixContext) ? getWixAffiliateUrl(wixContext) : getSoftwareCtaUrl(software);
-    await trackSoftwareCtaClick(software, url, sourcePage, resolvedCtaLocation);
+    await trackSoftwareCtaClick(software, url, sourcePage, resolvedCtaLocation, isTest);
 
     // Also record into first-party analytics event store
     const { recordFirstPartyEvent } = await import("@/lib/analytics/events");
@@ -90,6 +97,7 @@ export async function POST(request: NextRequest) {
       visitorId,
       sessionId,
       timestamp: new Date().toISOString(),
+      isTest,
     });
   }
 

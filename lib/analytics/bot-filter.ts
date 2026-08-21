@@ -1,6 +1,20 @@
 /**
  * Aggressive server-side bot and crawler filter.
- * Filters automated search spiders, synthetic QA, Vercel health checks, and headless browsers.
+ * Filters automated search spiders, Vercel platform/health-check noise,
+ * and headless browsers.
+ *
+ * Analytics Zero-Drop Production Proof Mega Mission (2026-08-21) — Phase
+ * 3/4: this used to collapse two very different things into one silent
+ * "drop, don't store" bucket: real crawler/bot noise, AND explicit
+ * Miloosh QA traffic (the old `x-synthetic-qa` header check). That's
+ * architecturally wrong — Miloosh's own QA traffic (marked via the
+ * `?qa=1` client-side flow, see lib/analytics/synthetic.ts) must be
+ * STORED with isTest:true so the pipeline's own correctness can be
+ * proven in production, and only actual bots/platform noise should be
+ * discarded outright. classifyRequest() below replaces the old boolean
+ * isInternalOrSyntheticTraffic with a reasoned classification so a
+ * reviewer (or a live Vercel log line) can see exactly which check
+ * fired, instead of a single opaque true/false.
  */
 
 const KNOWN_BOT_PATTERNS = [
@@ -87,18 +101,51 @@ export function isBotUserAgent(userAgent: string | null | undefined): boolean {
   return KNOWN_BOT_PATTERNS.some((pattern) => pattern.test(userAgent));
 }
 
-export function isInternalOrSyntheticTraffic(headers: Headers): boolean {
+/** The three outcomes a request can be classified into before body validation runs. */
+export type RequestClassificationKind = "BOT" | "INTERNAL_INFRA" | "PASS";
+
+export type RequestClassification = {
+  kind: RequestClassificationKind;
+  /** Which specific check fired, for logging — never returned to the public client. */
+  reason: string;
+};
+
+/**
+ * Replaces the old boolean isInternalOrSyntheticTraffic. BOT and
+ * INTERNAL_INFRA are kept as separate kinds (rather than one bucket)
+ * specifically so a Vercel log line or a debug response can say which one
+ * fired — this is what let the 2026-08-21 investigation actually find the
+ * real cause of the production event drop instead of guessing.
+ *
+ * Deliberately does NOT check any `x-synthetic-qa`-style header anymore:
+ * explicit Miloosh QA traffic is marked via the request BODY's isTest
+ * field (set by lib/analytics/synthetic.ts's ?qa=1 flow) and must reach
+ * storage, not be discarded here alongside real bots.
+ */
+export function classifyRequest(headers: Headers): RequestClassification {
   const userAgent = headers.get("user-agent") || "";
-  if (isBotUserAgent(userAgent)) return true;
+  if (isBotUserAgent(userAgent)) {
+    return { kind: "BOT", reason: `user-agent matched a known bot pattern: "${userAgent.slice(0, 120)}"` };
+  }
 
-  if (headers.get("x-synthetic-qa") === "true") return true;
-  if (headers.get("x-vercel-sc-headers")) return true;
-  if (headers.get("x-vercel-cron")) return true;
-  if (headers.get("purpose") === "prefetch") return true;
-  if (headers.get("sec-purpose") === "prefetch") return true;
-  if (headers.get("x-purpose") === "preview") return true;
-  if (headers.get("x-middleware-prefetch") === "1") return true;
-  if (headers.get("x-nextjs-prefetch") === "1") return true;
+  const infraChecks: Array<[string, boolean]> = [
+    ["x-vercel-sc-headers header present", Boolean(headers.get("x-vercel-sc-headers"))],
+    ["x-vercel-cron header present", Boolean(headers.get("x-vercel-cron"))],
+    ["purpose: prefetch", headers.get("purpose") === "prefetch"],
+    ["sec-purpose: prefetch", headers.get("sec-purpose") === "prefetch"],
+    ["x-purpose: preview", headers.get("x-purpose") === "preview"],
+    ["x-middleware-prefetch: 1", headers.get("x-middleware-prefetch") === "1"],
+    ["x-nextjs-prefetch: 1", headers.get("x-nextjs-prefetch") === "1"],
+  ];
+  const tripped = infraChecks.find(([, matched]) => matched);
+  if (tripped) {
+    return { kind: "INTERNAL_INFRA", reason: tripped[0] };
+  }
 
-  return false;
+  return { kind: "PASS", reason: "no bot/infra signal matched" };
+}
+
+/** @deprecated Use classifyRequest — kept only so existing tests can assert the old boolean shape still holds. */
+export function isInternalOrSyntheticTraffic(headers: Headers): boolean {
+  return classifyRequest(headers).kind !== "PASS";
 }

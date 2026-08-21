@@ -78,11 +78,16 @@ describe("First-Party Analytics, Bot Defense & Funnel Suite", () => {
       expect(isBotUserAgent(samsungAndroid)).toBe(false);
     });
 
-    it("filters synthetic QA, cron, and Next.js prefetch request headers", () => {
+    it("filters cron and Next.js prefetch request headers, but no longer treats explicit QA traffic as a bot", () => {
       const humanUA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/128.0.0.0 Safari/537.36";
 
+      // Analytics Zero-Drop Production Proof Mega Mission (2026-08-21) Phase 4:
+      // x-synthetic-qa must NOT be treated as bot-equivalent anymore — explicit
+      // Miloosh QA traffic is marked via the request BODY's isTest field (see
+      // lib/analytics/synthetic.ts) and must reach storage, not be silently
+      // dropped here alongside real bots.
       const syntheticHeader = new Headers({ "user-agent": humanUA, "x-synthetic-qa": "true" });
-      expect(isInternalOrSyntheticTraffic(syntheticHeader)).toBe(true);
+      expect(isInternalOrSyntheticTraffic(syntheticHeader)).toBe(false);
 
       const vercelHeader = new Headers({ "user-agent": humanUA, "x-vercel-sc-headers": "1" });
       expect(isInternalOrSyntheticTraffic(vercelHeader)).toBe(true);

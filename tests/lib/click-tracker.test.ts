@@ -129,7 +129,9 @@ describe("trackSoftwareCtaClick — Wix funnel dimensions", () => {
     await trackSoftwareCtaClick(wix, WIX_FUNNELS["website-builder"].url, "/software/wix", "software-page-cta");
     const [event] = await getOutboundEvents();
     const keys = Object.keys(event).sort();
-    expect(keys).toEqual(["affiliateFunnel", "affiliateProgram", "campaignId", "ctaLocation", "destination", "network", "softwareSlug", "sourcePage", "timestamp", "type", "url"]);
+    // "isTest" added by the Analytics Zero-Drop Production Proof Mega Mission
+    // (2026-08-21) Phase 11 — a boolean synthetic-QA marker, not PII.
+    expect(keys).toEqual(["affiliateFunnel", "affiliateProgram", "campaignId", "ctaLocation", "destination", "isTest", "network", "softwareSlug", "sourcePage", "timestamp", "type", "url"]);
   });
 
   it("a plain official-site click (no affiliate link) carries no affiliate dimensions", async () => {

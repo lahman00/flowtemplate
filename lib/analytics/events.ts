@@ -171,14 +171,24 @@ function appendLocalFallback(event: FirstPartyEvent): void {
   fs.writeFileSync(LOCAL_FALLBACK_PATH, JSON.stringify(events.slice(-MAX_STORED_EVENTS), null, 2));
 }
 
-export async function recordFirstPartyEvent(event: FirstPartyEvent): Promise<void> {
+/**
+ * Analytics Zero-Drop Production Proof Mega Mission (2026-08-21) — Phase
+ * 10: "never throw" must not mean "silently disappear." This still never
+ * throws (a storage hiccup must never break the page/API route that
+ * called it), but now returns whether the write actually succeeded and
+ * logs a failure via console.error — a single, non-recursive structured
+ * line (never calls itself or any other analytics recorder), observable
+ * in `vercel logs` — instead of swallowing the error with a bare comment.
+ */
+export async function recordFirstPartyEvent(event: FirstPartyEvent): Promise<boolean> {
   if (!hasBlobToken()) {
     try {
       appendLocalFallback(event);
-    } catch {
-      // ignore local write error
+      return true;
+    } catch (error) {
+      console.error(`[analytics] local fallback write failed for event type "${event.type}":`, error);
+      return false;
     }
-    return;
   }
 
   try {
@@ -190,8 +200,10 @@ export async function recordFirstPartyEvent(event: FirstPartyEvent): Promise<voi
       allowOverwrite: false,
       contentType: "application/json",
     });
-  } catch {
-    // transient blob store error
+    return true;
+  } catch (error) {
+    console.error(`[analytics] Blob write failed for event type "${event.type}":`, error);
+    return false;
   }
 }
 
