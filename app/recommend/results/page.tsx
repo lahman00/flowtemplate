@@ -73,7 +73,7 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
     );
   }
 
-  const recommendations = getRecommendations(answers, 3);
+  const { recommendations, confidence, confidenceNote } = getRecommendations(answers, 3);
 
   recordRecommendationEvent({ type: "recommendation_generated", answersSummary });
   for (const rec of recommendations) {
@@ -99,13 +99,31 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
 
         <header className="mt-6 max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Your top 3 recommendations
+            {confidence === "none" ? "No strong match yet" : `Your top ${recommendations.length} recommendation${recommendations.length === 1 ? "" : "s"}`}
           </h1>
           <p className="mt-6 text-lg leading-8 text-zinc-400">
             Ranked by a deterministic score computed from our verified dataset — no AI, no
             invented facts. Every point below is explained.
           </p>
         </header>
+
+        {confidenceNote ? (
+          <div
+            className={`mt-8 max-w-2xl rounded-xl border px-5 py-4 text-sm leading-6 ${
+              confidence === "none"
+                ? "border-amber-500/30 bg-amber-500/[0.06] text-amber-200"
+                : "border-white/15 bg-white/5 text-zinc-300"
+            }`}
+          >
+            {confidenceNote}
+          </div>
+        ) : null}
+
+        {confidence === "none" ? (
+          <div className="mt-10 max-w-md">
+            <ButtonLink href="/recommend">Adjust your answers</ButtonLink>
+          </div>
+        ) : null}
 
         <div className="mt-14 space-y-10">
           {recommendations.map((rec) => {
@@ -137,6 +155,14 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
                     <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
                       {rec.software.description}
                     </p>
+                    <p className="mt-3 max-w-2xl text-sm font-medium leading-6 text-white">
+                      {rec.explanation.whyItMatched}
+                    </p>
+                    {rec.explanation.tradeoff ? (
+                      <p className="mt-2 max-w-2xl text-sm leading-6 text-amber-300/90">
+                        Worth knowing: {rec.explanation.tradeoff}
+                      </p>
+                    ) : null}
                   </div>
                   <TrackedRecommendationLink
                     slug={rec.software.slug}

@@ -6,24 +6,22 @@ import {
   ArrowLeft,
   ArrowRight,
   Bot,
-  BookOpen,
   Building2,
-  GitCompare,
+  Compass,
   Globe,
-  Kanban,
-  MessageSquare,
+  ShieldQuestion,
   SlidersHorizontal,
   Users,
-  Workflow,
 } from "lucide-react";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { OptionButton } from "@/components/recommend/OptionButton";
 import { ToggleCard } from "@/components/recommend/ToggleCard";
 import type { RecommendationAnswers } from "@/lib/recommend/types";
+import { RECOMMEND_DOMAINS, DOMAIN_META } from "@/lib/recommend/domains";
 import { DEFAULT_ANSWERS, answersToSearchParams } from "@/lib/recommend/query";
 
-const STEPS = ["Your team", "Budget & industry", "What you need", "Fine-tune"] as const;
+const STEPS = ["What you need", "Your team", "Budget & industry", "Fine-tune"] as const;
 
 export function RecommendWizard() {
   const router = useRouter();
@@ -74,6 +72,36 @@ export function RecommendWizard() {
 
       <div className="mt-8 min-h-[22rem]">
         {step === 0 ? (
+          <fieldset>
+            <legend className="text-sm font-semibold text-white">What are you trying to do?</legend>
+            <p className="mt-1 text-xs text-zinc-500">
+              Pick the one that&apos;s closest — you can fine-tune the details next.
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {RECOMMEND_DOMAINS.map((domain) => {
+                const meta = DOMAIN_META[domain];
+                return (
+                  <OptionButton
+                    key={domain}
+                    selected={answers.primaryNeed === domain}
+                    onClick={() => update("primaryNeed", domain)}
+                    title={meta.label}
+                    description={meta.description}
+                  />
+                );
+              })}
+              <OptionButton
+                selected={answers.primaryNeed === null}
+                onClick={() => update("primaryNeed", null)}
+                title="Not sure yet"
+                description="Show me relevant options based on team size and budget alone"
+                className="sm:col-span-2"
+              />
+            </div>
+          </fieldset>
+        ) : null}
+
+        {step === 1 ? (
           <div className="space-y-8">
             <fieldset>
               <legend className="flex items-center gap-2 text-sm font-semibold text-white">
@@ -147,7 +175,7 @@ export function RecommendWizard() {
           </div>
         ) : null}
 
-        {step === 1 ? (
+        {step === 2 ? (
           <div className="space-y-8">
             <fieldset>
               <legend className="text-sm font-semibold text-white">Budget</legend>
@@ -191,58 +219,6 @@ export function RecommendWizard() {
           </div>
         ) : null}
 
-        {step === 2 ? (
-          <fieldset>
-            <legend className="text-sm font-semibold text-white">
-              What does the tool need to cover? Select all that apply.
-            </legend>
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <ToggleCard
-                selected={answers.needsProjectManagement}
-                onClick={() => update("needsProjectManagement", !answers.needsProjectManagement)}
-                icon={Kanban}
-                title="Project management"
-                description="Tasks, boards, timelines"
-              />
-              <ToggleCard
-                selected={answers.needsCrm}
-                onClick={() => update("needsCrm", !answers.needsCrm)}
-                icon={GitCompare}
-                title="CRM"
-                description="Leads, deals, pipeline"
-              />
-              <ToggleCard
-                selected={answers.needsKnowledgeBase}
-                onClick={() => update("needsKnowledgeBase", !answers.needsKnowledgeBase)}
-                icon={BookOpen}
-                title="Knowledge base"
-                description="Docs, wiki, notes"
-              />
-              <ToggleCard
-                selected={answers.needsAutomation}
-                onClick={() => update("needsAutomation", !answers.needsAutomation)}
-                icon={Workflow}
-                title="Automation"
-                description="Workflows, triggers"
-              />
-              <ToggleCard
-                selected={answers.needsCommunication}
-                onClick={() => update("needsCommunication", !answers.needsCommunication)}
-                icon={MessageSquare}
-                title="Communication"
-                description="Chat, calls, meetings"
-              />
-              <ToggleCard
-                selected={answers.needsAi}
-                onClick={() => update("needsAi", !answers.needsAi)}
-                icon={Bot}
-                title="AI features"
-                description="AI-assisted workflows"
-              />
-            </div>
-          </fieldset>
-        ) : null}
-
         {step === 3 ? (
           <div className="space-y-8">
             <fieldset>
@@ -282,9 +258,51 @@ export function RecommendWizard() {
                 ))}
               </div>
             </fieldset>
+
+            <ToggleCard
+              selected={answers.needsAi}
+              onClick={() => update("needsAi", !answers.needsAi)}
+              icon={Bot}
+              title="AI features"
+              description="AI-assisted workflows matter to me"
+            />
+
+            {answers.primaryNeed === "time_tracking" ? (
+              <fieldset>
+                <legend className="flex items-center gap-2 text-sm font-semibold text-white">
+                  <ShieldQuestion className="h-4 w-4" /> Employee monitoring
+                </legend>
+                <p className="mt-1 text-xs text-zinc-500">
+                  Some time trackers include screenshots or activity monitoring. Does that matter to you?
+                </p>
+                <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  {(
+                    [
+                      ["prefer-lightweight", "Keep it lightweight", "No screenshots or activity monitoring"],
+                      ["comfortable", "Monitoring is fine", "I need visibility into team activity"],
+                      ["no-preference", "No preference", ""],
+                    ] as const
+                  ).map(([value, label, description]) => (
+                    <OptionButton
+                      key={value}
+                      selected={answers.monitoringSensitivity === value}
+                      onClick={() => update("monitoringSensitivity", value)}
+                      title={label}
+                      description={description || undefined}
+                    />
+                  ))}
+                </div>
+              </fieldset>
+            ) : null}
           </div>
         ) : null}
       </div>
+
+      {step === 0 && answers.primaryNeed === null ? (
+        <p className="mt-4 flex items-center gap-2 text-xs text-zinc-500">
+          <Compass className="h-3.5 w-3.5 shrink-0" /> Pick a need above, or continue with &quot;Not sure yet.&quot;
+        </p>
+      ) : null}
 
       <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-6">
         <Button
