@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, GitCompare, LayoutGrid } from "lucide-react";
+import { ArrowUpRight, Compass, GitCompare, LayoutGrid } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SoftwareCard } from "@/components/SoftwareCard";
 import { Card } from "@/components/Card";
+import { ButtonLink } from "@/components/ButtonLink";
 import { JsonLd } from "@/components/JsonLd";
 import { getAllCategories, getCategory } from "@/data/categories";
 import { getSoftware } from "@/data/software";
@@ -106,6 +107,29 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             ))}
           </div>
         </section>
+
+        {software.length > 3 ? (
+          <section className="mt-14">
+            <Card className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white">
+                  <Compass className="h-5 w-5" strokeWidth={2} />
+                </span>
+                <div>
+                  <h3 className="text-base font-semibold text-white">
+                    Still not sure which one fits?
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-zinc-400">
+                    Answer a few questions and get a deterministic, explained match instead of reading through all {software.length}.
+                  </p>
+                </div>
+              </div>
+              <ButtonLink href="/recommend" className="w-full shrink-0 sm:w-auto">
+                Find my software
+              </ButtonLink>
+            </Card>
+          </section>
+        ) : null}
 
         {roleGuides.length > 0 && (
           <section className="mt-16 border-t border-white/10 pt-14">

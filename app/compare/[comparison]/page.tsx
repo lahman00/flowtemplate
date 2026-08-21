@@ -11,6 +11,7 @@ import { SoftwareCard } from "@/components/SoftwareCard";
 import { JsonLd } from "@/components/JsonLd";
 import { SearchForm } from "@/components/SearchForm";
 import { TrackedCtaLink } from "@/components/TrackedCtaLink";
+import { ButtonLink } from "@/components/ButtonLink";
 import { getSoftware, type Software } from "@/data/software";
 import {
   PUBLISHED_COMPARISONS,
@@ -391,6 +392,17 @@ export default async function ComparePage({ params }: ComparePageProps) {
             </div>
           </section>
         ) : null}
+
+        <section className="mt-16 border-t border-white/10 pt-14 text-center">
+          <SectionHeading
+            align="center"
+            title="Still not sure which one fits?"
+            description="Answer a few questions and get a deterministic, explained match instead of comparing tool by tool."
+          />
+          <ButtonLink href="/recommend" className="mt-8">
+            Find my software
+          </ButtonLink>
+        </section>
 
         <section className="mt-16 border-t border-white/10 pt-14 text-center">
           <SectionHeading
