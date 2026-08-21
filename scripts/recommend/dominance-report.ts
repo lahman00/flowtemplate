@@ -28,11 +28,14 @@ const VARIATIONS: Array<Partial<RecommendationAnswers>> = [
 
 function main() {
   const dominanceFlags: string[] = [];
+  let totalScenariosAcrossAllDomains = 0;
+  let tiedScenariosAcrossAllDomains = 0;
 
   for (const domain of RECOMMEND_DOMAINS as readonly RecommendDomain[]) {
     const top1Counts = new Map<string, number>();
     const top3Counts = new Map<string, number>();
     let totalScenarios = 0;
+    let tiedScenarios = 0;
 
     for (const variation of VARIATIONS) {
       const answers: RecommendationAnswers = { ...DEFAULT_ANSWERS, primaryNeed: domain, ...variation };
@@ -43,9 +46,16 @@ function main() {
       for (const rec of recommendations) {
         top3Counts.set(rec.software.slug, (top3Counts.get(rec.software.slug) ?? 0) + 1);
       }
+      // Phase 18/32 — tie frequency: does rank 1 share its score with rank 2?
+      if (recommendations.length > 1 && recommendations[1].scoring.totalScore === recommendations[0].scoring.totalScore) {
+        tiedScenarios++;
+      }
     }
 
-    console.log(`\n${domain} (${totalScenarios} scenarios):`);
+    totalScenariosAcrossAllDomains += totalScenarios;
+    tiedScenariosAcrossAllDomains += tiedScenarios;
+
+    console.log(`\n${domain} (${totalScenarios} scenarios, ${tiedScenarios} tied at max score = ${totalScenarios > 0 ? ((tiedScenarios / totalScenarios) * 100).toFixed(0) : 0}%):`);
     const sortedTop1 = [...top1Counts.entries()].sort((a, b) => b[1] - a[1]);
     for (const [slug, count] of sortedTop1) {
       const pct = (count / totalScenarios) * 100;
@@ -62,6 +72,8 @@ function main() {
 
   console.log(`\n${dominanceFlags.length === 0 ? "No dominance flags." : "DOMINANCE FLAGS:"}`);
   for (const flag of dominanceFlags) console.log(`  - ${flag}`);
+
+  console.log(`\nOVERALL TIE FREQUENCY: ${tiedScenariosAcrossAllDomains}/${totalScenariosAcrossAllDomains} scenarios (${((tiedScenariosAcrossAllDomains / totalScenariosAcrossAllDomains) * 100).toFixed(0)}%) had a tie at the max score.`);
 }
 
 main();
