@@ -174,3 +174,20 @@ describe("Adversarial QA — Phase 17 of the rebuild brief", () => {
     }
   });
 });
+
+describe("Deterministic tie-break — Recommend Engine Integrity Patch (2026-08-21), Phase 5", () => {
+  it("ties at the max score are broken alphabetically by slug, not by an incidental catalog/order-field position", () => {
+    // knowledge_base with no other signals: notion, confluence, obsidian, gitbook, guru, etc.
+    // all tie at the same flat PRIMARY_NEED_MATCH score. Before this patch, the winner was
+    // whichever had the lowest site-wide `order` field (Notion's order: 1) -- unrelated to
+    // buyer fit. "bloomfire" sorts first alphabetically among the tied group, so it wins now.
+    const result = getRecommendations(answers({ primaryNeed: "knowledge_base" }), 5);
+    expect(result.recommendations[0]?.software.slug).toBe("bloomfire");
+  });
+
+  it("the alphabetical tie-break is itself deterministic across repeated calls", () => {
+    const first = getRecommendations(answers({ primaryNeed: "automation" }), 5);
+    const second = getRecommendations(answers({ primaryNeed: "automation" }), 5);
+    expect(second.recommendations.map((r) => r.software.slug)).toEqual(first.recommendations.map((r) => r.software.slug));
+  });
+});

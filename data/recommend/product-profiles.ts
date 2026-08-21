@@ -29,6 +29,25 @@ import type { RecommendDomain } from "@/lib/recommend/domains";
  *
  * No affiliate information of any kind lives in this file or is read by
  * anything that reads it — see tests/lib/recommend-affiliate-neutrality.test.ts.
+ *
+ * Multi-domain audit (2026-08-21 integrity patch): the original authoring
+ * pass grouped products by one domain at a time and never revisited a
+ * product for a second domain, so real dual-fit evidence (e.g. Notion's
+ * own stored feature list) was missed — the type below was always
+ * multi-domain-capable, the data just never used it. Explicitly re-audited
+ * against each candidate's real data/software/*.json features/description:
+ * hubspot (email_marketing/help_desk considered — its stored features read
+ * as sales-email and live-chat, not a documented marketing-campaign or
+ * ticketing product, kept crm-only), clickup and slack (each has one
+ * "wiki"/"Canvas" doc feature, but framed as subordinate to their core
+ * product rather than a genuine knowledge-base buyer destination, kept
+ * single-domain), airtable (no task/project language in its stored
+ * features at all — a no-code database tool with no matching domain, kept
+ * CATALOG_ONLY), freshdesk and intercom (no knowledge-base feature in
+ * their stored data, unlike zoho-desk — kept help_desk-only), monday,
+ * microsoft-teams, hubstaff, and buffer (no second-domain evidence in
+ * their stored data). Only notion and zoho-desk had real, explicit,
+ * stored-feature-level evidence for a second domain.
  */
 
 export type ProductProfile = {
@@ -77,6 +96,15 @@ export const PRODUCT_PROFILES: readonly ProductProfile[] = [
   { slug: "tettra", domains: ["knowledge_base"] },
   { slug: "trainual", domains: ["knowledge_base"] },
 
+  // ---- notion (category: productivity — genuine multi-domain: its own data/software/notion.json
+  // lists "Wiki and knowledge base pages" AND "Project and task tracking" as two coequal, top-level
+  // features, not one subordinate to the other, and the description itself names both as core
+  // ("documents, databases, project tracking, and team knowledge in one flexible workspace"). Real
+  // buyers genuinely begin in either domain and land on Notion. Found during the 2026-08-21 integrity
+  // patch's multi-domain audit — was CATALOG_ONLY before, missed in the original single-pass authoring
+  // that grouped products by one domain at a time and never revisited any product for a second. ----
+  { slug: "notion", domains: ["knowledge_base", "project_management"] },
+
   // ---- automation (category: automation, 10 products) ----
   { slug: "ifttt", domains: ["automation"] },
   { slug: "make", domains: ["automation"] },
@@ -119,7 +147,11 @@ export const PRODUCT_PROFILES: readonly ProductProfile[] = [
   { slug: "reamaze", domains: ["help_desk"] },
   { slug: "tidio", domains: ["help_desk"] },
   { slug: "zendesk", domains: ["help_desk"] },
-  { slug: "zoho-desk", domains: ["help_desk"] },
+  // Genuine multi-domain: data/software/zoho-desk.json explicitly lists "24/7 branded self-service
+  // help center with knowledge base and community" as its own feature — unlike freshdesk/intercom,
+  // which were also audited in the 2026-08-21 integrity patch and kept help_desk-only because their
+  // stored feature lists document no comparable knowledge-base capability.
+  { slug: "zoho-desk", domains: ["help_desk", "knowledge_base"] },
 
   // ---- password_manager (from category: security — the security category also holds SSO/IAM/cloud-security/DevSecOps tools that are NOT password managers, deliberately excluded: auth0, cloudflare, crowdstrike, duo-security, okta, snyk, tailscale, wiz) ----
   { slug: "1password", domains: ["password_manager"] },

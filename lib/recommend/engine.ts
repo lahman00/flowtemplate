@@ -81,7 +81,22 @@ export function getRecommendations(
 
   const scored = eligible
     .map((software) => ({ software, scoring: scorer(software, answers) }))
-    .sort((a, b) => b.scoring.totalScore - a.scoring.totalScore);
+    .sort((a, b) => {
+      if (b.scoring.totalScore !== a.scoring.totalScore) return b.scoring.totalScore - a.scoring.totalScore;
+      // Recommend Engine Integrity Patch (2026-08-21): a real, pre-existing
+      // defect the Phase 5 dominance test surfaced — many scenarios (any
+      // default/generic answer set, especially) leave several eligible
+      // products genuinely tied at the max score, and without an explicit
+      // secondary key, Array.sort's stability just preserved
+      // getAllSoftware()'s incidental array order, which is driven by each
+      // product's site-wide `order` field (used for general homepage/
+      // category display priority) — a field with no relationship to
+      // buyer fit for a specific Recommend domain. That let one low-`order`
+      // product (e.g. Notion, order: 1) silently win nearly every tie
+      // across unrelated domains. Alphabetical-by-slug is a neutral,
+      // deterministic secondary key that carries no editorial signal.
+      return a.software.slug.localeCompare(b.software.slug);
+    });
 
   const topMatchPercent = scored.length > 0 ? scored[0]!.scoring.matchPercent : null;
   const { confidence, confidenceNote } = computeConfidence(scored.length, topMatchPercent, answers);

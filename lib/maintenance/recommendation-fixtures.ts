@@ -46,7 +46,13 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
     answers: { ...DEFAULT_ANSWERS, teamSize: "small", workStyle: "remote", budget: "low", primaryNeed: "project_management", needsAi: true },
     assertions: [
       { kind: "resultCount", expected: 3 },
-      { kind: "topCategory", expected: "project-management" },
+      // Recommend Engine Integrity Patch (2026-08-21): "productivity" is included
+      // because Notion (real catalog category "productivity") is a genuinely
+      // multi-domain-eligible product for project_management — see
+      // data/recommend/product-profiles.ts. Checking category alone would
+      // overfit to single-domain products; the real invariant this proves is
+      // domain eligibility, not catalog taxonomy.
+      { kind: "topCategoryIn", expected: ["project-management", "productivity"] },
       { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "Matches what you're trying to do" },
       { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "AI" },
     ],
@@ -64,7 +70,8 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
     name: "knowledge-base-simple",
     description: "Wants a knowledge base and prefers something simple.",
     answers: { ...DEFAULT_ANSWERS, primaryNeed: "knowledge_base", difficultyPreference: "simple" },
-    assertions: [{ kind: "topCategory", expected: "knowledge-base" }],
+    // "productivity" included for the same reason as small-remote-pm-ai-low-budget above — Notion.
+    assertions: [{ kind: "topCategoryIn", expected: ["knowledge-base", "productivity"] }],
   },
   {
     name: "automation-free-budget",
@@ -80,20 +87,18 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
   },
   {
     name: "baseline-no-answers",
-    description: "No meaningful answers given — no domain selected, so every product is still eligible (unchanged fallback) and ties at zero, ranking falls back to deterministic dataset order.",
+    description: "No meaningful answers given — no domain selected, so every product is still eligible (unchanged fallback) and ties at zero. Recommend Engine Integrity Patch (2026-08-21): does NOT assert one exact top slug — with everyone tied at 0, the deterministic alphabetical tie-break (see lib/recommend/engine.ts) picks whichever eligible slug sorts first, which is a real property of the dataset (currently \"1password\"), not a meaningful merit signal worth pinning in a regression test.",
     answers: { ...DEFAULT_ANSWERS },
     assertions: [
       { kind: "resultCount", expected: 3 },
       { kind: "exactMatchPercent", rank: 1, expected: 0 },
-      { kind: "topSlug", expected: "notion" },
     ],
   },
   {
     name: "industry-only-never-scored",
-    description: "Industry is the only answer given — must never contribute points (no dataset support for it; the engine must disclose this, not silently score it).",
+    description: "Industry is the only answer given — must never contribute points (no dataset support for it; the engine must disclose this, not silently score it). Does not assert an exact top slug — see baseline-no-answers.",
     answers: { ...DEFAULT_ANSWERS, industry: "Healthcare" },
     assertions: [
-      { kind: "topSlug", expected: "notion" },
       { kind: "factorPresent", rank: 1, direction: "informational", labelIncludes: "Industry" },
       { kind: "allFactorsZeroPoints", labelIncludes: "Industry" },
     ],
@@ -109,10 +114,9 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
   },
   {
     name: "integration-nonsense-string",
-    description: "Requires an integration name that appears nowhere in the dataset — every product should be penalized identically, falling back to dataset order.",
+    description: "Requires an integration name that appears nowhere in the dataset — every product should be penalized identically. Does not assert an exact top slug — see baseline-no-answers.",
     answers: { ...DEFAULT_ANSWERS, requiredIntegrations: ["Zzyxxblorp9000"] },
     assertions: [
-      { kind: "topSlug", expected: "notion" },
       { kind: "factorPresent", rank: 1, direction: "negative", labelIncludes: "Zzyxxblorp9000" },
     ],
   },
@@ -127,7 +131,8 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
     description: "Large enterprise team needing project management.",
     answers: { ...DEFAULT_ANSWERS, teamSize: "large", companyStage: "enterprise", primaryNeed: "project_management" },
     assertions: [
-      { kind: "topCategory", expected: "project-management" },
+      // "productivity" included for the same reason as small-remote-pm-ai-low-budget above — Notion.
+      { kind: "topCategoryIn", expected: ["project-management", "productivity"] },
       { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "enterprise" },
     ],
   },
@@ -142,7 +147,8 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
     description: "Office-based team needing project management — must NOT receive a remote-only work-style factor.",
     answers: { ...DEFAULT_ANSWERS, workStyle: "office", primaryNeed: "project_management" },
     assertions: [
-      { kind: "topCategory", expected: "project-management" },
+      // "productivity" included for the same reason as small-remote-pm-ai-low-budget above — Notion.
+      { kind: "topCategoryIn", expected: ["project-management", "productivity"] },
       { kind: "factorAbsent", rank: 1, labelIncludes: "Web and mobile" },
       { kind: "factorAbsent", rank: 1, labelIncludes: "remote" },
     ],
@@ -206,7 +212,9 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
     name: "absurd-postmark-must-not-surface-for-project-management",
     description: "A transactional-email API (postmark, not in the catalog subset scored here) must never appear for a project-management need — proven structurally via eligibility, not by asserting an absence of one slug.",
     answers: { ...DEFAULT_ANSWERS, primaryNeed: "project_management" },
-    assertions: [{ kind: "topCategory", expected: "project-management" }],
+    // "productivity" included for the same reason as small-remote-pm-ai-low-budget above — Notion.
+    // The real property this fixture proves is "postmark's category (api) never wins," which still holds.
+    assertions: [{ kind: "topCategoryIn", expected: ["project-management", "productivity"] }],
   },
   {
     name: "absurd-setmore-must-not-surface-for-crm",

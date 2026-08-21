@@ -4,6 +4,7 @@ import { isDomainEligible, isHardExcluded, passesEligibility } from "@/lib/recom
 import { DEFAULT_ANSWERS } from "@/lib/recommend/query";
 import { PRODUCT_PROFILES, getProductProfile } from "@/data/recommend/product-profiles";
 import { RECOMMEND_DOMAINS } from "@/lib/recommend/domains";
+import { scoreSoftwareForAnswers } from "@/lib/recommend/scoring";
 
 /**
  * Recommend Engine Rebuild (2026-08-21) — Phase 7 of the rebuild brief:
@@ -139,5 +140,60 @@ describe("Product profile data integrity — Phase 31 of the rebuild brief", () 
     for (const domain of RECOMMEND_DOMAINS) {
       expect(counts[domain] ?? 0, `domain "${domain}" has too few eligible products`).toBeGreaterThanOrEqual(3);
     }
+  });
+});
+
+describe("Multi-domain profiles — Recommend Engine Integrity Patch (2026-08-21), Phase 4/9", () => {
+  it("notion is genuinely eligible for both knowledge_base and project_management, on real evidence", () => {
+    const notion = getSoftware("notion");
+    expect(notion).toBeDefined();
+    expect(isDomainEligible(notion!, { ...DEFAULT_ANSWERS, primaryNeed: "knowledge_base" })).toBe(true);
+    expect(isDomainEligible(notion!, { ...DEFAULT_ANSWERS, primaryNeed: "project_management" })).toBe(true);
+    // Still correctly ineligible for domains it has no evidence for.
+    expect(isDomainEligible(notion!, { ...DEFAULT_ANSWERS, primaryNeed: "crm" })).toBe(false);
+  });
+
+  it("zoho-desk is genuinely eligible for both help_desk and knowledge_base, on real evidence", () => {
+    const zohoDesk = getSoftware("zoho-desk");
+    expect(zohoDesk).toBeDefined();
+    expect(isDomainEligible(zohoDesk!, { ...DEFAULT_ANSWERS, primaryNeed: "help_desk" })).toBe(true);
+    expect(isDomainEligible(zohoDesk!, { ...DEFAULT_ANSWERS, primaryNeed: "knowledge_base" })).toBe(true);
+  });
+
+  it("a multi-domain product does not leak into a domain it has no evidence for, even one adjacent to both its real domains", () => {
+    const notion = getSoftware("notion");
+    // Notion spans knowledge_base + project_management, but has no automation or crm evidence.
+    expect(isDomainEligible(notion!, { ...DEFAULT_ANSWERS, primaryNeed: "automation" })).toBe(false);
+    expect(isDomainEligible(notion!, { ...DEFAULT_ANSWERS, primaryNeed: "crm" })).toBe(false);
+  });
+
+  it("cross-domain leakage is still structurally blocked for every other product despite multi-domain support existing", () => {
+    // Re-assert the brief's own named absurdities still hold with the multi-domain type in real use.
+    expect(isDomainEligible(getSoftware("todoist")!, { ...DEFAULT_ANSWERS, primaryNeed: "accounting" })).toBe(false);
+    expect(isDomainEligible(getSoftware("setmore")!, { ...DEFAULT_ANSWERS, primaryNeed: "crm" })).toBe(false);
+    expect(isDomainEligible(getSoftware("pipedrive")!, { ...DEFAULT_ANSWERS, primaryNeed: "password_manager" })).toBe(false);
+  });
+
+  it("candidates reviewed and deliberately kept single-domain (or CATALOG_ONLY) stay that way — real evidence was checked, not assumed", () => {
+    // hubspot: crm only — its stored features read as sales-email/live-chat, not a documented
+    // marketing-campaign or ticketing product.
+    expect(getProductProfile("hubspot")?.domains).toEqual(["crm"]);
+    // airtable: no task/project language in its stored features at all — stays CATALOG_ONLY.
+    expect(getProductProfile("airtable")).toBeUndefined();
+    // clickup and slack: each has one subordinate doc feature, not a genuine second-domain fit.
+    expect(getProductProfile("clickup")?.domains).toEqual(["project_management"]);
+    expect(getProductProfile("slack")?.domains).toEqual(["communication"]);
+    // freshdesk/intercom: no knowledge-base feature in their stored data, unlike zoho-desk.
+    expect(getProductProfile("freshdesk")?.domains).toEqual(["help_desk"]);
+    expect(getProductProfile("intercom")?.domains).toEqual(["help_desk"]);
+  });
+
+  it("a multi-domain product gains no score advantage merely from having multiple domains (Phase 4's explicit requirement)", () => {
+    const notionScore = scoreSoftwareForAnswers(getSoftware("notion")!, { ...DEFAULT_ANSWERS, primaryNeed: "knowledge_base" });
+    const singleDomainScore = scoreSoftwareForAnswers(getSoftware("guru")!, { ...DEFAULT_ANSWERS, primaryNeed: "knowledge_base" });
+    // Both are simply eligible, scored on the same PRIMARY_NEED_MATCH flat credit — domain count plays no role.
+    expect(notionScore.factors.find((f) => f.label.includes("Matches what you're trying to do"))?.points).toBe(
+      singleDomainScore.factors.find((f) => f.label.includes("Matches what you're trying to do"))?.points
+    );
   });
 });
