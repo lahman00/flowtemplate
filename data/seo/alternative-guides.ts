@@ -119,6 +119,71 @@ export const ALTERNATIVE_GUIDES: Record<string, AlternativeGuide> = {
     ],
     evidenceSources: ["https://www.activecampaign.com"],
   },
+  // Growth War Room mission (2026-08-21) — the 5 entries below extend the same
+  // real-GSC-evidence pattern to the next tier of non-protected, non-experiment,
+  // action=IMPROVE opportunities from the same cached seo-factory data. Every
+  // comparisonSlug verified against isPublishedComparison's real stored order
+  // before use (the exact bug class caught and fixed in the prior mission).
+  salesforce: {
+    diagnosis: "The page's alternatives list doesn't separate a simpler sales-only CRM decision from a broader go-to-market-suite decision, which is what most real 'salesforce alternatives' searches are actually asking given Salesforce's own enterprise, multi-cloud scope.",
+    heading: "Decide how much of the go-to-market suite you actually need",
+    introduction: "Salesforce centralizes sales, service, marketing, and IT on one platform. The useful alternatives question is whether the real requirement is still that full breadth, or has narrowed to a simpler, sales-focused pipeline.",
+    whySeekAlternative: ["The team wants a simpler, visual sales pipeline without Salesforce's platform-wide configuration overhead.", "Marketing and service tools alongside CRM matter, but from a smaller, more self-serve platform.", "Built-in calling, email, and SMS in the CRM itself matters more than a broader suite."],
+    decisions: [
+      { heading: "Simpler visual sales pipeline", fit: "Pipedrive is the relevant comparison for teams that want a focused, visual deal pipeline without Salesforce's platform-wide configuration surface.", alternativeSlug: "pipedrive", comparisonSlug: "salesforce-vs-pipedrive" },
+      { heading: "Smaller go-to-market suite", fit: "HubSpot fits buyers who want sales, marketing, and service tools together, but on a more self-serve, less platform-heavy product.", alternativeSlug: "hubspot", comparisonSlug: "hubspot-vs-salesforce" },
+      { heading: "Calling-first sales CRM", fit: "Close is the closer route when built-in calling, email, and SMS inside the CRM itself is the core requirement.", alternativeSlug: "close", comparisonSlug: "salesforce-vs-close" },
+    ],
+    evidenceSources: ["https://www.salesforce.com"],
+  },
+  tidio: {
+    diagnosis: "The page's alternatives list doesn't separate Tidio's live-chat-plus-AI-agent positioning from deeper omnichannel ticketing, ecommerce-native AI support, or simpler shared-inbox decisions.",
+    heading: "Decide what kind of support operation you're running",
+    introduction: "Tidio combines live chat, a help desk, and the Lyro AI agent. The useful alternatives question is whether the real need is that live-chat-plus-AI combination, or has grown into deeper ticketing, ecommerce-specific AI, or a simpler shared inbox.",
+    whySeekAlternative: ["The team needs deeper omnichannel ticketing with routing and automation across email, chat, phone, and social.", "Support is ecommerce-first and needs AI shopping assistance and native Shopify order context.", "A simpler shared inbox with a knowledge base matters more than a dedicated AI agent."],
+    decisions: [
+      { heading: "Deeper omnichannel ticketing", fit: "Zendesk is the relevant comparison once the requirement grows into full ticketing, routing, and automation across every channel.", alternativeSlug: "zendesk", comparisonSlug: "tidio-vs-zendesk" },
+      { heading: "Ecommerce-native AI support", fit: "Gorgias fits ecommerce teams that want an AI shopping assistant and native Shopify order/customer context built in.", alternativeSlug: "gorgias", comparisonSlug: "gorgias-vs-tidio" },
+      { heading: "Simpler shared inbox", fit: "Help Scout is the closer route for a focused shared inbox and knowledge base without a dedicated AI-agent layer.", alternativeSlug: "help-scout", comparisonSlug: "help-scout-vs-tidio" },
+    ],
+    evidenceSources: ["https://www.tidio.com"],
+  },
+  lastpass: {
+    diagnosis: "The page's alternatives list doesn't distinguish LastPass's zero-knowledge vault positioning from an open-source-transparency decision, an enterprise zero-trust decision, or a team-admin-controls decision.",
+    heading: "Decide what matters most: openness, monitoring, or admin control",
+    introduction: "LastPass centers on a zero-knowledge encrypted vault with autofill. The useful alternatives question is which property matters most: open-source transparency, built-in breach monitoring, or granular team sharing controls.",
+    whySeekAlternative: ["An open-source, independently-auditable codebase matters more than a closed-source vendor product.", "Built-in dark-web breach monitoring for stored credentials is a requirement, not an add-on.", "A team needs granular, role-based sharing and admin controls, not just individual vaults."],
+    decisions: [
+      { heading: "Open-source transparency", fit: "Bitwarden is the relevant comparison for buyers who want an open-source, independently-auditable password vault.", alternativeSlug: "bitwarden", comparisonSlug: "bitwarden-vs-lastpass" },
+      { heading: "Built-in breach monitoring", fit: "Keeper fits teams that want zero-trust architecture with BreachWatch dark-web monitoring built into the vault itself.", alternativeSlug: "keeper", comparisonSlug: "lastpass-vs-keeper" },
+      { heading: "Granular team sharing controls", fit: "Dashlane is the closer route when role-based admin controls and granular secure sharing across a team are the priority.", alternativeSlug: "dashlane", comparisonSlug: "dashlane-vs-lastpass" },
+    ],
+    evidenceSources: ["https://www.lastpass.com"],
+  },
+  confluence: {
+    diagnosis: "The page's alternatives list doesn't separate Confluence's Atlassian-suite team-workspace positioning from an AI-verified-knowledge decision, a docs-as-code decision, or a Slack-native-Q&A decision.",
+    heading: "Decide how your team actually keeps knowledge current",
+    introduction: "Confluence centers on documentation and meeting notes shared across an organization inside the Atlassian suite. The useful alternatives question is which property matters most: continuously-verified accuracy, a git-based docs workflow, or a Slack-native Q&A layer.",
+    whySeekAlternative: ["Stale or outdated content needs to be flagged and continuously verified, not just stored.", "Documentation is technical/product-facing and should follow a git-based branch-review-merge workflow.", "The team lives in Slack and wants knowledge answered there directly, not in a separate wiki tab."],
+    decisions: [
+      { heading: "Continuously-verified knowledge", fit: "Guru is the relevant comparison for teams that want company information actively organized and verified, not just stored.", alternativeSlug: "guru", comparisonSlug: "confluence-vs-guru" },
+      { heading: "Docs-as-code workflow", fit: "GitBook fits technical teams that want documentation to follow a git-based branch, review, and merge process.", alternativeSlug: "gitbook", comparisonSlug: "confluence-vs-gitbook" },
+      { heading: "Slack-native Q&A", fit: "Tettra is the closer route when an AI Q&A bot answering directly from Slack matters more than a standalone wiki.", alternativeSlug: "tettra", comparisonSlug: "confluence-vs-tettra" },
+    ],
+    evidenceSources: ["https://www.atlassian.com/software/confluence"],
+  },
+  mulesoft: {
+    diagnosis: "The page's alternatives list doesn't distinguish MuleSoft's full-lifecycle iPaaS/API-management positioning from an AI-agent-connectivity decision, a Google-Cloud-native decision, or an API-discovery-and-monetization decision.",
+    heading: "Decide which part of API management you actually need",
+    introduction: "MuleSoft Anypoint Platform is Salesforce's unified iPaaS and full-lifecycle API management product. The useful alternatives question is whether the real need is that full lifecycle, or a more specific piece: AI-agent connectivity, Google Cloud-native management, or an API marketplace.",
+    whySeekAlternative: ["The priority is connecting and governing AI agents, not general-purpose integration.", "The stack is already Google Cloud-centric and API management should live there natively.", "Discovering, testing, and monetizing third-party APIs matters more than internal API governance."],
+    decisions: [
+      { heading: "AI-agent connectivity", fit: "Kong is the relevant comparison for teams whose core requirement is securely connecting and governing AI agents, not general iPaaS.", alternativeSlug: "kong", comparisonSlug: "kong-vs-mulesoft" },
+      { heading: "Google Cloud-native management", fit: "Apigee fits teams already on Google Cloud who want API design, security, and analytics native to that platform.", alternativeSlug: "apigee", comparisonSlug: "apigee-vs-mulesoft" },
+      { heading: "API discovery and monetization", fit: "RapidAPI is the closer route when discovering, testing, and monetizing third-party APIs through a marketplace is the priority.", alternativeSlug: "rapidapi", comparisonSlug: "mulesoft-vs-rapidapi" },
+    ],
+    evidenceSources: ["https://www.mulesoft.com"],
+  },
   freshdesk: {
     diagnosis: "The page emphasizes AI but does not separate core ticketing from omnichannel, ecommerce-specialist, and AI-led support choices across its comparison inventory.",
     heading: "Match the alternative to the support operation",
