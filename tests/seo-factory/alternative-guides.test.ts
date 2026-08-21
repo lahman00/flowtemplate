@@ -16,7 +16,12 @@ function similarity(a: string, b: string): number {
 
 describe("SEO execution cohort alternatives guides", () => {
   it("contains exactly the approved cohort with valid targets", () => {
-    expect(Object.keys(ALTERNATIVE_GUIDES).sort()).toEqual(["airtable", "buffer", "freshdesk", "front", "help-scout", "intercom", "pipedrive", "ringcentral", "semrush"]);
+    // Organic Traffic Breakthrough Mission (2026-08-21) added activecampaign,
+    // clickup, setmore, sprout-social, todoist — real GSC evidence (deep
+    // ranking + real impressions + 0% CTR for "X alternatives" queries),
+    // non-protected-cohort, action=IMPROVE per the seo-factory's own
+    // deterministic scoring. See data/seo/alternative-guides.ts's comment.
+    expect(Object.keys(ALTERNATIVE_GUIDES).sort()).toEqual(["activecampaign", "airtable", "buffer", "clickup", "freshdesk", "front", "help-scout", "intercom", "pipedrive", "ringcentral", "semrush", "setmore", "sprout-social", "todoist"]);
     for (const [slug, guide] of Object.entries(ALTERNATIVE_GUIDES)) {
       expect(getSoftware(slug)).toBeDefined(); expect(guide.decisions).toHaveLength(3); expect(guide.whySeekAlternative).toHaveLength(3);
       for (const decision of guide.decisions) {

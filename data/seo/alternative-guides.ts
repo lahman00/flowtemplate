@@ -51,6 +51,74 @@ export const ALTERNATIVE_GUIDES: Record<string, AlternativeGuide> = {
     ],
     evidenceSources: ["https://www.semrush.com/pricing/", "https://www.semrush.com/features/"],
   },
+  // Organic Traffic Breakthrough Mission (2026-08-21) — the 5 entries below were added after real
+  // Google Search Console evidence (scripts run against the production seo-factory's cached GSC-backed
+  // run, window 2026-07-21..2026-08-17) showed each of these products' own page ranking position ~70-90
+  // for real "X alternatives" queries with real double- and triple-digit impressions and 0% CTR — the
+  // exact intent-mismatch pattern this guide mechanism (components/AlternativeDecisionGuide.tsx) already
+  // fixes for pipedrive/airtable/semrush/freshdesk/etc above. Every comparisonSlug below was verified
+  // against the real comparison graph (data/comparisons.ts's getComparisonsInvolving) before being used
+  // — never a guessed or invented route.
+  todoist: {
+    diagnosis: "The page's generic alternatives list doesn't separate a personal-task-app decision from a broader team-work-management decision, which is what most real 'todoist alternative' searches are actually asking.",
+    heading: "Decide how far past personal tasks you need to go",
+    introduction: "Todoist is a personal and small-team task manager built around quick capture and natural-language scheduling. The right alternative depends on whether the real need is still personal task tracking, or has grown into team-wide project and work management.",
+    whySeekAlternative: ["The team has outgrown personal task lists and needs shared project tracking, dashboards, and automation.", "Tasks need to live alongside documents and a team knowledge base, not in a separate app.", "Built-in focus tools like a Pomodoro timer or habit tracking matter as much as the task list itself."],
+    decisions: [
+      { heading: "Team project management", fit: "ClickUp is the relevant route once the requirement grows into task hierarchy, dashboards, and automation across a team, not just a personal list.", alternativeSlug: "clickup", comparisonSlug: "clickup-vs-todoist" },
+      { heading: "Docs and tasks in one workspace", fit: "Notion fits when tasks need to sit alongside documents, databases, and a team wiki rather than a dedicated task app.", alternativeSlug: "notion", comparisonSlug: "notion-vs-todoist" },
+      { heading: "Focus and habit tracking built in", fit: "TickTick is the closer comparison for a personal task app that also includes a Pomodoro timer, habit tracker, and multiple calendar views.", alternativeSlug: "ticktick", comparisonSlug: "todoist-vs-ticktick" },
+    ],
+    evidenceSources: ["https://todoist.com"],
+  },
+  setmore: {
+    diagnosis: "The page's alternatives list doesn't distinguish Setmore's free branded-booking-page positioning from calendar-sync-first, open-source, or Squarespace-integrated scheduling decisions.",
+    heading: "Match the booking model to how you actually work",
+    introduction: "Setmore centers on a free, branded booking page with payments and reminders built in. The useful alternatives question is which part of that model matters most: calendar-sync breadth, an open/customizable platform, or integration with an existing Squarespace site.",
+    whySeekAlternative: ["Syncing many existing calendars and integrating with video tools like Zoom or Teams matters more than a standalone booking page.", "An open, self-hostable or highly customizable scheduling platform is the real requirement.", "The business already runs on Squarespace and wants scheduling built into that ecosystem."],
+    decisions: [
+      { heading: "Broadest calendar and video integrations", fit: "Calendly is the relevant comparison when syncing multiple calendars and connecting to tools like Zoom, Teams, or Meet is the priority.", alternativeSlug: "calendly", comparisonSlug: "calendly-vs-setmore" },
+      { heading: "Open, customizable scheduling", fit: "Cal.com fits teams that want an open platform with built-in video and payment collection rather than a fixed booking-page product.", alternativeSlug: "cal-com", comparisonSlug: "cal-com-vs-setmore" },
+      { heading: "Squarespace-integrated booking", fit: "Acuity Scheduling is the closer route for service businesses already on Squarespace, with custom intake forms and branded pages.", alternativeSlug: "acuity-scheduling", comparisonSlug: "acuity-scheduling-vs-setmore" },
+    ],
+    evidenceSources: ["https://www.setmore.com"],
+  },
+  clickup: {
+    diagnosis: "The page's alternatives list treats ClickUp as one undifferentiated project-management choice, without routing buyers by whether they want simpler boards, visual no-code workflows, or software-development-specific tracking.",
+    heading: "Choose an alternative by how your team actually plans work",
+    introduction: "ClickUp combines task hierarchy, docs, dashboards, and automation in one platform. Teams look for an alternative when they want something simpler, more visual, or built specifically around software delivery instead of general work management.",
+    whySeekAlternative: ["The team wants simpler boards and cards without ClickUp's full depth of Spaces, Folders, and custom fields.", "Visual, no-code automation and dashboards matter more than task hierarchy depth.", "Work is software development specifically, with sprints, backlogs, and code-linked issues."],
+    decisions: [
+      { heading: "Simpler Kanban boards", fit: "Trello is the relevant comparison for teams that want straightforward boards, lists, and cards without ClickUp's configuration depth.", alternativeSlug: "trello", comparisonSlug: "clickup-vs-trello" },
+      { heading: "Visual, no-code work management", fit: "Monday.com fits buyers who want customizable boards, dashboards, and automations with a more visual, less hierarchical setup.", alternativeSlug: "monday", comparisonSlug: "clickup-vs-monday" },
+      { heading: "Software development tracking", fit: "Jira is the closer route once the requirement is specifically sprints, backlogs, and dependency tracking across a dev team.", alternativeSlug: "jira", comparisonSlug: "clickup-vs-jira" },
+    ],
+    evidenceSources: ["https://clickup.com"],
+  },
+  "sprout-social": {
+    diagnosis: "The page's alternatives list doesn't separate Sprout Social's social-intelligence/listening positioning from simpler scheduling-first or visual-content-calendar decisions many searchers actually want.",
+    heading: "Decide between intelligence, simplicity, and visual planning",
+    introduction: "Sprout Social centers on real-time social intelligence, listening, and an AI-assisted inbox. The useful alternatives question is whether the real need is that depth of analysis, or a simpler scheduling and visual-planning workflow instead.",
+    whySeekAlternative: ["The team wants straightforward scheduling and publishing without a social-intelligence layer.", "Visual content planning for Instagram-first or TikTok-first teams matters more than listening/analytics depth.", "Broader competitor and trend tracking across networks is the priority."],
+    decisions: [
+      { heading: "Simpler scheduling and publishing", fit: "Buffer is the relevant comparison for teams that want straightforward multi-platform scheduling without Sprout Social's listening and intelligence layer.", alternativeSlug: "buffer", comparisonSlug: "buffer-vs-sprout-social" },
+      { heading: "Visual, Instagram-first content calendar", fit: "Later fits teams centered on a visual grid planner and Instagram/TikTok/Pinterest-first publishing.", alternativeSlug: "later", comparisonSlug: "sprout-social-vs-later" },
+      { heading: "Broader trend and competitor tracking", fit: "Hootsuite is the closer route when trend tracking, a unified inbox, and competitor performance analysis are the core requirement.", alternativeSlug: "hootsuite", comparisonSlug: "hootsuite-vs-sprout-social" },
+    ],
+    evidenceSources: ["https://sproutsocial.com"],
+  },
+  activecampaign: {
+    diagnosis: "The page's alternatives list doesn't distinguish ActiveCampaign's AI-driven automation positioning from ecommerce-customer-data, simpler-all-in-one, or widely-used-drag-and-drop-builder decisions.",
+    heading: "Match the alternative to your marketing data and workflow",
+    introduction: "ActiveCampaign positions itself as an AI-agent-driven marketing platform across email, SMS, and WhatsApp. The useful alternatives question is whether the real requirement is ecommerce customer data, a simpler all-in-one toolkit, or a familiar drag-and-drop email builder.",
+    whySeekAlternative: ["The business is ecommerce-first and needs unified customer profiles and omnichannel automation built for that.", "The team wants email, landing pages, and webinars in one simpler product rather than deep automation flows.", "A widely-used, easy drag-and-drop email builder matters more than AI-driven automation depth."],
+    decisions: [
+      { heading: "Ecommerce customer data platform", fit: "Klaviyo is the relevant comparison for ecommerce-first teams that need unified customer profiles and omnichannel automation.", alternativeSlug: "klaviyo", comparisonSlug: "activecampaign-vs-klaviyo" },
+      { heading: "Simpler all-in-one marketing", fit: "GetResponse fits buyers who want email, automation, landing pages, and webinars in one simpler product.", alternativeSlug: "getresponse", comparisonSlug: "getresponse-vs-activecampaign" },
+      { heading: "Familiar drag-and-drop email builder", fit: "Mailchimp is the closer route when an easy, widely-known email builder with integrated SMS matters more than deep automation.", alternativeSlug: "mailchimp", comparisonSlug: "activecampaign-vs-mailchimp" },
+    ],
+    evidenceSources: ["https://www.activecampaign.com"],
+  },
   freshdesk: {
     diagnosis: "The page emphasizes AI but does not separate core ticketing from omnichannel, ecommerce-specialist, and AI-led support choices across its comparison inventory.",
     heading: "Match the alternative to the support operation",
