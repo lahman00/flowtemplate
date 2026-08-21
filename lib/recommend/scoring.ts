@@ -1,9 +1,9 @@
 import type { Software } from "@/data/software";
 import type { RecommendationAnswers, ScoreFactor, ScoringResult } from "@/lib/recommend/types";
+import { getDomainMeta } from "@/lib/recommend/domains";
 import {
   AI_KEYWORDS,
   ANY_SIZE_KEYWORDS,
-  CATEGORY_NEED_KEYWORDS,
   DIFFICULTY_KEYWORDS,
   getCompanyStageKeywords,
   getTeamSizeKeywords,
@@ -11,41 +11,35 @@ import {
 } from "@/lib/recommend/keywords";
 
 /**
- * Sprint 10 Phase 1-2 — the deterministic scoring engine. No LLM, no
- * external API, no invented facts: every factor below is computed from a
- * real field already in data/software/*.json (category, pricing.model,
- * platforms) or a real text search over stored strings
- * (features/description/bestFor, see lib/recommend/keywords.ts). Every
- * point value is a named constant with a comment explaining it — "no
- * black box" per Phase 2. Full formula writeup in
+ * Sprint 10 Phase 1-2, rebuilt 2026-08-21 — the deterministic scoring
+ * engine. No LLM, no external API, no invented facts: every factor below
+ * is computed from a real field already in data/software/*.json
+ * (category, pricing.model, platforms) or a real text search over stored
+ * strings (features/description/bestFor, see lib/recommend/keywords.ts).
+ * Every point value is a named constant with a comment explaining it —
+ * "no black box" per Phase 2. Full formula writeup in
  * docs/recommendation-engine.md.
  *
  * `industry` is intentionally never scored — see lib/recommend/types.ts.
+ *
+ * Rebuild note: the original 5-domain "category needs" keyword-matching
+ * scorer is gone. It's replaced by two things working together:
+ * lib/recommend/eligibility.ts (a hard gate — a product outside the
+ * selected domain is never even passed to this file, see
+ * lib/recommend/engine.ts), and scorePrimaryNeed below (a flat, honest
+ * "you asked for X, this is categorized as X" credit for every product
+ * that already passed that gate). No keyword-guessing "might also
+ * mention X" partial credit anymore — a product either has real
+ * evidence for the domain (data/recommend/product-profiles.ts) or it's
+ * never scored for it at all.
  *
  * Phase 6: this file's only export, `scoreSoftwareForAnswers`, has the
  * exact shape of `ScoringStrategy` (lib/recommend/types.ts) — a future
  * AI-based scorer is a drop-in replacement behind that same signature.
  */
 
-const NEED_TO_CATEGORY: Record<keyof typeof CATEGORY_NEED_KEYWORDS, string> = {
-  needsProjectManagement: "project-management",
-  needsCrm: "crm",
-  needsKnowledgeBase: "knowledge-base",
-  needsAutomation: "automation",
-  needsCommunication: "communication",
-};
-
-const NEED_LABEL: Record<keyof typeof CATEGORY_NEED_KEYWORDS, string> = {
-  needsProjectManagement: "project management",
-  needsCrm: "CRM",
-  needsKnowledgeBase: "knowledge base",
-  needsAutomation: "automation",
-  needsCommunication: "communication",
-};
-
 const POINTS = {
-  CATEGORY_PRIMARY_MATCH: 25,
-  CATEGORY_KEYWORD_MATCH: 8,
+  PRIMARY_NEED_MATCH: 30,
   AI_MATCH: 15,
   AI_MISMATCH: -15,
   BUDGET_FREE_MATCH: 12,
@@ -67,36 +61,24 @@ function searchableText(software: Software): string {
   return [software.name, software.description, software.bestFor, ...software.features].join(" ");
 }
 
-function scoreCategoryNeeds(software: Software, answers: RecommendationAnswers, text: string): ScoreFactor[] {
-  const factors: ScoreFactor[] = [];
-
-  for (const need of Object.keys(CATEGORY_NEED_KEYWORDS) as Array<keyof typeof CATEGORY_NEED_KEYWORDS>) {
-    if (!answers[need]) continue;
-
-    const label = NEED_LABEL[need];
-    const categorySlug = NEED_TO_CATEGORY[need];
-
-    if (software.category === categorySlug) {
-      factors.push({
-        label: `Categorized as ${label}`,
-        points: POINTS.CATEGORY_PRIMARY_MATCH,
-        direction: "positive",
-        explanation: `You asked for ${label} — this product's stored category is exactly that.`,
-      });
-      continue;
-    }
-
-    if (matchesAny(text, CATEGORY_NEED_KEYWORDS[need])) {
-      factors.push({
-        label: `Mentions ${label} in its feature list`,
-        points: POINTS.CATEGORY_KEYWORD_MATCH,
-        direction: "positive",
-        explanation: `You asked for ${label} — it isn't this product's primary category, but its stored features/description mention it.`,
-      });
-    }
-  }
-
-  return factors;
+/**
+ * By the time this runs, lib/recommend/engine.ts has already filtered out
+ * every product that isn't in data/recommend/product-profiles.ts for
+ * answers.primaryNeed (see lib/recommend/eligibility.ts) — so every
+ * product reaching this function has real, checked evidence for the
+ * domain. This is a flat credit for that fact, not a re-check of it.
+ */
+function scorePrimaryNeed(answers: RecommendationAnswers): ScoreFactor[] {
+  if (!answers.primaryNeed) return [];
+  const label = getDomainMeta(answers.primaryNeed).label.toLowerCase();
+  return [
+    {
+      label: `Matches what you're trying to do`,
+      points: POINTS.PRIMARY_NEED_MATCH,
+      direction: "positive",
+      explanation: `You said you want to ${label} — this product has real, checked evidence for that.`,
+    },
+  ];
 }
 
 function scoreAi(software: Software, answers: RecommendationAnswers, text: string): ScoreFactor[] {
@@ -371,10 +353,7 @@ function scoreIndustry(answers: RecommendationAnswers): ScoreFactor[] {
 function computeMaxPossibleScore(answers: RecommendationAnswers): number {
   let max = 0;
 
-  for (const need of Object.keys(CATEGORY_NEED_KEYWORDS) as Array<keyof typeof CATEGORY_NEED_KEYWORDS>) {
-    if (answers[need]) max += POINTS.CATEGORY_PRIMARY_MATCH;
-  }
-
+  if (answers.primaryNeed) max += POINTS.PRIMARY_NEED_MATCH;
   if (answers.needsAi) max += POINTS.AI_MATCH;
   if (answers.budget === "free") max += POINTS.BUDGET_FREE_MATCH;
   else if (answers.budget === "low") max += POINTS.BUDGET_LOW_MATCH;
@@ -391,7 +370,7 @@ export function scoreSoftwareForAnswers(software: Software, answers: Recommendat
   const text = searchableText(software);
 
   const factors: ScoreFactor[] = [
-    ...scoreCategoryNeeds(software, answers, text),
+    ...scorePrimaryNeed(answers),
     ...scoreAi(software, answers, text),
     ...scoreBudget(software, answers),
     ...scoreTeamSize(answers, text),

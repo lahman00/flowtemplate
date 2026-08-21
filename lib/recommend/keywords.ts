@@ -17,22 +17,6 @@ import type { TeamSize, CompanyStage, DifficultyPreference } from "@/lib/recomme
 
 export const AI_KEYWORDS = ["\\bai\\b", "artificial intelligence", "machine learning"];
 
-export const CATEGORY_NEED_KEYWORDS = {
-  needsProjectManagement: [
-    "project",
-    "task",
-    "roadmap",
-    "kanban",
-    "gantt",
-    "sprint",
-    "\\bboard\\b",
-  ],
-  needsCrm: ["\\bcrm\\b", "sales pipeline", "\\bdeal\\b", "\\blead\\b", "customer relationship"],
-  needsKnowledgeBase: ["\\bwiki\\b", "knowledge base", "documentation", "\\bdocs\\b", "\\bnotes\\b"],
-  needsAutomation: ["automat", "workflow", "\\btrigger\\b", "\\bzap\\b"],
-  needsCommunication: ["\\bchat\\b", "messag", "video call", "\\bmeeting", "\\bcall\\b"],
-} as const;
-
 const TEAM_SIZE_KEYWORDS: Record<Exclude<TeamSize, "unspecified">, string[]> = {
   solo: ["solo", "freelancer", "individual"],
   small: ["small team", "small business"],
