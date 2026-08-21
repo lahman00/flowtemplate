@@ -1205,7 +1205,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "recurring",
     notes:
       "REJECTED 2026-08-20. A real application (Business Name: Miloosh, miloosh.com, honest fields throughout -- 0-2,000 social following, 'I haven't started my email list yet', not a Kit user) was submitted and declined the same day. First-party message from Jordan, Senior Affiliate Marketing Manager @ Kit, on the PartnerStack program page's Messages tab: \"After reviewing your application, we've decided not to move forward at this time\" -- citing audience/niche mismatch (\"we partner with creators who help other creators earn a living online\") and insufficient promotional detail. An earlier reconciliation pass the same day wrongly concluded no application existed, based only on a Partnerships-table sweep that omits declined applications -- corrected after checking the program's own direct page. Do not reapply without new evidence. Kit is the current brand name for the product formerly called ConvertKit — no separate catalog entry exists under either name, so this was never attached to a live software page.",
-    sourceUrls: ["https://kit.com/affiliate", "https://dash.partnerstack.com (program page: Kit (formerly ConvertKit), Application + Messages tabs)"],
+    sourceUrls: ["https://kit.com/affiliate", "https://dash.partnerstack.com"],
     applicationUrl: "https://dash.partnerstack.com/application?company=kit&group=kitaffiliates",
     confidence: "high",
   },
@@ -1337,7 +1337,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "unknown",
     notes:
       "Application form fully and truthfully filled 2026-08-20 (website=https://miloosh.com, identify-as=Blogger, Trainual customer=No; audience-size left blank, no verified figure) but could not be submitted -- see the affiliate pipeline (slug: trainual) for the diagnosed systemic PartnerStack marketplace-details form-submit blocker (same defect as slug: xero). Real program, real form, genuinely ready to go -- blocked on tooling, not on eligibility.",
-    sourceUrls: ["https://trainual.com/affiliate", "https://dash.partnerstack.com (marketplace listing: Trainual)"],
+    sourceUrls: ["https://trainual.com/affiliate", "https://dash.partnerstack.com"],
     applicationUrl: "https://trainual.com/affiliate",
     confidence: "high",
   },
@@ -1379,7 +1379,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "20% revenue share for the first year of a customer's subscription",
     recurrence: "one_time",
     notes: "Application submitted and PENDING_REVIEW as of 2026-08-20 (superseding an earlier note here that said \"not yet submitted\" -- that was stale). Re-verified 2026-08-20 directly on Amplitude's own PartnerStack program page: \"Your application was received,\" Messages tab empty, no decision yet. DISCREPANCY: the marketplace listing text (dash.partnerstack.com) states \"20% revenue share for the first year,\" but the program's own direct page's \"Offer structure\" field currently shows \"None provided\" -- likely because a personalized offer isn't generated until approval. Treat 20% as a real but unconfirmed-at-the-account-level figure until an actual offer appears post-approval.",
-    sourceUrls: ["https://amplitude.com/affiliates", "https://amplitude.com/partner-program", "https://dash.partnerstack.com (marketplace listing: Amplitude)"],
+    sourceUrls: ["https://amplitude.com/affiliates", "https://amplitude.com/partner-program", "https://dash.partnerstack.com"],
     applicationUrl: "https://amplitude.com/affiliates",
     confidence: "high",
   },
@@ -1449,7 +1449,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: null,
     recurrence: "unknown",
     notes: "Re-verified live 2026-08-20 on the PartnerStack marketplace listing: commission structure is genuinely disclosed as \"N/A\" on the listing itself (not just unread). Application form asks Domain, City, Country, Partner Type, team size, and -- notably -- \"How many clients do you have on Shopify\", which signals the program is oriented toward agencies/resellers managing client Shopify stores, not an editorial content publisher. Deprioritized this pass: undisclosed commission plus a form that doesn't fit Miloosh's real positioning.",
-    sourceUrls: ["https://www.gorgias.com/affiliate-program", "https://www.gorgias.com/partners", "https://dash.partnerstack.com (marketplace listing: Gorgias)"],
+    sourceUrls: ["https://www.gorgias.com/affiliate-program", "https://www.gorgias.com/partners", "https://dash.partnerstack.com"],
     applicationUrl: "https://www.gorgias.com/affiliate-program",
     confidence: "high",
   },
@@ -1629,7 +1629,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     commissionModel: "20-25% recurring commission for 2 years (per the live PartnerStack marketplace listing text)",
     recurrence: "recurring",
     notes: "Application form fully and correctly filled 2026-08-20 (LinkedIn: linkedin.com/company/141163964, website, Country=Israel, business type=Review/Comparison Site, audience size=<1,000, honest promotion description, both restricted-activity confirmations checked) but could not be submitted: the last-opened dropdown overlay never closes and its panel physically covers the Submit button. See the affiliate pipeline (slug: tidio) for the full diagnosis. Real, well-diagnosed vendor-form defect, not a research gap.",
-    sourceUrls: ["https://www.tidio.com/affiliates", "https://dash.partnerstack.com (marketplace listing: Tidio)"],
+    sourceUrls: ["https://www.tidio.com/affiliates", "https://dash.partnerstack.com"],
     applicationUrl: "https://www.tidio.com/affiliates",
     confidence: "high",
   },
@@ -1706,7 +1706,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "unknown",
     notes:
       "Direct WebFetch of xero.com/us/affiliate-program/ and a related partner-programs page both returned HTTP 503 on every attempt this session — a consistent, repeated block, not a one-off. Application form fully and truthfully filled 2026-08-20 on the live PartnerStack marketplace listing (website=https://miloosh.com, Accountant/Bookkeeper=No, existing Xero user=No, primary target audience=Small Businesses, promotion plan and SMB-audience answered honestly, full list of Miloosh's other real PartnerStack partnerships disclosed) but could not be submitted -- see the affiliate pipeline (slug: xero) for the diagnosed systemic PartnerStack marketplace-details form-submit blocker. Real program, real form, genuinely ready to go -- blocked on tooling, not on eligibility.",
-    sourceUrls: ["https://www.xero.com/us/affiliate-program/", "https://dash.partnerstack.com (marketplace listing: Xero)"],
+    sourceUrls: ["https://www.xero.com/us/affiliate-program/", "https://dash.partnerstack.com"],
     applicationUrl: "https://dash.partnerstack.com/marketplace/accounting/details/xero",
     cookieDuration: null,
     payoutThreshold: null,
@@ -1760,7 +1760,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "one_time",
     notes:
       "Found 2026-08-20 on the live PartnerStack marketplace: fewer than 500 active partners, program running since Jan 21, 2025. Application form mandates an exact numeric \"Monthly traffic to your website\" (spinbutton, required, no N/A option) plus several agreement/restriction checkboxes (brand-keyword PPC bidding prohibited, ad-impersonation exclusion, brand guidelines). Not submitted -- Miloosh has no independently verified monthly-traffic figure to enter truthfully. Owner can supply a real verified number (e.g. from GA4 once accessible) to unblock.",
-    sourceUrls: ["https://dash.partnerstack.com (marketplace listing: CrowdStrike)", "https://www.crowdstrike.com/en-us/legal/affiliate-agreement/"],
+    sourceUrls: ["https://dash.partnerstack.com", "https://www.crowdstrike.com/en-us/legal/affiliate-agreement/"],
     confidence: "high",
   },
   {
@@ -1774,7 +1774,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "one_time",
     notes:
       "Discovered 2026-08-20 during the overnight affiliate-expansion sweep of the PartnerStack marketplace (not found in prior research passes). Live PartnerStack listing, 1,000-4,999 active partners, program running since Apr 2, 2025. Application WAS successfully submitted (superseding an earlier note here that said otherwise): confirmed PENDING_REVIEW 2026-08-20 via Toggl's own direct PartnerStack program page (Application tab: \"Your application was received\"; Messages tab: no messages) and first-party Gmail confirmation. No decision yet.",
-    sourceUrls: ["https://dash.partnerstack.com (partnership page: Toggl)"],
+    sourceUrls: ["https://dash.partnerstack.com"],
     confidence: "high",
   },
   {
@@ -1788,7 +1788,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "recurring",
     notes:
       "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://affiliate.hubstaff.com/ca2oe167vcj1 (redirects to hubstaff.com). NOT ACTIVATED on Miloosh: there is no data/software/hubstaff.json and no existing Hubstaff editorial content (confirmed by repo search) -- partner-materials-audit.ts previously recorded this as HOLD/UNCLEAR for the same reason. EDITORIAL AUDIT 2026-08-20: EDITORIALLY_APPROVED_FOR_CATALOG, decided independently of the affiliate approval. Hubstaff is a legitimate, well-known time-tracking/workforce-management SaaS (real first-party pricing at hubstaff.com/pricing: $4.99-$25/seat/mo across 4 tiers); Miloosh already covers this exact category (Clockify, Toggl Track), giving real comparison candidates (hubstaff-vs-toggl-track, hubstaff-vs-clockify) with genuine decision value (screenshot/activity monitoring + payroll vs. lighter competitors). Full research handed off in docs/content-briefs/hubstaff.md for Antigravity to build -- the page itself was NOT built in this task. Owner: this is free, real revenue waiting on that content work, not on any further affiliate application step.",
-    sourceUrls: ["https://dash.partnerstack.com (partnership page: Hubstaff)"],
+    sourceUrls: ["https://dash.partnerstack.com"],
     applicationUrl: null,
     confidence: "high",
   },
@@ -1803,7 +1803,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgramInfo[] = [
     recurrence: "unknown",
     notes:
       "APPROVED, already Active on this PartnerStack account (hello@miloosh.com) as of 2026-08-20 -- discovered during a full 20-row partnerships-table sweep, not something this agent applied to. Real referral link verified live on the PartnerStack partnership page: https://try.pdware.com/9l2hndbyhssz (redirects to pdware.com). PDWare has never appeared anywhere in this repo before now (no software page, no prior research entry) -- Miloosh has no editorial content about this company at all, so there is no page to attach the affiliate link to. NOT ACTIVATED. EDITORIAL AUDIT 2026-08-20: EDITORIALLY_REJECTED, decided independently of the affiliate approval. PDWare (product: 'ResourceFirst') is an enterprise-only resource/portfolio-management (PPM) tool for large/complex organizations -- pdware.com shows no public pricing at all ('Request Pricing' only, sales-gated), so there is no verifiable first-party pricing/feature depth to build an honest profile without a sales contact. Miloosh's catalog has no close comparable (only tangentially Smartsheet); no existing category or comparison candidates fit. No evidence of buyer interest exists or is likely for this narrow enterprise niche. Do not build a page for this product -- reject the affiliate CTA along with it, not because the program is bad, but because it doesn't belong in Miloosh's catalog.",
-    sourceUrls: ["https://dash.partnerstack.com (partnership page: PDWare)"],
+    sourceUrls: ["https://dash.partnerstack.com"],
     applicationUrl: null,
     confidence: "high",
   },
