@@ -11,6 +11,16 @@ import { isOutboundTrackingEnabled } from "@/lib/revenue/events";
  * clicks vs. recommendation usage) stay easy to report on separately.
  * Same local-JSON-file sink, same limitations, as documented in
  * docs/revenue.md and docs/recommendation-engine.md.
+ *
+ * Recommend Engine Rebuild (2026-08-21) production incident: this file's
+ * write path had no try/catch, so on deployed Vercel serverless functions
+ * (read-only filesystem outside /tmp) every call threw ENOENT and 500'd
+ * the entire /recommend/results page. This is the exact bug
+ * lib/revenue/events.ts's own header already documents fixing on
+ * 2026-08-19 — this file never picked up that lesson. Fixed the same way:
+ * the write path must never throw. (Not migrated to Blob storage here —
+ * a real future improvement, but out of scope for "never crash the page
+ * over best-effort analytics.")
  */
 
 export type RecommendationEventType =
@@ -52,14 +62,26 @@ function writeLog(events: StoredRecommendationEvent[]): void {
   fs.writeFileSync(LOG_FILE, JSON.stringify(events, null, 2));
 }
 
+/**
+ * Never throws: a persistence failure (read-only production filesystem,
+ * disk hiccup, anything) must never break the page that called this — the
+ * recommendation was already computed and rendered regardless of whether
+ * Miloosh managed to log it. Same discipline as
+ * lib/revenue/events.ts's recordOutboundEvent.
+ */
 export function recordRecommendationEvent(event: RecommendationEvent): void {
   if (!isOutboundTrackingEnabled()) {
     return;
   }
 
-  const events = readLog();
-  events.push({ ...event, timestamp: new Date().toISOString() });
-  writeLog(events.slice(-MAX_STORED_EVENTS));
+  try {
+    const events = readLog();
+    events.push({ ...event, timestamp: new Date().toISOString() });
+    writeLog(events.slice(-MAX_STORED_EVENTS));
+  } catch {
+    // Read-only production filesystem or other transient error — this is
+    // best-effort analytics, not a critical path. Never let it 500 the page.
+  }
 }
 
 /** Full event log, most recent first. Powers the /internal/recommendations report. */
