@@ -6,9 +6,9 @@ import { getSoftwareCtaRel, getSoftwareCtaUrl, shouldShowAffiliateDisclosure } f
 import { getAffiliateActivation } from "@/lib/revenue/affiliate-manager";
 
 describe("canonical active affiliate partner registry", () => {
-  it("contains exactly the 13 verified active partners", () => {
-    expect(ACTIVE_PARTNERS).toHaveLength(13);
-    expect(new Set(ACTIVE_PARTNERS.map(({ slug }) => slug)).size).toBe(13);
+  it("contains exactly the 14 verified active partners", () => {
+    expect(ACTIVE_PARTNERS).toHaveLength(14);
+    expect(new Set(ACTIVE_PARTNERS.map(({ slug }) => slug)).size).toBe(14);
   });
 
   it.each(ACTIVE_PARTNERS.filter((partner) => partner.affiliateUrl))(
@@ -45,10 +45,10 @@ describe("canonical active affiliate partner registry", () => {
     expect(shouldShowAffiliateDisclosure(software!)).toBe(false);
   });
 
-  it("builds a 13-row operational money matrix with no partners blocked", () => {
+  it("builds a 14-row operational money matrix with no partners blocked", () => {
     const matrix = getPartnerMoneyMatrix();
-    expect(matrix).toHaveLength(13);
-    expect(matrix.filter(({ revenueReady }) => revenueReady)).toHaveLength(13);
+    expect(matrix).toHaveLength(14);
+    expect(matrix.filter(({ revenueReady }) => revenueReady)).toHaveLength(14);
     expect(matrix.filter(({ blocker }) => blocker)).toEqual([]);
     expect(matrix.every(({ coverage }) => coverage.comparisonRoutes > 0)).toBe(true);
     expect(matrix.find(({ slug }) => slug === "krispcall")).toMatchObject({
@@ -60,6 +60,11 @@ describe("canonical active affiliate partner registry", () => {
       url: "https://affiliate.hubstaff.com/ca2oe167vcj1",
       revenueReady: true,
       coverage: { softwareRoute: "/software/hubstaff", comparisonRoutes: 8 },
+    });
+    expect(matrix.find(({ slug }) => slug === "close")).toMatchObject({
+      url: "https://refer.close.com/0alqdg4so8rm",
+      revenueReady: true,
+      coverage: { softwareRoute: "/software/close", comparisonRoutes: 9 },
     });
   });
 

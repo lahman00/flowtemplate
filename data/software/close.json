@@ -8,7 +8,7 @@
   "best_for": "Sales teams, since the platform's 2013 launch, wanting to automate outbound outreach and lead qualification while reducing manual admin work.",
   "features": [
     "Built-in calling, email, and SMS messaging in one workspace",
-    "Chloe AI agent for automated outbound calling and prospect qualification",
+    "Chloe AI agent that qualifies inbound leads, calls prospects, answers questions and objections, and books meetings",
     "Automatic meeting booking and call transcription/summarization",
     "Automatic CRM field updates and intelligent follow-up generation",
     "Cold lead re-engagement automation",
@@ -16,9 +16,11 @@
     "Integrations with Gmail, Microsoft 365, Zoom, Calendly, and Zapier"
   ],
   "sources": [
-    "https://www.close.com"
+    "https://www.close.com",
+    "https://close.com/chloe",
+    "https://close.com/blog/introducing-chloe"
   ],
-  "accessed_at": "2026-08-04",
+  "accessed_at": "2026-08-21",
   "alternatives": [
     {
       "name": "Pipedrive",

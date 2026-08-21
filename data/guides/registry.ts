@@ -340,7 +340,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
     metaDescription: "Compare the top CRM tools for consultants: Pipedrive, Close, Zoho CRM, and HubSpot evaluated on pipeline clarity, email tracking, and contact management.",
     categorySlug: "crm",
     roleName: "Consultants & Advisory Firms",
-    updatedAt: "2026-08-20",
+    updatedAt: "2026-08-21",
     intro: "Consultants win high-value engagements through relationship building and disciplined follow-ups. A consultant CRM must provide visual deal stages, full email history, and activity reminders without cumbersome data entry.",
     targetAudience: [
       "Independent management, technology, and strategy consultants",
@@ -378,9 +378,9 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
         slug: "close",
         badge: "Best for High-Touch Outreach & Multi-Channel Comms",
         ranking: 2,
-        fitReason: "Close integrates two-way email, calling, and SMS directly into the lead record, making it exceptionally powerful for consultants doing proactive outbound outreach and business development.",
-        limitations: "Higher entry price point ($49/seat/mo) than basic pipeline tools.",
-        pricingNote: "Solo $49/user/mo, Essentials $99/user/mo (annual billing)."
+        fitReason: "Close integrates two-way email, calling, and SMS directly into the lead record, and its built-in Chloe AI agent qualifies inbound leads, calls prospects, answers objections, and books meetings automatically — making it exceptionally powerful for consultants doing proactive outbound outreach and business development without heavy admin overhead.",
+        limitations: "AI credits are capped per plan (500-2,000/month); heavy Chloe usage may require a higher tier.",
+        pricingNote: "Solo $9/user/mo, Essentials $35/user/mo, Growth $99/user/mo, Scale $139/user/mo (annual billing); Chloe included on every plan."
       },
       {
         slug: "zoho-crm",

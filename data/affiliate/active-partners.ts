@@ -1,7 +1,7 @@
 export const ACTIVE_PARTNER_SLUGS = [
   "constant-contact", "todoist", "moosend", "volza", "pipedrive",
   "getresponse", "airtable", "monday", "whatconverts", "elevenlabs", "krispcall",
-  "setmore", "hubstaff",
+  "setmore", "hubstaff", "close",
 ] as const;
 
 export type ActivePartnerSlug = (typeof ACTIVE_PARTNER_SLUGS)[number];
@@ -35,6 +35,12 @@ export type ActivePartner = {
  *
  * Hubstaff added 2026-08-20: real first-party PartnerStack partnership (account hello@miloosh.com).
  * Verified affiliate URL: https://affiliate.hubstaff.com/ca2oe167vcj1.
+ *
+ * Close added 2026-08-21: owner supplied a verified referral URL directly
+ * (previously PENDING_REVIEW with no link since the 2026-08-18 PartnerStack
+ * application). Verified affiliate URL: https://refer.close.com/0alqdg4so8rm.
+ * See data/affiliate/canonical-ledger.ts's "close" entry for the full note,
+ * including the scope of first-party Chloe (AI sales agent) claims supported.
  */
 export const ACTIVE_PARTNERS: readonly ActivePartner[] = [
   { slug: "constant-contact", status: "active", affiliateUrl: "https://join.constantcontact.com/ezj6pum5ei2l", blocker: null },
@@ -50,6 +56,7 @@ export const ACTIVE_PARTNERS: readonly ActivePartner[] = [
   { slug: "krispcall", status: "active", affiliateUrl: "https://try.krispcall.com/aikpbrrrl8k9", blocker: null },
   { slug: "setmore", status: "active", affiliateUrl: "https://www.setmore.com?ref=nge2zwi", blocker: null },
   { slug: "hubstaff", status: "active", affiliateUrl: "https://affiliate.hubstaff.com/ca2oe167vcj1", blocker: null },
+  { slug: "close", status: "active", affiliateUrl: "https://refer.close.com/0alqdg4so8rm", blocker: null },
 ] as const;
 
 const ACTIVE_PARTNERS_BY_SLUG = new Map(ACTIVE_PARTNERS.map((partner) => [partner.slug, partner]));
