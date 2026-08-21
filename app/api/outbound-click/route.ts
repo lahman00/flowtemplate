@@ -57,6 +57,20 @@ export async function POST(request: NextRequest) {
 
   if (kind === "vendor-link") {
     await trackVendorLinkClick(software, software.website, sourcePage);
+
+    // Also record into first-party analytics event store
+    const { recordFirstPartyEvent } = await import("@/lib/analytics/events");
+    await recordFirstPartyEvent({
+      type: "outbound_click",
+      softwareSlug: software.slug,
+      destination: "official",
+      url: software.website,
+      ctaLocation: resolvedCtaLocation || "vendor-link",
+      path: sourcePage,
+      visitorId,
+      sessionId,
+      timestamp: new Date().toISOString(),
+    });
   } else {
     const url = slug === "wix" && isWixContext(wixContext) ? getWixAffiliateUrl(wixContext) : getSoftwareCtaUrl(software);
     await trackSoftwareCtaClick(software, url, sourcePage, resolvedCtaLocation);

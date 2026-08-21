@@ -75,23 +75,49 @@ export function FirstPartyAnalytics() {
     // 2. Specialized page views
     if (pathname.startsWith("/software/")) {
       const softwareSlug = pathname.replace("/software/", "").split("/")[0];
-      sendBeaconEvent({
-        type: "software_view",
-        path: pathname,
-        softwareSlug,
-        visitorId,
-        sessionId,
-      });
-    } else if (pathname.startsWith("/compare/")) {
+      if (softwareSlug) {
+        sendBeaconEvent({
+          type: "software_view",
+          path: pathname,
+          softwareSlug,
+          visitorId,
+          sessionId,
+        });
+      }
+    } else if (pathname.startsWith("/compare/") && pathname !== "/compare") {
       const comparisonSlug = pathname.replace("/compare/", "").split("/")[0];
-      sendBeaconEvent({
-        type: "comparison_view",
-        path: pathname,
-        comparisonSlug,
-        visitorId,
-        sessionId,
-      });
-    } else if (pathname.startsWith("/recommend")) {
+      if (comparisonSlug) {
+        sendBeaconEvent({
+          type: "comparison_view",
+          path: pathname,
+          comparisonSlug,
+          visitorId,
+          sessionId,
+        });
+      }
+    } else if (pathname.startsWith("/categories/")) {
+      const categorySlug = pathname.replace("/categories/", "").split("/")[0];
+      if (categorySlug) {
+        sendBeaconEvent({
+          type: "category_view",
+          path: pathname,
+          categorySlug,
+          visitorId,
+          sessionId,
+        });
+      }
+    } else if (pathname.startsWith("/guides/") || pathname.startsWith("/alternatives/")) {
+      const guideSlug = pathname.replace(/^\/(guides|alternatives)\//, "").split("/")[0];
+      if (guideSlug) {
+        sendBeaconEvent({
+          type: "guide_view",
+          path: pathname,
+          guideSlug,
+          visitorId,
+          sessionId,
+        });
+      }
+    } else if (pathname.startsWith("/recommend/results")) {
       sendBeaconEvent({
         type: "recommend_use",
         path: pathname,

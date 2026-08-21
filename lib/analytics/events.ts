@@ -18,8 +18,11 @@ export type FirstPartyEventType =
   | "engaged_view"
   | "software_view"
   | "comparison_view"
+  | "category_view"
+  | "guide_view"
   | "recommend_use"
-  | "outbound_click";
+  | "outbound_click"
+  | "internal_cta_click";
 
 export interface BaseAnalyticsEvent {
   type: FirstPartyEventType;
@@ -50,6 +53,16 @@ export interface ComparisonViewEvent extends BaseAnalyticsEvent {
   comparisonSlug: string;
 }
 
+export interface CategoryViewEvent extends BaseAnalyticsEvent {
+  type: "category_view";
+  categorySlug: string;
+}
+
+export interface GuideViewEvent extends BaseAnalyticsEvent {
+  type: "guide_view";
+  guideSlug: string;
+}
+
 export interface RecommendUseEvent extends BaseAnalyticsEvent {
   type: "recommend_use";
   queryOrCategory?: string;
@@ -64,13 +77,22 @@ export interface OutboundClickEvent extends BaseAnalyticsEvent {
   isTest?: boolean;
 }
 
+export interface InternalCtaClickEvent extends BaseAnalyticsEvent {
+  type: "internal_cta_click";
+  targetPath: string;
+  ctaName?: string;
+}
+
 export type FirstPartyEvent =
   | PageViewEvent
   | EngagedViewEvent
   | SoftwareViewEvent
   | ComparisonViewEvent
+  | CategoryViewEvent
+  | GuideViewEvent
   | RecommendUseEvent
-  | OutboundClickEvent;
+  | OutboundClickEvent
+  | InternalCtaClickEvent;
 
 const BLOB_PREFIX = "first-party-analytics/";
 const LOCAL_FALLBACK_PATH = path.join(process.cwd(), "var", "first-party-analytics.json");

@@ -25,27 +25,55 @@ const KNOWN_BOT_PATTERNS = [
   /whatsapp/i,
   /discordbot/i,
   /applebot/i,
+  /redditbot/i,
+  /pinterest/i,
+  /skypeuripreview/i,
+  /quora link preview/i,
+  /embedly/i,
+  /outbrain/i,
+  /flipboard/i,
+  /yeti/i,
+  /ia_archiver/i,
+  /archive\.org_bot/i,
   /screaming frog/i,
   /lighthouse/i,
   /headlesschrome/i,
   /puppeteer/i,
   /playwright/i,
   /selenium/i,
+  /cypress/i,
+  /phantomjs/i,
+  /webdriver/i,
+  /testcafe/i,
+  /k6\b/i,
+  /artillery/i,
+  /jmeter/i,
+  /locust/i,
   /vercel/i,
   /nextjs/i,
   /curl/i,
   /wget/i,
   /python-requests/i,
+  /urllib/i,
   /node-fetch/i,
   /axios/i,
+  /got\//i,
+  /undici/i,
+  /superagent/i,
   /go-http-client/i,
   /postmanruntime/i,
   /insomnia/i,
+  /httpclient/i,
+  /libwww-perl/i,
   /uptime/i,
   /pingdom/i,
   /datadog/i,
   /newrelic/i,
   /synthetics/i,
+  /better uptime/i,
+  /site24x7/i,
+  /statuscake/i,
+  /uptimerobot/i,
   /bot\b/i,
   /spider\b/i,
   /crawler\b/i
@@ -65,8 +93,12 @@ export function isInternalOrSyntheticTraffic(headers: Headers): boolean {
 
   if (headers.get("x-synthetic-qa") === "true") return true;
   if (headers.get("x-vercel-sc-headers")) return true;
+  if (headers.get("x-vercel-cron")) return true;
   if (headers.get("purpose") === "prefetch") return true;
   if (headers.get("sec-purpose") === "prefetch") return true;
+  if (headers.get("x-purpose") === "preview") return true;
+  if (headers.get("x-middleware-prefetch") === "1") return true;
+  if (headers.get("x-nextjs-prefetch") === "1") return true;
 
   return false;
 }

@@ -73,10 +73,20 @@ export function VendorLinksBlock({ software }: { software: Software }) {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-zinc-300 transition hover:text-white"
               onClick={() => {
+                const visitorId = typeof localStorage !== "undefined" ? localStorage.getItem("miloosh_vid") ?? undefined : undefined;
+                const sessionId = typeof sessionStorage !== "undefined" ? sessionStorage.getItem("miloosh_sid") ?? undefined : undefined;
+                const ctaLocation = `vendor-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`;
                 void fetch("/api/outbound-click", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ slug: software.slug, kind: "vendor-link", sourcePage: pathname }),
+                  body: JSON.stringify({
+                    slug: software.slug,
+                    kind: "vendor-link",
+                    sourcePage: pathname,
+                    ctaLocation,
+                    visitorId,
+                    sessionId,
+                  }),
                   keepalive: true,
                 }).catch(() => {
                   // Best-effort only — a tracking failure must never affect the user's click.
