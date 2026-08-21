@@ -1481,8 +1481,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
   "comparisons": [
     "jobber-vs-housecall-pro",
     "servicetitan-vs-jobber",
-    "servicetitan-vs-housecall-pro",
-    "quickbooks-online-vs-jobber"
+    "servicetitan-vs-housecall-pro"
   ],
   "faqs": [
     {

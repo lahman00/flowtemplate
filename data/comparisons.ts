@@ -1176,6 +1176,7 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["moosend", "klaviyo"],
   ["volza", "semrush"],
   ["volza", "ahrefs"],
+  ["volza", "google-analytics"],
 
   // WhatConverts commercial-intent coverage: dedicated lead-source
   // attribution versus general analytics and an all-in-one CRM suite.
@@ -1217,9 +1218,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
 
   // 3. WhatConverts marketing lead attribution vs behavioral analytics:
   ["whatconverts", "mixpanel"],
-
-  // 4. Volza global B2B trade data vs general web analytics:
-  ["volza", "google-analytics"],
 
   // 2026-08-20 Growth Sprint #3 — Editorial substitutes, CRM suite expansion, and active-partner routing:
   // 1. HighLevel (GoHighLevel) agency funnel/CRM suite vs SMB/inside-sales CRMs:
@@ -1338,33 +1336,18 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["whatconverts", "ruler-analytics"],
   ["callrail", "ruler-analytics"],
   ["callrail", "hubspot"],
-  ["callrail", "semrush"],
   ["ruler-analytics", "hubspot"],
   ["elevenlabs", "murf-ai"],
   ["elevenlabs", "descript"],
   ["murf-ai", "descript"],
   ["synthesia", "murf-ai"],
   ["synthesia", "descript"],
-  ["quickbooks-online", "jobber"],
-  ["quickbooks-online", "housecall-pro"],
-  ["xero", "jobber"],
-  ["xero", "housecall-pro"],
-  ["setmore", "pipedrive"],
-  ["cal-com", "hubspot"],
-  ["calendly", "pipedrive"],
   ["notion", "smartsheet"],
   ["coda", "smartsheet"],
   ["descript", "otter-ai"],
   ["descript", "runway"],
   ["ruler-analytics", "google-analytics"],
-  ["ruler-analytics", "semrush"],
-  ["callrail", "activecampaign"],
-  ["setmore", "freshsales"],
-  ["whatconverts", "activecampaign"],
-  ["whatconverts", "sprout-social"],
   ["linear", "notion"],
-  ["cal-com", "pipedrive"],
-  ["callrail", "klaviyo"],
 
   // 2026-08-21 Revenue Expansion — High-intent substitute comparison:
   ["postmark", "brevo"],

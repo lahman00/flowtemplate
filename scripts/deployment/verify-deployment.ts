@@ -42,8 +42,8 @@ export function getLatestProductionDeployment(): DeploymentRecord {
         // continue to next deployment
       }
     }
-  } catch (err: any) {
-    console.error("Failed to run vercel CLI:", err.message);
+  } catch (err: unknown) {
+    console.error("Failed to run vercel CLI:", (err as Error).message);
   }
 
   throw new Error("No production deployment record found in vercel ls --prod");
@@ -85,8 +85,8 @@ export async function verifyLiveDeployment(expectedCommit?: string) {
       process.exit(1);
     }
     console.log(`  ✓ Direct deployment URL returned HTTP 200`);
-  } catch (err: any) {
-    console.error(`❌ Failed to fetch direct deployment URL: ${err.message}`);
+  } catch (err: unknown) {
+    console.error(`❌ Failed to fetch direct deployment URL: ${(err as Error).message}`);
     process.exit(1);
   }
 
@@ -99,8 +99,8 @@ export async function verifyLiveDeployment(expectedCommit?: string) {
       process.exit(1);
     }
     console.log(`  ✓ Canonical production domain returned HTTP 200`);
-  } catch (err: any) {
-    console.error(`❌ Failed to fetch canonical domain: ${err.message}`);
+  } catch (err: unknown) {
+    console.error(`❌ Failed to fetch canonical domain: ${(err as Error).message}`);
     process.exit(1);
   }
 
