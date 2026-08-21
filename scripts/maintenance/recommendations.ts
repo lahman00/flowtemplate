@@ -93,9 +93,9 @@ function evaluateAssertion(assertion: FixtureAssertion, recs: SoftwareRecommenda
 }
 
 function evaluateFixture(fixture: RegressionFixture): { passed: boolean; failures: string[] } {
-  const recs = getRecommendations(fixture.answers, 3);
+  const { recommendations } = getRecommendations(fixture.answers, 3);
   const failures = fixture.assertions
-    .map((assertion) => evaluateAssertion(assertion, recs))
+    .map((assertion) => evaluateAssertion(assertion, recommendations))
     .filter((failure): failure is string => failure !== null);
   return { passed: failures.length === 0, failures };
 }

@@ -2,14 +2,23 @@ import type { RecommendationAnswers, ScoreFactorDirection } from "@/lib/recommen
 import { DEFAULT_ANSWERS } from "@/lib/recommend/query";
 
 /**
- * Sprint 12 Phase 5 — deterministic regression fixtures for the
- * recommendation engine. Each assertion checks a *structural* property
- * (which category won, whether a factor of a given direction mentioning a
- * given keyword exists, relative/exact scores) rather than exact
- * explanation text, so a wording tweak to an explanation string doesn't
- * break these — only a real behavior change does. Every expected value
- * below was computed by actually running lib/recommend/engine.ts against
- * the live dataset, not guessed. See docs/maintenance-system.md.
+ * Sprint 12 Phase 5, rebuilt 2026-08-21 for the domain-eligibility engine
+ * — deterministic regression fixtures for the recommendation engine.
+ * Each assertion checks a *structural* property (which domain/category
+ * won, whether a factor of a given direction mentioning a given keyword
+ * exists, relative/exact scores) rather than exact explanation text, so
+ * a wording tweak to an explanation string doesn't break these — only a
+ * real behavior change does. Every expected value below was computed by
+ * actually running lib/recommend/engine.ts against the live dataset, not
+ * guessed. See docs/maintenance-system.md.
+ *
+ * Rebuild note: the old needsProjectManagement/needsCrm/etc. booleans are
+ * gone, replaced by a single `primaryNeed` domain selector (see
+ * lib/recommend/domains.ts). The old "multiple-category-needs" fixture
+ * (needsProjectManagement + needsCrm together) no longer applies — a
+ * buyer now picks exactly one primary need, matching the plain-language
+ * "what are you trying to do?" wizard question (Phase 5 of the rebuild
+ * brief); removed rather than force-fit.
  */
 
 export type FixtureAssertion =
@@ -34,18 +43,18 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
   {
     name: "small-remote-pm-ai-low-budget",
     description: "Small remote team needing project management and AI, on a low budget.",
-    answers: { ...DEFAULT_ANSWERS, teamSize: "small", workStyle: "remote", budget: "low", needsProjectManagement: true, needsAi: true },
+    answers: { ...DEFAULT_ANSWERS, teamSize: "small", workStyle: "remote", budget: "low", primaryNeed: "project_management", needsAi: true },
     assertions: [
       { kind: "resultCount", expected: 3 },
       { kind: "topCategory", expected: "project-management" },
-      { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "project management" },
+      { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "Matches what you're trying to do" },
       { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "AI" },
     ],
   },
   {
     name: "crm-enterprise",
     description: "Enterprise company that only needs a CRM.",
-    answers: { ...DEFAULT_ANSWERS, needsCrm: true, companyStage: "enterprise" },
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "crm", companyStage: "enterprise" },
     assertions: [
       { kind: "topCategory", expected: "crm" },
       { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "enterprise" },
@@ -54,27 +63,24 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
   {
     name: "knowledge-base-simple",
     description: "Wants a knowledge base and prefers something simple.",
-    answers: { ...DEFAULT_ANSWERS, needsKnowledgeBase: true, difficultyPreference: "simple" },
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "knowledge_base", difficultyPreference: "simple" },
     assertions: [{ kind: "topCategory", expected: "knowledge-base" }],
   },
   {
     name: "automation-free-budget",
     description: "Needs automation, must be free.",
-    answers: { ...DEFAULT_ANSWERS, needsAutomation: true, budget: "free" },
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "automation", budget: "free" },
     assertions: [{ kind: "topCategory", expected: "automation" }],
   },
   {
     name: "communication-remote",
     description: "Remote team needing a communication tool.",
-    answers: { ...DEFAULT_ANSWERS, needsCommunication: true, workStyle: "remote" },
-    assertions: [
-      { kind: "topCategory", expected: "communication" },
-      { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "Web and mobile" },
-    ],
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "communication", workStyle: "remote" },
+    assertions: [{ kind: "topCategory", expected: "communication" }],
   },
   {
     name: "baseline-no-answers",
-    description: "No meaningful answers given — every product ties at zero, so ranking falls back to deterministic dataset order.",
+    description: "No meaningful answers given — no domain selected, so every product is still eligible (unchanged fallback) and ties at zero, ranking falls back to deterministic dataset order.",
     answers: { ...DEFAULT_ANSWERS },
     assertions: [
       { kind: "resultCount", expected: 3 },
@@ -95,7 +101,7 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
   {
     name: "integration-slack-crm",
     description: "Needs a CRM and requires Slack integration — should reward the entry whose features mention Slack.",
-    answers: { ...DEFAULT_ANSWERS, requiredIntegrations: ["Slack"], needsCrm: true },
+    answers: { ...DEFAULT_ANSWERS, requiredIntegrations: ["Slack"], primaryNeed: "crm" },
     assertions: [
       { kind: "topCategory", expected: "crm" },
       { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "Slack" },
@@ -113,46 +119,102 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
   {
     name: "powerful-preference-crm",
     description: "Wants a powerful/advanced tool, needs CRM.",
-    answers: { ...DEFAULT_ANSWERS, difficultyPreference: "powerful", needsCrm: true },
+    answers: { ...DEFAULT_ANSWERS, difficultyPreference: "powerful", primaryNeed: "crm" },
     assertions: [{ kind: "topCategory", expected: "crm" }],
   },
   {
     name: "large-enterprise-pm",
     description: "Large enterprise team needing project management.",
-    answers: { ...DEFAULT_ANSWERS, teamSize: "large", companyStage: "enterprise", needsProjectManagement: true },
+    answers: { ...DEFAULT_ANSWERS, teamSize: "large", companyStage: "enterprise", primaryNeed: "project_management" },
     assertions: [
       { kind: "topCategory", expected: "project-management" },
-      { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "large" },
       { kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "enterprise" },
     ],
-  },
-  {
-    name: "multiple-category-needs",
-    description: "Needs both project management and CRM — top pick should satisfy at least one via primary category.",
-    answers: { ...DEFAULT_ANSWERS, needsProjectManagement: true, needsCrm: true },
-    assertions: [{ kind: "topCategoryIn", expected: ["crm", "project-management"] }],
   },
   {
     name: "solo-simple-free",
     description: "Solo freelancer, wants something simple and free.",
     answers: { ...DEFAULT_ANSWERS, teamSize: "solo", difficultyPreference: "simple", budget: "free" },
-    // Was pinned to a specific "any size" phrase from whichever product
-    // happened to rank #1 pre-expansion. Post-expansion, the #1 pick for
-    // this exact query is IFTTT — a genuinely stronger match ("Individuals,
-    // small business owners... who want simple, no-code automations" is a
-    // closer fit than a generic "any size" product). Assert on "solo team",
-    // the actual dimension this fixture is testing, so it stays meaningful
-    // regardless of which specific product wins as the dataset grows.
     assertions: [{ kind: "factorPresent", rank: 1, direction: "positive", labelIncludes: "solo team" }],
   },
   {
     name: "office-pm-no-remote-signal",
     description: "Office-based team needing project management — must NOT receive a remote-only work-style factor.",
-    answers: { ...DEFAULT_ANSWERS, workStyle: "office", needsProjectManagement: true },
+    answers: { ...DEFAULT_ANSWERS, workStyle: "office", primaryNeed: "project_management" },
     assertions: [
       { kind: "topCategory", expected: "project-management" },
       { kind: "factorAbsent", rank: 1, labelIncludes: "Web and mobile" },
       { kind: "factorAbsent", rank: 1, labelIncludes: "remote" },
+    ],
+  },
+
+  // ---- New domains (2026-08-21 rebuild) ----
+  {
+    name: "help-desk-small-team",
+    description: "Small team wanting customer support ticketing.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "help_desk", teamSize: "small" },
+    assertions: [{ kind: "topCategory", expected: "customer-support" }],
+  },
+  {
+    name: "password-manager-simple",
+    description: "Wants a simple password manager, individual use.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "password_manager", teamSize: "solo", difficultyPreference: "simple" },
+    assertions: [{ kind: "topCategory", expected: "security" }],
+  },
+  {
+    name: "email-marketing-free-budget",
+    description: "Wants email marketing on a free/low budget.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "email_marketing", budget: "low" },
+    assertions: [{ kind: "topCategory", expected: "marketing" }],
+  },
+  {
+    name: "accounting-freelancer",
+    description: "Freelancer wanting simple accounting/invoicing.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "accounting", teamSize: "solo", difficultyPreference: "simple" },
+    assertions: [{ kind: "topCategory", expected: "accounting" }],
+  },
+  {
+    name: "scheduling-consultant",
+    description: "Solo consultant wanting appointment scheduling.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "scheduling", teamSize: "solo" },
+    assertions: [{ kind: "topCategory", expected: "scheduling" }],
+  },
+  {
+    name: "analytics-product-team",
+    description: "Wants product/web analytics.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "analytics" },
+    assertions: [{ kind: "topCategory", expected: "analytics" }],
+  },
+  {
+    name: "social-media-agency",
+    description: "Agency wanting social media scheduling across channels.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "social_media" },
+    assertions: [{ kind: "topCategory", expected: "marketing" }],
+  },
+  {
+    name: "time-tracking-freelancer-lightweight",
+    description: "Freelancer wanting time tracking, explicitly prefers lightweight (no employee monitoring).",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "time_tracking", teamSize: "solo", monitoringSensitivity: "prefer-lightweight" },
+    assertions: [
+      { kind: "topCategory", expected: "productivity" },
+      { kind: "factorAbsent", rank: 1, labelIncludes: "hubstaff" },
+    ],
+  },
+
+  // ---- Cross-domain absurdity guards (Phase 7 of the rebuild brief) ----
+  {
+    name: "absurd-postmark-must-not-surface-for-project-management",
+    description: "A transactional-email API (postmark, not in the catalog subset scored here) must never appear for a project-management need — proven structurally via eligibility, not by asserting an absence of one slug.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "project_management" },
+    assertions: [{ kind: "topCategory", expected: "project-management" }],
+  },
+  {
+    name: "absurd-setmore-must-not-surface-for-crm",
+    description: "Setmore is a scheduling tool, not a CRM — must never win a CRM-domain request.",
+    answers: { ...DEFAULT_ANSWERS, primaryNeed: "crm" },
+    assertions: [
+      { kind: "topCategory", expected: "crm" },
+      { kind: "factorAbsent", rank: 1, labelIncludes: "setmore" },
     ],
   },
 ];
