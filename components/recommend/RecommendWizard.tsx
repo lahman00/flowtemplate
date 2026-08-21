@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
@@ -20,6 +20,7 @@ import { ToggleCard } from "@/components/recommend/ToggleCard";
 import type { RecommendationAnswers } from "@/lib/recommend/types";
 import { RECOMMEND_DOMAINS, DOMAIN_META } from "@/lib/recommend/domains";
 import { DEFAULT_ANSWERS, answersToSearchParams } from "@/lib/recommend/query";
+import { trackEvent } from "@/lib/analytics/track";
 
 const STEPS = ["What you need", "Your team", "Budget & industry", "Fine-tune"] as const;
 
@@ -31,8 +32,23 @@ export function RecommendWizard() {
 
   const isLastStep = step === STEPS.length - 1;
 
+  useEffect(() => {
+    // Fired once per mount, deliberately not tied to `step` — this marks
+    // the start of a wizard session, not each step transition.
+    trackEvent({ type: "recommend_started", path: "/recommend" });
+  }, []);
+
   function update<K extends keyof RecommendationAnswers>(key: K, value: RecommendationAnswers[K]) {
     setAnswers((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function selectPrimaryNeed(domain: RecommendationAnswers["primaryNeed"]) {
+    update("primaryNeed", domain);
+    trackEvent({
+      type: "recommend_need_selected",
+      path: "/recommend",
+      domain: domain ?? "not_sure",
+    });
   }
 
   function handleSubmit() {
@@ -44,6 +60,12 @@ export function RecommendWizard() {
         .filter((value) => value.length > 0)
         .slice(0, 10),
     };
+
+    trackEvent({
+      type: "recommend_completed",
+      path: "/recommend",
+      domain: finalAnswers.primaryNeed ?? "not_sure",
+    });
 
     const params = answersToSearchParams(finalAnswers);
     router.push(`/recommend/results?${params.toString()}`);
@@ -84,7 +106,7 @@ export function RecommendWizard() {
                   <OptionButton
                     key={domain}
                     selected={answers.primaryNeed === domain}
-                    onClick={() => update("primaryNeed", domain)}
+                    onClick={() => selectPrimaryNeed(domain)}
                     title={meta.label}
                     description={meta.description}
                   />
@@ -92,7 +114,7 @@ export function RecommendWizard() {
               })}
               <OptionButton
                 selected={answers.primaryNeed === null}
-                onClick={() => update("primaryNeed", null)}
+                onClick={() => selectPrimaryNeed(null)}
                 title="Not sure yet"
                 description="Show me relevant options based on team size and budget alone"
                 className="sm:col-span-2"

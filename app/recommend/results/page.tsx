@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Ban, Check, Compass, ThumbsUp } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
@@ -8,6 +7,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ButtonLink } from "@/components/ButtonLink";
 import { TrackedRecommendationLink } from "@/components/recommend/TrackedRecommendationLink";
+import { TrackedComparisonLink } from "@/components/recommend/TrackedComparisonLink";
+import { RecommendResultsAnalytics } from "@/components/recommend/RecommendResultsAnalytics";
 import { getCategoryName } from "@/data/categories";
 import { getComparisonBySlug } from "@/lib/comparison";
 import { getRecommendations } from "@/lib/recommend/engine";
@@ -88,6 +89,11 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
 
   return (
     <main className="flex-1 py-16 sm:py-20">
+      <RecommendResultsAnalytics
+        domain={answers.primaryNeed ?? "not_sure"}
+        confidence={confidence}
+        resultCount={recommendations.length}
+      />
       <Container>
         <Breadcrumbs
           items={[
@@ -251,13 +257,14 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
                         </h3>
                         <div className="mt-3 flex flex-wrap gap-2">
                           {relatedComparisons.map(({ slug, data }) => (
-                            <Link
+                            <TrackedComparisonLink
                               key={slug}
+                              comparisonSlug={slug}
                               href={`/compare/${slug}`}
                               className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-zinc-300 transition hover:border-white/25 hover:text-white"
                             >
                               {data.title}
-                            </Link>
+                            </TrackedComparisonLink>
                           ))}
                         </div>
                       </>
