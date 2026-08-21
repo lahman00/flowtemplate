@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
+import { FirstPartyAnalytics } from "@/components/FirstPartyAnalytics";
 import { SocialLandingCapture } from "@/components/SocialLandingCapture";
 import { getOrganizationJsonLd } from "@/lib/structured-data";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_THEME_COLOR, SITE_URL } from "@/lib/site";
@@ -63,6 +64,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-zinc-950 font-sans text-white antialiased">
         <JsonLd data={getOrganizationJsonLd()} />
         <Analytics />
+        <FirstPartyAnalytics />
         <SocialLandingCapture />
         <Navbar />
         {children}

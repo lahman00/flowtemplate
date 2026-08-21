@@ -32,10 +32,12 @@ export function TrackedCtaLink({ slug, ctaLocation, wixContext, onClick, ...prop
       {...props}
       onClick={(event) => {
         onClick?.(event);
+        const visitorId = typeof localStorage !== "undefined" ? localStorage.getItem("miloosh_vid") ?? undefined : undefined;
+        const sessionId = typeof sessionStorage !== "undefined" ? sessionStorage.getItem("miloosh_sid") ?? undefined : undefined;
         void fetch("/api/outbound-click", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ slug, kind: "cta", sourcePage: pathname, ctaLocation, wixContext }),
+          body: JSON.stringify({ slug, kind: "cta", sourcePage: pathname, ctaLocation, wixContext, visitorId, sessionId }),
           keepalive: true,
         }).catch(() => {
           // Best-effort only — a tracking failure must never affect the user's click.

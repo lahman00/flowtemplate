@@ -23,6 +23,8 @@ type OutboundClickBody = {
   sourcePage?: unknown;
   ctaLocation?: unknown;
   wixContext?: unknown;
+  visitorId?: unknown;
+  sessionId?: unknown;
 };
 
 function isWixContext(value: unknown): value is WixFunnelContext {
@@ -50,12 +52,31 @@ export async function POST(request: NextRequest) {
   }
 
   const resolvedCtaLocation = typeof ctaLocation === "string" ? ctaLocation : undefined;
+  const visitorId = typeof body.visitorId === "string" ? body.visitorId : "v_anon";
+  const sessionId = typeof body.sessionId === "string" ? body.sessionId : "s_anon";
 
   if (kind === "vendor-link") {
     await trackVendorLinkClick(software, software.website, sourcePage);
   } else {
     const url = slug === "wix" && isWixContext(wixContext) ? getWixAffiliateUrl(wixContext) : getSoftwareCtaUrl(software);
     await trackSoftwareCtaClick(software, url, sourcePage, resolvedCtaLocation);
+
+    // Also record into first-party analytics event store
+    const { recordFirstPartyEvent } = await import("@/lib/analytics/events");
+    const { shouldShowAffiliateDisclosure } = await import("@/lib/affiliate");
+    const isAffiliate = shouldShowAffiliateDisclosure(software);
+
+    await recordFirstPartyEvent({
+      type: "outbound_click",
+      softwareSlug: software.slug,
+      destination: isAffiliate ? "affiliate" : "official",
+      url,
+      ctaLocation: resolvedCtaLocation,
+      path: sourcePage,
+      visitorId,
+      sessionId,
+      timestamp: new Date().toISOString(),
+    });
   }
 
   return NextResponse.json({ ok: true }, { status: 202 });
