@@ -34,6 +34,28 @@ export const RECOMMEND_DOMAINS = [
   "analytics",
   "social_media",
   "time_tracking",
+  // Flippa Activation + Recommend Expansion Super-Mission (2026-08-21) —
+  // Phase 11-13: every domain below was added only after auditing the
+  // real CATALOG_ONLY products (scripts/recommend/catalog-only-report.ts)
+  // and confirming >=3 genuinely credible, coherent-buyer-job products —
+  // see data/recommend/product-profiles.ts's per-domain research notes.
+  // Candidates that failed that bar (observability: 2 products, CI/CD: 2,
+  // AI voice: 2, payments API: 2, search API: 2, no-code database: 1)
+  // were deliberately rejected, not force-fit.
+  "property_management",
+  "field_service",
+  "ecommerce_platform",
+  "website_builder",
+  "cms",
+  "headless_cms",
+  "developer_documentation",
+  "video_meetings",
+  "cloud_phone",
+  "api_management",
+  "deployment_hosting",
+  "source_control",
+  "seo_platform",
+  "call_tracking",
 ] as const;
 
 export type RecommendDomain = (typeof RECOMMEND_DOMAINS)[number];
@@ -132,6 +154,90 @@ export const DOMAIN_META: Record<RecommendDomain, DomainMeta> = {
     label: "Track time spent on work or projects",
     description: "Log hours for billing, payroll, or understanding where time actually goes.",
     primaryCategorySlug: "productivity",
+  },
+  property_management: {
+    domain: "property_management",
+    label: "Manage rental properties",
+    description: "Track tenants, rent, maintenance requests, and leases for properties you manage.",
+    primaryCategorySlug: "property-management",
+  },
+  field_service: {
+    domain: "field_service",
+    label: "Dispatch and schedule field technicians",
+    description: "Scheduling, dispatching, and invoicing for teams that do on-site work like repairs or installs.",
+    primaryCategorySlug: "field-service-management",
+  },
+  ecommerce_platform: {
+    domain: "ecommerce_platform",
+    label: "Build an online store",
+    description: "A platform to list products, take payments, and sell online.",
+    primaryCategorySlug: "ecommerce",
+  },
+  website_builder: {
+    domain: "website_builder",
+    label: "Build a website without coding",
+    description: "A drag-and-drop site builder with hosting included.",
+    primaryCategorySlug: "cms",
+  },
+  cms: {
+    domain: "cms",
+    label: "Manage a website's content",
+    description: "Publish and update pages, posts, or content on a website you or your team built.",
+    primaryCategorySlug: "cms",
+  },
+  headless_cms: {
+    domain: "headless_cms",
+    label: "Manage content that feeds a custom-built site or app",
+    description: "A content backend developers connect to their own frontend, not a drag-and-drop builder.",
+    primaryCategorySlug: "cms",
+  },
+  developer_documentation: {
+    domain: "developer_documentation",
+    label: "Publish docs for your product or API",
+    description: "A documentation site for developers or customers to reference, not an internal team wiki.",
+    primaryCategorySlug: "documentation",
+  },
+  video_meetings: {
+    domain: "video_meetings",
+    label: "Host video meetings or webinars",
+    description: "Face-to-face video calls, webinars, and screen sharing.",
+    primaryCategorySlug: "communication",
+  },
+  cloud_phone: {
+    domain: "cloud_phone",
+    label: "Run business phone calls and SMS",
+    description: "A cloud-based phone system for calling and texting customers.",
+    primaryCategorySlug: "communication",
+  },
+  api_management: {
+    domain: "api_management",
+    label: "Manage and gateway APIs",
+    description: "Route, secure, monitor, or monetize APIs across your organization.",
+    primaryCategorySlug: "api",
+  },
+  deployment_hosting: {
+    domain: "deployment_hosting",
+    label: "Host and deploy an app or website",
+    description: "Where your app's code actually runs, deploys, and serves traffic.",
+    primaryCategorySlug: "developer-tools",
+  },
+  source_control: {
+    domain: "source_control",
+    label: "Host code and manage git repositories",
+    description: "Where your team's code lives, reviews happen, and versions are tracked.",
+    primaryCategorySlug: "developer-tools",
+  },
+  seo_platform: {
+    domain: "seo_platform",
+    label: "Research keywords and track search rankings",
+    description: "SEO research, rank tracking, and site-audit tools for organic search.",
+    primaryCategorySlug: "marketing",
+  },
+  call_tracking: {
+    domain: "call_tracking",
+    label: "Track which marketing drives phone calls",
+    description: "Attribute inbound calls to the ad, campaign, or channel that generated them.",
+    primaryCategorySlug: "marketing",
   },
 };
 

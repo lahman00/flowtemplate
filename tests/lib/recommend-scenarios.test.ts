@@ -175,14 +175,96 @@ describe("Adversarial QA — Phase 17 of the rebuild brief", () => {
   });
 });
 
+describe("Recommend scenario matrix — 14 new domains (Flippa Activation + Recommend Expansion, 2026-08-21)", () => {
+  const scenarios: Array<{ name: string; input: RecommendationAnswers }> = [
+    { name: "small landlord property management", input: answers({ primaryNeed: "property_management", teamSize: "solo", budget: "low" }) },
+    { name: "large portfolio property management", input: answers({ primaryNeed: "property_management", teamSize: "large", companyStage: "enterprise" }) },
+    { name: "home-service field service SMB", input: answers({ primaryNeed: "field_service", teamSize: "small" }) },
+    { name: "field service enterprise contractor", input: answers({ primaryNeed: "field_service", teamSize: "large", difficultyPreference: "powerful" }) },
+    { name: "startup online store", input: answers({ primaryNeed: "ecommerce_platform", companyStage: "startup", budget: "low" }) },
+    { name: "enterprise ecommerce", input: answers({ primaryNeed: "ecommerce_platform", companyStage: "enterprise", difficultyPreference: "powerful" }) },
+    { name: "no-code website builder", input: answers({ primaryNeed: "website_builder", difficultyPreference: "simple" }) },
+    { name: "traditional CMS for a content team", input: answers({ primaryNeed: "cms", teamSize: "medium" }) },
+    { name: "headless CMS for developers", input: answers({ primaryNeed: "headless_cms", difficultyPreference: "powerful" }) },
+    { name: "developer/API documentation", input: answers({ primaryNeed: "developer_documentation" }) },
+    { name: "video meetings for remote team", input: answers({ primaryNeed: "video_meetings", workStyle: "remote" }) },
+    { name: "cloud phone system for SMB", input: answers({ primaryNeed: "cloud_phone", teamSize: "small" }) },
+    { name: "API management at scale", input: answers({ primaryNeed: "api_management", companyStage: "enterprise" }) },
+    { name: "deploy and host a startup app", input: answers({ primaryNeed: "deployment_hosting", companyStage: "startup", budget: "free" }) },
+    { name: "source control for a growing team", input: answers({ primaryNeed: "source_control", teamSize: "medium" }) },
+    { name: "SEO research and rank tracking", input: answers({ primaryNeed: "seo_platform" }) },
+    { name: "agency call tracking for attribution", input: answers({ primaryNeed: "call_tracking", teamSize: "small" }) },
+  ];
+
+  it.each(scenarios)("$name", ({ input }) => {
+    const result = getRecommendations(input, 3);
+    expect(() => result).not.toThrow();
+    assertStructurallySound(result, input.primaryNeed);
+  });
+
+  it("every new domain, requested one at a time, returns zero cross-domain leakage", () => {
+    const newDomains = [
+      "property_management", "field_service", "ecommerce_platform", "website_builder", "cms",
+      "headless_cms", "developer_documentation", "video_meetings", "cloud_phone", "api_management",
+      "deployment_hosting", "source_control", "seo_platform", "call_tracking",
+    ] as const;
+    for (const domain of newDomains) {
+      const result = getRecommendations(answers({ primaryNeed: domain }), 5);
+      const eligibleSlugs = new Set(getSlugsForDomain(domain));
+      for (const rec of result.recommendations) {
+        expect(eligibleSlugs.has(rec.software.slug), `${rec.software.slug} leaked into ${domain} results`).toBe(true);
+      }
+    }
+  });
+});
+
+describe("Adversarial engine attack — Phase 20 of the Flippa + Recommend Expansion mission", () => {
+  const attacks: Array<{ name: string; domain: RecommendationAnswers["primaryNeed"]; overrides: Partial<RecommendationAnswers>; mustNotLeakInto: RecommendationAnswers["primaryNeed"] }> = [
+    { name: "property management + creator priorities", domain: "property_management", overrides: { needsAi: true, difficultyPreference: "simple" }, mustNotLeakInto: "social_media" },
+    { name: "field service + enterprise analytics posture", domain: "field_service", overrides: { companyStage: "enterprise", difficultyPreference: "powerful" }, mustNotLeakInto: "analytics" },
+    { name: "cloud phone + password security framing", domain: "cloud_phone", overrides: { needsAi: false }, mustNotLeakInto: "password_manager" },
+    { name: "API management + social media framing", domain: "api_management", overrides: {}, mustNotLeakInto: "social_media" },
+    { name: "ecommerce platform + help desk framing", domain: "ecommerce_platform", overrides: {}, mustNotLeakInto: "help_desk" },
+    { name: "video meetings + accounting framing", domain: "video_meetings", overrides: {}, mustNotLeakInto: "accounting" },
+    { name: "developer documentation + CRM framing", domain: "developer_documentation", overrides: {}, mustNotLeakInto: "crm" },
+    { name: "seo platform + field service framing", domain: "seo_platform", overrides: {}, mustNotLeakInto: "field_service" },
+  ];
+
+  it.each(attacks)("$name — no leakage into $mustNotLeakInto", ({ domain, overrides, mustNotLeakInto }) => {
+    const result = getRecommendations(answers({ primaryNeed: domain, ...overrides }), 5);
+    expect(() => result).not.toThrow();
+    const leakedSlugs = new Set(getSlugsForDomain(mustNotLeakInto!));
+    for (const rec of result.recommendations) {
+      expect(leakedSlugs.has(rec.software.slug), `${rec.software.slug} leaked from ${domain} into ${mustNotLeakInto}`).toBe(false);
+    }
+  });
+
+  it("no domain in the full 27-domain set ever recommends a product without real eligibility evidence", () => {
+    for (const domain of [
+      "project_management", "crm", "knowledge_base", "automation", "communication", "help_desk",
+      "password_manager", "email_marketing", "accounting", "scheduling", "analytics", "social_media",
+      "time_tracking", "property_management", "field_service", "ecommerce_platform", "website_builder",
+      "cms", "headless_cms", "developer_documentation", "video_meetings", "cloud_phone",
+      "api_management", "deployment_hosting", "source_control", "seo_platform", "call_tracking",
+    ] as const) {
+      const result = getRecommendations(answers({ primaryNeed: domain }), 5);
+      const eligibleSlugs = new Set(getSlugsForDomain(domain));
+      for (const rec of result.recommendations) {
+        expect(eligibleSlugs.has(rec.software.slug)).toBe(true);
+      }
+    }
+  });
+});
+
 describe("Deterministic tie-break — Recommend Engine Integrity Patch (2026-08-21), Phase 5", () => {
   it("ties at the max score are broken alphabetically by slug, not by an incidental catalog/order-field position", () => {
     // knowledge_base with no other signals: notion, confluence, obsidian, gitbook, guru, etc.
     // all tie at the same flat PRIMARY_NEED_MATCH score. Before this patch, the winner was
     // whichever had the lowest site-wide `order` field (Notion's order: 1) -- unrelated to
-    // buyer fit. "bloomfire" sorts first alphabetically among the tied group, so it wins now.
+    // buyer fit. "archbee" sorts first alphabetically among the tied group (added 2026-08-21
+    // in the Recommend Expansion mission's knowledge_base evidence audit), so it wins now.
     const result = getRecommendations(answers({ primaryNeed: "knowledge_base" }), 5);
-    expect(result.recommendations[0]?.software.slug).toBe("bloomfire");
+    expect(result.recommendations[0]?.software.slug).toBe("archbee");
   });
 
   it("the alphabetical tie-break is itself deterministic across repeated calls", () => {

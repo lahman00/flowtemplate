@@ -84,7 +84,12 @@ export const PRODUCT_PROFILES: readonly ProductProfile[] = [
   { slug: "salesforce", domains: ["crm"] },
   { slug: "zoho-crm", domains: ["crm"] },
 
-  // ---- knowledge_base (category: knowledge-base, 10 products) ----
+  // ---- knowledge_base (category: knowledge-base, 10 products, +6 found 2026-08-21 in the
+  // "documentation" category — archbee/nuclino/slab/slite/document360/scribe describe themselves as
+  // wiki/knowledge-base/team-knowledge tools in their own stored data, the same real buyer job as this
+  // domain's original 10, just mis-sorted into "documentation" by catalog category alone. Docs tools
+  // whose real evidence is instead "publish docs for external developers/users" moved to the new
+  // developer_documentation domain below, not here. ----
   { slug: "bloomfire", domains: ["knowledge_base"] },
   { slug: "confluence", domains: ["knowledge_base"] },
   { slug: "gitbook", domains: ["knowledge_base"] },
@@ -95,6 +100,12 @@ export const PRODUCT_PROFILES: readonly ProductProfile[] = [
   { slug: "stack-overflow-for-teams", domains: ["knowledge_base"] },
   { slug: "tettra", domains: ["knowledge_base"] },
   { slug: "trainual", domains: ["knowledge_base"] },
+  { slug: "archbee", domains: ["knowledge_base"] }, // "The First Knowledge Portal Platform"
+  { slug: "nuclino", domains: ["knowledge_base"] }, // "unifies team knowledge, documentation..."
+  { slug: "slab", domains: ["knowledge_base"] }, // "knowledge management platform (wiki)"
+  { slug: "slite", domains: ["knowledge_base"] }, // "AI-powered knowledge base"
+  { slug: "document360", domains: ["knowledge_base"] }, // "knowledge base platform... internal and external documentation"
+  { slug: "scribe", domains: ["knowledge_base"] }, // auto-captures workflows into step-by-step docs, same job as trainual
 
   // ---- notion (category: productivity — genuine multi-domain: its own data/software/notion.json
   // lists "Wiki and knowledge base pages" AND "Project and task tracking" as two coequal, top-level
@@ -117,22 +128,30 @@ export const PRODUCT_PROFILES: readonly ProductProfile[] = [
   { slug: "zapier", domains: ["automation"] },
   { slug: "zoho-flow", domains: ["automation"] },
 
-  // ---- communication (category: communication, 15 products) ----
-  { slug: "dialpad", domains: ["communication"] },
-  { slug: "discord", domains: ["communication"] },
+  // ---- communication / video_meetings / cloud_phone (category: communication, 15 products,
+  // restructured 2026-08-21: "communication" alone was exactly the too-broad bucket the brief warned
+  // about, mixing team chat, video meetings, and business phone systems -- three real, different buyer
+  // decisions. Split using each product's own stored feature bullets, not guesses: a product only gets
+  // video_meetings when its own data explicitly names video/meetings as a real capability (not just
+  // "Huddles" as one minor feature among many), and only gets cloud_phone when it explicitly names VoIP/
+  // business-phone calling. Several unified-communications platforms (Zoom, Webex, Dialpad, RingCentral,
+  // Nextiva, Microsoft Teams) genuinely and explicitly span all three -- that's real evidence-backed
+  // multi-domain membership, not five-domains-because-many-features forcing. ----
+  { slug: "discord", domains: ["communication"] }, // text channels + voice rooms -- community/gaming chat, not a business video-meeting product
   { slug: "google-chat", domains: ["communication"] },
-  { slug: "google-meet", domains: ["communication"] },
-  { slug: "krispcall", domains: ["communication"] },
-  { slug: "mattermost", domains: ["communication"] },
-  { slug: "microsoft-teams", domains: ["communication"] },
-  { slug: "nextiva", domains: ["communication"] },
-  { slug: "ringcentral", domains: ["communication"] }, // protected-cohort product — referenced here, page content untouched
-  { slug: "rocket-chat", domains: ["communication"] },
-  { slug: "signal", domains: ["communication"] },
-  { slug: "slack", domains: ["communication"] },
+  { slug: "mattermost", domains: ["communication"] }, // "team messaging platform"; Calls is one feature among several, not its core identity
+  { slug: "signal", domains: ["communication"] }, // personal encrypted messaging, not a business video/phone product
+  { slug: "slack", domains: ["communication"] }, // Huddles is one feature among several, not Slack's core identity
   { slug: "telegram", domains: ["communication"] },
-  { slug: "webex", domains: ["communication"] },
-  { slug: "zoom", domains: ["communication"] },
+  { slug: "rocket-chat", domains: ["communication", "video_meetings"] }, // own description: "unifies messaging, voice, video" as coequal pillars
+  { slug: "google-meet", domains: ["video_meetings"] }, // pure video conferencing, no chat/phone feature bullets
+  { slug: "krispcall", domains: ["cloud_phone"] }, // pure cloud business phone system, no team-chat/video feature bullets
+  { slug: "webex", domains: ["communication", "video_meetings", "cloud_phone"] }, // own description: "video meetings, webinars, calling, and messaging"
+  { slug: "dialpad", domains: ["communication", "video_meetings", "cloud_phone"] }, // own description: "VoIP calling, video meetings, team messaging"
+  { slug: "ringcentral", domains: ["communication", "video_meetings", "cloud_phone"] }, // protected-cohort product — referenced here, page content untouched. Own description: "business phone, team messaging, video meetings"
+  { slug: "nextiva", domains: ["communication", "video_meetings", "cloud_phone"] }, // own description: "voice calling, video conferencing, team chat"
+  { slug: "zoom", domains: ["communication", "video_meetings", "cloud_phone"] }, // own features list explicitly: "Video meetings", "Zoom Chat team messaging", "Zoom Phone cloud VoIP calling"
+  { slug: "microsoft-teams", domains: ["communication", "video_meetings", "cloud_phone"] }, // own features list explicitly: "Chat and channels", "AI-powered meetings", "Teams Phone cloud calling"
 
   // ---- help_desk (category: customer-support, 13 products — all genuinely ticketing/shared-inbox/live-chat tools) ----
   { slug: "crisp", domains: ["help_desk"] },
@@ -217,6 +236,121 @@ export const PRODUCT_PROFILES: readonly ProductProfile[] = [
   { slug: "hubstaff", domains: ["time_tracking"] },
   { slug: "time-doctor", domains: ["time_tracking"] },
   { slug: "toggl-track", domains: ["time_tracking"] },
+
+  // ==========================================================================
+  // Flippa Activation + Recommend Expansion Super-Mission (2026-08-21) —
+  // domains added after auditing every CATALOG_ONLY product
+  // (scripts/recommend/catalog-only-report.ts) against the acceptance gate:
+  // >=3 genuinely credible products, coherent buyer job, real differentiation,
+  // enough evidence to score, truthful explanation, not just a broad category
+  // bucket. Rejected candidates (documented, not silently dropped): AI voice
+  // (elevenlabs + murf-ai = 2; synthesia is a full AI-video-with-avatars
+  // product, a different buyer job, not included just to reach 3),
+  // observability (datadog + sentry = 2), CI/CD (circleci + jenkins = 2),
+  // payments API (adyen + stripe = 2; plaid is financial-data-aggregation,
+  // a different job, not payment processing), search API (algolia +
+  // elastic = 2), no-code database (airtable alone, no peer), design tools
+  // (11 products but 3+ genuinely different buyer jobs each below the
+  // threshold once split — deferred, not in this mission's scope), and
+  // business marketplaces (zero real catalog products — see the Flippa
+  // editorial-gate decision in data/affiliate/canonical-ledger.ts; adding
+  // this domain would mean either an empty domain or fabricating
+  // marketplace product records neither researched nor catalogued, both
+  // prohibited).
+  // ==========================================================================
+
+  // ---- property_management (category: property-management, 4 products) ----
+  { slug: "appfolio", domains: ["property_management"] },
+  { slug: "buildium", domains: ["property_management"] },
+  { slug: "doorloop", domains: ["property_management"] },
+  { slug: "tenantcloud", domains: ["property_management"] },
+
+  // ---- field_service (category: field-service-management, 3 products) ----
+  { slug: "jobber", domains: ["field_service"] },
+  { slug: "housecall-pro", domains: ["field_service"] },
+  { slug: "servicetitan", domains: ["field_service"] },
+
+  // ---- ecommerce_platform (from category: ecommerce — real online-store platforms; weebly moved to
+  // website_builder below since its own data frames it primarily as a site builder with commerce
+  // bolted on, not a dedicated commerce platform) ----
+  { slug: "shopify", domains: ["ecommerce_platform"] },
+  { slug: "woocommerce", domains: ["ecommerce_platform"] },
+  { slug: "bigcommerce", domains: ["ecommerce_platform"] },
+  { slug: "adobe-commerce", domains: ["ecommerce_platform"] },
+  { slug: "shift4shop", domains: ["ecommerce_platform"] },
+  { slug: "prestashop", domains: ["ecommerce_platform"] },
+  { slug: "opencart", domains: ["ecommerce_platform"] },
+  { slug: "ecwid", domains: ["ecommerce_platform"] },
+  { slug: "shopware", domains: ["ecommerce_platform"] },
+  { slug: "salesforce-commerce-cloud", domains: ["ecommerce_platform"] },
+
+  // ---- website_builder (from category: cms — the 4 products whose own stored description explicitly
+  // calls itself a "website builder" with hosting included, distinct from a CMS a developer or content
+  // team runs) ----
+  { slug: "wix", domains: ["website_builder"] },
+  { slug: "squarespace", domains: ["website_builder"] },
+  { slug: "webflow", domains: ["website_builder"] },
+  { slug: "weebly", domains: ["website_builder"] },
+
+  // ---- cms (from category: cms — traditional/monolithic CMS platforms a non-developer can run
+  // out of the box, split from headless_cms below: different buyer, different job) ----
+  { slug: "wordpress", domains: ["cms"] },
+  { slug: "drupal", domains: ["cms"] },
+  { slug: "joomla", domains: ["cms"] },
+  { slug: "ghost", domains: ["cms"] },
+  { slug: "umbraco", domains: ["cms"] },
+  { slug: "craft-cms", domains: ["cms"] },
+
+  // ---- headless_cms (from category: cms — API-first content backends a developer connects to their
+  // own custom frontend; a genuinely different buyer than the traditional-CMS group above) ----
+  { slug: "contentful", domains: ["headless_cms"] },
+  { slug: "strapi", domains: ["headless_cms"] },
+  { slug: "sanity", domains: ["headless_cms"] },
+  { slug: "storyblok", domains: ["headless_cms"] },
+  { slug: "directus", domains: ["headless_cms"] },
+
+  // ---- developer_documentation (from category: documentation — publishing docs for external
+  // developers/users/API consumers, not an internal team wiki; see knowledge_base above for the 6
+  // documentation-category products whose real job is internal team knowledge instead) ----
+  { slug: "docusaurus", domains: ["developer_documentation"] },
+  { slug: "mkdocs", domains: ["developer_documentation"] },
+  { slug: "readme", domains: ["developer_documentation"] },
+  { slug: "swaggerhub", domains: ["developer_documentation"] },
+  { slug: "read-the-docs", domains: ["developer_documentation"] },
+  { slug: "zeroheight", domains: ["developer_documentation"] }, // design-system documentation, structurally a docs site not a wiki
+
+  // ---- api_management (from category: api — API gateway/lifecycle-management platforms; excludes
+  // payments (adyen/stripe/plaid), search (algolia/elastic), email/SMS APIs (postmark/sendgrid/twilio),
+  // and enterprise auth (workos) — each a different, and individually too-small, buyer job) ----
+  { slug: "apigee", domains: ["api_management"] },
+  { slug: "kong", domains: ["api_management"] },
+  { slug: "mulesoft", domains: ["api_management"] },
+  { slug: "rapidapi", domains: ["api_management"] },
+
+  // ---- deployment_hosting (from category: developer-tools — "where does my app/site actually run" ----
+  { slug: "netlify", domains: ["deployment_hosting"] },
+  { slug: "render", domains: ["deployment_hosting"] },
+  { slug: "vercel", domains: ["deployment_hosting"] },
+  { slug: "firebase", domains: ["deployment_hosting"] },
+  { slug: "supabase", domains: ["deployment_hosting"] },
+
+  // ---- source_control (from category: developer-tools — "where does my team's code live and get
+  // reviewed"; excludes circleci/jenkins (CI/CD, only 2 products, below threshold), datadog/sentry
+  // (observability, only 2), docker (containerization, no peer), postman (API testing, no peer)) ----
+  { slug: "github", domains: ["source_control"] },
+  { slug: "bitbucket", domains: ["source_control"] },
+  { slug: "gitlab", domains: ["source_control"] },
+
+  // ---- seo_platform (from category: marketing — SEO research/rank-tracking tools) ----
+  { slug: "semrush", domains: ["seo_platform"] }, // protected-cohort product — referenced here, page content untouched
+  { slug: "ahrefs", domains: ["seo_platform"] },
+  { slug: "moz", domains: ["seo_platform"] },
+
+  // ---- call_tracking (from category: marketing — marketing-attribution/call-tracking tools; excludes
+  // marketo-engage/braze (marketing automation/CDP, a different job, only 2 products anyway)) ----
+  { slug: "callrail", domains: ["call_tracking"] },
+  { slug: "ruler-analytics", domains: ["call_tracking"] },
+  { slug: "whatconverts", domains: ["call_tracking"] },
 ];
 
 const PROFILE_BY_SLUG = new Map(PRODUCT_PROFILES.map((p) => [p.slug, p]));

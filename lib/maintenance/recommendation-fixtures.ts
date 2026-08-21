@@ -71,7 +71,10 @@ export const RECOMMENDATION_FIXTURES: RegressionFixture[] = [
     description: "Wants a knowledge base and prefers something simple.",
     answers: { ...DEFAULT_ANSWERS, primaryNeed: "knowledge_base", difficultyPreference: "simple" },
     // "productivity" included for the same reason as small-remote-pm-ai-low-budget above — Notion.
-    assertions: [{ kind: "topCategoryIn", expected: ["knowledge-base", "productivity"] }],
+    // "documentation" included 2026-08-21: archbee/nuclino/slab/slite/document360/scribe were added to
+    // knowledge_base (real wiki/knowledge-base evidence in their own stored data) despite their catalog
+    // category being "documentation" — see data/recommend/product-profiles.ts.
+    assertions: [{ kind: "topCategoryIn", expected: ["knowledge-base", "productivity", "documentation"] }],
   },
   {
     name: "automation-free-budget",
