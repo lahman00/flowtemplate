@@ -25,6 +25,9 @@ export async function POST(request: NextRequest) {
     path: String(body.path).slice(0, 300),
     visitorId: String(body.visitorId).slice(0, 64),
     sessionId: String(body.sessionId).slice(0, 64),
+    // Recommend Engine Integrity Patch (2026-08-21): coerced to a strict
+    // boolean rather than trusted as-is — see lib/analytics/synthetic.ts.
+    isTest: body.isTest === true,
   } as FirstPartyEvent;
 
   await recordFirstPartyEvent(sanitizedEvent);

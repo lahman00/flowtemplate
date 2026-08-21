@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { isBotUserAgent, isInternalOrSyntheticTraffic } from "@/lib/analytics/bot-filter";
 import { recordFirstPartyEvent, getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/events";
 import { computePeriodMetrics, isSyntheticOrTestEvent } from "@/scripts/analytics/report";
+import { LEGACY_CONTAMINATED_SESSIONS, isLegacyContaminatedSession } from "@/lib/analytics/legacy-contaminated-sessions";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -189,6 +190,94 @@ describe("First-Party Analytics, Bot Defense & Funnel Suite", () => {
       expect(isSyntheticOrTestEvent({ type: "page_view", path: "/", visitorId: "v_1", sessionId: "s_test_2", timestamp: "" })).toBe(true);
       expect(isSyntheticOrTestEvent({ type: "page_view", path: "/", visitorId: "v_1", sessionId: "s_1", timestamp: "", isTest: true })).toBe(true);
       expect(isSyntheticOrTestEvent({ type: "page_view", path: "/", visitorId: "v_real_human_123", sessionId: "s_real_session_456", timestamp: "" })).toBe(false);
+    });
+  });
+
+  describe("Recommend Engine Integrity Patch (2026-08-21): synthetic QA exclusion & Recommend funnel", () => {
+    it("a QA browser session marked isTest:true is excluded from real-user metrics", () => {
+      const now = new Date().toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/recommend", visitorId: "v_qa_operator", sessionId: "s_qa_operator", timestamp: now, isTest: true },
+        { type: "recommend_started", path: "/recommend", visitorId: "v_qa_operator", sessionId: "s_qa_operator", timestamp: now, isTest: true } as FirstPartyEvent,
+      ];
+      const summary = computePeriodMetrics("TEST", events, events);
+      expect(summary.uniqueVisitors).toBe(0);
+      expect(summary.recommendFunnel.visitors.people).toBe(0);
+      expect(summary.recommendFunnel.starters.people).toBe(0);
+    });
+
+    it("an organic session (no isTest marker, not a legacy-contaminated session) is NOT excluded", () => {
+      const now = new Date().toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/recommend", visitorId: "v_real_organic", sessionId: "s_real_organic", timestamp: now },
+        { type: "recommend_started", path: "/recommend", visitorId: "v_real_organic", sessionId: "s_real_organic", timestamp: now } as FirstPartyEvent,
+      ];
+      const summary = computePeriodMetrics("TEST", events, events);
+      expect(summary.uniqueVisitors).toBe(1);
+      expect(summary.recommendFunnel.visitors.people).toBe(1);
+      expect(summary.recommendFunnel.starters.people).toBe(1);
+    });
+
+    it("a known legacy-contaminated session is excluded from real metrics by default, without deleting its events", () => {
+      expect(LEGACY_CONTAMINATED_SESSIONS.length).toBeGreaterThan(0);
+      const legacySession = LEGACY_CONTAMINATED_SESSIONS[0];
+      expect(isLegacyContaminatedSession(legacySession.sessionId)).toBe(true);
+      expect(legacySession.classification).toBe("UNKNOWN_POSSIBLE_OPERATOR_QA");
+
+      const now = new Date().toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/recommend", visitorId: legacySession.visitorId, sessionId: legacySession.sessionId, timestamp: now },
+      ];
+      // Excluded from the real-metrics path...
+      expect(isSyntheticOrTestEvent(events[0])).toBe(true);
+      const summary = computePeriodMetrics("TEST", events, events);
+      expect(summary.uniqueVisitors).toBe(0);
+      // ...but --include-synthetic can still see it, proving nothing was deleted.
+      expect(isSyntheticOrTestEvent(events[0], true)).toBe(false);
+      const debugSummary = computePeriodMetrics("TEST", events, events, [], true);
+      expect(debugSummary.uniqueVisitors).toBe(1);
+    });
+
+    it("Recommend funnel counts starters, completers, result viewers, product/comparison openers as distinct people/sessions/events", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "recommend_started", path: "/recommend", visitorId: "v_a", sessionId: "s_a", timestamp: t(0) } as FirstPartyEvent,
+        { type: "recommend_need_selected", path: "/recommend", domain: "crm", visitorId: "v_a", sessionId: "s_a", timestamp: t(1000) } as FirstPartyEvent,
+        { type: "recommend_completed", path: "/recommend", domain: "crm", visitorId: "v_a", sessionId: "s_a", timestamp: t(2000) } as FirstPartyEvent,
+        { type: "recommend_result_viewed", path: "/recommend/results", domain: "crm", confidence: "high", resultCount: 3, visitorId: "v_a", sessionId: "s_a", timestamp: t(3000) } as FirstPartyEvent,
+        { type: "recommend_product_open", path: "/recommend/results", softwareSlug: "hubspot", rank: 1, visitorId: "v_a", sessionId: "s_a", timestamp: t(4000) } as FirstPartyEvent,
+        { type: "recommend_comparison_open", path: "/recommend/results", comparisonSlug: "hubspot-vs-pipedrive", visitorId: "v_a", sessionId: "s_a", timestamp: t(5000) } as FirstPartyEvent,
+        // Visitor B starts but never completes.
+        { type: "recommend_started", path: "/recommend", visitorId: "v_b", sessionId: "s_b", timestamp: t(0) } as FirstPartyEvent,
+      ];
+
+      const summary = computePeriodMetrics("TEST", events, events);
+      const rf = summary.recommendFunnel;
+      expect(rf.visitors.people).toBe(2);
+      expect(rf.starters.people).toBe(2);
+      expect(rf.completers.people).toBe(1);
+      expect(rf.completionRate).toBe("50.0%");
+      expect(rf.resultViewers.people).toBe(1);
+      expect(rf.productOpeners.people).toBe(1);
+      expect(rf.comparisonOpeners.people).toBe(1);
+    });
+
+    it("outbound/affiliate clicks are only counted 'after Recommend' when they chronologically follow a real Recommend touch", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        // Visitor A: touches Recommend, then clicks outbound afterward -> counts.
+        { type: "recommend_started", path: "/recommend", visitorId: "v_a", sessionId: "s_a", timestamp: t(0) } as FirstPartyEvent,
+        { type: "outbound_click", path: "/software/hubspot", softwareSlug: "hubspot", destination: "affiliate", url: "https://hubspot.com/aff", visitorId: "v_a", sessionId: "s_a", timestamp: t(1000) },
+        // Visitor C: clicks outbound with NO prior Recommend touch at all -> does not count toward "after Recommend".
+        { type: "outbound_click", path: "/software/slack", softwareSlug: "slack", destination: "official", url: "https://slack.com", visitorId: "v_c", sessionId: "s_c", timestamp: t(0) },
+      ];
+
+      const summary = computePeriodMetrics("TEST", events, events);
+      const rf = summary.recommendFunnel;
+      expect(rf.outboundClickersAfter.people).toBe(1);
+      expect(rf.affiliateClickersAfter.people).toBe(1);
+      // Overall outboundClickers (unrelated to Recommend) still counts both.
+      expect(summary.outboundClickers).toBe(2);
     });
   });
 

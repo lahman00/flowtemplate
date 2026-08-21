@@ -1,5 +1,6 @@
 import { getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/events";
 import { getOutboundEvents, type StoredOutboundEvent } from "@/lib/revenue/events";
+import { LEGACY_CONTAMINATED_SESSIONS, isLegacyContaminatedSession } from "@/lib/analytics/legacy-contaminated-sessions";
 
 export interface PeriodSummary {
   periodName: string;
@@ -33,18 +34,52 @@ export interface PeriodSummary {
   topGuides: { slug: string; views: number }[];
   topOutboundDestinations: { url: string; clicks: number }[];
   topAffiliateProducts: { slug: string; clicks: number }[];
+  recommendFunnel: RecommendFunnelSummary;
 }
 
-export function isSyntheticOrTestEvent(e: FirstPartyEvent): boolean {
+/** People/sessions/events, kept separate per Phase 8 — "Never infer people from event count." */
+export interface RecommendFunnelMetric {
+  people: number;
+  sessions: number;
+  events: number;
+}
+
+export interface RecommendFunnelSummary {
+  visitors: RecommendFunnelMetric;
+  starters: RecommendFunnelMetric;
+  completers: RecommendFunnelMetric;
+  completionRate: string;
+  resultViewers: RecommendFunnelMetric;
+  productOpeners: RecommendFunnelMetric;
+  comparisonOpeners: RecommendFunnelMetric;
+  outboundClickersAfter: RecommendFunnelMetric;
+  affiliateClickersAfter: RecommendFunnelMetric;
+}
+
+/**
+ * Recommend Engine Integrity Patch (2026-08-21): also treats a known
+ * legacy-contaminated session (recorded before the isTest marker existed,
+ * investigated and found unable to be proven organic — see
+ * lib/analytics/legacy-contaminated-sessions.ts) as synthetic. This is an
+ * explicit, auditable, per-session annotation applied only here at report
+ * time — the underlying stored events are never mutated or deleted.
+ *
+ * `includeSynthetic` is the --include-synthetic debug override (Phase 1's
+ * "keep an optional mode for debugging"): when true, nothing is filtered
+ * out by this function, regardless of marker or legacy classification.
+ */
+export function isSyntheticOrTestEvent(e: FirstPartyEvent, includeSynthetic = false): boolean {
+  if (includeSynthetic) return false;
   if (e.isTest) return true;
   if (e.visitorId.startsWith("v_test_") || e.visitorId.startsWith("v_synthetic_") || e.visitorId.startsWith("v_anon_test")) return true;
   if (e.sessionId.startsWith("s_test_") || e.sessionId.startsWith("s_synthetic_") || e.sessionId.startsWith("s_anon_test")) return true;
+  if (isLegacyContaminatedSession(e.sessionId)) return true;
   return false;
 }
 
-export function filterEventsByDate(events: FirstPartyEvent[], startDateIso: string, endDateIso?: string): FirstPartyEvent[] {
+export function filterEventsByDate(events: FirstPartyEvent[], startDateIso: string, endDateIso?: string, includeSynthetic = false): FirstPartyEvent[] {
   return events.filter(e => {
-    if (isSyntheticOrTestEvent(e)) return false;
+    if (isSyntheticOrTestEvent(e, includeSynthetic)) return false;
     if (e.timestamp < startDateIso) return false;
     if (endDateIso && e.timestamp > endDateIso) return false;
     return true;
@@ -55,7 +90,8 @@ export function computePeriodMetrics(
   periodName: string,
   events: FirstPartyEvent[],
   allHistoricalEvents: FirstPartyEvent[] = [],
-  legacyClicks: StoredOutboundEvent[] = []
+  legacyClicks: StoredOutboundEvent[] = [],
+  includeSynthetic = false
 ): PeriodSummary {
   const visitors = new Set<string>();
   const sessions = new Set<string>();
@@ -70,6 +106,22 @@ export function computePeriodMetrics(
   const meaningfulClickers = new Set<string>();
   const outboundClickers = new Set<string>();
   const affiliateClickers = new Set<string>();
+
+  // Phase 8 — Recommend funnel, kept as separate people/sessions/events
+  // trackers so nothing here silently infers "people" from "events".
+  const rfVisitorsP = new Set<string>(), rfVisitorsS = new Set<string>(); let rfVisitorsE = 0;
+  const rfStartersP = new Set<string>(), rfStartersS = new Set<string>(); let rfStartersE = 0;
+  const rfCompletersP = new Set<string>(), rfCompletersS = new Set<string>(); let rfCompletersE = 0;
+  const rfResultViewersP = new Set<string>(), rfResultViewersS = new Set<string>(); let rfResultViewersE = 0;
+  const rfProductOpenersP = new Set<string>(), rfProductOpenersS = new Set<string>(); let rfProductOpenersE = 0;
+  const rfComparisonOpenersP = new Set<string>(), rfComparisonOpenersS = new Set<string>(); let rfComparisonOpenersE = 0;
+  const rfOutboundAfterP = new Set<string>(), rfOutboundAfterS = new Set<string>(); let rfOutboundAfterE = 0;
+  const rfAffiliateAfterP = new Set<string>(), rfAffiliateAfterS = new Set<string>(); let rfAffiliateAfterE = 0;
+  const firstRecommendTouchByVisitor = new Map<string, string>();
+  const RECOMMEND_TOUCH_TYPES = new Set([
+    "recommend_use", "recommend_started", "recommend_need_selected", "recommend_completed",
+    "recommend_result_viewed", "recommend_product_open", "recommend_comparison_open",
+  ]);
 
   const landingPageCounts = new Map<string, number>();
   const sessionLastPage = new Map<string, { path: string; timestamp: string }>();
@@ -86,7 +138,7 @@ export function computePeriodMetrics(
   // Build global session map to calculate new vs returning visitors across all time
   const globalSessionsByVisitor = new Map<string, Set<string>>();
   for (const he of allHistoricalEvents) {
-    if (isSyntheticOrTestEvent(he)) continue;
+    if (isSyntheticOrTestEvent(he, includeSynthetic)) continue;
     if (!globalSessionsByVisitor.has(he.visitorId)) {
       globalSessionsByVisitor.set(he.visitorId, new Set<string>());
     }
@@ -97,7 +149,7 @@ export function computePeriodMetrics(
   const sortedEvents = [...events].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
 
   for (const e of sortedEvents) {
-    if (isSyntheticOrTestEvent(e)) continue;
+    if (isSyntheticOrTestEvent(e, includeSynthetic)) continue;
 
     // Track landing page: first page view per session
     if (!sessions.has(e.sessionId) && e.type === "page_view") {
@@ -111,6 +163,15 @@ export function computePeriodMetrics(
       sessionsByVisitor.set(e.visitorId, new Set<string>());
     }
     sessionsByVisitor.get(e.visitorId)!.add(e.sessionId);
+
+    if (RECOMMEND_TOUCH_TYPES.has(e.type)) {
+      rfVisitorsP.add(e.visitorId);
+      rfVisitorsS.add(e.sessionId);
+      rfVisitorsE++;
+      if (!firstRecommendTouchByVisitor.has(e.visitorId)) {
+        firstRecommendTouchByVisitor.set(e.visitorId, e.timestamp);
+      }
+    }
 
     if (e.type === "page_view") {
       totalPageViews++;
@@ -133,6 +194,16 @@ export function computePeriodMetrics(
       guideCounts.set(e.guideSlug, (guideCounts.get(e.guideSlug) ?? 0) + 1);
     } else if (e.type === "recommend_use") {
       recommendUsers.add(e.visitorId);
+    } else if (e.type === "recommend_started") {
+      rfStartersP.add(e.visitorId); rfStartersS.add(e.sessionId); rfStartersE++;
+    } else if (e.type === "recommend_completed") {
+      rfCompletersP.add(e.visitorId); rfCompletersS.add(e.sessionId); rfCompletersE++;
+    } else if (e.type === "recommend_result_viewed") {
+      rfResultViewersP.add(e.visitorId); rfResultViewersS.add(e.sessionId); rfResultViewersE++;
+    } else if (e.type === "recommend_product_open") {
+      rfProductOpenersP.add(e.visitorId); rfProductOpenersS.add(e.sessionId); rfProductOpenersE++;
+    } else if (e.type === "recommend_comparison_open") {
+      rfComparisonOpenersP.add(e.visitorId); rfComparisonOpenersS.add(e.sessionId); rfComparisonOpenersE++;
     } else if (e.type === "internal_cta_click") {
       meaningfulClickers.add(e.visitorId);
     } else if (e.type === "outbound_click") {
@@ -142,6 +213,15 @@ export function computePeriodMetrics(
       if (e.destination === "affiliate") {
         affiliateClickers.add(e.visitorId);
         affiliateCounts.set(e.softwareSlug, (affiliateCounts.get(e.softwareSlug) ?? 0) + 1);
+      }
+      // Phase 8 — "after Recommend": this visitor touched Recommend at
+      // some earlier point (sortedEvents is chronological, so any touch
+      // already recorded happened strictly before this click's timestamp).
+      if (firstRecommendTouchByVisitor.has(e.visitorId)) {
+        rfOutboundAfterP.add(e.visitorId); rfOutboundAfterS.add(e.sessionId); rfOutboundAfterE++;
+        if (e.destination === "affiliate") {
+          rfAffiliateAfterP.add(e.visitorId); rfAffiliateAfterS.add(e.sessionId); rfAffiliateAfterE++;
+        }
       }
     }
   }
@@ -272,11 +352,23 @@ export function computePeriodMetrics(
     topCategories,
     topGuides,
     topOutboundDestinations,
-    topAffiliateProducts
+    topAffiliateProducts,
+    recommendFunnel: {
+      visitors: { people: rfVisitorsP.size, sessions: rfVisitorsS.size, events: rfVisitorsE },
+      starters: { people: rfStartersP.size, sessions: rfStartersS.size, events: rfStartersE },
+      completers: { people: rfCompletersP.size, sessions: rfCompletersS.size, events: rfCompletersE },
+      completionRate: rfStartersP.size > 0 ? `${((rfCompletersP.size / rfStartersP.size) * 100).toFixed(1)}%` : "0.0%",
+      resultViewers: { people: rfResultViewersP.size, sessions: rfResultViewersS.size, events: rfResultViewersE },
+      productOpeners: { people: rfProductOpenersP.size, sessions: rfProductOpenersS.size, events: rfProductOpenersE },
+      comparisonOpeners: { people: rfComparisonOpenersP.size, sessions: rfComparisonOpenersS.size, events: rfComparisonOpenersE },
+      outboundClickersAfter: { people: rfOutboundAfterP.size, sessions: rfOutboundAfterS.size, events: rfOutboundAfterE },
+      affiliateClickersAfter: { people: rfAffiliateAfterP.size, sessions: rfAffiliateAfterS.size, events: rfAffiliateAfterE },
+    },
   };
 }
 
 export async function generateAnalyticsReport() {
+  const includeSynthetic = process.argv.includes("--include-synthetic");
   const events = await getAllFirstPartyEvents();
   const legacyClicks = await getOutboundEvents();
 
@@ -287,18 +379,25 @@ export async function generateAnalyticsReport() {
   const last7d = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
   const last30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
-  const todayEvents = filterEventsByDate(events, todayStr + "T00:00:00.000Z");
-  const yesterdayEvents = filterEventsByDate(events, yesterdayStr + "T00:00:00.000Z", todayStr + "T00:00:00.000Z");
-  const last7dEvents = filterEventsByDate(events, last7d);
-  const last30dEvents = filterEventsByDate(events, last30d);
+  const todayEvents = filterEventsByDate(events, todayStr + "T00:00:00.000Z", undefined, includeSynthetic);
+  const yesterdayEvents = filterEventsByDate(events, yesterdayStr + "T00:00:00.000Z", todayStr + "T00:00:00.000Z", includeSynthetic);
+  const last7dEvents = filterEventsByDate(events, last7d, undefined, includeSynthetic);
+  const last30dEvents = filterEventsByDate(events, last30d, undefined, includeSynthetic);
 
   const periods = [
-    computePeriodMetrics("TODAY", todayEvents, events),
-    computePeriodMetrics("YESTERDAY", yesterdayEvents, events),
-    computePeriodMetrics("LAST 7 DAYS", last7dEvents, events),
-    computePeriodMetrics("LAST 30 DAYS", last30dEvents, events),
-    computePeriodMetrics("ALL TIME (First-Party Live)", events, events, legacyClicks)
+    computePeriodMetrics("TODAY", todayEvents, events, [], includeSynthetic),
+    computePeriodMetrics("YESTERDAY", yesterdayEvents, events, [], includeSynthetic),
+    computePeriodMetrics("LAST 7 DAYS", last7dEvents, events, [], includeSynthetic),
+    computePeriodMetrics("LAST 30 DAYS", last30dEvents, events, [], includeSynthetic),
+    computePeriodMetrics("ALL TIME (First-Party Live)", events, events, legacyClicks, includeSynthetic)
   ];
+
+  if (includeSynthetic) {
+    console.log("========================================================================================");
+    console.log(" WARNING --include-synthetic ACTIVE: synthetic/QA/legacy-contaminated sessions are INCLUDED below.");
+    console.log("   This mode is for debugging only — never treat these numbers as real human usage.");
+    console.log("========================================================================================\n");
+  }
 
   console.log("========================================================================================");
   console.log("                      MILOOSH REAL HUMAN USAGE & FUNNEL REPORT                          ");
@@ -357,6 +456,22 @@ export async function generateAnalyticsReport() {
       console.log(`\n  Top Affiliate Products Clicked:`);
       p.topAffiliateProducts.forEach((item, i) => console.log(`    ${i + 1}. ${item.slug} (${item.clicks} clicks)`));
     }
+
+    const rf = p.recommendFunnel;
+    console.log(`\n  RECOMMEND FUNNEL (synthetic/legacy-contaminated excluded${includeSynthetic ? " -- DISABLED, --include-synthetic active" : ""}):`);
+    console.log(`    ${"".padEnd(32)}   PEOPLE   SESSIONS   EVENTS`);
+    const rfRow = (label: string, m: RecommendFunnelMetric) =>
+      console.log(`    ${label.padEnd(32)} ${m.people.toString().padStart(8)} ${m.sessions.toString().padStart(10)} ${m.events.toString().padStart(8)}`);
+    rfRow("Real Recommend Visitors", rf.visitors);
+    rfRow("Recommend Starters", rf.starters);
+    rfRow("Recommend Completers", rf.completers);
+    console.log(`    ${"Completion Rate".padEnd(32)} ${rf.completionRate.padStart(8)}`);
+    rfRow("Result Viewers", rf.resultViewers);
+    rfRow("Product Openers", rf.productOpeners);
+    rfRow("Comparison Openers", rf.comparisonOpeners);
+    rfRow("Outbound Vendor Clicks After", rf.outboundClickersAfter);
+    rfRow("Affiliate Clicks After", rf.affiliateClickersAfter);
+
     console.log("\n");
   }
 
@@ -367,6 +482,24 @@ export async function generateAnalyticsReport() {
   if (legacyClicks.some(c => c.softwareSlug === "pipedrive")) {
     console.log("   * Note: 2026-08-19 Pipedrive click recorded during controlled production verification test.");
   }
+  console.log("========================================================================================\n");
+
+  const legacyExcludedCount = events.filter(e => isLegacyContaminatedSession(e.sessionId)).length;
+  const syntheticExcludedCount = events.filter(e => !isLegacyContaminatedSession(e.sessionId) && isSyntheticOrTestEvent(e)).length;
+  console.log("========================================================================================");
+  console.log(" DATA INTEGRITY (Recommend Engine Integrity Patch, 2026-08-21):");
+  console.log(`   Total stored first-party events (all time, unfiltered):    ${events.length}`);
+  console.log(`   Excluded — isTest marker (?qa=1 synthetic sessions):       ${syntheticExcludedCount}`);
+  console.log(`   Excluded — legacy-contaminated (pre-marker, unproven):     ${legacyExcludedCount}`);
+  if (LEGACY_CONTAMINATED_SESSIONS.length > 0) {
+    console.log("\n   Legacy-contaminated sessions (never deleted, only excluded from REAL metrics above):");
+    for (const s of LEGACY_CONTAMINATED_SESSIONS) {
+      const sessionEvents = events.filter(e => e.sessionId === s.sessionId);
+      console.log(`     - session ${s.sessionId}: ${sessionEvents.length} events, classification ${s.classification}`);
+      console.log(`       investigated ${s.investigatedAt}: ${s.reason}`);
+    }
+  }
+  console.log("   Run with --include-synthetic to see these counted back into the numbers above (debug only).");
   console.log("========================================================================================\n");
 }
 

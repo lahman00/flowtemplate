@@ -22,7 +22,13 @@ export type FirstPartyEventType =
   | "guide_view"
   | "recommend_use"
   | "outbound_click"
-  | "internal_cta_click";
+  | "internal_cta_click"
+  | "recommend_started"
+  | "recommend_need_selected"
+  | "recommend_completed"
+  | "recommend_result_viewed"
+  | "recommend_product_open"
+  | "recommend_comparison_open";
 
 export interface BaseAnalyticsEvent {
   type: FirstPartyEventType;
@@ -83,6 +89,46 @@ export interface InternalCtaClickEvent extends BaseAnalyticsEvent {
   ctaName?: string;
 }
 
+/**
+ * Recommend Engine Integrity Patch (2026-08-21) — Phase 7's "minimal
+ * useful set" of Recommend-specific interaction events, deferred by the
+ * prior mission. Same privacy model as every other event here: safe
+ * enums/IDs only (a RecommendDomain value, a real product/comparison
+ * slug, a confidence level) — never free-text answers.
+ */
+export interface RecommendStartedEvent extends BaseAnalyticsEvent {
+  type: "recommend_started";
+}
+
+export interface RecommendNeedSelectedEvent extends BaseAnalyticsEvent {
+  type: "recommend_need_selected";
+  /** A RecommendDomain value, or "not_sure" for the explicit "Not sure yet" option. */
+  domain: string;
+}
+
+export interface RecommendCompletedEvent extends BaseAnalyticsEvent {
+  type: "recommend_completed";
+  domain: string;
+}
+
+export interface RecommendResultViewedEvent extends BaseAnalyticsEvent {
+  type: "recommend_result_viewed";
+  domain: string;
+  confidence: "high" | "low" | "none";
+  resultCount: number;
+}
+
+export interface RecommendProductOpenEvent extends BaseAnalyticsEvent {
+  type: "recommend_product_open";
+  softwareSlug: string;
+  rank: number;
+}
+
+export interface RecommendComparisonOpenEvent extends BaseAnalyticsEvent {
+  type: "recommend_comparison_open";
+  comparisonSlug: string;
+}
+
 export type FirstPartyEvent =
   | PageViewEvent
   | EngagedViewEvent
@@ -92,7 +138,13 @@ export type FirstPartyEvent =
   | GuideViewEvent
   | RecommendUseEvent
   | OutboundClickEvent
-  | InternalCtaClickEvent;
+  | InternalCtaClickEvent
+  | RecommendStartedEvent
+  | RecommendNeedSelectedEvent
+  | RecommendCompletedEvent
+  | RecommendResultViewedEvent
+  | RecommendProductOpenEvent
+  | RecommendComparisonOpenEvent;
 
 const BLOB_PREFIX = "first-party-analytics/";
 const LOCAL_FALLBACK_PATH = path.join(process.cwd(), "var", "first-party-analytics.json");
