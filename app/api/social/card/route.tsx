@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
 import { SITE_NAME, SITE_THEME_COLOR } from "@/lib/site";
 import { loadInterFonts } from "@/lib/social/fonts";
+import { loadCanonicalLogoDataUri, logoWidthForHeight } from "@/lib/social/logo";
 
 // 2026-08-18 brand forensics: moved off edge runtime (fonts.ts needs Node's
 // fs to load the real Inter TTFs — see that file's header). Node/Fluid
@@ -17,8 +18,12 @@ import { loadInterFonts } from "@/lib/social/fonts";
  * components/SocialImageContent.tsx (the real source of truth already
  * used for app/opengraph-image.tsx and app/twitter-image.tsx): dark/
  * charcoal background, bold white wordmark-style headline, muted
- * zinc-400 secondary text, no icon mark, no vendor logos (Phase 6:
- * "must not imply endorsement by third-party software brands").
+ * zinc-400 secondary text, no vendor logos (Phase 6: "must not imply
+ * endorsement by third-party software brands"). The header does carry
+ * Miloosh's own canonical logo mark (lib/social/logo.ts, the real
+ * public/logo-icon.png asset, embedded as a data URI — added 2026-08-21 so
+ * every future social card automatically uses the real logo instead of
+ * text-only branding or an approximated mark).
  *
  * Usage: /api/social/card?size=square|linkedin|facebook|x&kind=comparison
  *   &headline=...&sub=...&badge=...
@@ -56,10 +61,15 @@ const KIND_LABELS: Record<string, string> = {
 // Matches app/globals.css's --color-accent — the site's real accent token, not an arbitrary blue.
 const ACCENT = "#3458a8";
 
-function Header({ badge }: { badge: string }) {
+function Header({ badge, logoDataUri }: { badge: string; logoDataUri: string }) {
+  const logoHeight = 36;
   return (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <div style={{ display: "flex", fontSize: 34, fontWeight: 800, color: "white", letterSpacing: -1 }}>{SITE_NAME}</div>
+      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element -- Satori (next/og) renders <img>, not next/image */}
+        <img src={logoDataUri} width={logoWidthForHeight(logoHeight)} height={logoHeight} alt="" />
+        <div style={{ display: "flex", fontSize: 34, fontWeight: 800, color: "white", letterSpacing: -1 }}>{SITE_NAME}</div>
+      </div>
       {badge ? (
         <div
           style={{
@@ -253,6 +263,7 @@ export async function GET(request: NextRequest) {
   const sub = (searchParams.get("sub") ?? "").slice(0, 220);
   const badge = (searchParams.get("badge") ?? KIND_LABELS[kind] ?? "").slice(0, 40);
   const Body = BODY_BY_KIND[kind] ?? StackedBody;
+  const logoDataUri = await loadCanonicalLogoDataUri();
 
   return new ImageResponse(
     (
@@ -267,7 +278,7 @@ export async function GET(request: NextRequest) {
           background: SITE_THEME_COLOR,
         }}
       >
-        <Header badge={badge} />
+        <Header badge={badge} logoDataUri={logoDataUri} />
         <Body headline={headline} sub={sub} sizeKey={sizeKey} />
         <Footer />
       </div>

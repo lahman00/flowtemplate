@@ -122,7 +122,7 @@ function channelNeedsAttempt(variant: ChannelVariant): boolean {
   return variant.publishResult === null || variant.publishResult.status === "FAILED" || variant.publishResult.status === "RATE_LIMITED";
 }
 
-function providerStateFromResult(previous: ProviderPublishState | undefined, result: PublishResult, attemptedAt: string): ProviderPublishState {
+export function providerStateFromResult(previous: ProviderPublishState | undefined, result: PublishResult, attemptedAt: string): ProviderPublishState {
   const unknownOutcome = result.status === "FAILED" && (result.error.includes("NETWORK_ERROR") || result.error.includes("unknown publication outcome"));
   const status: ProviderPublishState["status"] = result.status === "PUBLISHED" ? "PUBLISHED" : result.status === "PENDING_CONFIRMATION" ? "PENDING_CONFIRMATION" : result.status === "MANUAL_ONLY" ? "MANUAL_READY" : result.status === "SETUP_REQUIRED" ? "BLOCKED" : result.status === "DRY_RUN" || result.status === "DUPLICATE_SKIPPED" ? "PENDING" : unknownOutcome ? "UNKNOWN_OUTCOME" : "FAILED";
   return {
