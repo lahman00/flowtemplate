@@ -20,6 +20,7 @@ export interface PeriodSummary {
     pctOfTotalVisitors: string;
     conversionFromPrev: string;
   }[];
+  topLandingPages: { path: string; visits: number }[];
   topPages: { path: string; views: number }[];
   topSoftware: { slug: string; views: number }[];
   topComparisons: { slug: string; views: number }[];
@@ -27,8 +28,16 @@ export interface PeriodSummary {
   topAffiliateProducts: { slug: string; clicks: number }[];
 }
 
+function isSyntheticOrTestEvent(e: FirstPartyEvent): boolean {
+  if (e.isTest) return true;
+  if (e.visitorId.startsWith("v_test_") || e.visitorId.startsWith("v_synthetic_")) return true;
+  if (e.sessionId.startsWith("s_test_") || e.sessionId.startsWith("s_synthetic_")) return true;
+  return false;
+}
+
 function filterEventsByDate(events: FirstPartyEvent[], startDateIso: string, endDateIso?: string): FirstPartyEvent[] {
   return events.filter(e => {
+    if (isSyntheticOrTestEvent(e)) return false;
     if (e.timestamp < startDateIso) return false;
     if (endDateIso && e.timestamp > endDateIso) return false;
     return true;
@@ -47,6 +56,7 @@ function computePeriodMetrics(periodName: string, events: FirstPartyEvent[], leg
   const outboundClickers = new Set<string>();
   const affiliateClickers = new Set<string>();
 
+  const landingPageCounts = new Map<string, number>();
   const pageCounts = new Map<string, number>();
   const softwareCounts = new Map<string, number>();
   const comparisonCounts = new Map<string, number>();
@@ -56,6 +66,12 @@ function computePeriodMetrics(periodName: string, events: FirstPartyEvent[], leg
   let totalPageViews = 0;
 
   for (const e of events) {
+    if (isSyntheticOrTestEvent(e)) continue;
+
+    if (!visitors.has(e.visitorId) && e.type === "page_view") {
+      landingPageCounts.set(e.path, (landingPageCounts.get(e.path) ?? 0) + 1);
+    }
+
     visitors.add(e.visitorId);
     sessions.add(e.sessionId);
 
@@ -156,6 +172,7 @@ function computePeriodMetrics(periodName: string, events: FirstPartyEvent[], leg
     }
   ];
 
+  const topLandingPages = [...landingPageCounts.entries()].map(([path, visits]) => ({ path, visits })).sort((a, b) => b.visits - a.visits).slice(0, 10);
   const topPages = [...pageCounts.entries()].map(([path, views]) => ({ path, views })).sort((a, b) => b.views - a.views).slice(0, 10);
   const topSoftware = [...softwareCounts.entries()].map(([slug, views]) => ({ slug, views })).sort((a, b) => b.views - a.views).slice(0, 10);
   const topComparisons = [...comparisonCounts.entries()].map(([slug, views]) => ({ slug, views })).sort((a, b) => b.views - a.views).slice(0, 10);
@@ -176,6 +193,7 @@ function computePeriodMetrics(periodName: string, events: FirstPartyEvent[], leg
     outboundClickers: outboundCount,
     affiliateClickers: affiliateCount,
     funnel,
+    topLandingPages,
     topPages,
     topSoftware,
     topComparisons,
@@ -227,9 +245,25 @@ export async function generateAnalyticsReport() {
       console.log(`    ${f.stage.padEnd(52)}: ${f.uniquePeople.toString().padStart(4)} people | ${f.pctOfTotalVisitors.padStart(6)} of visitors | ${f.conversionFromPrev.padStart(6)} step conversion`);
     });
 
+    if (p.topLandingPages.length > 0) {
+      console.log(`\n  Top Landing Pages:`);
+      p.topLandingPages.forEach((item, i) => console.log(`    ${i + 1}. ${item.path} (${item.visits} visits)`));
+    }
     if (p.topPages.length > 0) {
       console.log(`\n  Top Pages:`);
       p.topPages.forEach((item, i) => console.log(`    ${i + 1}. ${item.path} (${item.views} views)`));
+    }
+    if (p.topSoftware.length > 0) {
+      console.log(`\n  Top Software Pages:`);
+      p.topSoftware.forEach((item, i) => console.log(`    ${i + 1}. ${item.slug} (${item.views} views)`));
+    }
+    if (p.topComparisons.length > 0) {
+      console.log(`\n  Top Comparisons:`);
+      p.topComparisons.forEach((item, i) => console.log(`    ${i + 1}. ${item.slug} (${item.views} views)`));
+    }
+    if (p.topOutboundDestinations.length > 0) {
+      console.log(`\n  Top Outbound Destinations:`);
+      p.topOutboundDestinations.forEach((item, i) => console.log(`    ${i + 1}. ${item.url} (${item.clicks} clicks)`));
     }
     if (p.topAffiliateProducts.length > 0) {
       console.log(`\n  Top Affiliate Products Clicked:`);

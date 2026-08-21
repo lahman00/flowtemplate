@@ -694,7 +694,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
     },
     {
       "title": "Deliverability & Revenue Attribution",
-      "description": "Industry-leading inbox placement rates combined with transparent revenue attribution models that prove exact sales generated per campaign."
+      "description": "High inbox placement rates combined with transparent revenue attribution models that prove exact sales generated per campaign."
     }
   ],
   "products": [
@@ -935,7 +935,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
     },
     {
       "title": "Upfront Payment Collection & Deposits",
-      "description": "Seamless integration with Stripe, Square, and PayPal allowing consultants to charge upfront session fees or deposits upon booking."
+      "description": "Direct integration with Stripe, Square, and PayPal allowing consultants to charge upfront session fees or deposits upon booking."
     },
     {
       "title": "Multi-Calendar Two-Way Sync & Buffer Times",
@@ -1141,7 +1141,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
       "slug": "microsoft-teams",
       "badge": "Best for Microsoft 365 Enterprise Ecosystems",
       "ranking": 4,
-      "fitReason": "Teams Phone seamlessly integrates voice calling into Microsoft 365, enabling users to make and receive PSTN phone calls directly inside Teams chat and meeting channels.",
+      "fitReason": "Teams Phone embeds voice calling directly into Microsoft 365, enabling users to make and receive PSTN phone calls directly inside Teams chat and meeting channels.",
       "limitations": "Requires Microsoft 365 licensing base plus Teams Phone Standard add-on and calling plan.",
       "pricingNote": "Teams Phone Standard add-on is $8/user/mo; domestic calling plans require additional licensing."
     }

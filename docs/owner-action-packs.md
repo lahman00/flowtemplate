@@ -1,12 +1,12 @@
 # Miloosh — High-Leverage Owner Action Execution Packs
 
-This document provides exact, step-by-step instructions for the **5 highest-leverage owner actions** that unlock **54 software products** and **515 comparison surfaces** across Miloosh.
+This document provides exact, step-by-step instructions for the **5 highest-leverage owner actions** that unlock **54 software products** and **476 comparison surfaces** across Miloosh.
 
 ---
 
 ## 1. Impact.com Publisher Portal Login & Tax Setup
 - **Priority**: 🔴 #1 (Highest Leverage)
-- **Leverage**: **20 Products Covered** | **201 Comparison Routes Affected**
+- **Leverage**: **20 Products Covered** | **178 Comparison Routes Affected**
 - **Action URL**: [https://app.impact.com/](https://app.impact.com/)
 - **Products Unlocked**:
   - `semrush`, `lastpass`, `woocommerce`, `sprout-social`, `hootsuite`, `smartsheet`, `mailchimp`, `shopify`, `bigcommerce`, `wix`, `squarespace`, `grammarly`, `bitwarden`, `ringcentral`, `nextiva`, `craft`, `keeper`, `keeper-security`, `ecwid`, `moz`
@@ -23,7 +23,7 @@ This document provides exact, step-by-step instructions for the **5 highest-leve
 
 ## 2. PartnerStack In-App Profile & Category Confirmation
 - **Priority**: 🟠 #2
-- **Leverage**: **20 Products Covered** | **180 Comparison Routes Affected**
+- **Leverage**: **20 Products Covered** | **167 Comparison Routes Affected**
 - **Action URL**: [https://dash.partnerstack.com/](https://dash.partnerstack.com/)
 - **Products Unlocked**:
   - `document360`, `mixpanel`, `reclaim-ai`, `dialpad`, `calendly`, `motion`, `guru`, `scribe`, `nutshell`, `keap`, `ruler-analytics`, `front`, `descript`, `hotjar`, `coda`, `klaviyo`, `gorgias`, `quickbooks-online`, `miro`, `partnerstack`
@@ -39,7 +39,7 @@ This document provides exact, step-by-step instructions for the **5 highest-leve
 
 ## 3. Commission Junction (CJ) Publisher Account Registration
 - **Priority**: 🟡 #3
-- **Leverage**: **6 Products Covered** | **66 Comparison Routes Affected**
+- **Leverage**: **6 Products Covered** | **64 Comparison Routes Affected**
 - **Action URL**: [https://signup.cj.com/member/signup/publisher/?cid=5140517](https://signup.cj.com/member/signup/publisher/?cid=5140517)
 - **Products Unlocked**:
   - `1password`, `dashlane`, `acuity-scheduling`, `google-meet`, `google-chat`, `evernote`
@@ -56,13 +56,13 @@ This document provides exact, step-by-step instructions for the **5 highest-leve
 ## 4. Zoho Affiliate Ecosystem Password Account Creation
 - **Priority**: 🟢 #4
 - **Leverage**: **5 Products Covered** | **45 Comparison Routes Affected**
-- **Action URL**: [https://www.zoho.com/affiliate/signup.html](https://www.zoho.com/affiliate/signup.html)
+- **Action URL**: [https://www.zoho.com/affiliate.html](https://www.zoho.com/affiliate.html)
 - **Products Unlocked**:
-  - `zoho-crm`, `zoho-books`, `zoho-projects`, `zoho-desk`, `zoho-flow`
+  - `zoho-crm`, `zoho-books`, `zoho-projects`, `zoho-desk`, `zoho-analytics`
 - **Known Commission Terms**:
   - 15% recurring revenue share on all Zoho subscriptions for 12 months
 - **What You Need to Do**:
-  1. Sign up on `zoho.com/affiliate/signup.html` using `hello@miloosh.com`.
+  1. Sign up on `zoho.com/affiliate.html` using `hello@miloosh.com`.
   2. Complete email and SMS verification.
   3. Enter promotional details: `https://miloosh.com` (Software reviews & comparisons).
 
@@ -70,13 +70,13 @@ This document provides exact, step-by-step instructions for the **5 highest-leve
 
 ## 5. ShareASale Publisher Account Registration
 - **Priority**: 🔵 #5
-- **Leverage**: **3 Products Covered** | **23 Comparison Routes Affected**
-- **Action URL**: [https://www.shareasale.com/join/](https://www.shareasale.com/join/)
+- **Leverage**: **3 Products Covered** | **22 Comparison Routes Affected**
+- **Action URL**: [https://www.shareasale.com/newsignup.cfm](https://www.shareasale.com/newsignup.cfm)
 - **Products Unlocked**:
-  - `shift4shop`, `weebly`, `later`
+  - `wpengine`, `freshbooks`, `optinmonster`
 - **Known Commission Terms**:
-  - $100 per merchant (Shift4Shop), 30% subscription (Weebly), $20 (Later)
+  - $200 CPA on WP Engine, $5-$10/lead + $55/sale on FreshBooks, 20% on OptinMonster
 - **What You Need to Do**:
   1. Sign up for a publisher account on `shareasale.com`.
   2. Add `https://miloosh.com` and verify domain via meta tag or DNS.
-  3. Search and join Shift4Shop, Weebly, and Later merchant programs.
+  3. Search and join WP Engine, FreshBooks, and OptinMonster merchant programs.

@@ -31,7 +31,7 @@ export const OWNER_ACTION_PACKS: readonly OwnerActionPack[] = [
       "grammarly", "bitwarden", "ringcentral", "nextiva", "craft", "keeper",
       "keeper-security", "ecwid", "moz"
     ],
-    comparisonsAffected: 201,
+    comparisonsAffected: 178,
     commissionEvidence: "Impact.com verified publisher rates ($200 CPA Semrush, 25% LastPass, $100-$150 RingCentral/Nextiva, 20% Ecwid/Craft/Keeper, $25 Moz)",
     preFilledFields: {
       "Company / Site Name": "Miloosh",
@@ -47,7 +47,7 @@ export const OWNER_ACTION_PACKS: readonly OwnerActionPack[] = [
       "Click 'Apply / Join Campaign' for each brand inside Impact marketplace"
     ],
     securityAndComplianceNotes: "Owner only — never share passwords or tax documents with AI agents. Ensure compliance with FTC affiliate disclosure requirements.",
-    postCompletionAutomation: "Once campaigns are approved and affiliate URLs generated, paste the URLs into data/affiliate/active-partners.ts to enable automatic tracking and CTA rendering across 201 comparison surfaces."
+    postCompletionAutomation: "Once campaigns are approved and affiliate URLs generated, paste the URLs into data/affiliate/active-partners.ts to enable automatic tracking and CTA rendering across 178 comparison surfaces."
   },
   {
     id: "partnerstack-marketplace-confirmation",
@@ -59,7 +59,7 @@ export const OWNER_ACTION_PACKS: readonly OwnerActionPack[] = [
       "guru", "scribe", "nutshell", "keap", "ruler-analytics", "front", "descript",
       "hotjar", "coda", "klaviyo", "gorgias", "quickbooks-online", "miro", "partnerstack"
     ],
-    comparisonsAffected: 180,
+    comparisonsAffected: 167,
     commissionEvidence: "PartnerStack standard marketplace offers (15-30% recurring on Document360, Reclaim AI, Guru, Scribe, Nutshell, Keap, Front, Descript, Hotjar)",
     preFilledFields: {
       "Website URL": "https://miloosh.com",
@@ -84,7 +84,7 @@ export const OWNER_ACTION_PACKS: readonly OwnerActionPack[] = [
     productsCovered: [
       "1password", "dashlane", "acuity-scheduling", "google-meet", "google-chat", "evernote"
     ],
-    comparisonsAffected: 66,
+    comparisonsAffected: 64,
     commissionEvidence: "CJ verified rates: 25% first year on 1Password, $20 on Dashlane, up to $30/seat on Google Workspace",
     preFilledFields: {
       "Account Name": "Miloosh",
@@ -98,53 +98,53 @@ export const OWNER_ACTION_PACKS: readonly OwnerActionPack[] = [
       "Set up direct deposit / Payoneer banking details",
       "Search Advertiser IDs: 5140517 (1Password), Dashlane, Google Workspace"
     ],
-    securityAndComplianceNotes: "CJ accounts require phone/2FA verification during initial onboarding.",
-    postCompletionAutomation: "Add CJ publisher ID and campaign tracking links to data/affiliate/canonical-ledger.ts."
+    securityAndComplianceNotes: "Never input owner banking or tax info into chat sessions. Do all CJ verification in-browser.",
+    postCompletionAutomation: "Generate CJ tracking links with SID tracking and paste into active partner registry to unlock 64 comparisons."
   },
   {
-    id: "zoho-partner-signup",
+    id: "zoho-affiliate-ecosystem",
     title: "4. Zoho Affiliate Ecosystem Password Account Creation",
     priority: 4,
-    loginOrSignupUrl: "https://www.zoho.com/affiliate/signup.html",
+    loginOrSignupUrl: "https://www.zoho.com/affiliate.html",
     productsCovered: [
-      "zoho-crm", "zoho-books", "zoho-projects", "zoho-desk", "zoho-flow"
+      "zoho-crm", "zoho-books", "zoho-projects", "zoho-desk", "zoho-analytics"
     ],
     comparisonsAffected: 45,
-    commissionEvidence: "15% recurring revenue share on all Zoho apps for 12 months",
+    commissionEvidence: "Zoho 15% recurring on all ecosystem subscriptions for 12 months",
     preFilledFields: {
       "Website": "https://miloosh.com",
-      "Promotion Method": "Editorial comparisons and software buying guides",
-      "Contact Email": "hello@miloosh.com"
+      "Company Name": "Miloosh",
+      "Promotion Type": "Review & Comparison Platform"
     },
     ownerRequiredFields: [
-      "Create Zoho user password for hello@miloosh.com",
-      "Complete phone/SMS verification",
-      "Submit payout details inside Zoho Affiliate Portal"
+      "Create Zoho master account and password",
+      "Accept Zoho Affiliate Program Agreement",
+      "Set up PayPal or direct wire transfer payout details"
     ],
-    securityAndComplianceNotes: "Single login unlocks all 5 Zoho catalog products across CRM, Accounting, and Project Management.",
-    postCompletionAutomation: "Activate `zoho-ecosystem` affiliate URL in active-partners registry to monetize 45 comparison routes."
+    securityAndComplianceNotes: "Requires owner password creation.",
+    postCompletionAutomation: "Provide the Zoho affiliate tracking code (zoho.to/...) to unlock 45 Zoho ecosystem comparison surfaces."
   },
   {
-    id: "shareasale-publisher-account",
+    id: "shareasale-account-creation",
     title: "5. ShareASale Publisher Account Registration",
     priority: 5,
-    loginOrSignupUrl: "https://www.shareasale.com/join/",
+    loginOrSignupUrl: "https://www.shareasale.com/newsignup.cfm",
     productsCovered: [
-      "shift4shop", "weebly", "later"
+      "wpengine", "freshbooks", "optinmonster"
     ],
-    comparisonsAffected: 23,
-    commissionEvidence: "ShareASale rates: $100 per merchant (Shift4Shop), 30% subscription (Weebly), $20 (Later)",
+    comparisonsAffected: 22,
+    commissionEvidence: "$200 CPA on WP Engine, $5-$10/lead + $55/sale on FreshBooks, 20% on OptinMonster",
     preFilledFields: {
+      "Username": "miloosh",
       "Website URL": "https://miloosh.com",
-      "Site Description": "Miloosh provides objective software reviews, comparisons, and role-based buyer guides",
-      "Account Email": "hello@miloosh.com"
+      "Website Description": "Independent B2B software research, alternatives, and comparisons"
     },
     ownerRequiredFields: [
-      "Set account password and PIN",
-      "Verify ownership via meta tag / email confirmation",
-      "Submit tax ID & payment method"
+      "Set account password",
+      "Confirm verification PIN sent to hello@miloosh.com",
+      "Complete W-8BEN/W-9 tax form"
     ],
-    securityAndComplianceNotes: "ShareASale reviews publisher websites within 1-2 business days.",
-    postCompletionAutomation: "Link approved merchant affiliate links into `data/affiliate/active-partners.ts`."
+    securityAndComplianceNotes: "Requires owner email verification code.",
+    postCompletionAutomation: "Join WP Engine and OptinMonster merchant programs; insert affiliate links into active registry."
   }
 ];

@@ -27,6 +27,7 @@ export interface BaseAnalyticsEvent {
   sessionId: string;
   timestamp: string;
   path: string;
+  isTest?: boolean;
 }
 
 export interface PageViewEvent extends BaseAnalyticsEvent {

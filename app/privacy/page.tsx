@@ -74,17 +74,17 @@ export default function PrivacyPage() {
           ),
         },
         {
-          heading: "Outbound link tracking",
+          heading: "First-party anonymous analytics & link tracking",
           body: (
             <p>
-              When you click a &quot;Visit official site&quot; or affiliate link on a product
-              or comparison page, {SITE_NAME}{" "}
-              may record that the click happened — which product, which page it was on, which
-              button, and the destination link — for internal analytics and revenue
-              measurement. Recording an outbound click doesn&apos;t use a cookie or create any
-              account or identifier for you, and it doesn&apos;t capture your IP address or
-              browser information. This information stays on {SITE_NAME}&apos;s own systems; it
-              isn&apos;t sold or shared with a third-party analytics provider.
+              To understand aggregate readership and improve software comparisons, {SITE_NAME}{" "}
+              operates a privacy-preserving first-party telemetry system. When you browse pages or
+              click an official or affiliate product link, we record anonymous interaction events
+              (such as page path, dwell time, and clicked product links). This system uses ephemeral,
+              pseudonymous client-side tokens (stored in local and session storage) with zero personal
+              identifiable information (PII), zero IP address storage, and zero browser fingerprinting.
+              This data remains strictly on {SITE_NAME}&apos;s own secure infrastructure and is never
+              sold or shared with third-party advertising networks.
             </p>
           ),
         },
