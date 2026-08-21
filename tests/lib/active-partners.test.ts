@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { ACTIVE_PARTNERS } from "@/data/affiliate/active-partners";
+import { ACTIVE_PARTNERS, getActivePartner } from "@/data/affiliate/active-partners";
 import { getPartnerMoneyMatrix } from "@/data/affiliate/money-matrix";
 import { getSoftware } from "@/data/software";
 import { getSoftwareCtaRel, getSoftwareCtaUrl, shouldShowAffiliateDisclosure } from "@/lib/affiliate";
+import { getAffiliateActivation } from "@/lib/revenue/affiliate-manager";
 
 describe("canonical active affiliate partner registry", () => {
   it("contains exactly the 13 verified active partners", () => {
@@ -60,5 +61,26 @@ describe("canonical active affiliate partner registry", () => {
       revenueReady: true,
       coverage: { softwareRoute: "/software/hubstaff", comparisonRoutes: 8 },
     });
+  });
+
+  /**
+   * Regression coverage for a real bug found 2026-08-21 while running the
+   * full maintenance agent swarm: scripts/maintenance/affiliate.ts's
+   * "confirmed affiliate program not activated" check only looked at
+   * getAffiliateActivation() (the env-var / config-file mechanism), never
+   * at active-partners.ts — even though softwareToAffiliateLink()
+   * (lib/affiliate.ts, the resolver that actually decides the live CTA)
+   * checks both. Every one of the then-13 real active partners was
+   * activated via active-partners.ts, not env vars, so all 13 were
+   * wrongly flagged as "not activated," polluting the maintenance report.
+   * This asserts the fix's actual combined check (mirroring what the
+   * script now does) never flags a real active partner.
+   */
+  it("no active partner is ever reported as 'not activated' by the affiliate maintenance check", () => {
+    for (const partner of ACTIVE_PARTNERS) {
+      const activation = getAffiliateActivation(partner.slug);
+      const isActive = activation.isActive || Boolean(getActivePartner(partner.slug)?.affiliateUrl);
+      expect(isActive, `${partner.slug} is in ACTIVE_PARTNERS but neither activation mechanism reports it active`).toBe(true);
+    }
   });
 });

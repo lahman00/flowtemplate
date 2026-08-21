@@ -1,6 +1,7 @@
 import { getAllSoftware } from "@/data/software";
 import { AFFILIATE_PROGRAMS } from "@/data/revenue/affiliate-programs";
 import { getAffiliateActivation } from "@/lib/revenue/affiliate-manager";
+import { getActivePartner } from "@/data/affiliate/active-partners";
 import { getRevenueScores } from "@/lib/revenue/scoring";
 import { getRevenueTier } from "@/lib/revenue/tiers";
 import { runAgent } from "@/lib/maintenance/run-agent";
@@ -45,14 +46,21 @@ async function run() {
     const name = software?.name ?? program.slug;
     const tier = tierBySlug.get(program.slug);
     const activation = getAffiliateActivation(program.slug);
+    // softwareToAffiliateLink() (lib/affiliate.ts) — the resolver that actually
+    // decides the live CTA — checks BOTH this env/config activation AND the
+    // canonical active-partners.ts registry. Checking only the former here
+    // produced a false "not activated" warning for every one of the 13 real
+    // active partners (all activated via active-partners.ts, none via env
+    // vars), which is the actually-used mechanism for real revenue today.
+    const isActive = activation.isActive || Boolean(getActivePartner(program.slug)?.affiliateUrl);
 
-    if (program.programExists === "yes" && !activation.isActive) {
+    if (program.programExists === "yes" && !isActive) {
       confirmedNotActivated.push(program.slug);
       issues.push({
         id: `affiliate-confirmed-not-activated-${program.slug}`,
         severity: tier === "A" ? "warning" : "info",
         title: `${name}: confirmed affiliate program not activated`,
-        description: `programExists is "yes"${program.networkName ? ` (${program.networkName})` : ""}, but no affiliate URL is currently configured (checked env vars and config/affiliate-credentials.json). ${tier === "A" ? "This is a Tier A product — see docs/affiliate-applications.md." : "Applying is optional for lower tiers, but the program is confirmed real."}`,
+        description: `programExists is "yes"${program.networkName ? ` (${program.networkName})` : ""}, but no affiliate URL is currently configured (checked env vars, config/affiliate-credentials.json, and data/affiliate/active-partners.ts). ${tier === "A" ? "This is a Tier A product — see docs/affiliate-applications.md." : "Applying is optional for lower tiers, but the program is confirmed real."}`,
         location: program.slug,
       });
     }
