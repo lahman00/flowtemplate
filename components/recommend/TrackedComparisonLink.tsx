@@ -6,6 +6,7 @@ import { trackEvent } from "@/lib/analytics/track";
 
 type TrackedComparisonLinkProps = ComponentProps<typeof Link> & {
   comparisonSlug: string;
+  domain: string;
 };
 
 /**
@@ -14,7 +15,7 @@ type TrackedComparisonLinkProps = ComponentProps<typeof Link> & {
  * card. Same best-effort, never-blocks-navigation pattern as
  * TrackedRecommendationLink.
  */
-export function TrackedComparisonLink({ comparisonSlug, onClick, ...props }: TrackedComparisonLinkProps) {
+export function TrackedComparisonLink({ comparisonSlug, domain, onClick, ...props }: TrackedComparisonLinkProps) {
   return (
     <Link
       {...props}
@@ -24,6 +25,7 @@ export function TrackedComparisonLink({ comparisonSlug, onClick, ...props }: Tra
           type: "recommend_comparison_open",
           path: "/recommend/results",
           comparisonSlug,
+          domain,
         });
       }}
     />

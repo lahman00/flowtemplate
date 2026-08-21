@@ -2,6 +2,69 @@ import { getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/ev
 import { getOutboundEvents, type StoredOutboundEvent } from "@/lib/revenue/events";
 import { LEGACY_CONTAMINATED_SESSIONS, isLegacyContaminatedSession } from "@/lib/analytics/legacy-contaminated-sessions";
 
+/**
+ * Flippa Activation + Recommend Expansion Super-Mission (2026-08-21) —
+ * Phase 26: Recommend usage broken down by PRIMARY DOMAIN (an aggregate
+ * enum value, never personal/free text). Kept as a standalone function
+ * rather than threaded into computePeriodMetrics's Set-based tracking —
+ * simpler to verify correct in isolation. Joins outbound_click to a
+ * domain via the same visitor's most recent recommend-domain touch in the
+ * same session (the events are already sorted chronologically by the
+ * caller), same "chronologically-prior touch" logic as the existing
+ * outboundClickersAfter metric.
+ */
+export interface DomainFunnelRow {
+  domain: string;
+  completers: number;
+  resultViewers: number;
+  productOpeners: number;
+  comparisonOpeners: number;
+  outboundClickersAfter: number;
+}
+
+export function computeRecommendDomainBreakdown(events: FirstPartyEvent[], includeSynthetic = false): DomainFunnelRow[] {
+  const sorted = [...events].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  const byDomain = new Map<string, { completers: Set<string>; resultViewers: Set<string>; productOpeners: Set<string>; comparisonOpeners: Set<string>; outboundClickersAfter: Set<string> }>();
+  const lastDomainTouchByVisitor = new Map<string, string>();
+
+  function bucket(domain: string) {
+    if (!byDomain.has(domain)) {
+      byDomain.set(domain, { completers: new Set(), resultViewers: new Set(), productOpeners: new Set(), comparisonOpeners: new Set(), outboundClickersAfter: new Set() });
+    }
+    return byDomain.get(domain)!;
+  }
+
+  for (const e of sorted) {
+    if (isSyntheticOrTestEvent(e, includeSynthetic)) continue;
+
+    if (e.type === "recommend_completed" && e.domain) {
+      bucket(e.domain).completers.add(e.visitorId);
+      lastDomainTouchByVisitor.set(e.visitorId, e.domain);
+    } else if (e.type === "recommend_result_viewed" && e.domain) {
+      bucket(e.domain).resultViewers.add(e.visitorId);
+      lastDomainTouchByVisitor.set(e.visitorId, e.domain);
+    } else if (e.type === "recommend_product_open" && e.domain) {
+      bucket(e.domain).productOpeners.add(e.visitorId);
+    } else if (e.type === "recommend_comparison_open" && e.domain) {
+      bucket(e.domain).comparisonOpeners.add(e.visitorId);
+    } else if (e.type === "outbound_click") {
+      const domain = lastDomainTouchByVisitor.get(e.visitorId);
+      if (domain) bucket(domain).outboundClickersAfter.add(e.visitorId);
+    }
+  }
+
+  return [...byDomain.entries()]
+    .map(([domain, b]) => ({
+      domain,
+      completers: b.completers.size,
+      resultViewers: b.resultViewers.size,
+      productOpeners: b.productOpeners.size,
+      comparisonOpeners: b.comparisonOpeners.size,
+      outboundClickersAfter: b.outboundClickersAfter.size,
+    }))
+    .sort((a, b) => b.completers - a.completers);
+}
+
 export interface PeriodSummary {
   periodName: string;
   uniqueVisitors: number;
@@ -541,6 +604,23 @@ export async function generateAnalyticsReport() {
   } else {
     for (const [source, count] of [...trafficSourceCounts.entries()].sort((a, b) => b[1] - a[1])) {
       console.log(`     ${source.padEnd(18)} ${count}`);
+    }
+  }
+  console.log("========================================================================================\n");
+
+  // Phase 26 — Recommend usage by PRIMARY DOMAIN, all-time. Aggregate enum
+  // values only, never free text; small-n percentages deliberately omitted
+  // per Phase 26's "do not display statistically silly percentages when n
+  // is tiny" instruction — raw counts only.
+  const domainBreakdown = computeRecommendDomainBreakdown(events, includeSynthetic);
+  console.log("========================================================================================");
+  console.log(" RECOMMEND FUNNEL BY DOMAIN (all time, aggregate enum values only, no personal text):");
+  if (domainBreakdown.length === 0) {
+    console.log("   (no domain-attributed Recommend activity recorded yet)");
+  } else {
+    console.log(`   ${"DOMAIN".padEnd(24)} COMPLETERS  RESULT-VIEWERS  PRODUCT-OPENS  COMPARISON-OPENS  OUTBOUND-AFTER`);
+    for (const row of domainBreakdown) {
+      console.log(`   ${row.domain.padEnd(24)} ${row.completers.toString().padStart(10)} ${row.resultViewers.toString().padStart(16)} ${row.productOpeners.toString().padStart(14)} ${row.comparisonOpeners.toString().padStart(18)} ${row.outboundClickersAfter.toString().padStart(15)}`);
     }
   }
   console.log("========================================================================================\n");

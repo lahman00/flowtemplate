@@ -9,6 +9,7 @@ type TrackedRecommendationLinkProps = ComponentProps<typeof Link> & {
   rank: number;
   matchPercent: number;
   answersSummary: string;
+  domain: string;
 };
 
 /**
@@ -29,6 +30,7 @@ export function TrackedRecommendationLink({
   rank,
   matchPercent,
   answersSummary,
+  domain,
   onClick,
   ...props
 }: TrackedRecommendationLinkProps) {
@@ -42,6 +44,7 @@ export function TrackedRecommendationLink({
           path: "/recommend/results",
           softwareSlug: slug,
           rank,
+          domain,
         });
         void fetch("/api/recommendation-click", {
           method: "POST",

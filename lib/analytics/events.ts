@@ -142,11 +142,14 @@ export interface RecommendProductOpenEvent extends BaseAnalyticsEvent {
   type: "recommend_product_open";
   softwareSlug: string;
   rank: number;
+  /** Flippa + Recommend Expansion mission (2026-08-21) Phase 26 — lets the funnel report break product opens down by domain. */
+  domain?: string;
 }
 
 export interface RecommendComparisonOpenEvent extends BaseAnalyticsEvent {
   type: "recommend_comparison_open";
   comparisonSlug: string;
+  domain?: string;
 }
 
 export type FirstPartyEvent =

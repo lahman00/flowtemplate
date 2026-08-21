@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { isBotUserAgent, isInternalOrSyntheticTraffic } from "@/lib/analytics/bot-filter";
 import { recordFirstPartyEvent, getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/events";
-import { computePeriodMetrics, isSyntheticOrTestEvent } from "@/scripts/analytics/report";
+import { computePeriodMetrics, isSyntheticOrTestEvent, computeRecommendDomainBreakdown } from "@/scripts/analytics/report";
 import { LEGACY_CONTAMINATED_SESSIONS, isLegacyContaminatedSession } from "@/lib/analytics/legacy-contaminated-sessions";
 import fs from "node:fs";
 import path from "node:path";
@@ -287,6 +287,44 @@ describe("First-Party Analytics, Bot Defense & Funnel Suite", () => {
       expect(rf.affiliateClickersAfter.people).toBe(1);
       // Overall outboundClickers (unrelated to Recommend) still counts both.
       expect(summary.outboundClickers).toBe(2);
+    });
+  });
+
+  describe("Flippa Activation + Recommend Expansion Super-Mission (2026-08-21) Phase 26: domain breakdown", () => {
+    it("attributes completers, result viewers, product opens, and comparison opens to the right domain", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "recommend_completed", path: "/recommend", domain: "crm", visitorId: "v_a", sessionId: "s_a", timestamp: t(0) } as FirstPartyEvent,
+        { type: "recommend_result_viewed", path: "/recommend/results", domain: "crm", confidence: "high", resultCount: 3, visitorId: "v_a", sessionId: "s_a", timestamp: t(1000) } as FirstPartyEvent,
+        { type: "recommend_product_open", path: "/recommend/results", softwareSlug: "hubspot", rank: 1, domain: "crm", visitorId: "v_a", sessionId: "s_a", timestamp: t(2000) } as FirstPartyEvent,
+        { type: "recommend_comparison_open", path: "/recommend/results", comparisonSlug: "hubspot-vs-pipedrive", domain: "crm", visitorId: "v_a", sessionId: "s_a", timestamp: t(3000) } as FirstPartyEvent,
+        { type: "recommend_completed", path: "/recommend", domain: "field_service", visitorId: "v_b", sessionId: "s_b", timestamp: t(0) } as FirstPartyEvent,
+      ];
+
+      const breakdown = computeRecommendDomainBreakdown(events);
+      const crmRow = breakdown.find((r) => r.domain === "crm");
+      const fieldServiceRow = breakdown.find((r) => r.domain === "field_service");
+      expect(crmRow).toEqual({ domain: "crm", completers: 1, resultViewers: 1, productOpeners: 1, comparisonOpeners: 1, outboundClickersAfter: 0 });
+      expect(fieldServiceRow).toEqual({ domain: "field_service", completers: 1, resultViewers: 0, productOpeners: 0, comparisonOpeners: 0, outboundClickersAfter: 0 });
+    });
+
+    it("attributes an outbound click to the visitor's most recent recommend-domain touch", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "recommend_completed", path: "/recommend", domain: "seo_platform", visitorId: "v_a", sessionId: "s_a", timestamp: t(0) } as FirstPartyEvent,
+        { type: "outbound_click", path: "/software/ahrefs", softwareSlug: "ahrefs", destination: "affiliate", url: "https://ahrefs.com/aff", visitorId: "v_a", sessionId: "s_a", timestamp: t(1000) },
+      ];
+      const breakdown = computeRecommendDomainBreakdown(events);
+      expect(breakdown.find((r) => r.domain === "seo_platform")?.outboundClickersAfter).toBe(1);
+    });
+
+    it("excludes synthetic and legacy-contaminated events from the domain breakdown by default", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "recommend_completed", path: "/recommend", domain: "call_tracking", visitorId: "v_qa", sessionId: "s_qa", timestamp: t(0), isTest: true } as FirstPartyEvent,
+      ];
+      expect(computeRecommendDomainBreakdown(events)).toEqual([]);
+      expect(computeRecommendDomainBreakdown(events, true).find((r) => r.domain === "call_tracking")?.completers).toBe(1);
     });
   });
 

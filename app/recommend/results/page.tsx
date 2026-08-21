@@ -175,6 +175,7 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
                     rank={rec.rank}
                     matchPercent={rec.scoring.matchPercent}
                     answersSummary={answersSummary}
+                    domain={answers.primaryNeed ?? "not_sure"}
                     href={`/software/${rec.software.slug}`}
                     className="inline-flex min-h-11 shrink-0 items-center rounded-lg border border-white/15 bg-white/5 px-4 text-sm font-semibold text-white transition hover:bg-white/10"
                   >
@@ -260,6 +261,7 @@ export default async function RecommendResultsPage({ searchParams }: ResultsPage
                             <TrackedComparisonLink
                               key={slug}
                               comparisonSlug={slug}
+                              domain={answers.primaryNeed ?? "not_sure"}
                               href={`/compare/${slug}`}
                               className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-zinc-300 transition hover:border-white/25 hover:text-white"
                             >
