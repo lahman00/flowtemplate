@@ -21,7 +21,13 @@ export function truncateAtWord(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   const truncated = text.slice(0, maxLength);
   const lastSpace = truncated.lastIndexOf(" ");
-  return `${(lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated).trimEnd()}…`;
+  const atWord = (lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated).trimEnd();
+  // A description that's one long comma-joined sentence (the norm for this
+  // catalog — real vendor facts rarely land on an early period) can cut
+  // right after a comma/semicolon/colon, reading as "...manage sales," — a
+  // dangling list separator right before the ellipsis is more jarring than
+  // ending on a plain word, so strip it.
+  return `${atWord.replace(/[,;:]+$/, "")}…`;
 }
 
 /**
