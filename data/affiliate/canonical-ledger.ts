@@ -294,7 +294,7 @@ export const CANONICAL_AFFILIATE_LEDGER: readonly AffiliateProgramRelationship[]
   },
 
   // ==========================================
-  // 2. APPROVED NEEDS EDITORIAL CONTENT (1 program)
+  // 2. APPROVED NEEDS EDITORIAL CONTENT (2 programs)
   // ==========================================
   {
     programId: "pdware",
@@ -314,6 +314,43 @@ export const CANONICAL_AFFILIATE_LEDGER: readonly AffiliateProgramRelationship[]
     eligibility: "Approved in PartnerStack, but product is enterprise PPM without public pricing. Withheld from public catalog.",
     applicationUrl: "https://try.pdware.com/",
     notes: "Approved in network but editorially withheld from Miloosh catalog."
+  },
+  {
+    // Flippa Activation + Recommend Expansion Super-Mission (2026-08-21).
+    // Owner supplied a real referral URL and first-party program terms
+    // (see data/affiliate/partner-materials-audit.ts's Flippa entry for the
+    // full restriction/eligibility fields this schema can't hold). Editorial
+    // gate verdict: EDITORIALLY_REJECTED for now, not because Flippa is a
+    // bad product, but because Miloosh's entire 247-product catalog and 21
+    // categories are operational SaaS tools businesses subscribe to and use
+    // day-to-day -- Flippa is a categorically different thing, an M&A
+    // marketplace for buying/selling whole online businesses. Zero existing
+    // editorial surface (category, guide, comparison) covers this buyer job;
+    // building one properly would mean researching Flippa AND real
+    // competing marketplaces (Empire Flippers, Acquire.com, Motion Invest)
+    // from scratch -- a genuine new content vertical, not a page. The gate
+    // question "would this page exist even if commission = $0" answers no:
+    // this was triggered by the referral program's existence, not by
+    // independent editorial planning. Recorded here so the relationship
+    // itself isn't lost and can be revisited if Miloosh ever builds a real
+    // business-marketplace content vertical on its own editorial merits.
+    programId: "flippa",
+    programName: "Flippa Referral Program",
+    network: "PartnerStack (Flippa's own referral program)",
+    productSlugs: [],
+    status: "APPROVED_NEEDS_EDITORIAL_CONTENT",
+    statusUpdatedAt: "2026-08-21",
+    applicationSubmittedAt: null,
+    decisionAt: null,
+    affiliateUrl: "https://referral.flippa.com/dhjx92ie474a",
+    commissionModel: "20% of qualifying Flippa fee (success fee on acquisition, listing fee, success fee on sale) per first-party program terms",
+    cookieWindow: "12 months (referral attribution window per first-party terms; last-referrer attribution if multiple links used)",
+    evidence: ["Owner-supplied referral URL", "Owner-supplied first-party Flippa Referral Program Terms (2026-08-21)"],
+    ownerBlocker: null,
+    formBlocker: null,
+    eligibility: "Referral URL and terms verified real by the owner. COUNTRY ELIGIBILITY: UNVERIFIED -- terms state an eligible-country requirement exists but the supplied evidence does not enumerate which countries qualify; Israel's status was not resolved during this mission and must not be assumed either way.",
+    applicationUrl: "https://referral.flippa.com/dhjx92ie474a",
+    notes: "Program relationship is real and verified. NOT publicly monetized: no Miloosh page/CTA exists or was created. Editorial gate verdict EDITORIALLY_REJECTED (see comment above) -- no genuine buyer-decision editorial category exists for business/website marketplaces on Miloosh today. Revisit only alongside a real, independently-justified editorial decision to cover that category, not as a reaction to this program's existence."
   },
 
   // ==========================================

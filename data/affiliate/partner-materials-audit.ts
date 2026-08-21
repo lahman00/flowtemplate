@@ -83,4 +83,40 @@ export const PARTNER_MATERIAL_AUDIT: readonly PartnerMaterialAudit[] = [
   record({ company: "Brevo", slug: "brevo", programNetwork: "PartnerStack", currentStatus: "REJECTED (PartnerStack top-level partnership badge still shows Active — stale relative to this outcome)", applicationStatus: "Rejected", approvalStatus: "Rejected", affiliateUrl: UNKNOWN, readiness: "REJECTED", evidence: [LIVE_VERIFICATION, "Brevo first-party PartnerStack Messages thread, account hello@miloosh.com, program page BREVO: 'Your application was not approved... has been removed from our onboarding process' (dated Today, 2026-08-19), preceded by an 'under review' message dated Yesterday"], lastVerifiedDate: "2026-08-19" }),
   record({ company: "Shopify", slug: "shopify", programNetwork: "Impact", currentStatus: "ACTIVE", applicationStatus: "Approved", approvalStatus: "Approved", affiliateUrl: "https://shopify.pxf.io/L0EG9O", readiness: "READY NOW", evidence: [STATUS_DRAFT, "data/software/shopify.json"], lastVerifiedDate: "2026-08-19" }),
   record({ company: "Wix", slug: "wix", programNetwork: "Impact", currentStatus: "ACTIVE", applicationStatus: "Approved", approvalStatus: "Approved", affiliateUrl: "https://wix.pxf.io/c/7623171/2096727/25616", readiness: "READY NOW", evidence: [STATUS_DRAFT, "data/software/wix.json"], lastVerifiedDate: "2026-08-19" }),
+  // Flippa Activation + Recommend Expansion Super-Mission (2026-08-21).
+  // Real, owner-supplied referral URL and first-party program terms. No
+  // Miloosh catalog page/slug exists -- "flippa" here is an audit-tracking
+  // identifier only, not a live page. readiness "HOLD / UNCLEAR" matches
+  // the exact precedent set by the PDWare entry above: approved in-network,
+  // but withheld because it's unclear/not yet justified whether it fits
+  // Miloosh's catalog. See data/affiliate/canonical-ledger.ts's Flippa
+  // entry for the full editorial-gate reasoning.
+  record({
+    company: "Flippa",
+    slug: "flippa",
+    programNetwork: "PartnerStack (Flippa's own referral program)",
+    currentStatus: "APPROVED_NEEDS_EDITORIAL_CONTENT",
+    applicationStatus: "Owner already has referral dashboard/resource access",
+    approvalStatus: "Approved (referral URL live)",
+    affiliateUrl: "https://referral.flippa.com/dhjx92ie474a",
+    commission: {
+      type: "revenue_share",
+      value: "20% of qualifying Flippa fee",
+      originalWording: "20% of the success fee paid to Flippa when an eligible referral acquires an online business; 20% of the listing fee when an eligible referral successfully lists a business; 20% of the success fee when an eligible referral successfully sells their listed business.",
+    },
+    recurrence: "one-time per qualifying transaction (acquisition, listing, or sale)",
+    cookieWindow: "12 months (referral action window; last-referrer attribution if multiple referral links were used)",
+    payoutThreshold: "$5 USD",
+    payoutMethod: "PartnerStack",
+    qualificationRules: "Listings below $5,000 do not qualify. Refunded/charged-back transactions before the payable date do not qualify. Referral actions qualify for up to 12 months after referral.",
+    restrictions: "No distribution through coupon/discount sites. No PPC bidding on Flippa-related keywords. No self-referrals or group-company abuse. Site must not impersonate Flippa. Flippa logo must not be altered.",
+    ppcTrademarkRestrictions: "No PPC bidding on Flippa-related keywords (explicit first-party term).",
+    couponRestrictions: "No distribution through coupon/discount sites (explicit first-party term).",
+    selfReferralRules: "No self-referrals / group-company abuse (explicit first-party term).",
+    geographyRestrictions: "UNVERIFIED. Terms state an eligible-country requirement exists but the supplied evidence does not enumerate which countries qualify. Do not assume Israel (or any other specific country) is eligible or ineligible without direct first-party confirmation.",
+    brandGuidelines: "Do not alter the Flippa logo (explicit first-party term). No further brand-asset detail supplied.",
+    readiness: "HOLD / UNCLEAR",
+    evidence: ["Owner-supplied referral URL (2026-08-21)", "Owner-supplied first-party Flippa Referral Program Terms (2026-08-21)"],
+    lastVerifiedDate: "2026-08-21",
+  }),
 ] as const;
