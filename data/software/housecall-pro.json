@@ -109,17 +109,6 @@
         "Custom reporting",
         "Inventory management"
       ]
-    },
-    {
-      "name": "QuickBooks Online",
-      "slug": "quickbooks-online",
-      "description": "Leading double-entry accounting platform for business bookkeeping.",
-      "best_for": "Foundational small business bookkeeping and tax filing",
-      "strengths": [
-        "Double-entry accounting",
-        "Bank feeds",
-        "Tax preparation"
-      ]
     }
   ],
   "order": 229

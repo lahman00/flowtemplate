@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { isBotUserAgent, isInternalOrSyntheticTraffic } from "@/lib/analytics/bot-filter";
 import { recordFirstPartyEvent, getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/events";
-import { computePeriodMetrics, filterEventsByDate, isSyntheticOrTestEvent } from "@/scripts/analytics/report";
+import { computePeriodMetrics, isSyntheticOrTestEvent } from "@/scripts/analytics/report";
 import fs from "node:fs";
 import path from "node:path";
 

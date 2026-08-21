@@ -37,6 +37,16 @@
     "Steep learning curve requiring dedicated analytics engineers and implementation consultants",
     "Tag management and variable mapping (e-vars, props) can be cumbersome without Adobe Launch/Tags"
   ],
+  "faq": [
+    {
+      "question": "How does Adobe Analytics compare to Twilio Segment?",
+      "answer": "Adobe Analytics is an enterprise business intelligence and visualization suite designed for deep multi-channel journey reporting and cross-channel attribution. In contrast, Twilio Segment is a Customer Data Platform (CDP) and data pipeline that collects, cleans, and forwards raw event data to downstream destinations, which often includes Adobe Analytics, BigQuery, and Snowflake."
+    },
+    {
+      "question": "Does Adobe Analytics require dedicated implementation specialists?",
+      "answer": "Yes — Adobe Analytics generally requires specialized data engineering to structure tracking variables (eVars, props, and events) and manage tagging schemas through Adobe Experience Platform (AEP) or Launch."
+    }
+  ],
   "sources": [
     "https://business.adobe.com/products/analytics/adobe-analytics.html",
     "https://business.adobe.com/products/analytics/pricing.html"

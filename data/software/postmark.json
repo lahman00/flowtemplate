@@ -74,6 +74,16 @@
     "Dedicated IP addresses require an additional $50/month add-on fee",
     "Visual drag-and-drop marketing campaign builders are more limited than full-suite ESPs"
   ],
+  "faq": [
+    {
+      "question": "What are the best alternatives to Postmark for transactional email?",
+      "answer": "Top alternatives to Postmark include SendGrid (ideal for high-volume combined marketing and transactional sending), Brevo (best for European GDPR compliance with 300 free emails/day), and Amazon SES (best for bare-metal, lowest-cost developer relay infrastructure)."
+    },
+    {
+      "question": "Does Postmark support European (EU) data residency?",
+      "answer": "Yes — Postmark provides dedicated EU server routing and storage options to ensure European customer data remains within the EU for strict GDPR compliance."
+    }
+  ],
   "sources": [
     "https://postmarkapp.com/pricing",
     "https://postmarkapp.com"

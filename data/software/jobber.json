@@ -115,17 +115,6 @@
         "Job costing",
         "Integrated pricebook"
       ]
-    },
-    {
-      "name": "QuickBooks Online",
-      "slug": "quickbooks-online",
-      "description": "Cloud accounting software for small businesses, contractors, and bookkeepers.",
-      "best_for": "Contractors managing double-entry accounting, payroll, and 1099 compliance",
-      "strengths": [
-        "Double-entry accounting",
-        "Payroll sync",
-        "CPA ecosystem"
-      ]
     }
   ],
   "order": 228
