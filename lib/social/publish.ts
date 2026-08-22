@@ -147,7 +147,23 @@ async function reconcilePendingBufferPosts(queue: SocialQueueEntry[], now: Date)
     const variant = entry.channels.linkedin;
     const previous = variant?.providerState;
     if (!variant || previous?.status !== "PENDING_CONFIRMATION" || previous.transport !== "buffer" || !previous.bufferPostId) continue;
-    const result = await reconcileBufferLinkedInPost(previous.bufferPostId, variant.text, variant.link ?? "");
+    // ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) real
+    // attribution-gap finding: variant.link here is the raw stored DRAFT
+    // link — UTM tags are deliberately never baked into the stored queue
+    // copy (see lib/social/utm.ts's header), only applied at the actual
+    // publish call. The original publish attempt correctly sent a
+    // UTM-tagged URL to Buffer, but if that attempt came back
+    // PENDING_CONFIRMATION rather than immediately "sent", this
+    // reconciliation pass used to overwrite the stored publishResult.link
+    // with the untagged draft link instead — a real, confirmed
+    // production case (2026-08-22, entry 37b40676 published with no
+    // utm_* params at all). buildUtmUrl is pure and deterministic, so
+    // re-deriving the exact same tagged URL here (rather than re-reading
+    // a value that was never persisted) reproduces what was actually
+    // sent to Buffer, keeping this reconciled result correctly
+    // attributable.
+    const taggedLink = variant.link ? buildUtmUrl(variant.link, "linkedin", entry.campaign, entry.id) : "";
+    const result = await reconcileBufferLinkedInPost(previous.bufferPostId, variant.text, taggedLink);
     const providerState = providerStateFromResult(previous, result, now.toISOString());
     // Reconciliation is a read, not another publication attempt.
     providerState.attempts = previous.attempts;

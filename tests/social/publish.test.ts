@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, beforeEach, afterAll } from "vitest";
+import { describe, it, expect, beforeAll, beforeEach, afterAll, vi } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { publishOneEntry, runPublishCycle, classifyScheduledEntries, hasChannelAttemptedToday, hasChannelPublishedToday, GRACE_WINDOW_MS, MAX_CATCHUP_PER_RUN, MAX_REQUEUE_ATTEMPTS, REQUEUE_OFFSET_MS } from "@/lib/social/publish";
@@ -6,6 +6,19 @@ import { readQueue, addQueueEntries } from "@/lib/social/queue";
 import { getSocialStrategy } from "@/lib/social/strategy";
 import type { SocialAdapter } from "@/lib/social/channels/types";
 import type { Channel, ChannelVariant, PublishResult, SocialQueueEntry } from "@/lib/social/types";
+
+// ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) — real
+// attribution-gap regression: reconcilePendingBufferPosts (the async
+// "was this LinkedIn post actually confirmed by Buffer" check) used to
+// re-derive its result using the raw, never-tagged stored draft link
+// instead of the UTM-tagged URL actually sent to Buffer during the
+// original publish attempt. Mocked here (not network-mocked) so the
+// test can inspect exactly which `link` argument reconciliation used,
+// without a real Buffer API call.
+vi.mock("@/lib/social/channels/linkedin", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/social/channels/linkedin")>();
+  return { ...actual, reconcileBufferLinkedInPost: vi.fn() };
+});
 
 /**
  * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) — lib/social/
@@ -593,5 +606,43 @@ describe("runPublishCycle — LinkedIn-only daily continuity", () => {
     const updated = (await readQueue())[0]!;
     expect(updated.id).toBe(entry.id);
     expect(updated.channels.linkedin?.providerState?.attempts).toBe(1);
+  });
+});
+
+describe("reconcilePendingBufferPosts (via runPublishCycle) — attribution integrity", () => {
+  it("REGRESSION: reconciling a PENDING_CONFIRMATION LinkedIn post re-derives the UTM-tagged link, not the raw untagged draft link", async () => {
+    const { reconcileBufferLinkedInPost } = await import("@/lib/social/channels/linkedin");
+    const { buildUtmUrl } = await import("@/lib/social/utm");
+    // Mirrors the real function's contract: whatever `link` it's called
+    // with is what ends up on the returned PublishResult (see
+    // buildPublishResult / resultFromBufferPost in the real module).
+    vi.mocked(reconcileBufferLinkedInPost).mockImplementation(async (_bufferPostId, text = "", link = "") => ({
+      channel: "linkedin", status: "PUBLISHED", text, link,
+      postUrl: "https://www.linkedin.com/feed/update/urn:li:share:1", postId: "1", verified: true, error: "", contentHash: "x", transport: "buffer", bufferPostId: "buf-1",
+    }));
+
+    const draftLink = "https://miloosh.com/software/close";
+    const entry: SocialQueueEntry = {
+      ...fixtureEntry({
+        linkedin: {
+          text: "x", link: draftLink, imageUrl: null, altText: null, hashtags: [],
+          publishResult: { channel: "linkedin", status: "PENDING_CONFIRMATION", text: "x", link: draftLink, postUrl: null, postId: null, verified: false, error: "", contentHash: "x" },
+          providerState: { status: "PENDING_CONFIRMATION", attempts: 1, lastAttemptAt: "2026-08-22T07:06:00.000Z", publishedAt: null, postId: null, postUrl: null, contentHash: "x", verified: false, error: "", transport: "buffer", bufferPostId: "buf-1" },
+        },
+      }),
+      campaign: "launch-week",
+      state: "SCHEDULED",
+    };
+    await addQueueEntries([entry]);
+
+    await runPublishCycle({ dryRun: false, now: new Date("2026-08-22T09:00:00.000Z"), adapters: {} as Record<Channel, SocialAdapter> });
+
+    const [, , calledLink] = vi.mocked(reconcileBufferLinkedInPost).mock.calls[0]!;
+    const expectedTaggedLink = buildUtmUrl(draftLink, "linkedin", "launch-week", entry.id);
+    expect(calledLink).toBe(expectedTaggedLink);
+    expect(calledLink).toContain("utm_source=linkedin");
+
+    const updated = (await readQueue()).find((e) => e.id === entry.id)!;
+    expect(updated.channels.linkedin?.publishResult?.link).toBe(expectedTaggedLink);
   });
 });
