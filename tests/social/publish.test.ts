@@ -7,6 +7,26 @@ import { getSocialStrategy } from "@/lib/social/strategy";
 import type { SocialAdapter } from "@/lib/social/channels/types";
 import type { Channel, ChannelVariant, PublishResult, SocialQueueEntry } from "@/lib/social/types";
 
+/**
+ * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) — lib/social/
+ * publish.ts's skipChannels now genuinely gates on strategy.enabledChannels
+ * (previously a channel disabled there could still be attempted at publish
+ * time if an entry already carried its variant — a real gap, now fixed).
+ * Several tests below use bluesky/reddit purely as an arbitrary SECOND
+ * channel to test multi-channel orchestration (failure isolation, per-day
+ * caps), not anything bluesky/reddit-specific — both are for-real disabled
+ * in the actual strategy config this reads. This helper force-enables
+ * exactly the channels a given test cares about, preserving each test's
+ * original intent instead of either weakening the new production check or
+ * hunting for a channel name that happens to still be enabled.
+ */
+function strategyWithChannelsEnabled(...channels: Channel[]) {
+  const base = getSocialStrategy();
+  const enabledChannels = { ...base.enabledChannels };
+  for (const c of channels) enabledChannels[c] = true;
+  return { ...base, enabledChannels };
+}
+
 const QUEUE_PATH = path.join(process.cwd(), "var", "agents", "social-queue.json");
 
 let realBackup: string | null = null;
@@ -328,7 +348,7 @@ describe("runPublishCycle — MANUAL_ONLY must never masquerade as PUBLISHED", (
       reddit: fakeAdapter("reddit", "manual"),
     } as Record<Channel, SocialAdapter>;
 
-    await runPublishCycle({ dryRun: false, now: new Date(), adapters });
+    await runPublishCycle({ dryRun: false, now: new Date(), adapters, strategy: strategyWithChannelsEnabled("reddit") });
     const after = await readQueue();
 
     expect(after[0]!.state).toBe("READY_FOR_MANUAL"); // this used to be the exact bug: it would land in PUBLISHED here
@@ -426,7 +446,7 @@ describe("runPublishCycle — Facebook per-day cap enforcement", () => {
     await addQueueEntries([alreadyPublishedToday, secondCandidate]);
 
     const adapters = { facebook: fakeAdapter("facebook", "publish"), bluesky: fakeAdapter("bluesky", "publish") } as Record<Channel, SocialAdapter>;
-    await runPublishCycle({ dryRun: false, now: new Date(), adapters });
+    await runPublishCycle({ dryRun: false, now: new Date(), adapters, strategy: strategyWithChannelsEnabled("bluesky") });
 
     const after = await readQueue();
     const second = after.find((e) => e.id === "second-candidate")!;
@@ -474,14 +494,15 @@ describe("runPublishCycle — Facebook per-day cap enforcement", () => {
     const candidate = { ...fixtureEntry({ facebook: { ...blankVariant }, bluesky: { ...blankVariant } }), id: "provider-independent", scheduledFor: "2026-08-19T16:30:00.000Z" };
     await addQueueEntries([alreadyPublishedToday, candidate]);
     const adapters = { facebook: fakeAdapter("facebook", "publish"), bluesky: fakeAdapter("bluesky", "publish") } as Record<Channel, SocialAdapter>;
+    const strategy = strategyWithChannelsEnabled("bluesky");
 
-    await runPublishCycle({ dryRun: false, now, adapters });
+    await runPublishCycle({ dryRun: false, now, adapters, strategy });
     let updated = (await readQueue()).find((entry) => entry.id === candidate.id)!;
     expect(updated.state).toBe("PUBLISHED");
     expect(updated.channels.facebook?.providerState).toBeUndefined();
     expect(updated.channels.bluesky?.providerState?.status).toBe("PUBLISHED");
 
-    await runPublishCycle({ dryRun: false, now: new Date("2026-08-20T17:00:00.000Z"), adapters });
+    await runPublishCycle({ dryRun: false, now: new Date("2026-08-20T17:00:00.000Z"), adapters, strategy });
     updated = (await readQueue()).find((entry) => entry.id === candidate.id)!;
     expect(updated.channels.facebook?.providerState?.status).toBe("PUBLISHED");
     expect(updated.channels.bluesky?.providerState?.attempts).toBe(1);

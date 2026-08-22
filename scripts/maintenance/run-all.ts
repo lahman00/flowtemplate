@@ -1,6 +1,7 @@
 import { executeLinksAgent } from "@/scripts/maintenance/links";
 import { executeSocialLinksAgent } from "@/scripts/maintenance/social-links";
 import { executeSocialChannelHealthAgent } from "@/scripts/maintenance/social-channel-health";
+import { executeSocialScheduleHealthAgent } from "@/scripts/maintenance/social-schedule-health";
 import { executeFreshnessAgent } from "@/scripts/maintenance/freshness";
 import { executeSeoAgent } from "@/scripts/maintenance/seo";
 import { executeRecommendationsAgent } from "@/scripts/maintenance/recommendations";
@@ -66,6 +67,11 @@ function buildRecommendedActions(entries: MaintenanceSummaryAgentEntry[]): strin
   const socialChannelHealthAgent = entries.find((e) => e.agent === "social-channel-health");
   if (socialChannelHealthAgent && socialChannelHealthAgent.criticalCount > 0) {
     actions.push(`Fix ${socialChannelHealthAgent.criticalCount} enabled-but-broken social channel(s) in var/maintenance/social-channel-health.md — supply the missing credentials in Vercel, or disable the channel in data/social/social-strategy.json until it's ready. Note: LinkedIn is never checked here (its transport can't be resolved outside Vercel's own runtime) — verify it separately via real queue publish history.`);
+  }
+
+  const socialScheduleHealthAgent = entries.find((e) => e.agent === "social-schedule-health");
+  if (socialScheduleHealthAgent && socialScheduleHealthAgent.criticalCount > 0) {
+    actions.push(`Investigate the social-schedule cron in var/maintenance/social-schedule-health.md — the SCHEDULED runway has fallen critically thin while real backlog remains, suggesting /api/cron/social-schedule stopped running or CRON_SECRET is misconfigured.`);
   }
 
   const freshnessAgent = entries.find((e) => e.agent === "freshness");
@@ -134,6 +140,7 @@ async function main() {
     await executeLinksAgent(),
     await executeSocialLinksAgent(),
     await executeSocialChannelHealthAgent(),
+    await executeSocialScheduleHealthAgent(),
     await executeFreshnessAgent(),
     await executeSeoAgent(),
     await executeRecommendationsAgent(),

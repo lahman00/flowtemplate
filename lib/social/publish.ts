@@ -374,6 +374,20 @@ export async function runPublishCycle(options: { dryRun: boolean; now?: Date; st
     // needs per-channel state, not per-entry — flagged, not silently
     // accepted.
     const skipChannels = (Object.keys(entry.channels) as Channel[]).filter((channel) => {
+      // ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) — a real
+      // gap this closes: disabling a channel in enabledChannels (e.g.
+      // bluesky/mastodon, which have never had real production
+      // credentials) previously only affected future content generation
+      // and schedule.ts's cadence math, never the publish attempt itself.
+      // An entry generated before the channel was disabled still carries
+      // that channel's variant with publishResult: null, which
+      // channelNeedsAttempt() reads as "needs attempt" regardless of the
+      // current strategy config — so every not-yet-tried entry in the
+      // backlog would still burn one real attempt against a channel
+      // that's known to have no credentials. Checked first, before any
+      // per-entry logic, since a disabled channel is a blanket fact, not
+      // conditional on this entry.
+      if (!strategy.enabledChannels[channel]) return true;
       if (linkedinOnlyEntryIds.has(entry.id) && channel !== "linkedin") return true;
       const channelScheduledFor = entry.channels[channel]?.scheduledFor;
       if (channelScheduledFor && new Date(channelScheduledFor).getTime() > now.getTime()) return true;
