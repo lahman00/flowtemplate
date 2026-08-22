@@ -1,6 +1,44 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getQueueEntry, setQueueState, updateQueueEntry } from "@/lib/social/queue";
 import { publishOneEntry, providerStateFromResult } from "@/lib/social/publish";
+import { reconcileBufferLinkedInPost } from "@/lib/social/channels/linkedin";
+
+/**
+ * GET reconciles a PENDING_CONFIRMATION Buffer post for one entry — the
+ * same read-only lookup runPublishCycle's reconcilePendingBufferPosts
+ * does automatically at the top of every cron cycle, exposed here so a
+ * manually-triggered post's real delivery status can be confirmed
+ * without waiting for the next automated window.
+ */
+export async function GET(request: NextRequest) {
+  const secret = process.env.SOCIAL_MANUAL_PUBLISH_SECRET;
+  const authHeader = request.headers.get("authorization");
+  if (!secret || authHeader !== `Bearer ${secret}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const entryId = new URL(request.url).searchParams.get("entryId");
+  if (!entryId) return NextResponse.json({ error: "Missing entryId" }, { status: 400 });
+
+  const entry = await getQueueEntry(entryId);
+  if (!entry) return NextResponse.json({ error: `No queue entry ${entryId}` }, { status: 404 });
+  const variant = entry.channels.linkedin;
+  const bufferPostId = variant?.providerState?.bufferPostId;
+  if (!variant || !bufferPostId) {
+    return NextResponse.json({ entryId, state: entry.state, providerState: variant?.providerState ?? null, note: "No bufferPostId recorded to reconcile." });
+  }
+
+  const result = await reconcileBufferLinkedInPost(bufferPostId, variant.text, variant.link ?? "");
+  const now = new Date().toISOString();
+  const providerState = providerStateFromResult(variant.providerState, result, now);
+  providerState.attempts = variant.providerState!.attempts;
+  providerState.lastAttemptAt = variant.providerState!.lastAttemptAt;
+  await updateQueueEntry(entry.id, { channels: { ...entry.channels, linkedin: { ...variant, publishResult: result, providerState } } });
+  if (result.status === "PUBLISHED" && entry.state === "SCHEDULED") {
+    await setQueueState(entry.id, "PUBLISHED", `LinkedIn publication confirmed by Buffer reconciliation (${bufferPostId}).`);
+  }
+
+  return NextResponse.json({ entryId, bufferPostId, status: result.status, postUrl: result.postUrl, postId: result.postId, verified: result.verified, error: result.error });
+}
 
 /**
  * Manual single-entry publish trigger (2026-08-21). runPublishCycle()
