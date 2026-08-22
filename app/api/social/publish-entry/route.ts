@@ -27,6 +27,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ entryId, state: entry.state, providerState: variant?.providerState ?? null, note: "No bufferPostId recorded to reconcile." });
   }
 
+  if (new URL(request.url).searchParams.get("introspectFields") === "1") {
+    const introspectRes = await fetch("https://api.buffer.com", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY!}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ query: `{ __type(name: "Post") { fields { name type { name kind ofType { name } } } } }` }),
+    });
+    return NextResponse.json(await introspectRes.json());
+  }
+
   const result = await reconcileBufferLinkedInPost(bufferPostId, variant.text, variant.link ?? "");
   const now = new Date().toISOString();
   const providerState = providerStateFromResult(variant.providerState, result, now);
