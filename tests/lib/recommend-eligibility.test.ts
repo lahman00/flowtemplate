@@ -40,7 +40,11 @@ describe("Domain eligibility — cross-domain absurdities are structurally impos
   });
 
   it("a product with no profile at all is ineligible for every domain (absence of evidence never becomes eligibility)", () => {
-    const software = getSoftware("figma"); // design category, no domain evidence
+    // canva (design category, no stored domain evidence — general graphic/marketing design, a
+    // different job from ui_ux_design's interface-design/prototyping/handoff cluster). Was figma
+    // until the 2026-08-22 mega-mission gave figma real ui_ux_design evidence — canva remains
+    // genuinely unclaimed per scripts/recommend/coverage-report.ts's live CATALOG_ONLY output.
+    const software = getSoftware("canva");
     expect(software).toBeDefined();
     for (const domain of RECOMMEND_DOMAINS) {
       expect(isDomainEligible(software!, { ...DEFAULT_ANSWERS, primaryNeed: domain })).toBe(false);

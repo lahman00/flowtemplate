@@ -56,6 +56,21 @@ export const RECOMMEND_DOMAINS = [
   "source_control",
   "seo_platform",
   "call_tracking",
+  // Decontamination + Commercial Growth Mega-Mission (2026-08-22) — fresh
+  // audit of scripts/recommend/catalog-only-report.ts's live output (not a
+  // stale report). Every domain below cleared the same >=3-genuine-product,
+  // coherent-buyer-job bar as the prior expansion — see product-profiles.ts's
+  // per-domain research notes for the exact stored-text evidence. Checked
+  // and rejected in this same pass: "ai" (16 products spanning chat/image/
+  // video/code/copywriting/transcription — not one buyer job), "api"
+  // payments sub-cluster (adyen/stripe are genuine substitutes, but plaid is
+  // a different job — bank-data verification, not payment processing — so
+  // still only 2), "marketing" outside seo/call-tracking (marketo-engage,
+  // braze — 2, different jobs from each other too).
+  "ui_ux_design",
+  "task_management",
+  "note_taking",
+  "identity_management",
 ] as const;
 
 export type RecommendDomain = (typeof RECOMMEND_DOMAINS)[number];
@@ -238,6 +253,30 @@ export const DOMAIN_META: Record<RecommendDomain, DomainMeta> = {
     label: "Track which marketing drives phone calls",
     description: "Attribute inbound calls to the ad, campaign, or channel that generated them.",
     primaryCategorySlug: "marketing",
+  },
+  ui_ux_design: {
+    domain: "ui_ux_design",
+    label: "Design a product interface and hand it to developers",
+    description: "Design screens, build clickable prototypes, and produce clean specs for engineers.",
+    primaryCategorySlug: "design",
+  },
+  task_management: {
+    domain: "task_management",
+    label: "Keep your own to-do list organized",
+    description: "A personal task list with projects, reminders, and scheduling — not a team project board.",
+    primaryCategorySlug: "productivity",
+  },
+  note_taking: {
+    domain: "note_taking",
+    label: "Capture and organize notes",
+    description: "Write, structure, and search notes, documents, and things you want to remember.",
+    primaryCategorySlug: "productivity",
+  },
+  identity_management: {
+    domain: "identity_management",
+    label: "Add login, SSO, or multi-factor authentication",
+    description: "Secure how people sign in to your product or your company's internal tools.",
+    primaryCategorySlug: "security",
   },
 };
 

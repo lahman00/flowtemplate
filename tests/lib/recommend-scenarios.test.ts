@@ -3,6 +3,7 @@ import { getRecommendations } from "@/lib/recommend/engine";
 import { DEFAULT_ANSWERS } from "@/lib/recommend/query";
 import type { RecommendationAnswers } from "@/lib/recommend/types";
 import { getSlugsForDomain } from "@/data/recommend/product-profiles";
+import { RECOMMEND_DOMAINS } from "@/lib/recommend/domains";
 
 /**
  * Recommend Engine Rebuild (2026-08-21) — Phase 16 (scenario matrix) and
@@ -194,6 +195,18 @@ describe("Recommend scenario matrix — 14 new domains (Flippa Activation + Reco
     { name: "source control for a growing team", input: answers({ primaryNeed: "source_control", teamSize: "medium" }) },
     { name: "SEO research and rank tracking", input: answers({ primaryNeed: "seo_platform" }) },
     { name: "agency call tracking for attribution", input: answers({ primaryNeed: "call_tracking", teamSize: "small" }) },
+    // Decontamination + Commercial Growth Mega-Mission (2026-08-22) — 4 new domains.
+    { name: "freelance UI/UX design and prototyping", input: answers({ primaryNeed: "ui_ux_design", teamSize: "solo", difficultyPreference: "simple" }) },
+    { name: "enterprise design-to-dev handoff", input: answers({ primaryNeed: "ui_ux_design", companyStage: "enterprise", difficultyPreference: "powerful" }) },
+    { name: "product team wireframing free budget", input: answers({ primaryNeed: "ui_ux_design", budget: "free" }) },
+    { name: "solo personal task management", input: answers({ primaryNeed: "task_management", teamSize: "solo" }) },
+    { name: "simple to-do app for individuals", input: answers({ primaryNeed: "task_management", difficultyPreference: "simple" }) },
+    { name: "task management with AI", input: answers({ primaryNeed: "task_management", needsAi: true }) },
+    { name: "individual note-taking, simple", input: answers({ primaryNeed: "note_taking", teamSize: "solo", difficultyPreference: "simple" }) },
+    { name: "note-taking for growth-stage team", input: answers({ primaryNeed: "note_taking", companyStage: "growth" }) },
+    { name: "startup adding SSO/MFA", input: answers({ primaryNeed: "identity_management", companyStage: "startup" }) },
+    { name: "enterprise identity management, powerful", input: answers({ primaryNeed: "identity_management", companyStage: "enterprise", difficultyPreference: "powerful" }) },
+    { name: "identity management free budget", input: answers({ primaryNeed: "identity_management", budget: "free" }) },
   ];
 
   it.each(scenarios)("$name", ({ input }) => {
@@ -207,6 +220,7 @@ describe("Recommend scenario matrix — 14 new domains (Flippa Activation + Reco
       "property_management", "field_service", "ecommerce_platform", "website_builder", "cms",
       "headless_cms", "developer_documentation", "video_meetings", "cloud_phone", "api_management",
       "deployment_hosting", "source_control", "seo_platform", "call_tracking",
+      "ui_ux_design", "task_management", "note_taking", "identity_management",
     ] as const;
     for (const domain of newDomains) {
       const result = getRecommendations(answers({ primaryNeed: domain }), 5);
@@ -228,6 +242,8 @@ describe("Adversarial engine attack — Phase 20 of the Flippa + Recommend Expan
     { name: "video meetings + accounting framing", domain: "video_meetings", overrides: {}, mustNotLeakInto: "accounting" },
     { name: "developer documentation + CRM framing", domain: "developer_documentation", overrides: {}, mustNotLeakInto: "crm" },
     { name: "seo platform + field service framing", domain: "seo_platform", overrides: {}, mustNotLeakInto: "field_service" },
+    { name: "UI/UX design + accounting framing", domain: "ui_ux_design", overrides: { needsAi: true }, mustNotLeakInto: "accounting" },
+    { name: "identity management + task management framing", domain: "identity_management", overrides: { difficultyPreference: "simple" }, mustNotLeakInto: "task_management" },
   ];
 
   it.each(attacks)("$name — no leakage into $mustNotLeakInto", ({ domain, overrides, mustNotLeakInto }) => {
@@ -239,14 +255,12 @@ describe("Adversarial engine attack — Phase 20 of the Flippa + Recommend Expan
     }
   });
 
-  it("no domain in the full 27-domain set ever recommends a product without real eligibility evidence", () => {
-    for (const domain of [
-      "project_management", "crm", "knowledge_base", "automation", "communication", "help_desk",
-      "password_manager", "email_marketing", "accounting", "scheduling", "analytics", "social_media",
-      "time_tracking", "property_management", "field_service", "ecommerce_platform", "website_builder",
-      "cms", "headless_cms", "developer_documentation", "video_meetings", "cloud_phone",
-      "api_management", "deployment_hosting", "source_control", "seo_platform", "call_tracking",
-    ] as const) {
+  it("no domain in the full domain set ever recommends a product without real eligibility evidence", () => {
+    // Reads RECOMMEND_DOMAINS directly (was a hardcoded 27-entry list that
+    // silently excluded any newly-added domain, e.g. the 4 added in the
+    // 2026-08-22 mega-mission, from this check) — dynamic so a future
+    // domain addition can never accidentally skip this test.
+    for (const domain of RECOMMEND_DOMAINS) {
       const result = getRecommendations(answers({ primaryNeed: domain }), 5);
       const eligibleSlugs = new Set(getSlugsForDomain(domain));
       for (const rec of result.recommendations) {

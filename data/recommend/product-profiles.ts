@@ -351,6 +351,49 @@ export const PRODUCT_PROFILES: readonly ProductProfile[] = [
   { slug: "callrail", domains: ["call_tracking"] },
   { slug: "ruler-analytics", domains: ["call_tracking"] },
   { slug: "whatconverts", domains: ["call_tracking"] },
+
+  // ---- ui_ux_design (from category: design, 2026-08-22 — interface design/prototyping/dev-handoff
+  // tools; excludes canva (general graphic/marketing design, different job) and affinity (photo/
+  // illustration/publishing suite, different job) and miro/lucidchart (diagramming/whiteboarding,
+  // different job) — each product's own stored description explicitly names design/prototyping/
+  // handoff as its core job, verified against data/software/*.json, not inferred from category alone.
+  // framer also spans website_builder (its stored description explicitly says "publish production
+  // websites" alongside design) — real second-domain evidence, not guessed. ----
+  { slug: "figma", domains: ["ui_ux_design"] },
+  { slug: "sketch", domains: ["ui_ux_design"] },
+  { slug: "framer", domains: ["ui_ux_design", "website_builder"] },
+  { slug: "marvel", domains: ["ui_ux_design"] },
+  { slug: "balsamiq", domains: ["ui_ux_design"] },
+  { slug: "whimsical", domains: ["ui_ux_design"] },
+  { slug: "zeplin", domains: ["ui_ux_design"] },
+
+  // ---- task_management (from category: productivity, 2026-08-22 — personal to-do/task apps;
+  // excludes coda/airtable (flexible database/workspace tools, different job), superhuman (email
+  // client, no peer) — each of the 4 below is explicitly a personal task/to-do manager in its own
+  // stored description, not a team project-management tool (kept distinct from project_management,
+  // whose 12 products are explicitly team/board/timeline tools). ----
+  { slug: "todoist", domains: ["task_management"] },
+  { slug: "things", domains: ["task_management"] },
+  { slug: "ticktick", domains: ["task_management"] },
+  { slug: "anydo", domains: ["task_management"] },
+
+  // ---- note_taking (from category: productivity, 2026-08-22 — note-capture/organization apps,
+  // distinct from knowledge_base (team-facing wiki/documentation hub) since these are personal
+  // note apps by their own stored description. ----
+  { slug: "evernote", domains: ["note_taking"] },
+  { slug: "microsoft-onenote", domains: ["note_taking"] },
+  { slug: "craft", domains: ["note_taking"] },
+
+  // ---- identity_management (from category: security, 2026-08-22 — identity/SSO/MFA platforms;
+  // excludes cloudflare (CDN/network security, different job), crowdstrike/wiz (endpoint/cloud
+  // security posture, different job from each other too), snyk (code security scanning, no peer),
+  // tailscale (zero-trust network mesh, no peer). Note: auth0's own stored description identifies
+  // it as "an Okta product" — kept as a separate entry since the two are marketed and positioned
+  // as distinct products for different buyers (developer-first API vs. enterprise admin console),
+  // not a duplicate listing. ----
+  { slug: "auth0", domains: ["identity_management"] },
+  { slug: "okta", domains: ["identity_management"] },
+  { slug: "duo-security", domains: ["identity_management"] },
 ];
 
 const PROFILE_BY_SLUG = new Map(PRODUCT_PROFILES.map((p) => [p.slug, p]));
