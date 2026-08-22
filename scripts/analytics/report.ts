@@ -165,7 +165,6 @@ export function computePeriodMetrics(
   const comparisonVisitors = new Set<string>();
   const categoryVisitors = new Set<string>();
   const guideVisitors = new Set<string>();
-  const recommendUsers = new Set<string>();
   const meaningfulClickers = new Set<string>();
   const outboundClickers = new Set<string>();
   const affiliateClickers = new Set<string>();
@@ -255,8 +254,6 @@ export function computePeriodMetrics(
     } else if (e.type === "guide_view") {
       guideVisitors.add(e.visitorId);
       guideCounts.set(e.guideSlug, (guideCounts.get(e.guideSlug) ?? 0) + 1);
-    } else if (e.type === "recommend_use") {
-      recommendUsers.add(e.visitorId);
     } else if (e.type === "recommend_started") {
       rfStartersP.add(e.visitorId); rfStartersS.add(e.sessionId); rfStartersE++;
     } else if (e.type === "recommend_completed") {
@@ -329,7 +326,13 @@ export function computePeriodMetrics(
   const totalVisitorsCount = visitors.size;
   const engagedCount = engagedVisitors.size;
   const multiPageCount = multiPageVisitors.size;
-  const highIntentCount = new Set([...recommendUsers, ...comparisonVisitors, ...softwareVisitors]).size;
+  // 2026-08-22 fix: was seeded from recommendUsers, a set that only grew on the
+  // narrow "recommend_use" event (fires solely when a visitor lands directly on
+  // /recommend/results) — silently excluding anyone who started the wizard but
+  // didn't reach results, undercounting real high-intent behavior. rfVisitorsP
+  // already tracks every RECOMMEND_TOUCH_TYPES event (recommend_started included),
+  // computed unconditionally above regardless of period, so it's a strict superset.
+  const highIntentCount = new Set([...rfVisitorsP, ...comparisonVisitors, ...softwareVisitors]).size;
   const meaningfulCount = meaningfulClickers.size;
   const outboundCount = outboundClickers.size;
   const affiliateCount = affiliateClickers.size;
@@ -402,7 +405,7 @@ export function computePeriodMetrics(
     comparisonVisitors: comparisonVisitors.size,
     categoryVisitors: categoryVisitors.size,
     guideVisitors: guideVisitors.size,
-    recommendUsers: recommendUsers.size,
+    recommendUsers: rfVisitorsP.size,
     meaningfulClickers: meaningfulCount,
     outboundClickers: outboundCount,
     affiliateClickers: affiliateCount,
@@ -475,7 +478,7 @@ export async function generateAnalyticsReport() {
     console.log(`  - Engaged Visitors (>10s): ${p.engagedVisitors.toString().padEnd(6)} |  - Multi-Page Visitors:  ${p.multiPageVisitors}`);
     console.log(`  - Software Page Visitors:  ${p.softwareVisitors.toString().padEnd(6)} |  - Comparison Visitors:   ${p.comparisonVisitors}`);
     console.log(`  - Category Page Visitors:  ${p.categoryVisitors.toString().padEnd(6)} |  - Guide Page Visitors:    ${p.guideVisitors}`);
-    console.log(`  - Recommend Tool Users:    ${p.recommendUsers.toString().padEnd(6)} |  - Meaningful Clickers:  ${p.meaningfulClickers}`);
+    console.log(`  - Recommend Tool Users:    ${p.recommendUsers.toString().padEnd(6)} |  - Meaningful Clickers:  ${p.meaningfulClickers}`); // any Recommend touch (started/results/completed/etc) — see RECOMMEND FUNNEL below for the full breakdown
     console.log(`  - Outbound Clickers:       ${p.outboundClickers.toString().padEnd(6)} |  - Affiliate Clickers:    ${p.affiliateClickers}\n`);
 
     console.log(`  CANONICAL HUMAN FUNNEL:`);
