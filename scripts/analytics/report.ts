@@ -116,6 +116,108 @@ export function computeCtaExposure(events: FirstPartyEvent[], includeSynthetic =
   return rows.sort((a, b) => b.impressions - a.impressions);
 }
 
+/**
+ * TRAFFIC ACQUISITION WAR MODE mission (2026-08-22) Phase 2 — per-source
+ * funnel, not just a landing-page-view count. Attributes each visitor to
+ * the TrafficSource on their earliest page_view (their true landing
+ * touch, not whichever page_view happens to be sorted first), then
+ * reports the same engagement/commercial-intent/CTA/outbound shape as
+ * the main funnel, broken down by source. A source sending 100 bounces
+ * is a materially different result from one sending 5 engaged buyers —
+ * this is what makes that visible, which a flat visitor-count-by-source
+ * table cannot.
+ */
+export interface AcquisitionSourceRow {
+  source: string;
+  visitors: number;
+  engaged: number;
+  multiPage: number;
+  commercialPageVisitors: number;
+  ctaImpressions: number;
+  ctaClickers: number;
+  outboundClickers: number;
+  affiliateClickers: number;
+}
+
+export function computeAcquisitionSourceBreakdown(events: FirstPartyEvent[], includeSynthetic = false): AcquisitionSourceRow[] {
+  const real = events.filter((e) => !isSyntheticOrTestEvent(e, includeSynthetic));
+  const sorted = [...real].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+
+  const sourceByVisitor = new Map<string, string>();
+  const pageViewCountByVisitor = new Map<string, number>();
+  for (const e of sorted) {
+    if (e.type !== "page_view") continue;
+    if (!sourceByVisitor.has(e.visitorId)) {
+      sourceByVisitor.set(e.visitorId, e.trafficSource ?? "unknown");
+    }
+    pageViewCountByVisitor.set(e.visitorId, (pageViewCountByVisitor.get(e.visitorId) ?? 0) + 1);
+  }
+
+  type Bucket = {
+    visitors: Set<string>;
+    engaged: Set<string>;
+    multiPage: Set<string>;
+    commercialPageVisitors: Set<string>;
+    ctaImpressions: Set<string>;
+    ctaClickers: Set<string>;
+    outboundClickers: Set<string>;
+    affiliateClickers: Set<string>;
+  };
+  const buckets = new Map<string, Bucket>();
+  function bucket(source: string): Bucket {
+    if (!buckets.has(source)) {
+      buckets.set(source, {
+        visitors: new Set(), engaged: new Set(), multiPage: new Set(), commercialPageVisitors: new Set(),
+        ctaImpressions: new Set(), ctaClickers: new Set(), outboundClickers: new Set(), affiliateClickers: new Set(),
+      });
+    }
+    return buckets.get(source)!;
+  }
+
+  for (const visitorId of sourceByVisitor.keys()) {
+    const source = sourceByVisitor.get(visitorId)!;
+    bucket(source).visitors.add(visitorId);
+    if ((pageViewCountByVisitor.get(visitorId) ?? 0) >= 2) {
+      bucket(source).multiPage.add(visitorId);
+      bucket(source).engaged.add(visitorId);
+    }
+  }
+
+  for (const e of sorted) {
+    const source = sourceByVisitor.get(e.visitorId);
+    if (!source) continue; // no page_view ever recorded for this visitor — shouldn't happen, but never attribute to a guessed source
+    const b = bucket(source);
+
+    if (e.type === "engaged_view") {
+      b.engaged.add(e.visitorId);
+    } else if (e.type === "software_view" || e.type === "comparison_view") {
+      b.commercialPageVisitors.add(e.visitorId);
+    } else if (e.type === "cta_impression") {
+      b.ctaImpressions.add(e.visitorId);
+    } else if (e.type === "outbound_click") {
+      b.ctaClickers.add(e.visitorId);
+      b.outboundClickers.add(e.visitorId);
+      if (e.destination === "affiliate") b.affiliateClickers.add(e.visitorId);
+    } else if (e.type === "internal_cta_click") {
+      b.ctaClickers.add(e.visitorId);
+    }
+  }
+
+  return [...buckets.entries()]
+    .map(([source, b]) => ({
+      source,
+      visitors: b.visitors.size,
+      engaged: b.engaged.size,
+      multiPage: b.multiPage.size,
+      commercialPageVisitors: b.commercialPageVisitors.size,
+      ctaImpressions: b.ctaImpressions.size,
+      ctaClickers: b.ctaClickers.size,
+      outboundClickers: b.outboundClickers.size,
+      affiliateClickers: b.affiliateClickers.size,
+    }))
+    .sort((a, b) => b.visitors - a.visitors);
+}
+
 export interface PeriodSummary {
   periodName: string;
   uniqueVisitors: number;
@@ -693,6 +795,25 @@ export async function generateAnalyticsReport() {
     for (const row of ctaExposure) {
       const ctr = row.impressions >= 5 ? `${((row.clicks / row.impressions) * 100).toFixed(1)}%` : "n too small";
       console.log(`   ${row.softwareSlug.padEnd(20)} ${row.ctaLocation.padEnd(28)} ${row.impressions.toString().padStart(11)} ${row.clicks.toString().padStart(7)}  ${ctr}`);
+    }
+  }
+  console.log("========================================================================================\n");
+
+  // TRAFFIC ACQUISITION WAR MODE mission (2026-08-22) Phase 2 — per-source
+  // funnel. Raw counts only; a "TINY SAMPLE" flag replaces any rate/CTR
+  // math below n=5 visitors so nobody mistakes 1-of-1 for a trend.
+  const acquisitionBreakdown = computeAcquisitionSourceBreakdown(events, includeSynthetic);
+  console.log("========================================================================================");
+  console.log(" ACQUISITION SOURCE FUNNEL, all time (source = TrafficSource on each visitor's earliest page_view):");
+  if (acquisitionBreakdown.length === 0) {
+    console.log("   (no real page_view events recorded yet)");
+  } else {
+    console.log(`   ${"SOURCE".padEnd(16)} VISITORS  ENGAGED  MULTI-PG  COMMERCIAL  CTA-SEEN  CTA-CLICK  OUTBOUND  AFFILIATE`);
+    for (const row of acquisitionBreakdown) {
+      const tiny = row.visitors < 5 ? "  (TINY SAMPLE)" : "";
+      console.log(
+        `   ${row.source.padEnd(16)} ${row.visitors.toString().padStart(8)} ${row.engaged.toString().padStart(8)} ${row.multiPage.toString().padStart(9)} ${row.commercialPageVisitors.toString().padStart(11)} ${row.ctaImpressions.toString().padStart(9)} ${row.ctaClickers.toString().padStart(10)} ${row.outboundClickers.toString().padStart(9)} ${row.affiliateClickers.toString().padStart(10)}${tiny}`
+      );
     }
   }
   console.log("========================================================================================\n");

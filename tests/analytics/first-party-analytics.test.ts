@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { isBotUserAgent, isInternalOrSyntheticTraffic } from "@/lib/analytics/bot-filter";
 import { recordFirstPartyEvent, getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/events";
-import { computePeriodMetrics, isSyntheticOrTestEvent, computeRecommendDomainBreakdown, computeCtaExposure } from "@/scripts/analytics/report";
+import { computePeriodMetrics, isSyntheticOrTestEvent, computeRecommendDomainBreakdown, computeCtaExposure, computeAcquisitionSourceBreakdown } from "@/scripts/analytics/report";
 import { LEGACY_CONTAMINATED_SESSIONS, isLegacyContaminatedSession } from "@/lib/analytics/legacy-contaminated-sessions";
 import fs from "node:fs";
 import path from "node:path";
@@ -361,6 +361,44 @@ describe("First-Party Analytics, Bot Defense & Funnel Suite", () => {
       ];
       expect(computeCtaExposure(events)).toEqual([]);
       expect(computeCtaExposure(events, true).find((r) => r.softwareSlug === "notion")?.impressions).toBe(1);
+    });
+  });
+
+  describe("TRAFFIC ACQUISITION WAR MODE mission (2026-08-22) Phase 2: acquisition source funnel", () => {
+    it("attributes a visitor to the TrafficSource on their earliest page_view, not their latest", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/", trafficSource: "organic_search", visitorId: "v_a", sessionId: "s_a", timestamp: t(0) } as FirstPartyEvent,
+        { type: "page_view", path: "/software/notion", trafficSource: "direct", visitorId: "v_a", sessionId: "s_a", timestamp: t(1000) } as FirstPartyEvent,
+        { type: "outbound_click", path: "/software/notion", softwareSlug: "notion", destination: "official", url: "https://notion.so", visitorId: "v_a", sessionId: "s_a", timestamp: t(2000) },
+      ];
+      const rows = computeAcquisitionSourceBreakdown(events);
+      const organicRow = rows.find((r) => r.source === "organic_search");
+      expect(organicRow).toBeTruthy();
+      expect(organicRow?.visitors).toBe(1);
+      expect(organicRow?.outboundClickers).toBe(1);
+      expect(rows.find((r) => r.source === "direct")).toBeUndefined();
+    });
+
+    it("counts multi-page and engaged, and separates CTA-seen from CTA-clicked, per source", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/", trafficSource: "social", visitorId: "v_b", sessionId: "s_b", timestamp: t(0) } as FirstPartyEvent,
+        { type: "page_view", path: "/software/slack", trafficSource: "social", visitorId: "v_b", sessionId: "s_b", timestamp: t(1000) } as FirstPartyEvent,
+        { type: "cta_impression", path: "/software/slack", softwareSlug: "slack", ctaLocation: "software-page-cta", visitorId: "v_b", sessionId: "s_b", timestamp: t(2000) } as FirstPartyEvent,
+      ];
+      const rows = computeAcquisitionSourceBreakdown(events);
+      const socialRow = rows.find((r) => r.source === "social");
+      expect(socialRow).toMatchObject({ visitors: 1, engaged: 1, multiPage: 1, ctaImpressions: 1, ctaClickers: 0, outboundClickers: 0 });
+    });
+
+    it("excludes synthetic QA visitors by default", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/", trafficSource: "referral", visitorId: "v_qa", sessionId: "s_qa", timestamp: t(0), isTest: true } as FirstPartyEvent,
+      ];
+      expect(computeAcquisitionSourceBreakdown(events)).toEqual([]);
+      expect(computeAcquisitionSourceBreakdown(events, true).find((r) => r.source === "referral")?.visitors).toBe(1);
     });
   });
 
