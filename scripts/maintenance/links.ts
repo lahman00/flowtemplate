@@ -1,6 +1,6 @@
 import { getAllSoftware } from "@/data/software";
 import { AFFILIATE_PROGRAMS } from "@/data/revenue/affiliate-programs";
-import { getAffiliateActivation } from "@/lib/revenue/affiliate-manager";
+import { getSoftwareCtaUrl, shouldShowAffiliateDisclosure } from "@/lib/affiliate";
 import { checkUrlsWithConcurrency, type LinkCheckResult, type LinkCheckOutcome } from "@/lib/maintenance/http";
 import { runAgent } from "@/lib/maintenance/run-agent";
 import { writeReport } from "@/lib/maintenance/report-io";
@@ -26,7 +26,7 @@ type CollectedUrl = {
   locations: UrlLocation[];
 };
 
-function collectUrls(): CollectedUrl[] {
+export function collectUrls(): CollectedUrl[] {
   const bySlug = new Map<string, CollectedUrl>();
 
   function add(url: string | undefined | null, softwareSlug: string, kind: UrlKind, fieldLabel: string) {
@@ -50,9 +50,22 @@ function collectUrls(): CollectedUrl[] {
     add(software.links?.status, software.slug, "vendor-resource", "links.status");
     add(software.links?.community, software.slug, "vendor-resource", "links.community");
 
-    const activation = getAffiliateActivation(software.slug);
-    if (activation.isActive && activation.affiliateUrl) {
-      add(activation.affiliateUrl, software.slug, "affiliate", "activated affiliate URL");
+    // WAR MODE mission (2026-08-22) Phase 27 revenue-leak finding: this
+    // used to check getAffiliateActivation() alone (the env-var/config-file
+    // activation mechanism) -- but none of the 14 real, revenue-generating
+    // active partners use that mechanism; they're all activated through
+    // data/affiliate/active-partners.ts instead (see tests/lib/active-
+    // partners.test.ts's "no active partner is ever reported as 'not
+    // activated'" regression, which fixed the identical gap in
+    // scripts/maintenance/affiliate.ts on 2026-08-21 but never propagated
+    // the fix here). The result: this checker had zero live-URL-health
+    // coverage of any real revenue-bearing affiliate link. getSoftwareCtaUrl
+    // is the actual resolver every live CTA calls, so checking its result
+    // (only when it's genuinely an affiliate link, per
+    // shouldShowAffiliateDisclosure) tracks the single source of truth
+    // instead of re-deriving activation status here.
+    if (shouldShowAffiliateDisclosure(software)) {
+      add(getSoftwareCtaUrl(software), software.slug, "affiliate", "resolved affiliate CTA URL");
     }
   }
 
