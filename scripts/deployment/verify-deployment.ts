@@ -1,4 +1,5 @@
 import { execSync } from "node:child_process";
+import { verifyProjectIdentity, ProjectIdentityError } from "@/lib/project-guard";
 
 export interface DeploymentRecord {
   id: string;
@@ -53,6 +54,14 @@ export async function verifyLiveDeployment(expectedCommit?: string) {
   console.log("================================================================");
   console.log("             MILOOSH VERCEL DEPLOYMENT GUARD                    ");
   console.log("================================================================\n");
+
+  try {
+    const identity = verifyProjectIdentity();
+    console.log(`✓ Project identity confirmed: ${identity.repoSlug}\n`);
+  } catch (err) {
+    console.error(err instanceof ProjectIdentityError ? `❌ ${err.message}` : err);
+    process.exit(1);
+  }
 
   const currentLocalHead = execSync("git rev-parse HEAD", { encoding: "utf8" }).trim();
   const currentOriginHead = execSync("git rev-parse origin/main", { encoding: "utf8" }).trim();

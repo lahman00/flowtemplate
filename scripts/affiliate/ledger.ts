@@ -1,5 +1,6 @@
 import { CANONICAL_AFFILIATE_LEDGER, type CanonicalLedgerStatus } from "@/data/affiliate/canonical-ledger";
 import { getAllSoftware } from "@/data/software";
+import { verifyProjectIdentity, ProjectIdentityError } from "@/lib/project-guard";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -158,6 +159,12 @@ export function computeLedgerSummary(): LedgerSummaryReport {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
+  try {
+    verifyProjectIdentity();
+  } catch (err) {
+    console.error(err instanceof ProjectIdentityError ? err.message : err);
+    process.exit(1);
+  }
   const summary = computeLedgerSummary();
   const outPath = path.join(process.cwd(), "var/agents/canonical-affiliate-ledger-summary.json");
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
