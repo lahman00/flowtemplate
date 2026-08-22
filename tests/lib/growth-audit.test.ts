@@ -94,6 +94,8 @@ describe("Growth Audit Tooling", () => {
     expect(linkAudit.underlinkedActiveAffiliates.length).toBeGreaterThan(0);
     const volza = linkAudit.underlinkedActiveAffiliates.find((s) => s.url === "/software/volza");
     expect(volza).toBeDefined();
-    expect(volza?.inboundCount).toBe(5);
+    // 5 -> 3 after the 2026-08-22 comparison-graph purification removed volza-vs-semrush and
+    // volza-vs-ahrefs (Volza is trade/customs intelligence, not a real substitute for SEO tools).
+    expect(volza?.inboundCount).toBe(3);
   });
 });

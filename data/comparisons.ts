@@ -286,7 +286,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   // "Docker vs Firebase" that were deliberately excluded).
   ["notion", "microsoft-onenote"],
   ["notion", "craft"],
-  ["notion", "otter-ai"],
   ["slack", "google-chat"],
   ["slack", "rocket-chat"],
   ["clickup", "teamwork"],
@@ -409,7 +408,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["things", "ticktick"],
   ["toggl-track", "clockify"],
   ["microsoft-onenote", "craft"],
-  ["superhuman", "front"],
   ["1password", "dashlane"],
   ["1password", "keeper-security"],
   ["1password", "nordpass"],
@@ -426,7 +424,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["adyen", "plaid"],
   ["adyen", "stripe"],
   ["algolia", "elastic"],
-  ["algolia", "supabase"],
   ["amplitude", "posthog"],
   ["amplitude", "segment"],
   ["apigee", "mulesoft"],
@@ -468,7 +465,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["dashlane", "keeper-security"],
   ["dashlane", "nordpass"],
   ["datadog", "sentry"],
-  ["datadog", "snyk"],
   ["deepl", "gemini"],
   ["directus", "sanity"],
   ["directus", "strapi"],
@@ -480,7 +476,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["drupal", "wordpress"],
   ["duo-security", "okta"],
   ["ecwid", "weebly"],
-  ["elastic", "supabase"],
   ["elevenlabs", "runway"],
   ["elevenlabs", "synthesia"],
   ["fathom-analytics", "google-analytics"],
@@ -552,7 +547,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["sanity", "storyblok"],
   ["sanity", "strapi"],
   ["savvycal", "youcanbookme"],
-  ["sentry", "snyk"],
   ["shift4shop", "shopify"],
   ["shopware", "woocommerce"],
   ["signal", "telegram"],
@@ -1171,8 +1165,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["moosend", "getresponse"],
   ["moosend", "activecampaign"],
   ["moosend", "klaviyo"],
-  ["volza", "semrush"],
-  ["volza", "ahrefs"],
   ["volza", "google-analytics"],
 
   // WhatConverts commercial-intent coverage: dedicated lead-source
@@ -1214,7 +1206,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["pipedrive", "whatconverts"],
 
   // 3. WhatConverts marketing lead attribution vs behavioral analytics:
-  ["whatconverts", "mixpanel"],
 
   // 2026-08-20 Growth Sprint #3 — Editorial substitutes, CRM suite expansion, and active-partner routing:
   // 1. HighLevel (GoHighLevel) agency funnel/CRM suite vs SMB/inside-sales CRMs:
@@ -1251,9 +1242,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
 
   // 2026-08-20 Growth Sprint #5 — Design systems, visual whiteboarding & structured workspace authority:
   // 1. Visual infinite whiteboard / diagramming canvases vs structured document workspace:
-  ["miro", "notion"],
-  ["whimsical", "notion"],
-  ["lucidchart", "notion"],
 
   // 2. UI design tools & developer handoff vs dedicated design system documentation:
   ["figma", "zeroheight"],
@@ -1297,7 +1285,6 @@ export const PUBLISHED_COMPARISONS: ReadonlyArray<readonly [string, string]> = [
   ["freshbooks", "harvest"],
   ["freshbooks", "toggl-track"],
   ["freshbooks", "clockify"],
-  ["wave", "harvest"],
 
   // 2026-08-20 Commercial Growth Engine Wave 3:
   ["keeper", "nordpass"],

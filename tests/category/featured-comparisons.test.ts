@@ -131,15 +131,18 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(isPublishedComparison("gohighlevel", "zoho-crm")).toBe(true);
     expect(isPublishedComparison("gohighlevel", "activecampaign")).toBe(true);
 
-    // WhatConverts: degree increased from 2 to 4
+    // WhatConverts: degree increased from 2 to 4 (whatconverts-vs-mixpanel removed 2026-08-22 —
+    // comparison-graph purification: Mixpanel is product-usage analytics, a genuinely different
+    // buyer job from WhatConverts' call/lead-source attribution focus, not a real substitute)
     const wcComps = getComparisonsInvolving("whatconverts");
-    expect(wcComps.length).toBeGreaterThanOrEqual(4);
+    expect(wcComps.length).toBeGreaterThanOrEqual(3);
     expect(isPublishedComparison("pipedrive", "whatconverts")).toBe(true);
-    expect(isPublishedComparison("whatconverts", "mixpanel")).toBe(true);
 
-    // Volza: degree increased from 2 to 3
+    // Volza: degree reduced 2026-08-22 — comparison-graph purification removed volza-vs-semrush
+    // and volza-vs-ahrefs (Volza is trade/customs intelligence, not a real substitute for SEO
+    // tools; only the genuinely comparable volza-vs-google-analytics pair remains).
     const volzaComps = getComparisonsInvolving("volza");
-    expect(volzaComps.length).toBeGreaterThanOrEqual(3);
+    expect(volzaComps.length).toBeGreaterThanOrEqual(1);
     expect(isPublishedComparison("volza", "google-analytics")).toBe(true);
 
     // Pipedrive: degree increased from 8 to 12
@@ -200,10 +203,10 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
   });
 
   it("verifies Sprint #5 design systems, visual whiteboarding & structured workspace authority", () => {
-    // Visual whiteboards vs Notion
-    expect(isPublishedComparison("miro", "notion")).toBe(true);
-    expect(isPublishedComparison("whimsical", "notion")).toBe(true);
-    expect(isPublishedComparison("lucidchart", "notion")).toBe(true);
+    // miro-vs-notion, whimsical-vs-notion, lucidchart-vs-notion removed 2026-08-22 —
+    // comparison-graph purification: diagramming/whiteboard tools are a genuinely different
+    // buyer job from Notion's docs/wiki job, not a real substitute (a buyer picks a whiteboard
+    // AND a notes tool, not one instead of the other).
 
     // Design tools & handoff vs Zeroheight
     expect(isPublishedComparison("figma", "zeroheight")).toBe(true);
@@ -212,7 +215,7 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
 
     // Verify degree increases
     expect(getComparisonsInvolving("zeroheight").length).toBeGreaterThanOrEqual(13);
-    expect(getComparisonsInvolving("miro").length).toBeGreaterThanOrEqual(9);
+    expect(getComparisonsInvolving("miro").length).toBeGreaterThanOrEqual(8);
     expect(getComparisonsInvolving("figma").length).toBeGreaterThanOrEqual(11);
     expect(getComparisonsInvolving("zeplin").length).toBeGreaterThanOrEqual(9);
   });
@@ -258,17 +261,19 @@ describe("Category Featured Comparisons & Editorial Independence", () => {
     expect(isPublishedComparison("freshbooks", "zoho-books")).toBe(true);
     expect(isPublishedComparison("wave", "zoho-books")).toBe(true);
 
-    // Invoicing & time tracking bridges
+    // Invoicing & time tracking bridges (wave-vs-harvest removed 2026-08-22 —
+    // comparison-graph purification: Wave's own stored features are pure bookkeeping/invoicing/
+    // payroll with no time-tracking feature at all, unlike FreshBooks' explicit "Built-in time
+    // tracking with billable hours converted directly to invoices" — not a real substitute pair)
     expect(isPublishedComparison("freshbooks", "harvest")).toBe(true);
     expect(isPublishedComparison("freshbooks", "toggl-track")).toBe(true);
     expect(isPublishedComparison("freshbooks", "clockify")).toBe(true);
-    expect(isPublishedComparison("wave", "harvest")).toBe(true);
 
     // Verify degree expansions
     expect(getComparisonsInvolving("quickbooks-online").length).toBeGreaterThanOrEqual(4);
     expect(getComparisonsInvolving("xero").length).toBeGreaterThanOrEqual(4);
     expect(getComparisonsInvolving("freshbooks").length).toBeGreaterThanOrEqual(6);
-    expect(getComparisonsInvolving("wave").length).toBeGreaterThanOrEqual(5);
+    expect(getComparisonsInvolving("wave").length).toBeGreaterThanOrEqual(4);
     expect(getComparisonsInvolving("zoho-books").length).toBeGreaterThanOrEqual(4);
   });
 });
