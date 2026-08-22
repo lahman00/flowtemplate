@@ -38,22 +38,28 @@ type ComparePageProps = {
 };
 
 /**
- * Contextual affiliate CTA for a "Choose X if…" card — only ever renders
- * when `software` already has a real, confirmed affiliate link
- * (shouldShowAffiliateDisclosure), so an unmonetized product in a
- * comparison shows no CTA at all rather than a fabricated one. Wix
- * specifically routes through the funnel-aware resolver
+ * CTA for a "Choose X if…" card — always renders, for every product,
+ * exactly like the software page's own CTA (getSoftwareCtaUrl never
+ * returns an empty string: it resolves to the affiliate link when one is
+ * active, otherwise the plain official site). WAR MODE mission (2026-08-22)
+ * Phase 22 fix: this used to early-return null for any non-affiliate
+ * product, so a real buyer persuaded by "Choose X if…" text had no button
+ * to act on it — found on 138 of 1212 published comparisons where only
+ * one side had a deal (the other side's card was silently dead) and on
+ * 1062 more where both sides were dead. Rendering unconditionally and
+ * gating only the disclosure text on affiliate status restores parity
+ * between the two sides regardless of which one Miloosh monetizes — the
+ * same commission-independent-of-display principle already enforced by
+ * lib/recommend and lib/comparison's editorial neutrality.
+ *
+ * Wix specifically routes through the funnel-aware resolver
  * (lib/wix-funnels.ts) using the OTHER product in the pairing to pick
  * the right funnel (e.g. a headless-CMS comparison routes to the
  * Headless funnel, not the generic Website Builder one) — every other
  * product just uses its own single affiliate_url, same as the software
- * page. This is the one place besides /software/[slug] that a real
- * external CTA to a vendor appears; every other page on the site still
- * only links to Wix (or anything else) internally via /software/[slug].
+ * page.
  */
 function ComparisonChoiceCta({ software, otherSlug }: { software: Software; otherSlug: string }) {
-  if (!shouldShowAffiliateDisclosure(software)) return null;
-
   const href = resolveComparisonCtaUrl(software, otherSlug);
   const wixContext = software.slug === "wix" ? getWixContextForComparison(otherSlug) : undefined;
 
@@ -72,13 +78,15 @@ function ComparisonChoiceCta({ software, otherSlug }: { software: Software; othe
         Visit {software.name}
         <ExternalLink className="h-4 w-4" />
       </TrackedCtaLink>
-      <p className="mt-2 text-center text-xs text-zinc-500">
-        This is an affiliate link. See our{" "}
-        <Link href="/affiliate-disclosure" className="underline underline-offset-4 hover:text-zinc-300">
-          Affiliate Disclosure
-        </Link>
-        .
-      </p>
+      {shouldShowAffiliateDisclosure(software) ? (
+        <p className="mt-2 text-center text-xs text-zinc-500">
+          This is an affiliate link. See our{" "}
+          <Link href="/affiliate-disclosure" className="underline underline-offset-4 hover:text-zinc-300">
+            Affiliate Disclosure
+          </Link>
+          .
+        </p>
+      ) : null}
     </div>
   );
 }
