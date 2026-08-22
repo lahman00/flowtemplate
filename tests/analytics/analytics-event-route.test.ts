@@ -157,6 +157,14 @@ describe("POST /api/analytics/event — end-to-end route behavior", () => {
     expect((await res.json()).classification).toBe("REJECTED_VALIDATION");
   });
 
+  it("accepts a cta_impression event (WAR MODE Phase 21 — CTA exposure telemetry)", async () => {
+    const res = await post({ type: "cta_impression", path: "/software/notion", visitorId: "v_impr", sessionId: "s_impr", softwareSlug: "notion", ctaLocation: "software-page-cta" });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ recorded: true, classification: "REAL_OR_UNKNOWN_HUMAN" });
+    const stored = await getAllFirstPartyEvents();
+    expect(stored.some((e) => e.visitorId === "v_impr" && e.type === "cta_impression")).toBe(true);
+  });
+
   it("never crashes and never stores when storage itself fails", async () => {
     const events = await import("@/lib/analytics/events");
     const spy = vi.spyOn(events, "recordFirstPartyEvent").mockResolvedValue(false);

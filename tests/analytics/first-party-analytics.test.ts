@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { isBotUserAgent, isInternalOrSyntheticTraffic } from "@/lib/analytics/bot-filter";
 import { recordFirstPartyEvent, getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/events";
-import { computePeriodMetrics, isSyntheticOrTestEvent, computeRecommendDomainBreakdown } from "@/scripts/analytics/report";
+import { computePeriodMetrics, isSyntheticOrTestEvent, computeRecommendDomainBreakdown, computeCtaExposure } from "@/scripts/analytics/report";
 import { LEGACY_CONTAMINATED_SESSIONS, isLegacyContaminatedSession } from "@/lib/analytics/legacy-contaminated-sessions";
 import fs from "node:fs";
 import path from "node:path";
@@ -325,6 +325,42 @@ describe("First-Party Analytics, Bot Defense & Funnel Suite", () => {
       ];
       expect(computeRecommendDomainBreakdown(events)).toEqual([]);
       expect(computeRecommendDomainBreakdown(events, true).find((r) => r.domain === "call_tracking")?.completers).toBe(1);
+    });
+  });
+
+  describe("WAR MODE mission (2026-08-22) Phase 21: CTA exposure vs. click", () => {
+    it("counts a click only when the same visitor who saw the impression also clicked", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "cta_impression", path: "/software/notion", softwareSlug: "notion", ctaLocation: "software-page-cta", visitorId: "v_a", sessionId: "s_a", timestamp: t(0) } as FirstPartyEvent,
+        { type: "outbound_click", path: "/software/notion", softwareSlug: "notion", ctaLocation: "software-page-cta", destination: "official", url: "https://notion.so", visitorId: "v_a", sessionId: "s_a", timestamp: t(1000) },
+        // Visitor B saw a different CTA on the same page (never saw this one) but still clicked it — must NOT count as converted-from-impression.
+        { type: "outbound_click", path: "/software/notion", softwareSlug: "notion", ctaLocation: "software-page-cta", destination: "official", url: "https://notion.so", visitorId: "v_b", sessionId: "s_b", timestamp: t(2000) },
+      ];
+      const rows = computeCtaExposure(events);
+      const row = rows.find((r) => r.softwareSlug === "notion" && r.ctaLocation === "software-page-cta");
+      expect(row).toEqual({ softwareSlug: "notion", ctaLocation: "software-page-cta", impressions: 1, clicks: 1 });
+    });
+
+    it("keeps separate CTA locations for the same software distinct", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "cta_impression", path: "/software/notion", softwareSlug: "notion", ctaLocation: "software-page-cta", visitorId: "v_a", sessionId: "s_a", timestamp: t(0) } as FirstPartyEvent,
+        { type: "cta_impression", path: "/compare/notion-vs-coda", softwareSlug: "notion", ctaLocation: "compare-page-choose-card", visitorId: "v_a", sessionId: "s_a", timestamp: t(1000) } as FirstPartyEvent,
+      ];
+      const rows = computeCtaExposure(events);
+      expect(rows).toHaveLength(2);
+      expect(rows.find((r) => r.ctaLocation === "software-page-cta")?.impressions).toBe(1);
+      expect(rows.find((r) => r.ctaLocation === "compare-page-choose-card")?.impressions).toBe(1);
+    });
+
+    it("excludes synthetic QA impressions and clicks by default", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "cta_impression", path: "/software/notion", softwareSlug: "notion", ctaLocation: "software-page-cta", visitorId: "v_qa", sessionId: "s_qa", timestamp: t(0), isTest: true } as FirstPartyEvent,
+      ];
+      expect(computeCtaExposure(events)).toEqual([]);
+      expect(computeCtaExposure(events, true).find((r) => r.softwareSlug === "notion")?.impressions).toBe(1);
     });
   });
 

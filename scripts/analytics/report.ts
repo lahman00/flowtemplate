@@ -65,6 +65,57 @@ export function computeRecommendDomainBreakdown(events: FirstPartyEvent[], inclu
     .sort((a, b) => b.completers - a.completers);
 }
 
+/**
+ * WAR MODE mission (2026-08-22) Phase 21 — CTA exposure vs. click, by
+ * (softwareSlug, ctaLocation). Answers a question the funnel couldn't
+ * answer before: of the people who actually saw a given CTA on screen,
+ * how many clicked it? Distinct from the funnel's "MEANINGFUL CTA CLICK"
+ * stage, which only counts clicks against total page visitors — it can't
+ * tell "the CTA converts badly" apart from "almost nobody scrolled to
+ * it." Joined per-visitor (an impression and a click from the same
+ * visitor for the same slug+location), not just raw counts, so a single
+ * visitor bouncing back and forth doesn't inflate the click side.
+ */
+export interface CtaExposureRow {
+  softwareSlug: string;
+  ctaLocation: string;
+  impressions: number;
+  clicks: number;
+}
+
+export function computeCtaExposure(events: FirstPartyEvent[], includeSynthetic = false): CtaExposureRow[] {
+  const key = (slug: string, loc: string | undefined) => `${slug}|||${loc ?? "(unspecified)"}`;
+  const impressionVisitorsByKey = new Map<string, Set<string>>();
+  const clickVisitorsByKey = new Map<string, Set<string>>();
+
+  for (const e of events) {
+    if (isSyntheticOrTestEvent(e, includeSynthetic)) continue;
+
+    if (e.type === "cta_impression") {
+      const k = key(e.softwareSlug, e.ctaLocation);
+      if (!impressionVisitorsByKey.has(k)) impressionVisitorsByKey.set(k, new Set());
+      impressionVisitorsByKey.get(k)!.add(e.visitorId);
+    } else if (e.type === "outbound_click") {
+      const k = key(e.softwareSlug, e.ctaLocation);
+      if (!clickVisitorsByKey.has(k)) clickVisitorsByKey.set(k, new Set());
+      clickVisitorsByKey.get(k)!.add(e.visitorId);
+    }
+  }
+
+  const rows: CtaExposureRow[] = [];
+  for (const [k, impressionVisitors] of impressionVisitorsByKey.entries()) {
+    const [softwareSlug, ctaLocation] = k.split("|||") as [string, string];
+    const clickVisitors = clickVisitorsByKey.get(k) ?? new Set<string>();
+    let clicks = 0;
+    for (const vid of clickVisitors) {
+      if (impressionVisitors.has(vid)) clicks++;
+    }
+    rows.push({ softwareSlug, ctaLocation, impressions: impressionVisitors.size, clicks });
+  }
+
+  return rows.sort((a, b) => b.impressions - a.impressions);
+}
+
 export interface PeriodSummary {
   periodName: string;
   uniqueVisitors: number;
@@ -624,6 +675,24 @@ export async function generateAnalyticsReport() {
     console.log(`   ${"DOMAIN".padEnd(24)} COMPLETERS  RESULT-VIEWERS  PRODUCT-OPENS  COMPARISON-OPENS  OUTBOUND-AFTER`);
     for (const row of domainBreakdown) {
       console.log(`   ${row.domain.padEnd(24)} ${row.completers.toString().padStart(10)} ${row.resultViewers.toString().padStart(16)} ${row.productOpeners.toString().padStart(14)} ${row.comparisonOpeners.toString().padStart(18)} ${row.outboundClickersAfter.toString().padStart(15)}`);
+    }
+  }
+  console.log("========================================================================================\n");
+
+  // Phase 21 — CTA exposure vs. click, per (softwareSlug, ctaLocation).
+  // Raw counts only (no percentages) below a reasonable n, per the same
+  // "don't display statistically silly percentages when n is tiny"
+  // discipline as the domain breakdown above.
+  const ctaExposure = computeCtaExposure(events, includeSynthetic);
+  console.log("========================================================================================");
+  console.log(" CTA EXPOSURE VS. CLICK, all time (impressions = distinct visitors who saw the CTA on screen):");
+  if (ctaExposure.length === 0) {
+    console.log("   (no cta_impression events recorded yet — this telemetry shipped 2026-08-22, so early periods will show none)");
+  } else {
+    console.log(`   ${"SOFTWARE".padEnd(20)} ${"CTA LOCATION".padEnd(28)} IMPRESSIONS  CLICKS  CTR`);
+    for (const row of ctaExposure) {
+      const ctr = row.impressions >= 5 ? `${((row.clicks / row.impressions) * 100).toFixed(1)}%` : "n too small";
+      console.log(`   ${row.softwareSlug.padEnd(20)} ${row.ctaLocation.padEnd(28)} ${row.impressions.toString().padStart(11)} ${row.clicks.toString().padStart(7)}  ${ctr}`);
     }
   }
   console.log("========================================================================================\n");

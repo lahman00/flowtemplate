@@ -28,7 +28,8 @@ export type FirstPartyEventType =
   | "recommend_completed"
   | "recommend_result_viewed"
   | "recommend_product_open"
-  | "recommend_comparison_open";
+  | "recommend_comparison_open"
+  | "cta_impression";
 
 export interface BaseAnalyticsEvent {
   type: FirstPartyEventType;
@@ -152,6 +153,22 @@ export interface RecommendComparisonOpenEvent extends BaseAnalyticsEvent {
   domain?: string;
 }
 
+/**
+ * WAR MODE mission (2026-08-22) Phase 21 — CTA exposure telemetry. Fired
+ * once per CTA element per page view, the first time it becomes visible
+ * in the viewport (see components/TrackedCtaLink.tsx's IntersectionObserver).
+ * Exists so the funnel can measure a real click-through rate on a CTA
+ * (clicks / people who actually saw it) instead of only (clicks / people
+ * who loaded the page, whether or not the CTA was ever on-screen) — the
+ * previous funnel had no way to distinguish "nobody saw it" from "people
+ * saw it and declined to click."
+ */
+export interface CtaImpressionEvent extends BaseAnalyticsEvent {
+  type: "cta_impression";
+  softwareSlug: string;
+  ctaLocation?: string;
+}
+
 export type FirstPartyEvent =
   | PageViewEvent
   | EngagedViewEvent
@@ -167,7 +184,8 @@ export type FirstPartyEvent =
   | RecommendCompletedEvent
   | RecommendResultViewedEvent
   | RecommendProductOpenEvent
-  | RecommendComparisonOpenEvent;
+  | RecommendComparisonOpenEvent
+  | CtaImpressionEvent;
 
 const BLOB_PREFIX = "first-party-analytics/";
 const LOCAL_FALLBACK_PATH = path.join(process.cwd(), "var", "first-party-analytics.json");
