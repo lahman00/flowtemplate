@@ -61,6 +61,13 @@ export interface PageViewEvent extends BaseAnalyticsEvent {
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
+  /**
+   * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) — the queue
+   * entry ID a social post's link is tagged with at publish time
+   * (lib/social/utm.ts), captured so real visitors can be attributed to
+   * the specific post that brought them, not just a coarse source bucket.
+   */
+  utmContent?: string;
   /** Normalized via lib/analytics/attribution.ts — never computed ad hoc elsewhere. */
   trafficSource?: "organic_search" | "social" | "referral" | "direct" | "unknown";
 }

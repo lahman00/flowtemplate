@@ -77,6 +77,14 @@ describe("POST /api/analytics/event — end-to-end route behavior", () => {
     expect(found?.qaRun).toBeUndefined();
   });
 
+  it("stores utmContent on a page_view — real gap closed 2026-08-22: every social post link is tagged with utm_content=<queue entry id>, but nothing captured it until now, making true post-level attribution impossible", async () => {
+    const res = await post({ type: "page_view", path: "/software/circleci", visitorId: "v_post", sessionId: "s_post", utmSource: "facebook", utmMedium: "social", utmCampaign: "organic", utmContent: "85b5f3f3-8aa6-44fe-8faf-4e57957880fd" });
+    expect(res.status).toBe(200);
+    const stored = await getAllFirstPartyEvents();
+    const found = stored.find((e) => e.visitorId === "v_post");
+    expect((found as { utmContent?: string })?.utmContent).toBe("85b5f3f3-8aa6-44fe-8faf-4e57957880fd");
+  });
+
   it("rejects a bot user-agent as BOT, and never stores the event", async () => {
     const res = await post({ type: "page_view", path: "/", visitorId: "v_bot", sessionId: "s_bot" }, { "user-agent": "Googlebot/2.1" });
     expect(res.status).toBe(200);

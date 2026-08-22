@@ -15,8 +15,17 @@ const ATTRIBUTION_CAPTURED_KEY = "miloosh_attribution_captured";
  * wrongly reclassify an already-attributed session as "direct" on its
  * second page view. Captured once per browser tab session (sessionStorage-
  * gated, same pattern as lib/analytics/synthetic.ts's QA marker).
+ *
+ * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) real gap:
+ * every social post's link is already tagged with utm_content=<queue
+ * entry id> at publish time (lib/social/utm.ts) — a genuine, unique
+ * per-post identifier — but nothing ever read utm_content out of the
+ * landing URL, so true post-level attribution ("which specific post
+ * brought this visitor") was structurally impossible despite the tag
+ * existing on every link. Added alongside the other three UTM fields,
+ * same capture/cap/privacy treatment.
  */
-function captureLandingAttribution(): { referrerHost?: string; utmSource?: string; utmMedium?: string; utmCampaign?: string; trafficSource: ReturnType<typeof normalizeTrafficSource> } | null {
+function captureLandingAttribution(): { referrerHost?: string; utmSource?: string; utmMedium?: string; utmCampaign?: string; utmContent?: string; trafficSource: ReturnType<typeof normalizeTrafficSource> } | null {
   try {
     if (sessionStorage.getItem(ATTRIBUTION_CAPTURED_KEY) === "1") return null;
     sessionStorage.setItem(ATTRIBUTION_CAPTURED_KEY, "1");
@@ -26,12 +35,14 @@ function captureLandingAttribution(): { referrerHost?: string; utmSource?: strin
     const utmSource = params.get("utm_source")?.slice(0, 64) || undefined;
     const utmMedium = params.get("utm_medium")?.slice(0, 64) || undefined;
     const utmCampaign = params.get("utm_campaign")?.slice(0, 64) || undefined;
+    const utmContent = params.get("utm_content")?.slice(0, 64) || undefined;
 
     return {
       referrerHost,
       utmSource,
       utmMedium,
       utmCampaign,
+      utmContent,
       trafficSource: normalizeTrafficSource({ referrerHost, utmSource, utmMedium }),
     };
   } catch {
