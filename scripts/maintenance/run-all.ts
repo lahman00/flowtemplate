@@ -1,5 +1,6 @@
 import { executeLinksAgent } from "@/scripts/maintenance/links";
 import { executeSocialLinksAgent } from "@/scripts/maintenance/social-links";
+import { executeSocialChannelHealthAgent } from "@/scripts/maintenance/social-channel-health";
 import { executeFreshnessAgent } from "@/scripts/maintenance/freshness";
 import { executeSeoAgent } from "@/scripts/maintenance/seo";
 import { executeRecommendationsAgent } from "@/scripts/maintenance/recommendations";
@@ -60,6 +61,11 @@ function buildRecommendedActions(entries: MaintenanceSummaryAgentEntry[]): strin
   const socialLinksAgent = entries.find((e) => e.agent === "social-links");
   if (socialLinksAgent && socialLinksAgent.criticalCount > 0) {
     actions.push(`Fix ${socialLinksAgent.criticalCount} dead internal link(s) in the social queue in var/maintenance/social-links.md — restore the route, add a redirect in data/redirects.ts, or transition the entry to SKIPPED. Treat any "LIVE PUBLISHED POST" finding as urgent: it is broken for real visitors right now.`);
+  }
+
+  const socialChannelHealthAgent = entries.find((e) => e.agent === "social-channel-health");
+  if (socialChannelHealthAgent && socialChannelHealthAgent.criticalCount > 0) {
+    actions.push(`Fix ${socialChannelHealthAgent.criticalCount} enabled-but-broken social channel(s) in var/maintenance/social-channel-health.md — supply the missing credentials in Vercel, or disable the channel in data/social/social-strategy.json until it's ready. Note: LinkedIn is never checked here (its transport can't be resolved outside Vercel's own runtime) — verify it separately via real queue publish history.`);
   }
 
   const freshnessAgent = entries.find((e) => e.agent === "freshness");
@@ -127,6 +133,7 @@ async function main() {
   const reports = [
     await executeLinksAgent(),
     await executeSocialLinksAgent(),
+    await executeSocialChannelHealthAgent(),
     await executeFreshnessAgent(),
     await executeSeoAgent(),
     await executeRecommendationsAgent(),
