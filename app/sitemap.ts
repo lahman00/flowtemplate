@@ -6,32 +6,66 @@ import { getAllCategories } from "@/data/categories";
 import { getAllRoleGuides } from "@/data/guides/registry";
 import { PUBLISHED_COMPARISONS, getComparisonSlug } from "@/data/comparisons";
 
+/**
+ * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) — real finding:
+ * every one of this sitemap's 1,526 entries had zero <lastmod>, the
+ * signal Google's own docs say helps crawlers prioritize what to
+ * (re)crawl. Not fabricated: software.accessedAt (100% real coverage,
+ * every catalog entry) and guide.updatedAt (100% coverage) are genuine
+ * per-entry "when was this content last verified/touched" facts already
+ * tracked in the data. A comparison or category page's true freshness is
+ * the MORE RECENT of its constituent products' accessedAt dates — its
+ * rendered content changes whenever either input does.
+ */
+function toDate(yyyyMmDd: string): Date {
+  return new Date(`${yyyyMmDd}T00:00:00.000Z`);
+}
+
+function latestOf(dates: Date[]): Date {
+  return new Date(Math.max(...dates.map((d) => d.getTime())));
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const softwarePages: MetadataRoute.Sitemap = getAllSoftware().map((software) => ({
+  const allSoftware = getAllSoftware();
+  const softwareBySlug = new Map(allSoftware.map((s) => [s.slug, s]));
+
+  const softwarePages: MetadataRoute.Sitemap = allSoftware.map((software) => ({
     url: `${SITE_URL}/software/${software.slug}`,
+    lastModified: toDate(software.accessedAt),
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
-  const categoryPages: MetadataRoute.Sitemap = getAllCategories().map((category) => ({
-    url: `${SITE_URL}/category/${category.slug}`,
-    changeFrequency: "weekly",
-    priority: 0.7,
-  }));
+  const categoryPages: MetadataRoute.Sitemap = getAllCategories().map((category) => {
+    const membersAccessedAt = allSoftware.filter((s) => s.category === category.slug).map((s) => toDate(s.accessedAt));
+    return {
+      url: `${SITE_URL}/category/${category.slug}`,
+      ...(membersAccessedAt.length > 0 ? { lastModified: latestOf(membersAccessedAt) } : {}),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    };
+  });
 
   const roleGuidePages: MetadataRoute.Sitemap = getAllRoleGuides().map((guide) => ({
     url: `${SITE_URL}/${guide.slug}`,
+    lastModified: toDate(guide.updatedAt),
     changeFrequency: "monthly",
     priority: 0.85,
   }));
 
   const comparisonPages: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/compare`, changeFrequency: "weekly", priority: 0.7 },
-    ...PUBLISHED_COMPARISONS.map(([slugA, slugB]) => ({
-      url: `${SITE_URL}/compare/${getComparisonSlug(slugA, slugB)}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.75,
-    })),
+    ...PUBLISHED_COMPARISONS.map(([slugA, slugB]) => {
+      const softwareA = softwareBySlug.get(slugA);
+      const softwareB = softwareBySlug.get(slugB);
+      const dates = [softwareA, softwareB].filter((s): s is NonNullable<typeof s> => Boolean(s)).map((s) => toDate(s.accessedAt));
+      return {
+        url: `${SITE_URL}/compare/${getComparisonSlug(slugA, slugB)}`,
+        ...(dates.length > 0 ? { lastModified: latestOf(dates) } : {}),
+        changeFrequency: "monthly" as const,
+        priority: 0.75,
+      };
+    }),
   ];
 
   // Every legal/trust page (Privacy, Terms, Disclaimer, Affiliate
