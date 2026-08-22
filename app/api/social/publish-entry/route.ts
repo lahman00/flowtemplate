@@ -53,6 +53,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "No channel on this entry needed an attempt (already published, or nothing eligible)." }, { status: 409 });
   }
 
+  // Mirrors runPublishCycle's own handling (lib/social/publish.ts): a
+  // concurrent/retried invocation that lost the durable claim made no
+  // external request, so the entry must not be overwritten or marked
+  // FAILED — it stays exactly as it was for a clean future retry.
+  if (attempts.every((attempt) => attempt.result.status === "DUPLICATE_SKIPPED")) {
+    return NextResponse.json({ entryId: entry.id, nextState: entry.state, attempts: attempts.map((a) => ({ channel: a.channel, status: a.result.status, error: a.result.error })), note: "All attempts were DUPLICATE_SKIPPED — entry left untouched." });
+  }
+
   const updatedChannels = { ...entry.channels };
   for (const { channel, result } of attempts) {
     const current = updatedChannels[channel]!;
