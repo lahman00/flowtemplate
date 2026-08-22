@@ -9,7 +9,12 @@ import { recordFirstPartyEvent, type FirstPartyEvent, type FirstPartyEventType }
  * not silently collapse into each other):
  *   BOT                 — user-agent matched a known bot/crawler pattern. Discarded, not stored.
  *   INTERNAL_INFRA       — Vercel platform/prefetch noise, not a real request. Discarded, not stored.
- *   REJECTED_VALIDATION — malformed/missing/oversized payload. Discarded, not stored.
+ *   REJECTED_VALIDATION — malformed/missing/oversized payload, or an engaged_view whose claimed
+ *                         durationSeconds is implausibly below the 10-second dwell threshold
+ *                         (see components/FirstPartyAnalytics.tsx's 2026-08-22 header — a real,
+ *                         reproducible-in-theory browser behavior, not a guessed edge case: tab
+ *                         duplication copies sessionStorage but not the in-memory dwell timer).
+ *                         Discarded, not stored.
  *   FAILED_STORAGE       — passed every check, but the write itself failed. User experience unaffected either way.
  *   SYNTHETIC_QA         — passed every check, isTest:true, STORED (excluded from real-human reports by default).
  *   REAL_OR_UNKNOWN_HUMAN — passed every check, isTest not set, STORED as ordinary traffic.
@@ -55,6 +60,19 @@ export async function POST(request: NextRequest) {
     typeof body.path !== "string"
   ) {
     return NextResponse.json({ recorded: false, classification: "REJECTED_VALIDATION", reason: "missing_or_invalid_fields" }, { status: 400 });
+  }
+
+  // Defense-in-depth: the client now sends the real elapsed time (see
+  // components/FirstPartyAnalytics.tsx), but a modified/replayed/scripted
+  // client could still claim any value. An engaged_view genuinely cannot
+  // occur before the app's own 10-second dwell timer — allow a small
+  // margin for clock/timer slop, not for a fabricated fast value.
+  if (body.type === "engaged_view") {
+    const claimed = (body as { durationSeconds?: unknown }).durationSeconds;
+    if (typeof claimed !== "number" || claimed < 8) {
+      console.warn(`[analytics] REJECTED_VALIDATION: engaged_view claimed durationSeconds=${String(claimed)}, below the 10s dwell floor`);
+      return NextResponse.json({ recorded: false, classification: "REJECTED_VALIDATION", reason: "implausible_engagement_timing" }, { status: 400 });
+    }
   }
 
   const isTest = body.isTest === true;

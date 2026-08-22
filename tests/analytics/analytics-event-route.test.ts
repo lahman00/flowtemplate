@@ -129,6 +129,34 @@ describe("POST /api/analytics/event — end-to-end route behavior", () => {
     expect((await res.json()).classification).toBe("REJECTED_VALIDATION");
   });
 
+  it("accepts a genuine engaged_view whose claimed durationSeconds meets the 10s dwell floor", async () => {
+    const res = await post({ type: "engaged_view", path: "/", visitorId: "v_engaged", sessionId: "s_engaged", durationSeconds: 10 });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ recorded: true, classification: "REAL_OR_UNKNOWN_HUMAN" });
+    const stored = await getAllFirstPartyEvents();
+    expect(stored.some((e) => e.visitorId === "v_engaged")).toBe(true);
+  });
+
+  it("accepts an engaged_view slightly over the floor (real timer slop, e.g. a slow tab)", async () => {
+    const res = await post({ type: "engaged_view", path: "/", visitorId: "v_slop", sessionId: "s_slop", durationSeconds: 11 });
+    expect(res.status).toBe(200);
+    expect((await res.json()).classification).toBe("REAL_OR_UNKNOWN_HUMAN");
+  });
+
+  it("rejects an engaged_view claiming an implausibly fast duration — 2026-08-22 forensics finding (tab-duplication theory: sessionStorage/session ID is copied on tab duplication, the in-memory dwell timer is not, so an already-progressed timer in the original tab can fire shortly after a fresh page_view from the duplicate)", async () => {
+    const res = await post({ type: "engaged_view", path: "/recommend", visitorId: "v_fast", sessionId: "s_fast", durationSeconds: 1 });
+    expect(res.status).toBe(400);
+    expect((await res.json()).classification).toBe("REJECTED_VALIDATION");
+    const stored = await getAllFirstPartyEvents();
+    expect(stored.some((e) => e.visitorId === "v_fast")).toBe(false);
+  });
+
+  it("rejects an engaged_view with a missing or non-numeric durationSeconds rather than trusting it silently", async () => {
+    const res = await post({ type: "engaged_view", path: "/", visitorId: "v_noduration", sessionId: "s_noduration" });
+    expect(res.status).toBe(400);
+    expect((await res.json()).classification).toBe("REJECTED_VALIDATION");
+  });
+
   it("never crashes and never stores when storage itself fails", async () => {
     const events = await import("@/lib/analytics/events");
     const spy = vi.spyOn(events, "recordFirstPartyEvent").mockResolvedValue(false);
