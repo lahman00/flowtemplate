@@ -27,15 +27,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ entryId, state: entry.state, providerState: variant?.providerState ?? null, note: "No bufferPostId recorded to reconcile." });
   }
 
-  if (new URL(request.url).searchParams.get("externalLink") === "1") {
-    const linkRes = await fetch("https://api.buffer.com", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${process.env.SOCIAL_LINKEDIN_BUFFER_API_KEY!}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ query: `query($input: PostInput!) { post(input: $input) { id status sentAt externalLink error { message } } }`, variables: { input: { id: bufferPostId } } }),
-    });
-    return NextResponse.json(await linkRes.json());
-  }
-
   const result = await reconcileBufferLinkedInPost(bufferPostId, variant.text, variant.link ?? "");
   const now = new Date().toISOString();
   const providerState = providerStateFromResult(variant.providerState, result, now);
