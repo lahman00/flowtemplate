@@ -17,28 +17,49 @@ function software(overrides: Partial<Software>): Software {
 }
 
 describe("generateMetaDescription", () => {
-  it("appends the alternatives CTA when the combined text fits the SERP budget", () => {
-    const s = software({ description: "Notion combines docs and databases.", alternatives: [{ name: "A" } as never, { name: "B" } as never] });
+  /**
+   * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) Track C real
+   * finding: with the PREVIOUS (2026-08-21) version of this function, 244
+   * of 247 real software pages' meta descriptions never mentioned
+   * "alternative" at all — despite every one of those pages' own <title>
+   * being "Best {X} Alternatives" — because the CTA carrying that word
+   * only got appended when it fit, and it almost never did. Real cached
+   * Search Console evidence (var/agents/gsc-opportunity-mining.json) shows
+   * decent impressions on exactly these alternatives-intent queries with
+   * 0 clicks. This is the permanent regression guard: the word
+   * "alternative" must always appear, for every real catalog entry, full
+   * stop — not "when it fits."
+   */
+  it("REGRESSION GUARD: every real software page's meta description mentions \"alternative\" — the 2026-08-21 version silently failed this for 244/247 pages", async () => {
+    const { getAllSoftware } = await import("@/data/software");
+    const failures = getAllSoftware()
+      .map((s) => ({ slug: s.slug, description: generateMetaDescription(s) }))
+      .filter(({ description }) => !description.toLowerCase().includes("alternative"));
+    expect(failures).toEqual([]);
+  });
+
+  it("always leads with a fixed \"N {Name} alternatives compared\" prefix, never truncated away", () => {
+    const s = software({ name: "Notion", description: "Notion combines docs and databases.", alternatives: [{ name: "A" } as never, { name: "B" } as never] });
     const result = generateMetaDescription(s);
-    expect(result).toContain("Compare 2 real alternatives");
+    expect(result.startsWith("2 Notion alternatives compared: ")).toBe(true);
     expect(result.length).toBeLessThanOrEqual(META_DESCRIPTION_MAX_LENGTH);
     expect(result.endsWith("…")).toBe(false);
   });
 
-  it("never truncates a description that fits on its own, even without the CTA fitting (regression: the CTA used to always be appended first, wasting the whole budget on boilerplate that then got sliced away)", () => {
-    const description = "A".repeat(140) + " end.";
+  it("never truncates a description that fits within the remaining budget after the prefix", () => {
+    const description = "A".repeat(100) + " end.";
     const s = software({ description, alternatives: [{ name: "A" } as never] });
     const result = generateMetaDescription(s);
-    expect(result).toBe(description);
+    expect(result).toBe(`1 X alternatives compared: ${description}`);
   });
 
-  it("truncates at a word boundary with an ellipsis only when the description itself exceeds the budget", () => {
+  it("truncates the description (not the prefix) at a word boundary with an ellipsis when it exceeds the remaining budget", () => {
     const description = "word ".repeat(60).trim();
     const s = software({ description, alternatives: [{ name: "A" } as never] });
     const result = generateMetaDescription(s);
     expect(result.length).toBeLessThanOrEqual(META_DESCRIPTION_MAX_LENGTH);
     expect(result.endsWith("…")).toBe(true);
-    expect(result).not.toContain("Compare");
+    expect(result.startsWith("1 X alternatives compared: ")).toBe(true);
   });
 
   /**

@@ -31,19 +31,37 @@ export function truncateAtWord(text: string, maxLength: number): string {
 }
 
 /**
- * Prefers the product-specific description on its own — appending the
- * generic "Compare N alternatives" CTA only when it actually fits within
- * the SERP-safe budget. The old version always appended the CTA first and
- * truncated after, so on any description over ~90 chars (the majority) the
- * CTA text was silently sliced away and every page ended mid-sentence with
- * an ellipsis for zero benefit.
+ * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) Track C real
+ * finding: the previous version (2026-08-21 fix) put the CTA LAST,
+ * appended only when the combined text fit — but the CTA text itself
+ * ("Compare N real alternatives to find the best fit for your team.",
+ * ~55-70 chars) rarely leaves enough of the 155-char budget for a real
+ * product description (this catalog's descriptions run 100-140 chars),
+ * so the CTA was silently dropped almost universally: 244 of 247
+ * software pages' meta descriptions never mentioned "alternative" at
+ * all — despite every one of those pages' own <title> being "Best {X}
+ * Alternatives". Real cached Search Console evidence (var/agents/
+ * gsc-opportunity-mining.json) shows exactly the symptom this produces:
+ * decent impressions on alternatives-intent queries ("clickup
+ * alternatives", "confluence alternative", "postmark alternative") with
+ * 0 clicks even at a page-1-adjacent position — a snippet that never
+ * reinforces the very intent the searcher typed is a plausible real
+ * cause, not proven causally (never claimed as such), but directly
+ * actionable and safe: Google does not use meta description as a
+ * ranking signal, only as a snippet-selection hint, so this cannot hurt
+ * position and can only help CTR.
+ *
+ * Fixed by putting a short, fixed-length "alternatives" mention FIRST
+ * (always fits — every catalog entry has >=1 alternative, confirmed) and
+ * the real product description after, still word-boundary-truncated via
+ * truncateAtWord (preserving the 2026-08-21 fix's actual goal: never cut
+ * off mid-word/mid-sentence for zero benefit).
  */
 export function generateMetaDescription(software: Software): string {
-  const cta = `Compare ${software.alternatives.length} real alternatives to find the best fit for your team.`;
-  const withCta = `${software.description} ${cta}`;
-  if (withCta.length <= META_DESCRIPTION_MAX_LENGTH) return withCta;
-  if (software.description.length <= META_DESCRIPTION_MAX_LENGTH) return software.description;
-  return truncateAtWord(software.description, META_DESCRIPTION_MAX_LENGTH);
+  const prefix = `${software.alternatives.length} ${software.name} alternatives compared: `;
+  const budget = META_DESCRIPTION_MAX_LENGTH - prefix.length;
+  if (software.description.length <= budget) return `${prefix}${software.description}`;
+  return `${prefix}${truncateAtWord(software.description, budget)}`;
 }
 
 export function generateIntro(software: Software): string {
