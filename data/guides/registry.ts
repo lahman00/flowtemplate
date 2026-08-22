@@ -491,7 +491,7 @@ export const ROLE_GUIDES: readonly RoleGuide[] = [
     faqs: [
       {
         question: "How do I choose between Pipedrive and HubSpot for a small business?",
-        answer: "If your primary priority is sales execution, closing deals, and keeping sales reps organized with visual pipelines, Pipedrive is the best and most cost-effective choice. If you need marketing automation, blog/landing pages, and customer support on one platform, HubSpot is the stronger all-in-one choice."
+        answer: "If your primary priority is sales execution, closing deals, and keeping sales reps organized with visual pipelines, Pipedrive is a strong, cost-effective choice. If you need marketing automation, blog/landing pages, and customer support on one platform, HubSpot is the stronger all-in-one choice."
       },
       {
         question: "What is the most affordable CRM for a small team on a tight budget?",
