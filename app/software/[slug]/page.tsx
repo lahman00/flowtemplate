@@ -178,7 +178,7 @@ export default async function SoftwarePage({ params }: SoftwarePageProps) {
               className="mt-6 w-full"
               ctaLocation="software-page-cta"
             >
-              Visit official site
+              Visit {software.name}
               <ExternalLink className="h-4 w-4" />
             </TrackedCtaLink>
 

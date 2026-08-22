@@ -22,7 +22,7 @@ export default function AffiliateDisclosurePage() {
           heading: "Current status",
           body: (
             <p>
-              Some &quot;Visit official site&quot; links on {SITE_NAME} are affiliate links.
+              Some &quot;Visit [Vendor]&quot; links on {SITE_NAME} are affiliate links.
               If you follow one of those links and sign up for or purchase a product,
               {" "}{SITE_NAME} may earn a commission <strong className="text-white">at no
               extra cost to you</strong>. Other outbound links remain ordinary links to a
