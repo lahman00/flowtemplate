@@ -1,4 +1,5 @@
 import { executeLinksAgent } from "@/scripts/maintenance/links";
+import { executeSocialLinksAgent } from "@/scripts/maintenance/social-links";
 import { executeFreshnessAgent } from "@/scripts/maintenance/freshness";
 import { executeSeoAgent } from "@/scripts/maintenance/seo";
 import { executeRecommendationsAgent } from "@/scripts/maintenance/recommendations";
@@ -54,6 +55,11 @@ function buildRecommendedActions(entries: MaintenanceSummaryAgentEntry[]): strin
   const linkAgent = entries.find((e) => e.agent === "links");
   if (linkAgent && linkAgent.criticalCount > 0) {
     actions.push(`Review ${linkAgent.criticalCount} broken/unreachable URL(s) in var/maintenance/links.md and update the affected data/software/*.json source(s) by hand once confirmed.`);
+  }
+
+  const socialLinksAgent = entries.find((e) => e.agent === "social-links");
+  if (socialLinksAgent && socialLinksAgent.criticalCount > 0) {
+    actions.push(`Fix ${socialLinksAgent.criticalCount} dead internal link(s) in the social queue in var/maintenance/social-links.md — restore the route, add a redirect in data/redirects.ts, or transition the entry to SKIPPED. Treat any "LIVE PUBLISHED POST" finding as urgent: it is broken for real visitors right now.`);
   }
 
   const freshnessAgent = entries.find((e) => e.agent === "freshness");
@@ -120,6 +126,7 @@ async function main() {
 
   const reports = [
     await executeLinksAgent(),
+    await executeSocialLinksAgent(),
     await executeFreshnessAgent(),
     await executeSeoAgent(),
     await executeRecommendationsAgent(),
