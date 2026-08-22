@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { isBotUserAgent, isInternalOrSyntheticTraffic } from "@/lib/analytics/bot-filter";
 import { recordFirstPartyEvent, getAllFirstPartyEvents, type FirstPartyEvent } from "@/lib/analytics/events";
-import { computePeriodMetrics, isSyntheticOrTestEvent, computeRecommendDomainBreakdown, computeCtaExposure, computeAcquisitionSourceBreakdown } from "@/scripts/analytics/report";
+import { computePeriodMetrics, isSyntheticOrTestEvent, computeRecommendDomainBreakdown, computeCtaExposure, computeAcquisitionSourceBreakdown, computeAcquisitionMilestones } from "@/scripts/analytics/report";
 import { LEGACY_CONTAMINATED_SESSIONS, isLegacyContaminatedSession } from "@/lib/analytics/legacy-contaminated-sessions";
 import fs from "node:fs";
 import path from "node:path";
@@ -399,6 +399,51 @@ describe("First-Party Analytics, Bot Defense & Funnel Suite", () => {
       ];
       expect(computeAcquisitionSourceBreakdown(events)).toEqual([]);
       expect(computeAcquisitionSourceBreakdown(events, true).find((r) => r.source === "referral")?.visitors).toBe(1);
+    });
+  });
+
+  describe("ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) Phase 0: acquisition milestone scoreboard", () => {
+    it("counts cumulative distinct real visitors and reports 0/4 milestones reached below 100", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = Array.from({ length: 5 }, (_, i) => ({
+        type: "page_view", path: "/", visitorId: `v_${i}`, sessionId: `s_${i}`, timestamp: t(i * 1000),
+      })) as FirstPartyEvent[];
+      const { cumulativeRealVisitors, milestones } = computeAcquisitionMilestones(events);
+      expect(cumulativeRealVisitors).toBe(5);
+      expect(milestones.every((m) => !m.reached)).toBe(true);
+      expect(milestones.find((m) => m.name === "A")?.visitorsRemaining).toBe(95);
+    });
+
+    it("marks milestone A reached with the exact timestamp of the 100th distinct real visitor, never interpolated", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = Array.from({ length: 100 }, (_, i) => ({
+        type: "page_view", path: "/", visitorId: `v_${i}`, sessionId: `s_${i}`, timestamp: t(i * 1000),
+      })) as FirstPartyEvent[];
+      const hundredthTimestamp = events[99]!.timestamp;
+      const { milestones } = computeAcquisitionMilestones(events);
+      const a = milestones.find((m) => m.name === "A");
+      expect(a?.reached).toBe(true);
+      expect(a?.reachedAt).toBe(hundredthTimestamp);
+      expect(milestones.find((m) => m.name === "B")?.reached).toBe(false);
+    });
+
+    it("does not count a repeat visitor twice toward the cumulative total", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/", visitorId: "v_a", sessionId: "s_a1", timestamp: t(0) } as FirstPartyEvent,
+        { type: "page_view", path: "/software/notion", visitorId: "v_a", sessionId: "s_a1", timestamp: t(1000) } as FirstPartyEvent,
+        { type: "page_view", path: "/", visitorId: "v_a", sessionId: "s_a2", timestamp: t(2000) } as FirstPartyEvent, // same visitor, a later session
+      ];
+      expect(computeAcquisitionMilestones(events).cumulativeRealVisitors).toBe(1);
+    });
+
+    it("excludes synthetic QA and legacy-contaminated visitors from the cumulative count", () => {
+      const t = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();
+      const events: FirstPartyEvent[] = [
+        { type: "page_view", path: "/", visitorId: "v_real", sessionId: "s_real", timestamp: t(0) } as FirstPartyEvent,
+        { type: "page_view", path: "/", visitorId: "v_qa", sessionId: "s_qa", timestamp: t(1000), isTest: true } as FirstPartyEvent,
+      ];
+      expect(computeAcquisitionMilestones(events).cumulativeRealVisitors).toBe(1);
     });
   });
 

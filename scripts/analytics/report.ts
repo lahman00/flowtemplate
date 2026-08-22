@@ -218,6 +218,62 @@ export function computeAcquisitionSourceBreakdown(events: FirstPartyEvent[], inc
     .sort((a, b) => b.visitors - a.visitors);
 }
 
+/**
+ * ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) Phase 0 — the
+ * durable acquisition scoreboard. Deliberately NOT separately-persisted
+ * state (a second source of truth that could drift from the real event
+ * store) -- every real event already carries a server-stamped timestamp
+ * (app/api/analytics/event/route.ts, never client-supplied), so the exact
+ * moment cumulative distinct real visitors first crossed each milestone
+ * is fully recoverable by replaying events in order. "Never claim a
+ * milestone until telemetry proves it": a milestone is `reached: true`
+ * only once real (non-synthetic, non-legacy-contaminated) visitor #N has
+ * actually been recorded, never interpolated or estimated.
+ */
+export const ACQUISITION_MILESTONES = [
+  { name: "A", threshold: 100 },
+  { name: "B", threshold: 300 },
+  { name: "C", threshold: 500 },
+  { name: "D", threshold: 1000 },
+] as const;
+
+export interface AcquisitionMilestoneStatus {
+  name: string;
+  threshold: number;
+  reached: boolean;
+  reachedAt: string | null;
+  visitorsRemaining: number;
+}
+
+export function computeAcquisitionMilestones(events: FirstPartyEvent[]): { cumulativeRealVisitors: number; milestones: AcquisitionMilestoneStatus[] } {
+  const real = events.filter((e) => !isSyntheticOrTestEvent(e));
+  const sorted = [...real].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+
+  const seenVisitors = new Set<string>();
+  const crossedAt = new Map<number, string>();
+
+  for (const e of sorted) {
+    if (seenVisitors.has(e.visitorId)) continue;
+    seenVisitors.add(e.visitorId);
+    for (const m of ACQUISITION_MILESTONES) {
+      if (seenVisitors.size === m.threshold && !crossedAt.has(m.threshold)) {
+        crossedAt.set(m.threshold, e.timestamp);
+      }
+    }
+  }
+
+  const cumulativeRealVisitors = seenVisitors.size;
+  const milestones = ACQUISITION_MILESTONES.map((m) => ({
+    name: m.name,
+    threshold: m.threshold,
+    reached: cumulativeRealVisitors >= m.threshold,
+    reachedAt: crossedAt.get(m.threshold) ?? null,
+    visitorsRemaining: Math.max(0, m.threshold - cumulativeRealVisitors),
+  }));
+
+  return { cumulativeRealVisitors, milestones };
+}
+
 export interface PeriodSummary {
   periodName: string;
   uniqueVisitors: number;
@@ -796,6 +852,19 @@ export async function generateAnalyticsReport() {
       const ctr = row.impressions >= 5 ? `${((row.clicks / row.impressions) * 100).toFixed(1)}%` : "n too small";
       console.log(`   ${row.softwareSlug.padEnd(20)} ${row.ctaLocation.padEnd(28)} ${row.impressions.toString().padStart(11)} ${row.clicks.toString().padStart(7)}  ${ctr}`);
     }
+  }
+  console.log("========================================================================================\n");
+
+  // ROAD TO THE FIRST 1,000 REAL HUMANS mission (2026-08-22) Phase 0 — the
+  // durable milestone scoreboard, printed first among the growth sections
+  // since it's now the mission's own stated single most important number.
+  const { cumulativeRealVisitors, milestones } = computeAcquisitionMilestones(events);
+  console.log("========================================================================================");
+  console.log(" ACQUISITION SCOREBOARD — ROAD TO 1,000 REAL HUMANS");
+  console.log(`   Cumulative verified real humans (all time): ${cumulativeRealVisitors}`);
+  for (const m of milestones) {
+    const status = m.reached ? `REACHED at ${m.reachedAt}` : `not yet reached — ${m.visitorsRemaining} more real visitor(s) needed`;
+    console.log(`   Milestone ${m.name} (${m.threshold}): ${status}`);
   }
   console.log("========================================================================================\n");
 
