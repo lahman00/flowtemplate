@@ -29,18 +29,25 @@ type TrackedCtaLinkProps = ComponentProps<typeof ButtonLink> & {
  */
 export function TrackedCtaLink({ slug, ctaLocation, wixContext, onClick, ...props }: TrackedCtaLinkProps) {
   const pathname = usePathname();
-  const wrapperRef = useRef<HTMLSpanElement>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
   const hasFiredImpression = useRef(false);
 
-  // WAR MODE mission (2026-08-22) Phase 21 — fire cta_impression exactly
+  // WAR MODE mission (2026-08-22) Phase 21/23 — fire cta_impression exactly
   // once, the first time this CTA is actually visible on screen, not just
   // present in the DOM (a CTA below the fold that nobody scrolled to was
-  // never "seen"). ButtonLink -> next/link's Link doesn't forward a ref
-  // through this component's own props, so the observed element is a
-  // zero-footprint wrapper (display: contents — never affects layout)
-  // rather than the link itself.
+  // never "seen"). Phase 23 forensics: the first version of this observed
+  // a `display: contents` wrapper span instead of the link itself, on the
+  // (wrong) assumption ButtonLink couldn't forward a ref. `display: contents`
+  // elements generate no box of their own — getBoundingClientRect on one is
+  // always {0,0,0,0} — so IntersectionObserver could never report it as
+  // intersecting, and the whole feature silently never fired in production
+  // for the ~90 minutes it was live. Proven via a live browser check against
+  // miloosh.com: the CTA was 100% on-screen (real getBoundingClientRect
+  // confirmed it inside the viewport) yet zero cta_impression events were
+  // stored. Fixed by making ButtonLink forward its ref (see that file) to
+  // the real, laid-out <a> element and observing that directly.
   useEffect(() => {
-    const node = wrapperRef.current;
+    const node = linkRef.current;
     if (!node || hasFiredImpression.current) return;
 
     const observer = new IntersectionObserver(
@@ -60,24 +67,23 @@ export function TrackedCtaLink({ slug, ctaLocation, wixContext, onClick, ...prop
   }, [pathname, slug, ctaLocation]);
 
   return (
-    <span ref={wrapperRef} style={{ display: "contents" }}>
-      <ButtonLink
-        {...props}
-        onClick={(event) => {
-          onClick?.(event);
-          const visitorId = typeof localStorage !== "undefined" ? localStorage.getItem("miloosh_vid") ?? undefined : undefined;
-          const sessionId = typeof sessionStorage !== "undefined" ? sessionStorage.getItem("miloosh_sid") ?? undefined : undefined;
-          const isTest = markAndCheckSyntheticQa();
-          void fetch("/api/outbound-click", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ slug, kind: "cta", sourcePage: pathname, ctaLocation, wixContext, visitorId, sessionId, isTest }),
-            keepalive: true,
-          }).catch(() => {
-            // Best-effort only — a tracking failure must never affect the user's click.
-          });
-        }}
-      />
-    </span>
+    <ButtonLink
+      {...props}
+      ref={linkRef}
+      onClick={(event) => {
+        onClick?.(event);
+        const visitorId = typeof localStorage !== "undefined" ? localStorage.getItem("miloosh_vid") ?? undefined : undefined;
+        const sessionId = typeof sessionStorage !== "undefined" ? sessionStorage.getItem("miloosh_sid") ?? undefined : undefined;
+        const isTest = markAndCheckSyntheticQa();
+        void fetch("/api/outbound-click", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ slug, kind: "cta", sourcePage: pathname, ctaLocation, wixContext, visitorId, sessionId, isTest }),
+          keepalive: true,
+        }).catch(() => {
+          // Best-effort only — a tracking failure must never affect the user's click.
+        });
+      }}
+    />
   );
 }
