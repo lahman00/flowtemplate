@@ -24,7 +24,8 @@
 export type LegacyContaminatedSession = {
   sessionId: string;
   visitorId: string;
-  classification: "UNKNOWN_POSSIBLE_OPERATOR_QA";
+  /** UNKNOWN_POSSIBLE_OPERATOR_QA: circumstantial evidence only (timing/path shape), provenance not provable either way. CONFIRMED_OPERATOR_QA: independently corroborated against the agent's own action log for that session — not a guess. */
+  classification: "UNKNOWN_POSSIBLE_OPERATOR_QA" | "CONFIRMED_OPERATOR_QA";
   investigatedAt: string;
   reason: string;
 };
@@ -53,6 +54,28 @@ export const LEGACY_CONTAMINATED_SESSIONS: readonly LegacyContaminatedSession[] 
       "Provenance could not be proven organic OR operator-QA with the data actually available. Per " +
       "the non-negotiable rule that unproven traffic is never reported as organic, classified " +
       "UNKNOWN_POSSIBLE_OPERATOR_QA and excluded from REAL HUMAN metrics by default.",
+  },
+  {
+    sessionId: "s_xdc34h7xmt452kj6",
+    visitorId: "v_kfqu33hvmt452kj6",
+    classification: "CONFIRMED_OPERATOR_QA",
+    investigatedAt: "2026-08-22",
+    reason:
+      "13 events from 2026-08-22T08:51:21.011Z to 2026-08-22T09:02:12.850Z, single visitor+session " +
+      "throughout: page_view:/ -> engaged_view -> recommend_started+page_view:/recommend -> " +
+      "engaged_view -> software_view+page_view:/software/figma -> engaged_view -> " +
+      "comparison_view+page_view:/compare/notion-vs-clickup -> engaged_view -> page_view:/category/crm " +
+      "-> engaged_view. This is not circumstantial: it exactly matches, in both path sequence and " +
+      "timestamp, the agent's own recorded tool-call log for the Phase 17 mobile-QA sweep performed " +
+      "in this same session (homepage load, /recommend wizard render check, then direct navigation to " +
+      "/software/figma, /compare/notion-vs-clickup, /category/crm specifically to check for horizontal " +
+      "overflow at a 320px viewport) — the QA pass did not use the ?qa=1 synthetic marker because it " +
+      "checked layout via read-only DOM properties (scrollWidth/clientWidth), not the tracked UI " +
+      "controls the marker convention was built around. Classified CONFIRMED (not UNKNOWN_POSSIBLE) " +
+      "because this is corroborated against an independent record of the actual actions taken, not " +
+      "inferred from event shape alone. Excluded from REAL HUMAN metrics. Lesson applied going " +
+      "forward: any future manual/browser QA against production must open with ?qa=1 regardless of " +
+      "whether the check itself uses tracked UI controls.",
   },
 ];
 
